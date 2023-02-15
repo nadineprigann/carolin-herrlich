@@ -3,6 +3,7 @@ export const useDefaultsStore = defineStore('defaults', () => {
     availableLanguages: string[]
     appTitle: string
     navigation: Route[]
+    host: string
   }
 
   // State
@@ -10,6 +11,7 @@ export const useDefaultsStore = defineStore('defaults', () => {
     availableLanguages: [],
     appTitle: '',
     navigation: [],
+    host: '',
   })
 
   // Actions

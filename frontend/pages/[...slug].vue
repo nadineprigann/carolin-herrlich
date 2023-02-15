@@ -27,16 +27,28 @@ const route = useRoute()
 route.meta.id = meta.id
 
 // Set HTML head data
+const defaultsStore = useDefaultsStore()
+const { defaults } = storeToRefs(defaultsStore)
 const languageStore = useLanguageStore()
 const { isoCode } = storeToRefs(languageStore)
+
+const alternate = computed(() => {
+  return meta.alternate.map((item) => {
+    return {
+      rel: 'alternate',
+      href: defaults.value.host + item.url,
+      hreflang: item.lang,
+    }
+  })
+})
+
 useHead({
   htmlAttrs: {
     lang: isoCode,
   },
+  link: alternate,
 })
 
-const defaultsStore = useDefaultsStore()
-const { defaults } = storeToRefs(defaultsStore)
 useSeoMeta({
   titleTemplate: (titleChunk) => {
     return titleChunk === defaults.value.appTitle

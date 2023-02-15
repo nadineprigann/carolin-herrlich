@@ -13,8 +13,14 @@ declare global {
     urls: ImageUrl[]
   }
 
+  interface Alternate {
+    url: string
+    lang: string
+  }
+
   interface Page {
     meta: {
+      alternate: Alternate[]
       id: number
       name?: string
       template: string

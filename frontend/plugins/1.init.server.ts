@@ -1,4 +1,9 @@
 export default defineNuxtPlugin(async () => {
   await useLanguageStore().init()
-  useDefaultsStore().fetch()
+
+  const defaultsStore = useDefaultsStore()
+  defaultsStore.fetch()
+
+  // Set hostname (e.g. for useHead)
+  defaultsStore.defaults.host = useRequestHeaders().host || ''
 })
