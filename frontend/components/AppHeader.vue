@@ -7,7 +7,7 @@ const { defaults } = storeToRefs(defaultsStore)
   <div class="app-header">
     <h1>{{ defaults.appTitle }}</h1>
     <NavList />
-    <LanguageSwitch />
+    <!-- <LanguageSwitch /> -->
   </div>
 </template>
 
