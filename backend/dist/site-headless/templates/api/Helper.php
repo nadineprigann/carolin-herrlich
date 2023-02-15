@@ -28,6 +28,7 @@ class Helper {
 
     // Set language
     wire('languages')->setLanguage($lang);
+    wire('languages')->setLocale();
 
     return $requestedLang;
   }
@@ -35,6 +36,7 @@ class Helper {
   public static function unsetLanguage() {
     // Recall previous language
     wire('languages')->unsetLanguage();
+    wire('languages')->setLocale();
   }
 
   public static function getMeta($page) {
@@ -43,7 +45,31 @@ class Helper {
     $response->id = $page->id;
     $response->url = $page->url;
     $response->template = $page->template->name;
+    $response->alternate = self::getAlternate($page);
     return $response;
+  }
+
+  public static function getAlternate($page) {
+    $defaultLanguage = wire('config')->_defaultLanguage;
+    $availableLanguages = wire('config')->_availableLanguages;
+    $languageSupportPageNames = wire('modules')->isInstalled('LanguageSupportPageNames');
+    $alternates = [];
+
+    if (!$languageSupportPageNames) return $alternates;
+
+    foreach (wire('languages') as $lang) {
+      $l = $lang->isDefault() ? $defaultLanguage : $lang->name;
+
+      // Check if language is listed in PW config
+      if (!in_array($l, $availableLanguages)) continue;
+
+      $alternates[] = array(
+        'url' => $languageSupportPageNames ? $page->localUrl($lang) : $page->url,
+        'lang' => $l
+      );
+    }
+
+    return $alternates;
   }
 
   public static function getFields($page, array $exclude = null) {
@@ -247,23 +273,27 @@ class Helper {
   public static function getDatetime($page, $field) {
     $timestamp = intval($page->getUnformatted($field->name));
     if (!$timestamp) return null;
-    // $fmt = datefmt_create(null, \IntlDateFormatter::LONG, \IntlDateFormatter::NONE);
+    // Reference: https://unicode-org.github.io/icu/userguide/format_parse/datetime/
+    $fmt = new \IntlDateFormatter(wire('languages')->getLocale(), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
+    $fmt->setPattern("d.M.YYYY");
+    $date = $fmt->format($timestamp);
+    $fmt->setPattern("HH:mm");
+    $time = $fmt->format($timestamp);
     return [
       'formatted' => [
-        // 'date' => datefmt_format($fmt , $timestamp),
-        'date' => strftime('%d.%m.%Y', $timestamp),
-        'time' => strftime('%H:%S', $timestamp)
+        'date' => $date,
+        'time' => $time,
       ],
       'iso' => date('c', $timestamp),
-      'dst' => date('I', $timestamp),
-      'timestamp' => $timestamp
+      // 'dst' => date('I', $timestamp),
+      // 'timestamp' => $timestamp
     ];
   }
 
   public static function formatText($field) {
     // Replace -- and --- in text fields with soft hyphen and zero-width space respectively
-    $field = str_replace("--", "&shy;", $field);
     $field = str_replace("---", "&#8203;", $field);
+    $field = str_replace("--", "&shy;", $field);
 
     // Convert relative (backend) paths to absolute paths (so that they work on the frontend too)
     $field = str_replace('/site/assets/files/', wire('config')->urls->httpRoot . 'site/assets/files/', $field);
