@@ -38,9 +38,6 @@ $config->debug = false;
 
 $config->useFunctionsAPI = true;
 $config->usePageClasses = true;
-$config->useMarkupRegions = true;
-$config->prependTemplateFile = '_init.php';
-$config->appendTemplateFile = '_main.php';
 $config->templateCompile = false;
 $config->imageSizerOptions = array_merge($config->imageSizerOptions, [
   'upscaling'     => false,       // upscale if necessary to reach target size?
