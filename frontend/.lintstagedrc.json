@@ -1,0 +1,4 @@
+{
+  "*.{ts,js,vue}": "pnpm lint:prod",
+  "*.{css,scss,vue}": "pnpm stylelint"
+}

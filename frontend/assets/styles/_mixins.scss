@@ -1,0 +1,57 @@
+@mixin focus-default($color: var(--focus-color)) {
+  &:focus-visible {
+    background-color: $color;
+    outline: none;
+  }
+}
+
+// Use this only on large (!) clickable areas like prev/next buttons over a slideshow
+@mixin tap-highlight-reset {
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+}
+
+@mixin input-reset {
+  padding: 0;
+  border: none;
+}
+
+@mixin input-default {
+  @include input-reset;
+  @include focus-default;
+
+  padding: 0.25em;
+  background-color: rgb(240 240 240);
+}
+
+@mixin button-reset {
+  padding: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+}
+
+@mixin button-default {
+  @include button-reset;
+  @include focus-default;
+
+  padding: 0.25em 0.5em;
+  background-color: rgb(240 240 240);
+}
+
+@mixin link-reset {
+  @include focus-default;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+@mixin link-default {
+  @include link-reset;
+
+  color: var(--link-color);
+  text-decoration: underline;
+
+  // &:active {}
+  // &:visited {}
+}

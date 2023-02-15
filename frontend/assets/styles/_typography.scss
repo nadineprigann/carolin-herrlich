@@ -1,0 +1,14 @@
+@mixin ff-regular {
+  font-family: serif, sans-serif;
+}
+
+@mixin fs-html {
+  font-size: var(--fs-root);
+  line-height: var(--lh-root);
+
+  // Place vw-based font-sizes here to make REM scale accordingly
+}
+
+@mixin fs-body {
+  font-size: 1.6em;
+}

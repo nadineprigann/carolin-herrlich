@@ -1,0 +1,13 @@
+// Since we can’t use CSS vars in @media definition, fall back to SCSS
+$xxsmall: 20em; // 320px
+$xsmall: 30em; // 480px
+$small: 40em; // 640px
+$medium: 48em; // 768px
+$large: 64em; // 1024px
+$xlarge: 80em; // 1280px
+$xxlarge: 90em; // 1440px
+
+// Use these variables for the main breakpoints in a layout
+$mobile: $xxsmall;
+$tablet: $medium;
+$desktop: $xlarge;
