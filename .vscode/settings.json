@@ -1,0 +1,75 @@
+// Based on https://github.com/bencodezen/vue-enterprise-boilerplate/blob/main/.vscode/settings.json
+// Reference: https://code.visualstudio.com/docs/getstarted/settings
+{
+  // Spacing
+  "editor.wordWrap": "on",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.trimAutoWhitespace": true,
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+
+  // Configure glob patterns for excluding files and folders
+  "files.exclude": {
+    "frontend/.nuxt": true,
+    "frontend/dist": true
+  },
+
+  // Configure file associations to languages
+  "files.associations": {
+    ".markdownlintrc": "jsonc",
+    ".module": "php"
+  },
+
+  // Event triggers
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true,
+    "source.fixAll.markdownlint": true
+  },
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue",
+    "vue-html",
+    "html"
+  ],
+
+  // HTML
+  "html.format.enable": false,
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.includeLanguages": {
+    "vue-html": "html"
+  },
+
+  // JS, JSON
+  "jest.autoEnable": false,
+  "jest.enableCodeLens": false,
+  "javascript.format.enable": false,
+  "json.format.enable": false,
+
+  // CSS
+  "stylelint.enable": true,
+  "stylelint.validate": ["css", "scss", "vue"],
+  "css.validate": false,
+  "scss.validate": false,
+  "scss.scannerExclude": [
+    "**/.git",
+    "**/node_modules",
+    "**/bower_components",
+    "backend/dev/**",
+    "backend/dist/**"
+  ],
+
+  // Markdown
+  "[markdown]": {
+    "files.trimTrailingWhitespace": false,
+    "editor.renderWhitespace": "all",
+    "editor.acceptSuggestionOnEnter": "off"
+  }
+}
