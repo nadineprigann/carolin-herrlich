@@ -84,6 +84,11 @@ class Helper {
 
       $value = $page->get($field->name);
 
+      if ($field->type instanceof FieldtypePageTitle) {
+        $pdata[$field->name] = self::formatText($value);
+        continue;
+      }
+
       if ($field->type instanceof FieldtypeImage) {
         $pdata[$field->name] = Images::get($value);
         continue;
