@@ -62,7 +62,6 @@ $config->_availableLanguages = [$config->_defaultLanguage];
 $config->_productionBackendUrl = '';
 $config->_frontendUrl = '';
 $config->_omitCache = false;
-$config->tableSalt = '8220093e19a4fe9a9f69a5e1c0d70684b146d798';
 $config->defaultAdminTheme = 'AdminThemeUikit';
 
 
