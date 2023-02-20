@@ -63,12 +63,13 @@ Note: In case ProcessWire has already been installed, then directly go to _Setup
 1. [Download](https://processwire.com/download/core/) the latest ProcessWire archive and extract its content to the `dist/` folder.
 2. Create a MySQL database with a _utfmb4_unicode_ci_ collation.
 3. Initiate the ProcessWire installer in the browser.
-4. Select the _Headless_ site profile during installation.
-5. After installation, duplicate `config.php`, rename it to `config-default.php` and clear out all sensitive data. Also duplicate `.htaccess` and rename it to `htaccess.txt`.
+4. Select the _Headless_ site profile in the first step.
+5. In the next step, select `utf8mb4` as DB charset and `InnoDB` as DB engine.
+6. After installation, duplicate `config.php`, rename it to `config-default.php` and clear out all sensitive data. Also duplicate `.htaccess` and rename it to `htaccess.txt`.
 
 ### Setup
 
-In case ProcessWire is already installed in the `dist/` directory, then simply grab the latest database dump under `dist/site/assets/backups/database/` and import it to a local database. Afterwards **duplicate** `config-default.php`, rename the copy to `config.php` and enter all necessary credentials. Also **duplicate** `htaccess.txt` and rename the copy to `.htaccess`. When setting up a local webserver, the document root has to point to the `dist/` directory.
+In case ProcessWire is already installed in the `dist/` directory, then simply grab the latest database dump under `dist/site/assets/backups/database/` and import it to a local database with the collation `utf8mb4_unicode_ci`. Afterwards **duplicate** `config-default.php`, rename the copy to `config.php` and enter all necessary credentials. Also **duplicate** `htaccess.txt` and rename the copy to `.htaccess`. When setting up a local webserver, the document root has to point to the `dist/` directory.
 
 Make sure to update the existing API key in the _AppApi_ module settings.
 
