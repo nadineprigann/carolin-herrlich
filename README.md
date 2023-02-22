@@ -113,7 +113,7 @@ pnpm dev
 
 ### Deployment
 
-The frontend build and deployment is handled by [GitHub actions](https://help.github.com/en/actions). The corresponding workflow can be found under `/.github/workflows/frontend.yml`. Make sure to set the environment variables accordingly and to create a [GitHub secret](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) called `FRONTEND_PASSWORD` that holds the FTP password (no special characters allowed!).
+The frontend build and deployment is handled by [GitHub actions](https://help.github.com/en/actions). The corresponding workflow can be found under `/.github/workflows/frontend.yml`. Make sure to set the environment variables in `.env.production` accordingly and to create a [GitHub secret](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets) called `FRONTEND_PASSWORD` that holds the FTP password (no special characters allowed!).
 
 If the build target is a static website (`pnpm generate`), make sure to install and configure Github Repository Dispatch module in the backend. This will trigger a re-deployment once a page has been updated.
 
