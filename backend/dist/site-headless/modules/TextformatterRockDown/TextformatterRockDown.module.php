@@ -12,8 +12,8 @@ class TextformatterRockDown extends Textformatter
   public static function getModuleInfo()
   {
     return [
-      'title' => 'Markdown-like Textformatter for Headlines',
-      'version' => '1.2.0',
+      'title' => 'RockDown: Markdown-like Textformatter for Headlines',
+      'version' => '1.3.0',
       'summary' => 'ProcessWire Textformatter for simple markdown style text formatting (*bold*, _italic_, ~strike~, ```mono```)',
     ];
   }

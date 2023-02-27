@@ -34,6 +34,19 @@ Formatted:
 
 <img src=https://i.imgur.com/KRUjB3z.png width=300>
 
+## Usage
+
+Just install the module and add `TextformatterRockDown` to the field you want to apply it to:
+
+<img src=https://i.imgur.com/A07FeoC.png height=400>
+
+Then just output the field's value in your template files as usual:
+
+```php
+echo $page->title; // plain
+echo $page->edit('title'); // fontend editable
+```
+
 ## Custom tags
 
 You can add custom replacements easily via hook in `/site/ready.php`
