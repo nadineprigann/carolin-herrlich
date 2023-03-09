@@ -98,7 +98,7 @@ All paths in this chapter are relative to the `/frontend/` folder.
 Within the `/frontend/` folder run the following command:
 
 ```console
-pnpm i
+pnpm install
 ```
 
 To start developing, run...
