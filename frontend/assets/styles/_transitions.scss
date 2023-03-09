@@ -4,7 +4,7 @@
     transition: opacity $duration $easing $delay;
   }
 
-  .#{$name}-enter,
+  .#{$name}-enter-from,
   .#{$name}-leave-to {
     opacity: 0;
   }
