@@ -2,9 +2,9 @@
 const languageStore = useLanguageStore()
 const { isoCode } = storeToRefs(languageStore)
 
-const props = defineProps({
-  language: { type: String, required: true },
-})
+const props = defineProps<{
+  language: string
+}>()
 
 const classes = computed(() => {
   return {

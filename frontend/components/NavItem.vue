@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-const props = defineProps({
-  item: { type: Object, required: true },
-})
+const props = defineProps<{
+  item: Route
+}>()
 </script>
 
 <template>
