@@ -31,25 +31,19 @@ git remote add default git@github.com:sprsprspr/pw-nuxt-kickstart.git
 Whenever there are new commits made to the _pw-nuxt-kickstart_ that should be applied to one of its instances, simply [fetch](https://git-scm.com/docs/git-fetch) them:
 
 ```console
-git fetch default main
+git fetch default dev
 ```
 
 List the new commits:
 
 ```console
-git log --oneline main..default/main
+git log --oneline dev..default/dev
 ```
 
 Pick commits with [git-cherry-pick](https://git-scm.com/docs/git-cherry-pick):
 
 ```console
 git cherry-pick -x <commit>`
-```
-
-If everything works fine, [push](https://help.github.com/articles/pushing-to-a-remote/) them to _origin_:
-
-```console
-git push origin main
 ```
 
 ## Backend
