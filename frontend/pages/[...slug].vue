@@ -26,6 +26,10 @@ const template = computed(() => {
 const route = useRoute()
 route.meta.id = meta.id
 
+// Set template in layout store
+const { layout } = useLayoutStore()
+layout.template = meta.template
+
 // Set HTML head data
 const defaultsStore = useDefaultsStore()
 const { defaults } = storeToRefs(defaultsStore)
