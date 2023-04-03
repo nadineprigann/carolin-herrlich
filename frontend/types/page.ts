@@ -18,16 +18,25 @@ declare global {
     lang: string
   }
 
+  interface Meta {
+    alternate: Alternate[]
+    id: number
+    name?: string
+    template: string
+    url: URL
+  }
+
   interface Page {
-    meta: {
-      alternate: Alternate[]
-      id: number
-      name?: string
-      template: string
-      url: URL
-    }
+    meta: Meta
     fields: {
       meta_description?: string
+      title: string
+    }
+  }
+
+  interface PageReference {
+    meta: Meta
+    fields: {
       title: string
     }
   }
