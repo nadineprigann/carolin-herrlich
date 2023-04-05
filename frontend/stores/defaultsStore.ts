@@ -1,9 +1,9 @@
+// This store holds (only!) the data that was returned by the "defaults" API call.
 export const useDefaultsStore = defineStore('defaults', () => {
   interface Defaults {
     availableLanguages: string[]
     appTitle: string
     navigation: Route[]
-    host: string
   }
 
   // State
@@ -11,7 +11,6 @@ export const useDefaultsStore = defineStore('defaults', () => {
     availableLanguages: [],
     appTitle: '',
     navigation: [],
-    host: '',
   })
 
   // Actions

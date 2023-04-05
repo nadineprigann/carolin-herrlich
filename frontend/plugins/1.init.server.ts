@@ -5,5 +5,5 @@ export default defineNuxtPlugin(async () => {
   defaultsStore.fetch()
 
   // Set hostname (e.g. for useHead)
-  defaultsStore.defaults.host = useRequestHeaders().host || ''
+  useAppConfig().host = useRequestHeaders().host || ''
 })

@@ -40,7 +40,7 @@ const alternate = computed(() => {
   return meta.alternate.map((item) => {
     return {
       rel: 'alternate',
-      href: defaults.value.host + item.url,
+      href: useAppConfig().host + item.url,
       hreflang: item.lang,
     }
   })
