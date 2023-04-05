@@ -50,12 +50,13 @@ class Helper {
   }
 
   public static function getAlternate($page) {
-    $defaultLanguage = wire('config')->_defaultLanguage;
-    $availableLanguages = wire('config')->_availableLanguages;
     $languageSupportPageNames = wire('modules')->isInstalled('LanguageSupportPageNames');
     $alternates = [];
 
     if (!$languageSupportPageNames) return $alternates;
+
+    $defaultLanguage = wire('config')->_defaultLanguage;
+    $availableLanguages = wire('config')->_availableLanguages;
 
     foreach (wire('languages') as $lang) {
       $l = $lang->isDefault() ? $defaultLanguage : $lang->name;
