@@ -1,13 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
-    language: '',
-    availableLanguages: '',
-
     public: {
       apiBase: '',
       // TODO: Make apiSecret private (currently needed on every request)
       apiSecret: '',
+      availableLanguages: '',
+      language: '',
     },
   },
 

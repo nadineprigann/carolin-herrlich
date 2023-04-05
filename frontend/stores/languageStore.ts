@@ -6,8 +6,8 @@ export const useLanguageStore = defineStore('language', () => {
   const { defaults } = storeToRefs(defaultsStore)
 
   // State
-  const isoCode = ref(runtimeConfig.language)
-  const al = computed(() => runtimeConfig.availableLanguages.split(','))
+  const isoCode = ref(runtimeConfig.public.language)
+  const al = computed(() => runtimeConfig.public.availableLanguages.split(','))
   const availableLanguages = ref(al)
 
   // Actions
