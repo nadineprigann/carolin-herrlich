@@ -20,6 +20,15 @@ $pages->addHookAfter('saveReady', function($event) {
   if ($deleted && wire('config')->debug) wire('log')->save('app-api', 'cache deleted');
 });
 
+// Set CORS headers for API request
+$this->addHookBefore('Router::setCorsHeaders', function($event) {
+  $event->replace = true;
+  $server = wire('config')->_frontendUrl;
+  header("Access-Control-Allow-Origin: {$server}");
+  header('Access-Control-Allow-Headers: Content-Type, AUTHORIZATION, X-API-KEY');
+  header('Access-Control-Allow-Credentials: true');
+});
+
 // Adjust "View site" link in user navigation if a frontend URL has been set in config.php
 if (wire()->config->_productionFrontendUrl) {
   wire()->addHookAfter('AdminThemeFramework::getUserNavArray', function($event) {

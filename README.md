@@ -67,6 +67,8 @@ In case ProcessWire is already installed in the `dist/` directory, then simply g
 
 Make sure to update the existing API key in the _AppApi_ module settings.
 
+In order to allow the frontend to access the backend API, set `$config->_frontendUrl` in `config.php` to the appropriate value. Leaving this value empty will result in CORS errors when trying to access the API.
+
 On a live server, make sure to [optimize the handling of 404s](https://processwire.com/blog/posts/optimizing-404s-in-processwire/) and only allow HTTPS connections (inside `.htaccess` file or via web hosting).
 
 ### Directory structure
