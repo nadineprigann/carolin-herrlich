@@ -55,6 +55,9 @@ useHead({
 
 useSeoMeta({
   titleTemplate: (titleChunk) => {
+    // If appTitle is undefined, just return titleChunk
+    if (!defaults.value.appTitle) return `${titleChunk}`
+
     return titleChunk === defaults.value.appTitle
       ? defaults.value.appTitle
       : `${titleChunk} - ${defaults.value.appTitle}`
