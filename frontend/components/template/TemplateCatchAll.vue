@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="template-catch-all">No matching template file found</div>
+  <main class="template-catch-all">No matching template file found</main>
 </template>
 
 <style lang="scss" scoped>

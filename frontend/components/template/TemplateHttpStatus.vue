@@ -14,11 +14,11 @@ const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <div class="template-http-status">
+  <main class="template-http-status">
     <!-- eslint-disable-next-line vue/no-v-html -->
     <h2 v-html="fields.title" />
     <BaseTextarea :text="fields.text" />
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>

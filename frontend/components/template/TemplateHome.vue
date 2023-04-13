@@ -6,10 +6,10 @@ const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <div class="template-home">
+  <main class="template-home">
     <!-- eslint-disable-next-line vue/no-v-html -->
     <h2 v-html="fields.title" />
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>

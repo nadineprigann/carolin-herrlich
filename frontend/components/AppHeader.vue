@@ -4,11 +4,11 @@ const { defaults } = storeToRefs(defaultsStore)
 </script>
 
 <template>
-  <div class="app-header">
+  <header class="app-header">
     <h1>{{ defaults.appTitle }}</h1>
     <NavList />
     <!-- <LanguageSwitch /> -->
-  </div>
+  </header>
 </template>
 
 <style lang="scss" scoped>
