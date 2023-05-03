@@ -30,7 +30,7 @@
     "stylelint-config-standard-vue": "1.0.0"
   },
   "dependencies": {
-    "@pinia/nuxt": "0.4.7",
-    "pinia": "2.0.33"
+    "@pinia/nuxt": "0.4.9",
+    "pinia": "2.0.35"
   }
 }
