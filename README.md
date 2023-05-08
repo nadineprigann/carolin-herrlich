@@ -113,6 +113,8 @@ The frontend build and deployment is handled by [GitHub actions](https://help.gi
 
 If the build target is a static website (`pnpm generate`), make sure to install and configure Github Repository Dispatch module in the backend. This will trigger a re-deployment once a page has been updated.
 
+After the inital deployment, **duplicate** `htaccess.txt` on the webserver and rename the copy to `.htaccess`.
+
 ## Alternative deployment via SSH
 
 For both the frontend and the backend the GitHub workflow files also offer a deployment via SSH. For it to work, you need to create an SSH key in the following format:
