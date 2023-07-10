@@ -1,6 +1,20 @@
 export {}
 
 declare global {
+  interface Datetime {
+    formatted: {
+      date: string
+      time: string
+    }
+    iso: string
+  }
+
+  interface File {
+    description?: string
+    ext: string
+    url: string
+  }
+
   interface ImageUrl {
     url: string
     width?: number
@@ -21,9 +35,9 @@ declare global {
   interface Meta {
     alternate: Alternate[]
     id: number
-    name?: string
+    // name: string
     template: string
-    url: URL
+    url: string
   }
 
   interface Page {
