@@ -43,6 +43,7 @@ class Helper {
     $page->of(true);
     $response = new \StdClass();
     $response->id = $page->id;
+    $response->name = $page->name;
     $response->url = $page->url;
     $response->template = $page->template->name;
     $response->alternate = self::getAlternate($page);

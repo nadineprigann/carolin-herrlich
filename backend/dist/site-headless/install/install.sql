@@ -1,4 +1,4 @@
-# --- WireDatabaseBackup {"time":"2023-04-05 18:38:26","user":"","dbName":"pw-nuxt-kickstart","description":"","tables":[],"excludeTables":["pages_drafts","pages_roles","permissions","roles","roles_permissions","users","users_roles","user","role","permission"],"excludeCreateTables":[],"excludeExportTables":["field_roles","field_permissions","field_email","field_pass","caches","session_login_throttle","page_path_history"]}
+# --- WireDatabaseBackup {"time":"2023-07-10 16:48:31","user":"","dbName":"pw-nuxt-kickstart","description":"","tables":[],"excludeTables":["pages_drafts","pages_roles","permissions","roles","roles_permissions","users","users_roles","user","role","permission"],"excludeCreateTables":[],"excludeExportTables":["field_roles","field_permissions","field_email","field_pass","caches","session_login_throttle","page_path_history"]}
 
 DROP TABLE IF EXISTS `appapi_apikeys`;
 CREATE TABLE `appapi_apikeys` (
