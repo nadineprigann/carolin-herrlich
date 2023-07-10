@@ -15,11 +15,28 @@
   /* Use --blank-line for horizontal spacing of content elements */
   --blank-line: calc(var(--lh-root) * 1em);
 
-  /* Use --gutter for vertical spacing of layout elements */
+  /* Use --gutter for vertical and horizontal spacing of layout elements */
   --gutter: 1rem;
+
+  /* --gutter-m: 2rem;
+  --gutter-l: 4rem; */
 
   /* Easing */
 
   /* https://cubic-bezier.com/#.55,0,.1,1 */
   --swift-out: cubic-bezier(0.55, 0, 0.1, 1);
 }
+
+/* Breakpoints have to be kept in sync with the ones defined in _breakpoints.scss */
+
+/* @media (min-width: 48em) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (min-width: 80em) {
+  :root {
+    --gutter: 4rem;
+  }
+} */

@@ -4,8 +4,7 @@
 //   font-family: '';
 //   font-style: normal;
 //   font-weight: 400;
-//   src: url('~/assets/fonts/XXXXX.woff2') format('woff2'),
-//     url('~/assets/fonts/XXXXX.woff') format('woff');
+//   src: url('~/assets/fonts/XXXXX.woff2') format('woff2');
 // }
 
 * {
@@ -32,12 +31,17 @@ body {
   @include fs-body;
 
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 // https://www.joshwcomeau.com/css/custom-css-reset/#nine-root-stacking-context-10
 // stylelint-disable-next-line selector-id-pattern
 #__nuxt {
   isolation: isolate;
+}
+
+a {
+  @include link-reset;
 }
 
 audio,

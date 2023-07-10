@@ -25,6 +25,7 @@
 
 @mixin button-reset {
   padding: 0;
+  color: inherit;
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
@@ -46,13 +47,34 @@
   text-decoration: none;
 }
 
-@mixin link-default {
+@mixin link-default($color: var(--link-color)) {
   @include link-reset;
 
-  color: var(--link-color);
+  color: $color;
   text-decoration: underline;
 
   // &:hover {}
   // &:active {}
   // &:visited {}
+}
+
+@mixin list-reset {
+  padding-inline-start: 0;
+  list-style-type: none;
+}
+
+@mixin gutters($size: var(--gutter), $property: padding, $directions...) {
+  @if length($directions) > 0 {
+    @each $direction in $directions {
+      #{$property}-#{$direction}: $size;
+    }
+  } @else {
+    #{$property}: $size;
+  }
+}
+
+@mixin grid($rows: 12, $gap-h: 0, $gap-v: var(--gutter)) {
+  display: grid;
+  grid-template-columns: repeat($rows, 1fr);
+  gap: $gap-h $gap-v;
 }
