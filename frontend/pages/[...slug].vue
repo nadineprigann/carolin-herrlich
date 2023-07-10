@@ -36,11 +36,12 @@ const { defaults } = storeToRefs(defaultsStore)
 const languageStore = useLanguageStore()
 const { isoCode } = storeToRefs(languageStore)
 
+const runtimeConfig = useRuntimeConfig()
 const alternate = computed(() => {
   return meta.alternate.map((item) => {
     return {
       rel: 'alternate',
-      href: useAppConfig().host + item.url,
+      href: runtimeConfig.public.baseUrl + item.url,
       hreflang: item.lang,
     }
   })

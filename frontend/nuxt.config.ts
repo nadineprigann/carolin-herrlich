@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
+      baseUrl: '',
       apiBase: '',
       // TODO: Make apiSecret private (currently needed on every request)
       apiSecret: '',

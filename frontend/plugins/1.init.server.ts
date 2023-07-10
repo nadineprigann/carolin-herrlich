@@ -3,7 +3,4 @@ export default defineNuxtPlugin(async () => {
 
   const defaultsStore = useDefaultsStore()
   defaultsStore.fetch()
-
-  // Set hostname (e.g. for useHead)
-  useAppConfig().host = useRequestHeaders().host || ''
 })
