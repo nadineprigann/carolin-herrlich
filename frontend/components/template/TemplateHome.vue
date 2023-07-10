@@ -7,8 +7,7 @@ const { fields } = toRefs(props.data)
 
 <template>
   <main class="template-home">
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <h2 v-html="fields.title" />
+    <FieldText element="h2" :text="fields.title" />
   </main>
 </template>
 
