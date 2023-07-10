@@ -25,6 +25,7 @@ const template = computed(() => {
 // Set route meta (currently needed during useLanguageStores().change())
 const route = useRoute()
 route.meta.id = meta.id
+route.meta.template = meta.template
 
 // Set template in layout store
 const { layout } = useLayoutStore()
