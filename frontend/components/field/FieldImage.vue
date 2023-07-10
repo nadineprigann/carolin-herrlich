@@ -37,7 +37,7 @@ const srcset = computed(() => {
     :loading="props.loading"
     :alt="props.image.description"
     :class="classes"
-    class="base-image"
+    class="field-image"
   />
   <img
     v-else-if="props.image && !props.image.resized"
@@ -45,10 +45,10 @@ const srcset = computed(() => {
     :loading="props.loading"
     :alt="props.image.description"
     :class="classes"
-    class="base-image"
+    class="field-image"
   />
 </template>
 
 <style lang="scss" scoped>
-// .base-image {}
+// .field-image {}
 </style>

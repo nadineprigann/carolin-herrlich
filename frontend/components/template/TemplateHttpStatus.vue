@@ -17,7 +17,7 @@ const { fields } = toRefs(props.data)
   <main class="template-http-status">
     <!-- eslint-disable-next-line vue/no-v-html -->
     <h2 v-html="fields.title" />
-    <BaseTextarea :text="fields.text" />
+    <FieldTextarea :text="fields.text" />
   </main>
 </template>
 

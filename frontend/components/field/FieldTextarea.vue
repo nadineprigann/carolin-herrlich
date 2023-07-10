@@ -8,14 +8,14 @@ const props = defineProps<{
   <!-- eslint-disable vue/no-v-html -->
   <div
     v-if="props.text"
-    class="base-textarea"
+    class="field-textarea"
     @click="delegateLinks"
     v-html="props.text"
   />
 </template>
 
 <style lang="scss" scoped>
-.base-textarea {
+.field-textarea {
   // :deep() is needed to expose DOM elements inside a v-html
   :deep(h3),
   :deep(h4) {
