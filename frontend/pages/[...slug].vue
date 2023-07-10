@@ -28,8 +28,9 @@ route.meta.id = meta.id
 route.meta.template = meta.template
 
 // Set template in layout store
-const { layout } = useLayoutStore()
-layout.template = meta.template
+const layoutStore = useLayoutStore()
+const { layout } = storeToRefs(layoutStore)
+layout.value.template = meta.template
 
 // Set HTML head data
 const defaultsStore = useDefaultsStore()
