@@ -2,7 +2,7 @@
 interface Props {
   image: Image
   sizes?: string
-  loading?: string
+  loading?: 'eager' | 'lazy'
 }
 
 const props = withDefaults(defineProps<Props>(), {
