@@ -1,7 +1,15 @@
 <script lang="ts" setup>
+interface TemplateHome extends Page {
+  fields: {
+    meta_description: string
+    title: string
+  }
+}
+
 const props = defineProps<{
-  data: Page
+  data: TemplateHome
 }>()
+
 const { fields } = toRefs(props.data)
 </script>
 
