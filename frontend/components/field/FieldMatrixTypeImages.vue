@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
   <div class="field-matrix-type-images">
-    <BaseImage
+    <FieldImage
       v-for="(image, index) in props.item.images"
       :key="`image-${index}`"
       :image="image"

@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
   <div class="field-matrix-type-text">
-    <BaseTextarea :text="props.item.text" />
+    <FieldTextarea :text="props.item.text" />
   </div>
 </template>
 
