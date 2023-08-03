@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  item: {
-    type: string
-    images: Image[]
-  }
+  item: MatrixTypeImages
 }>()
 </script>
 

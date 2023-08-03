@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  item: {
-    type: string
-  }
+  item: MatrixItem
 }>()
 
 // Pick component based on matrix type
@@ -20,5 +18,9 @@ const type = computed(() => {
 </script>
 
 <template>
-  <component :is="type" :item="item" />
+  <component :is="type" :item="item" class="field-matrix-item" />
 </template>
+
+<style lang="scss" scoped>
+// .field-matrix-item {}
+</style>

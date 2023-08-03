@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  items: []
+  items?: MatrixItem[]
 }>()
 </script>
 
 <template>
-  <div class="field-matrix">
+  <div v-if="props.items?.length" class="field-matrix">
     <FieldMatrixItem
       v-for="(item, index) in props.items"
       :key="`item-${index}`"

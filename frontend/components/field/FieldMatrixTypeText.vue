@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  item: {
-    type: string
-    text: string
-  }
+  item: MatrixTypeText
 }>()
 </script>
 
