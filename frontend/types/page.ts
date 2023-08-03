@@ -54,4 +54,10 @@ declare global {
       title: string
     }
   }
+
+  interface SelectOption {
+    id: number
+    title: string
+    value?: string
+  }
 }
