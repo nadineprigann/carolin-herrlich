@@ -22,11 +22,13 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       # https://github.com/SamKirkland/FTP-Deploy-Action
       - name: Deploy project (FTP)
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ env.server }}
           # port: ${{ env.port }}
@@ -55,7 +57,7 @@ jobs:
 
       # https://github.com/easingthemes/ssh-deploy
       # - name: Deploy project (SSH)
-      #   uses: easingthemes/ssh-deploy@v4.0.5
+      #   uses: easingthemes/ssh-deploy@v5.0.3
       #   env:
       #     SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
       #     ARGS: "-avzr --delete"

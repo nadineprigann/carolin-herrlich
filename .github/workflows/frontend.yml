@@ -25,18 +25,20 @@ jobs:
     name: Build and deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "20"
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 7.27.0
+          version: 8.15.5
           run_install: false
 
       - name: Get pnpm store directory
@@ -45,7 +47,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -63,7 +65,7 @@ jobs:
 
       # https://github.com/SamKirkland/FTP-Deploy-Action
       - name: Deploy project (FTP)
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ env.server }}
           # port: ${{ env.port }}
@@ -84,7 +86,7 @@ jobs:
 
       # https://github.com/easingthemes/ssh-deploy
       # - name: Deploy project (SSH)
-      #   uses: easingthemes/ssh-deploy@v4.0.5
+      #   uses: easingthemes/ssh-deploy@v5.0.3
       #   env:
       #     SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
       #     ARGS: "-avzr --delete"
