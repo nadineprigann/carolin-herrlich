@@ -6,7 +6,7 @@
  * THIS IS A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2021 by Ryan Cramer Design, LLC
+ * Copyright 2023 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  * 
  * PWPFRMI
@@ -39,7 +39,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		return array(
 			'title' => __('ProFields: Repeater Matrix Inputfield', __FILE__), // Module Title
 			'summary' => __('Commercial module (Inputfield) providing multi-type repeaters.', __FILE__), // Module Summary
-			'version' => 8,
+			'version' => 9,
 			'requires' => 'FieldtypeRepeaterMatrix',
 			'href' => 'https://processwire.com/store/pro-fields/',
 		);
@@ -85,6 +85,12 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * 
 	 */
 	protected $lastRepeaterItemLabel = '';
+	
+	/**
+	 * @var string
+	 *
+	 */
+	protected $lastRepeaterItemColor = '';
 
 	/**
 	 * Recognized image extensions for addTypeImages
@@ -117,12 +123,16 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	}
 	
 	/**
+	 * Get the RepeaterMatrix field 
+	 * 
 	 * @return null|Field|RepeaterMatrixField
 	 * 
 	 */
 	public function getField() {
-		if($this->field) return $this->field;
-		return $this->hasField;
+		/** @var RepeaterMatrixField|Field|null $field */
+		$field = $this->field;
+		if(!$field) $field = $this->hasField;
+		return $field;
 	}
 	
 	/**
@@ -159,7 +169,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		$str = parent::entityEncode($str, $markdown);
 		if($useIcon) {
 			// capture render of repeater item labels to add in some markup
-			$str = str_replace(' &gt; ', '' . wireIconMarkup('angle-double-right', 'fw ui-priority-secondary'), $str);
+			$str = str_replace(' &gt; ', wireIconMarkup('angle-double-right', 'fw ui-priority-secondary'), $str);
 		}
 		return $str;
 	}
@@ -237,6 +247,8 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		$field = $this->getField();
 		$type = $this->getRepeaterItemType($page);
 		$namespace = "matrix$type";
+		$config = $this->wire()->config;
+		$ajax = $config->ajax;
 		
 		if($type) {
 			// type defined
@@ -252,22 +264,23 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			if($typeKey !== false) unset($fieldIDs[$typeKey]); 
 		}
 		
-		$inputfields = $page->template->fieldgroup->getPageInputfields($page, "_repeater{$page->id}", $fieldIDs, $namespace);
+		$inputfields = $page->template->fieldgroup->getPageInputfields($page, "_repeater$page->id", $fieldIDs, $namespace);
 
 		// special case for CKEditor context namespace, must be given a unique configName
 		foreach($inputfields->getAll() as $inputfield) {
+			/** @var Inputfield $inputfield */
 			if($inputfield->className() !== 'InputfieldCKEditor') continue;
-			if(!$inputfield->hasField || !($inputfield->hasField->flags & Field::flagFieldgroupContext)) continue;
-			$configName = "{$inputfield}_{$inputfield->hasField}_$namespace";
+			$hasField = $inputfield->hasField; /** @var Field|null $hasField */
+			if(!$hasField || !($hasField->flags & Field::flagFieldgroupContext)) continue;
+			$configName = "{$inputfield}_{$hasField}_$namespace";
 			$inputfield->set('configName', $configName);
-			if($this->wire()->config->ajax) {
+			if($ajax) {
 				// use hook to populate to data-configData attribute to cover situation of when 
 				// this is the first item of its type
-				$inputfield->addHookBefore('render', function(HookEvent $event) {
-					/** @var Inputfield $inputfield */
-					$inputfield = $event->object;
+				$inputfield->addHookBefore('render', function(HookEvent $event) use($config) {
+					$inputfield = $event->object; /** @var Inputfield $inputfield */
 					$configName = $inputfield->getSetting('configName');
-					$inputfield->attr('data-configdata', json_encode($event->wire()->config->js($configName)));
+					$inputfield->attr('data-configdata', json_encode($config->js($configName)));
 				});
 			}
 		}
@@ -382,6 +395,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			
 			$head = $field->get("matrix{$n}_head");
 			$icon = $field->matrixTypeIcon($head); 
+			if(empty($icon)) $icon = 'plus-circle';
 			
 			$defaultKey = "matrix{$n}_label";
 			$langKey = ($language ? $defaultKey . $language->id : $defaultKey);
@@ -411,7 +425,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 				'label' => $label,
 				'groupLabel' => $groupLabel,
 				'typeLabel' => $typeLabel,
-				'icon' => ($icon ? $icon : 'plus-circle'),
+				'icon' => $icon,
 				'image' => $image,
 			);
 			
@@ -485,9 +499,11 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 
 		if(!$out) $out = $field->get("matrix{$type}_label");
 		if(!$out) $out = $field->get("matrix{$type}_name");
+		
+		$length = function_exists('mb_strlen') ? mb_strlen($out) : strlen($out);
 
-		if(mb_strlen($out) > 128) {
-			$out = mb_substr($out, 0, 128);
+		if($length > 128) {
+			$out = function_exists('mb_substr') ? mb_substr($out, 0, 128) : substr($out, 0, 128);
 			if(preg_match('/^(.+)[\s,;]\w*$/', $out, $matches)) {
 				$out = $matches[1];
 			}
@@ -553,7 +569,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 
 		$out = str_replace(
 			array('{matrix_name}', '{matrix_label}', '{matrix_group}', '{matrix_type}', '{matrix_summary}'),
-			array($nameLabel, $label, $groupLabel, $typeLabel, $summaryLabel),
+			array("$nameLabel", "$label", "$groupLabel", "$typeLabel", "$summaryLabel"),
 			$out
 		);
 
@@ -689,9 +705,10 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * 
 	 */
 	protected function ___renderAddMatrixCustom(array $types) {
-		if($types) {} // ignore
 		// null for headline means "use default" while blank means "use none"
-		return array(null, '<p>Custom content (hook not found)</p>'); 
+		/** @var array|string $value */
+		$value = array(null, '<p>Custom content (hook not found)</p>'); 
+		return $value;
 	}
 
 	/**
@@ -786,9 +803,9 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		if($uikit) {
 			$addLabel = wireIconMarkup('plus-circle', 'fw') . $addLabel;
 			$button = "<button class='uk-button uk-button-text'>$addLabel</button>";
-			$select = "<span $wrapAttr uk-form-custom='target: true'>{$select}{$button}&nbsp;{$spinner}</span>";
+			$select = "<span $wrapAttr uk-form-custom='target: true'>$select$button&nbsp;$spinner</span>";
 		} else {
-			$select = "<span $wrapAttr>{$select}&nbsp;{$spinner}</span>";
+			$select = "<span $wrapAttr>$select&nbsp;$spinner</span>";
 		}
 		
 		if(method_exists($this, 'renderPasteLink')) $select .= $this->renderPasteLink();
@@ -913,7 +930,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			/** @var PageArray $value */
 			$value = $this->attr('value');
 			// determine which repeater pages have data posted in this request
-			foreach($value as $key => $page) {
+			foreach($value as $page) {
 				$loaded = $input->{"loaded_repeater$page->id"};
 				if(!$loaded) continue;
 				$type = $input->{"type_repeater$page->id"};

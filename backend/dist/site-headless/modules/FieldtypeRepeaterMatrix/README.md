@@ -1,12 +1,10 @@
-ProcessWire ProFields: Repeater Matrix
-======================================
+# ProcessWire ProFields: Repeater Matrix
 
 This is a commercially licensed and supported module, please do not distribute.
-Copyright 2021 by Ryan Cramer Design, LLC
+Copyright 2023 by Ryan Cramer Design, LLC
 
 
-ABOUT REPEATER MATRIX
----------------------
+## ABOUT REPEATER MATRIX
 
 Repeater Matrix is a type of ProcessWire field that enables you to have a single 
 field with multiple items (pages) of varying types. You define what fields 
@@ -15,96 +13,30 @@ define. Repeater Matrix fields are very similar to regular ProcessWire repeater
 fields, except that in regular repeater fields, you can only have one type. 
 Think of it as a more flexible version of regular repeater fields. 
 
-CHANGELOG
----------
-Version 7, October 2021 - Development/beta version
+## REQUIREMENTS
 
-- Add support for Select, Images and Custom add-types. 
-- Add support for insert before/after. 
-- Add support for inline clone. 
-- Add support for label groups (used with Select add-type). 
-- Add support for custom icons per-type (defined in label). 
-- Add new supported properties to type labels. 
-- Various other code improvements and minor fixes. 
-- New API methods via new RepeaterMatrixField custom Field class. 
-- Moved several methods from FieldtypeRepeaterMatrix to RepeaterMatrixField,
-  the moved methods are now deprecated in FieldtypeRepeaterMatrix class.
-
-Version 6, 2020-2021
-
-- Added support for family-friendly depth and drag features.
-- New API methods added to FieldtypeRepeaterMatrix class. 
-- Various minor fixes. 
-
-Version 5, May 2019
-
-- Added support for changing the matrix type of an item. To change the type, 
-  click the gear icon that appears in the header of each item. A box will open 
-  where you can select the new matrix type. 
-  
-- Added support for importing types from other RepeaterMatrix fields. To use, 
-  click the "Import Matrix Type" button to the right of the "Add Matrix Type"
-  button. It will give you a select box where you can choose which to import.
-  
-- Add support for field/template context enabling you to select which matrix types
-  are shown for a Matrix field on a per-template basis. 
-  
-- Added detection of when a Matrix type name can collide with a field name.
-
-- Several new methods (on FieldtypeRepeaterMatrix instance) were added. Below is
-  a list of these methods, but see the actual method phpdoc for more details: 
-
-  - getMatrixTypesInfo($field)
-    Get all information available for each matrix type in an array of arrays 
-    indexed by type name.
-  
-  - getAllMatrixTypesInfo() 
-    Get verbose information array for all RepeaterMatrix fields in the system.
-  
-  - getMatrixFields()
-    Get an array of all RepeaterMatrix fields.
-  
-  - getMatrixTypeByName($name, $field = null)
-    Return matrix type (integer) for given name, or boolean false if not found.
-  
-  - getMatrixTypeLabel($type, Field $field = null, $language = null) 
-    Get the label for the given matrix type (name or number).
-
-
-REQUIREMENTS
-------------
-
-- ProcessWire 3.0.187 or newer
-
+- ProcessWire 3.0.200 or newer
 - ProcessWire's core FieldtypeRepeater module must be installed 
   (Modules > Core > Fieldtype > Repeater).
 
 
-HOW TO INSTALL
---------------
+## HOW TO INSTALL
 
 1. Copy all the files in this directory to /site/modules/FieldtypeRepeaterMatrix/ 
-
 2. In your admin, go to Modules > Check for new modules. 
-
 3. Click the "Install" button next to FieldtypeRepeaterMatrix. 
 
 
-HOW TO CREATE A REPEATER MATRIX FIELD
--------------------------------------
+## HOW TO CREATE A REPEATER MATRIX FIELD
 
 1. In the ProcessWire admin, go to Setup > Fields > Add New. 
-
 2. Enter your desired field name, label, and choose "RepeaterMatrix" as the type.
-
 3. After saving, click on the "Details" tab. You may add Matrix types from here.
-
 4. After configuring your Repeater Matrix field, add it to one or more templates
    by clicking on the "Actions" tab and checking boxes next to templates.
 
 
-GENERATING OUTPUT WITH REPEATER MATRIX
---------------------------------------
+## GENERATING OUTPUT WITH REPEATER MATRIX
 
 Items in Matrix fields are just pages like any other on your site. However, unlike 
 regular Repeater fields, items can vary in type. Meaning, each item can have a 
@@ -118,7 +50,7 @@ This example assumes the Matrix field is named "test_matrix" and has two types
 named "content" and "quote". The "content" type contains fields "headline" and 
 "summary", while the "quote" type contains fields "quote" and "cite". The following
 code might be placed in the template file used by a page with a Matrix field. 
-
+~~~~
   <?php
   foreach($page->test_matrix as $item) {
     if($item->type == 'content') {
@@ -135,28 +67,29 @@ code might be placed in the template file used by a page with a Matrix field.
       ";
     }
   }
+~~~~
 
 
-ISOLATING OUTPUT TO A SEPARATE VIEW FILE
+### ISOLATING OUTPUT TO A SEPARATE VIEW FILE
 
 Lets say that you wanted to isolate the above output to a separate file for 
 easier re-use. You could cut and paste the entire block of code above and place 
 it in this file:
-
+~~~~
   /site/templates/fields/test_matrix.php
-
+~~~~  
 Then anytime you wanted to output the contents of your test_matrix field, you 
 could do so like this in any template file:
-
+~~~~
   <?php echo $page->render('test_matrix'); ?>
-
+~~~~
 Note that in this test_matrix.php, there is a locally scoped $value variable 
 available that contains the same thing as $page->test_matrix. You can use 
 whichever variable you prefer. $value is just a standard variable provided 
 to any field rendering file. 
 
 
-ISOLATING ITEM OUTPUT TO SEPARATE VIEW FILES
+### ISOLATING ITEM OUTPUT TO SEPARATE VIEW FILES
 
 Going further, lets say that you wanted each Matrix item type to have its own 
 output file, rather than having a large conditional if() statement checking 
@@ -164,42 +97,41 @@ each type, like you see in the example above. What you would do is instead
 create these files:
 
 Main/index output file: /site/templates/fields/test_matrix.php 
-
+~~~~
   <?php
   foreach($value as $item) {
     echo $item->render();
   }
-
+~~~~  
 Output file for type "content": /site/templates/fields/test_matrix/content.php
-
+~~~~
   <h3><?php echo $page->headline; ?></h3>
   <p><?php echo $page->summary; ?></p>
-
+~~~~  
 Output file for type "quote": /site/templates/fields/test_matrix/quote.php
-
+~~~~
   <blockquote>
     <p><?php echo $page->quote; ?></p>
     <cite><$php echo $page->cite; ?></cite>
   </blockquote>
-
+~~~~
 Any time you want to output the contents of your matrix field, you would just 
 use the $page->render method or property, i.e. 
-
+~~~~
   echo $page->render('test_matrix');
-
+~~~~
 This alternate syntax can be used:
-
+~~~~
   echo $page->render->test_matrix; 
-
+~~~~
 Or, for even shorter syntax, you can also access the rendered value of any 
 field by accessing the field name from the $page with a leading and trailing 
 underscore, like this:
-
+~~~~
   echo $page->_test_matrix_; 
+~~~~
 
-
-MATRIX PAGES
-------------
+## MATRIX PAGES
 
 Matrix pages are just like any other page in ProcessWire, except they use 
 the class RepeaterMatrixPage (an extension of RepeaterPage and Page). These 
@@ -207,34 +139,32 @@ Matrix pages come with a special method called matrix(), which enables you to
 retrieve information about the matrix type used by the page. Here are a few 
 methods you might find useful for a Matrix $page:
 
-  $page->matrix('label')
+- `$page->matrix('label')`  
   Returns the text label used by this matrix type (in current user's language).
 
-  $page->matrix('fields')
+- `$page->matrix('fields')`  
   Returns a WireArray of all Field objects used by this type. 
 
-  $page->matrix('type')
+- `$page->matrix('type')`  
   The name of the matrix type, same as $page->type. 
 
 Repeater Matrix pages also have these methods (like regular RepeaterPage objects): 
 
-  $page->getForPage()
+- `$page->getForPage()`  
   Returns the Page object that this Matrix field lives on.
 
-  $page->getForField()
+- `$page->getForField()`  
   Returns the Field object for this Matrix field. 
 
 
-SUPPORT AND UPGRADES
---------------------
+## SUPPORT AND UPGRADES
 
 Please see the ProFields support board at http://processwire.com/talk/. If you
 have purchased ProFields and don't have access to the support board, please
 send a PM to Ryan in the forum or email ryan@processwire.com.
 
 
-TERMS AND CONDITIONS
---------------------
+## TERMS AND CONDITIONS
 
 You may not copy or distribute ProFields, except on site(s) you have registered it
 for with Ryan Cramer Design, LLC. It is okay to make copies for use on staging
@@ -261,5 +191,3 @@ may request a full refund. Should you run into any trouble with ProFields, pleas
 email for support or visit the ProFields Support forum.
 
 Thanks for using ProcessWire ProFields!
-
-

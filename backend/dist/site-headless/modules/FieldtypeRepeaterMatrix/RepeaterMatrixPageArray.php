@@ -8,7 +8,7 @@
  * THIS IS PART OF A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2021 by Ryan Cramer Design, LLC
+ * Copyright 2023 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  *
  * PWPFRMPA
@@ -18,7 +18,7 @@
 class RepeaterMatrixPageArray extends RepeaterPageArray {
 
 	/**
-	 * @todo
+	 * @todo Coming soon
 	 * 
 	 * @param RepeaterMatrixPage $parent
 	 * @return PageArray
@@ -43,7 +43,7 @@ class RepeaterMatrixPageArray extends RepeaterPageArray {
 	}
 
 	/**
-	 * @todo
+	 * @todo Coming soon
 	 * 
 	 * @param RepeaterMatrixPage $child
 	 * @return null|NullPage

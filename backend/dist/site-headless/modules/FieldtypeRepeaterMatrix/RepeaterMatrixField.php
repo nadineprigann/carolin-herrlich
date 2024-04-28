@@ -81,7 +81,7 @@ class RepeaterMatrixField extends Field {
 			if(ctype_digit($n) && ((int) $n) > $max) $max = (int) $n;
 		}
 		if($max) {
-			$maxMatrixTypes[$this->id] = $max;
+			$this->maxMatrixTypes[$this->id] = $max;
 		} else {
 			$max = 5;
 		}
@@ -299,6 +299,7 @@ class RepeaterMatrixField extends Field {
 	 */
 	public function matrixTypeGroupAndLabel($label) {
 
+		$label = (string) $label;
 		if(strpos($label, '>>')) {
 			$label = str_replace('>>', ' > ', $label);
 		}
@@ -329,6 +330,7 @@ class RepeaterMatrixField extends Field {
 	 *
 	 */
 	public function matrixTypeIcon(&$head, $remove = false) {
+		if(!is_string($head)) return '';
 		if(strpos($head, 'icon-') === false) return '';
 		if(preg_match('/\bicon[-]([a-z][-a-z0-9]+)\b\s*/', $head, $matches)) {
 			if($remove) $head = str_replace($matches[0], '', $head);
@@ -336,7 +338,7 @@ class RepeaterMatrixField extends Field {
 		}
 		return '';
 	}
-	
+
 	/*** TODO ****************************************************************************/
 	
 	/**

@@ -8,7 +8,7 @@
  * THIS IS PART OF A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2021 by Ryan Cramer Design, LLC
+ * Copyright 2023 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  * 
  * @property string $type
@@ -265,7 +265,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 		$languages = $this->wire()->languages;
 		$setLanguage = null;
 		if($languages && $language) {
-			if($language !== null && !is_object($language)) $language = $languages->get($language);
+			if(!is_object($language)) $language = $languages->get($language);
 			if($language && $language->id != $this->wire()->user->language->id) $setLanguage = $language;
 			if($setLanguage) $languages->setLanguage($setLanguage);
 			$label = $this->matrix('label');
@@ -314,11 +314,10 @@ class RepeaterMatrixPage extends RepeaterPage {
 		$out = '';
 		$sanitizer = $this->wire()->sanitizer;
 		foreach($this->matrix('fields') as $field) {
+			/** @var Field $field $value */
 			$value = $this->get($field->name);
-			if(is_object($value)) {
-				if($value instanceof LanguagesValueInterface) {
-					$value = (string) $value;
-				}
+			if($value instanceof LanguagesValueInterface) {
+				$value = (string) $value;
 			}
 			if(is_string($value) && strlen($value)) {
 				if(method_exists($sanitizer, 'truncate')) {

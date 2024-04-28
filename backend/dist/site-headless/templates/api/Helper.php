@@ -220,6 +220,7 @@ class Helper {
   }
 
   public static function getPageReference($page) {
+    if (!($page && $page->id)) return null;
     // $p->of(true);
     $item = new \StdClass();
     $item->meta = self::getMeta($page);

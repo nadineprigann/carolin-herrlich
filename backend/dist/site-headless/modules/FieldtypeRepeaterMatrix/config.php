@@ -9,7 +9,7 @@
  * THIS IS PART OF A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2021 by Ryan Cramer Design, LLC
+ * Copyright 2023 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  *
  * PWPFRMPA
@@ -55,6 +55,8 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 	 * 
 	 */
 	public function __construct(Field $field, Template $template) {
+		parent::__construct();
+		$field->wire($this);
 		$this->field = $field;
 		$this->template = $template; 
 	}
@@ -115,7 +117,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		
 		// add existing items in order
 		ksort($order);
-		foreach($order as $sort => $n) {
+		foreach($order as $n) {
 			$fieldset->add($this->getConfigInputfieldsMatrixItem($n));
 		}
 		
@@ -129,7 +131,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		$fieldset->add($importItem);
 
 		// add needed css and js
-		$url = $config->urls->FieldtypeRepeaterMatrix; 
+		$url = $config->urls('FieldtypeRepeaterMatrix'); 
 		$config->styles->add($url . 'config.css');
 		$config->scripts->add($url . 'config.js');
 		$config->js('RepeaterMatrix', array(
@@ -153,7 +155,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		$importButton->href = '#';
 		$importButton->icon = 'plus-circle';
 		$importButton->value = $importLabel;
-		$importButton->setSecondary(true);
+		$importButton->setSecondary();
 		
 		$fieldset->appendMarkup = "<p>" . $addButton->render() . $importButton->render() . "</p>";
 		
@@ -286,7 +288,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		$fieldset->icon = ($matrixIcon ? $matrixIcon : 'arrows');
 		$fieldset->collapsed = Inputfield::collapsedYes;
 		$fieldset->attr('id', $prefix . "item");
-
+		
 		/** @var InputfieldHidden $f */
 		$f = $modules->get('InputfieldHidden');
 		$f->attr('id+name', $prefix . "sort");
@@ -294,6 +296,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		$f->attr('value', $matrixSort);
 		$fieldset->add($f);
 
+		/** @var InputfieldHidden $f */
 		$f = $modules->get('InputfieldHidden');
 		$f->attr('id+name', "_" . $prefix . "delete");
 		$f->addClass('MatrixItemDelete');
@@ -337,8 +340,8 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 			$f->columnWidth = 50;
 			$f->notes = $notes;
 		}
-		if(strlen($f->value)) {
-			$value = $f->value;
+		if(strlen("$f->value")) {
+			$value = (string) $f->value;
 			list($groupLabel, $typeLabel) = $field->matrixTypeGroupAndLabel($value);
 			if(strlen($groupLabel)) {
 				$groupLabel = $sanitizer->entities($groupLabel);
@@ -410,14 +413,14 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 			$this->_('You may enter `{matrix_label}` to show the entire label defined above.') . ' ' . 
 			$this->_('Or, if using “Group > Type” style labels, you may refer to them individually with `{matrix_group}` and `{matrix_type}`.') . ' ' . 
 			$this->_('You may enter `{matrix_summary}` to auto-summarize the item content.') . ' ' . 
-			$this->_('Text surrounded in `[square brackets]` will be de-emphasized.') . ' ' . 
-			'';
+			$this->_('Text surrounded in `[square brackets]` will be de-emphasized.') . ' ';
 		$input->notes = 
 			sprintf(
 				$this->_('To replace the default icon (drag arrows) specify `icon-name` at the beginning of the label, replacing “name” with an [fa-icon name](%s) (without the “fa-” prefix).'),
 				'https://fontawesome.com/v4.7/icons/'
 			) . ' ' . 
-			$this->_('For example, `icon-home`, `icon-heart`, etc.'); 
+			$this->_('For example, `icon-home`, `icon-heart`, etc.') . ' ' . 
+			$this->_('To use a different background color for the item headers, specify a hex color code, i.e. `#FF0000` at the end of the label (use only colors that work with white text).'); 
 		$input->collapsed = Inputfield::collapsedYes;
 		$fieldset->add($input);
 
@@ -463,7 +466,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		if($language && $language->isDefault()) $language = null;
 		foreach($this->matrixTypesInfo as $fieldName => $types) {
 			$importField = $this->wire()->fields->get($fieldName);
-			foreach($types as $typeName => $info) {
+			foreach($types as /*$typeName =>*/ $info) {
 				$importLabel = $importField->getLabel() . ' > ';
 				$importLabel .= $language && !empty($info["label$language->id"]) ? $info["label$language->id"] : $info['label'];
 				$f->addOption("$importField->id.$info[type]", $importLabel);
@@ -653,14 +656,14 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		$addedFieldIDs = array();
 		$contextQty = 0;
 		list($fromNS, $toNS) = array(rtrim($fromPrefix, '_'), rtrim($toPrefix, '_'));
-		foreach($fromInfo[$fromType] as $fieldName => $field) {
+		foreach($fromInfo[$fromType] as /*$fieldName =>*/ $field) {
 			if($toFieldgroup->hasField($field)) continue;
 			$field = $fields->get($field->name); // without context
 			$toFieldgroup->add($field);
 			$addedFieldIDs[] = $field->id;
 		}
 		$toFieldgroup->save();
-		foreach($fromInfo[$fromType] as $fieldName => $field) {
+		foreach($fromInfo[$fromType] as /*$fieldName =>*/ $field) {
 			$data = $fromFieldgroup->getFieldContextArray($field->id, $fromNS);
 			if(empty($data)) continue;
 			$field = $toFieldgroup->getFieldContext($field->name);
@@ -789,7 +792,6 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 			sprintf($this->_('If image files are located in `%s` then you may specify just the image filename like `image.png` and omit the path.'), $imagesUrl);
 		$f->val($inputfield->getAddTypeImages(true));
 		$f->collapsed = !strlen($inputfield->imageDefs); 
-		$this->message($inputfield->imageDefs);
 		$rows = substr_count($f->val(), "\n");
 		if($rows > 3) $f->attr('rows', $rows+1);
 		$fs2->add($f);

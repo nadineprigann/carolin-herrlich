@@ -2,13 +2,15 @@
 
 This module helps you to create an api, to which an app or an external service can connect to.
 
+![A screen with the open AppApi module page](https://backend.sebi.dev/site/assets/files/1476/imac-and-ipad-on-top-of-a-white-desk-mockup-b4767.0x260.png)
+
 **A special thanks goes to [Thomas Aull](https://github.com/thomasaull)** , whose module [RestApi](https://modules.processwire.com/modules/rest-api/) was the starting point to this project.
 
 **Credits:** go to [Benjamin Milde](https://github.com/LostKobrakai) for his code example on how to use FastRoute with ProcessWire and [Camilo Castro](https://gist.github.com/clsource) for this [Gist](https://gist.github.com/clsource/dc7be74afcbfc5fe752c)
 
 [![Current Version](https://img.shields.io/github/v/tag/Sebiworld/AppApi?label=Current%20Version)](https://img.shields.io/github/v/tag/Sebiworld/AppApi?label=Current%20Version) [![Current Version](https://img.shields.io/github/issues-closed-raw/Sebiworld/AppApi?color=%2356d364)](https://img.shields.io/github/issues-closed-raw/Sebiworld/AppApi?color=%2356d364) [![Current Version](https://img.shields.io/github/issues-raw/Sebiworld/AppApi)](https://img.shields.io/github/issues-raw/Sebiworld/AppApi)
 
-<a href="https://www.buymeacoffee.com/Sebi.dev" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<a href='https://ko-fi.com/E1E2LOEPF' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi3.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 | | |
 | ------------------: | -------------------------------------------------------------------------- |
@@ -41,10 +43,7 @@ This module helps you to create an api, to which an app or an external service c
   - [3.1: Output Formatting](https://github.com/Sebiworld/AppApi/wiki/3.1:-Output-Formatting)
   - [3.2: Error Handling](https://github.com/Sebiworld/AppApi/wiki/3.2:-Error-Handling)
   - [3.3: Example: Listing Users](https://github.com/Sebiworld/AppApi/wiki/3.3:-Example:-Listing-Users)
-  - [3.4: Example: Universal Twack Api](https://github.com/Sebiworld/AppApi/wiki/3.4:-Example:-Universal-Twack-Api)
-    - [3.4.1: Routes](https://github.com/Sebiworld/AppApi/wiki/3.4:-Example:-Universal-Twack-Api#example2-routes)
-    - [3.4.2: Page Handlers](https://github.com/Sebiworld/AppApi/wiki/3.4:-Example:-Universal-Twack-Api#example2-page-handlers)
-    - [3.4.3: File Handlers](https://github.com/Sebiworld/AppApi/wiki/3.4:-Example:-Universal-Twack-Api#example2-file-handlers)
+  - [3.4: Add Documentation](https://github.com/Sebiworld/AppApi/wiki/3.4:-Add-Documentation)
 - [4: AppApi Modules](https://github.com/Sebiworld/AppApi/wiki/4.0:-AppApi-Modules)
 
 <a name="installation"></a>

@@ -27,3 +27,15 @@
 	position: relative;
 	top: 3px;
 }
+
+.InputfieldRepeaterMatrixAddCustom { 
+	/* suggested by Spiria */
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.InputfieldRepeaterMatrixAddCustom span {
+	/* suggested by Spiria */
+	line-height: 1.3em;
+	padding-top: 10px
+}

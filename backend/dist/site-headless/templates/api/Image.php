@@ -4,7 +4,7 @@ class Image {
   public static function get ($image, array $widths = null) {
     $widths = isset($widths) ? $widths : [400, 800, 1200, 1600, 2000];
 
-    if (!$image && !$image->width) return null;
+    if (!$image && !file_exists($image->filename)) return null;
 
     $response = new \StdClass();
     $response->urls = [];

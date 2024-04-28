@@ -1,7 +1,7 @@
 /**
  * ProcessWire Repeater Matrix Inputfield Javascript
  *
- * Copyright 2021 by Ryan Cramer 
+ * Copyright 2023 by Ryan Cramer 
  *
  */
 
