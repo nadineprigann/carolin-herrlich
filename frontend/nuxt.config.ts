@@ -40,11 +40,7 @@ export default defineNuxtConfig({
   modules: ['@pinia/nuxt'],
 
   imports: {
-    dirs: ['stores', 'types'],
-  },
-
-  pinia: {
-    autoImports: ['defineStore', 'storeToRefs', 'acceptHMRUpdate'],
+    dirs: ['types'],
   },
 
   typescript: {
