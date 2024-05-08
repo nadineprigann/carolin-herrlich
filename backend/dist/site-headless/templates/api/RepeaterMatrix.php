@@ -15,7 +15,7 @@ class RepeaterMatrix {
       // if ($matrixItem->type === 'type_section') {
       //   $title = $matrixItem->title;
       //   if (!$title) continue;
-      //   $item->title = $title;
+      //   $item->title = Helper::formatText($title)
       // }
 
       if ($matrixItem->type === 'type_text') {
