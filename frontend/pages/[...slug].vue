@@ -32,6 +32,11 @@ const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 layout.value.template = meta.template
 
+// Set layout
+const nuxtLayout = computed(() => {
+  return 'default'
+})
+
 // Set HTML head data
 const defaultsStore = useDefaultsStore()
 const { defaults } = storeToRefs(defaultsStore)
@@ -71,5 +76,9 @@ useSeoMeta({
 </script>
 
 <template>
-  <component :is="template" :data="data" />
+  <div>
+    <NuxtLayout :name="nuxtLayout">
+      <component :is="template" :data="data" />
+    </NuxtLayout>
+  </div>
 </template>
