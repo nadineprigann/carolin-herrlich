@@ -43,10 +43,6 @@ export default defineNuxtConfig({
     dirs: ['types'],
   },
 
-  typescript: {
-    shim: false,
-  },
-
   vite: {
     css: {
       preprocessorOptions: {
