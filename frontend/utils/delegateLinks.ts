@@ -18,17 +18,19 @@ export const delegateLinks = ($event: MouseEvent) => {
     // Don't handle right clicks
     if (button !== undefined && button !== 0) return
     // Don’t handle mailto/tel protocols
-    if (target && (target.protocol === 'mailto:' || target.protocol === 'tel:'))
-      return
+    if (target.protocol === 'mailto:' || target.protocol === 'tel:') return
     // Don't handle if `target="_blank"`
-    if (target && target.getAttribute) {
+    if (target.getAttribute) {
       const linkTarget = target.getAttribute('target') || ''
       if (/\b_blank\b/i.test(linkTarget)) return
     }
     // Don't handle same page links/anchors
     const url = new URL(target.href)
-    const to = url.pathname
-    if (window.location.pathname !== to && $event.preventDefault) {
+    const to = url.pathname + url.search // Include the query string
+    if (
+      window.location.pathname + window.location.search !== to &&
+      $event.preventDefault
+    ) {
       $event.preventDefault()
       router.push(to)
     }
