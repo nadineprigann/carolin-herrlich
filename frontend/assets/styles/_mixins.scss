@@ -66,7 +66,7 @@
 }
 
 @mixin gutters($size: var(--gutter), $property: padding, $directions...) {
-  @if length($directions) > 0 {
+  @if list.length($directions) > 0 {
     @each $direction in $directions {
       #{$property}-#{$direction}: $size;
     }
