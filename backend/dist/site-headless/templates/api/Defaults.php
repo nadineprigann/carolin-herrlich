@@ -51,7 +51,7 @@ class Defaults {
     }
     $response->availableLanguages = $languages;
 
-    $response->appTitle = $page->title;
+    $response->appTitle = wire('sanitizer')->unentities($page->title);
     $response->navigation = Navigation::get();
 
     return $response;

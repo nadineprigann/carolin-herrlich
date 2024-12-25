@@ -138,7 +138,12 @@ class Helper {
 
       // TODO: Why do we have to turn of output formatting to (sometimes) get the sleepValue?
       // $page->of(false);
-      $pdata[$field->name] = $field->type->sleepValue($page, $field, $value);
+      $v = $field->type->sleepValue($page, $field, $value);
+
+      // Remove entities (added by HTML Entity Encoder)
+      $vu = wire('sanitizer')->unentities($v);
+
+      $pdata[$field->name] = $vu;
     }
 
     return $pdata;
@@ -305,6 +310,9 @@ class Helper {
 
     // Convert relative (backend) paths to absolute paths (so that they work on the frontend too)
     $field = str_replace('/site/assets/files/', wire('config')->urls->httpRoot . 'site/assets/files/', $field);
+
+    // Remove entities (added by HTML Entity Encoder)
+    $field = wire('sanitizer')->unentities($field);
 
     return $field;
   }

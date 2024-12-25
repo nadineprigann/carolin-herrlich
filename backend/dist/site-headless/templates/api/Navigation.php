@@ -33,7 +33,7 @@ class Navigation {
     $item->meta = new \StdClass();
     $item->meta->id = $page->id;
     $item->meta->template = $page->template->name;
-    $item->meta->title = $page->title;
+    $item->meta->title = wire('sanitizer')->unentities($page->title);
     $item->meta->url = $page->url;
     $item->path = self::getPath($page);
     return $item;
