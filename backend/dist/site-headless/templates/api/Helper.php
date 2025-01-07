@@ -136,6 +136,11 @@ class Helper {
         continue;
       }
 
+      if ($field->type instanceof FieldtypeCheckbox) {
+        $pdata[$field->name] = $value === 1 ? true : false;
+        continue;
+      }
+
       // TODO: Why do we have to turn of output formatting to (sometimes) get the sleepValue?
       // $page->of(false);
       $v = $field->type->sleepValue($page, $field, $value);
