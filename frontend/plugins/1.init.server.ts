@@ -1,5 +1,5 @@
-export default defineNuxtPlugin(async () => {
-  await useLanguageStore().init()
+export default defineNuxtPlugin(() => {
+  useLanguageStore().init()
 
   const defaultsStore = useDefaultsStore()
   defaultsStore.fetch()
