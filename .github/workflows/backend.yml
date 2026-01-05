@@ -5,7 +5,7 @@ env:
   # port:
   # protocol:
   username: m3967ftp-b
-  remote-root: /home/m3967/Sites/backend
+  remote-root: /home/m3967/Sites/backend/
 
 on:
   push:
