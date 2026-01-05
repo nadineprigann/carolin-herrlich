@@ -1,0 +1,42 @@
+:root {
+  /* Colors */
+  --black: rgb(0 0 0);
+  --white: rgb(255 255 255);
+  --link-color: rgb(0 0 255);
+  --focus-color: rgb(0 140 255 / 20%);
+  --selection-color: var(--focus-color);
+
+  /* Typography */
+  --fs-root: 0.625em;
+  --lh-root: 1.25;
+
+  /* Spacing */
+
+  /* Use --blank-line for horizontal spacing of content elements */
+  --blank-line: calc(var(--lh-root) * 1em);
+
+  /* Use --gutter for vertical and horizontal spacing of layout elements */
+  --gutter: 1rem;
+
+  /* --gutter-m: 2rem;
+  --gutter-l: 4rem; */
+
+  /* Easing */
+
+  /* https://cubic-bezier.com/#.55,0,.1,1 */
+  --swift-out: cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* Breakpoints have to be kept in sync with the ones defined in _breakpoints.scss */
+
+/* @media (min-width: 48em) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (min-width: 80em) {
+  :root {
+    --gutter: 4rem;
+  }
+} */

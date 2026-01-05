@@ -1,0 +1,129 @@
+@import '~/assets/styles/_variables.css';
+
+// @font-face {
+//   font-family: '';
+//   font-style: normal;
+//   font-weight: 400;
+//   src: url('~/assets/fonts/XXXXX.woff2') format('woff2');
+// }
+
+* {
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  @include fs-html;
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior
+  // &:focus-within {
+  //   scroll-behavior: smooth;
+  // }
+}
+
+body {
+  @include ff-regular;
+  @include fs-body;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// https://www.joshwcomeau.com/css/custom-css-reset/#nine-root-stacking-context-10
+// stylelint-disable-next-line selector-id-pattern
+#__nuxt {
+  isolation: isolate;
+}
+
+a {
+  @include link-reset;
+}
+
+audio,
+canvas,
+img,
+picture,
+svg,
+video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  // font-size: inherit;
+  font-weight: inherit;
+  overflow-wrap: break-word;
+}
+
+p,
+li {
+  // hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+ul,
+ol {
+  padding-inline-start: 1.25em;
+}
+
+em {
+  // Before adjusting, make sure a matching webfont style is implemented
+  // font-style: italic;
+}
+
+strong {
+  // Before adjusting, make sure a matching webfont weight is implemented
+  // font-weight: 700;
+}
+
+sup,
+sub {
+  position: relative;
+  font-size: 75%;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.4em;
+}
+
+sub {
+  top: 0.4em;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='url'],
+textarea {
+  @include input-default;
+}
+
+button {
+  @include button-default;
+}
+
+::selection {
+  background-color: var(--selection-color);
+}

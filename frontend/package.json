@@ -1,0 +1,36 @@
+{
+  "name": "pw-nuxt-kickstart",
+  "version": "2.4.0",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "generate:prod": "nuxt generate --dotenv .env.production",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint --ext .ts,.js,.vue .",
+    "lint:prod": "NODE_ENV=production eslint --ext .ts,.js,.vue .",
+    "prepare": "cd .. && husky install frontend/.husky"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config-typescript": "12.1.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
+    "nuxt": "3.15.3",
+    "postcss": "8.4.38",
+    "postcss-scss": "4.0.9",
+    "prettier": "3.2.5",
+    "sass": "1.76.0",
+    "stylelint": "16.5.0",
+    "stylelint-config-recess-order": "5.0.1",
+    "stylelint-config-standard-scss": "13.1.0",
+    "stylelint-config-standard-vue": "1.0.0"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "0.5.1",
+    "pinia": "2.1.7"
+  }
+}

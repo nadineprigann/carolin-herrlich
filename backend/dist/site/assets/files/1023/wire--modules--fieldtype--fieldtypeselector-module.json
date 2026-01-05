@@ -1,0 +1,24 @@
+{
+    "file": "wire\/modules\/Fieldtype\/FieldtypeSelector.module",
+    "textdomain": "wire--modules--fieldtype--fieldtypeselector-module",
+    "translations": {
+        "edcca7404d60fa39e1e56bbb6c85c519": {
+            "text": "Initialer Selektor-Wert"
+        },
+        "7705e5655113c7b4e5b224010ac7af38": {
+            "text": "Hier einen initialen Selektor-String eintragen, welcher als festgelegter Startpunkt f\u00fcr alle von diesem Feld generierten Selektoren dient. Alle Seiten, welche auf diesen benutzer-spezifischen Selektor zutreffen, sind an den hier eingegebenen Selektor gebunden."
+        },
+        "4795bb99893dc26981eb889746b21499": {
+            "text": "Beispiel: template=product"
+        },
+        "8de040fe605622e9683d5c72a79d28b4": {
+            "text": "Vorschau der Spalten"
+        },
+        "e4dad406b489c052036f2de2bd7dc3a5": {
+            "text": "Geben Sie eine CSV-Zeichenkette mit Spalten-\/Feldnamen ein, die in den aus diesem Feld generierten Vorschauen angezeigt werden sollen."
+        },
+        "9079d8cb5302982d2d861798bc2a2d38": {
+            "text": "Beispiel: name, template, parent, id"
+        }
+    }
+}
