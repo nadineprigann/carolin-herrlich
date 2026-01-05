@@ -1,11 +1,11 @@
 name: Backend
 
 env:
-  server:
+  server: webh04.biohost.net
   # port:
   # protocol:
-  username:
-  # remote-root:
+  username: m3967ftp-b
+  remote-root: /home/m3967/Sites/backend
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           server: ${{ env.server }}
           # port: ${{ env.port }}
           # protocol: ${{ env.protocol }}
-          # server-dir: ${{ env.remote-root }}
+          server-dir: ${{ env.remote-root }}
           username: ${{ env.username }}
           local-dir: backend/dist/
           password: ${{ secrets.BACKEND_PASSWORD }}
