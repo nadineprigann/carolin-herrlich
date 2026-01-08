@@ -3,6 +3,9 @@
 /**
  * Repeater Matrix Field
  * 
+ * Copyright 2025 by Ryan Cramer Design, LLC
+ * ryan@processwire.com
+ * 
  * @property FieldtypeRepeaterMatrix $type
  * @property int $parent_id Parent page ID for repeater items.
  * @property int $template_id Template ID used by repeater items.
@@ -59,7 +62,7 @@ class RepeaterMatrixField extends Field {
 	 * @var array
 	 * 
 	 */
-	protected $maxMatrixTypes = array();
+	protected $maxMatrixTypes = [];
 
 	/**
 	 * Get the max quantity of matrix types (highest 'n' value used by matrix type in $field)
@@ -67,7 +70,7 @@ class RepeaterMatrixField extends Field {
 	 * @return int
 	 *
 	 */
-	public function getMaxMatrixTypes() {
+	public function getMaxMatrixTypes(): int {
 		if(isset($this->maxMatrixTypes[$this->id])) {
 			return $this->maxMatrixTypes[$this->id];
 		}
@@ -118,21 +121,21 @@ class RepeaterMatrixField extends Field {
 	 * @return array|string|null
 	 *
 	 */
-	public function getMatrixTypesInfo(array $options = array()) {
+	public function getMatrixTypesInfo(array $options = []) {
 
-		$defaults = array(
+		$defaults = [
 			'get' => '',
 			'type' => '',
 			'index' => 'name',
 			'language' => null,
-		);
+		];
 
 		$options = array_merge($defaults, $options);
 		$get = $options['get'];
 
 		$config = $this->wire()->config;
 		$languages = $this->wire()->languages;
-		$matrixTypes = array();
+		$matrixTypes = [];
 
 		for($n = 1; $n <= $this->getMaxMatrixTypes(); $n++) {
 
@@ -144,7 +147,7 @@ class RepeaterMatrixField extends Field {
 			if(empty($name)) continue;
 			if($options['type'] && ($name !== $options['type'] && "$n" !== "$options[type]")) continue;
 			
-			$a = array();
+			$a = [];
 			if(!$get || $get === 'type' || $get === 'n') $a['type'] = $n;
 			if(!$get || $get === 'name') $a['name'] = $name;
 			if(!$get || $get === 'label') $a['label'] = $label;
@@ -160,8 +163,8 @@ class RepeaterMatrixField extends Field {
 
 			if(!$get || $get === 'fields') {
 				$fieldIDs = $this->get($prefix . 'fields');
-				$a['fields'] = array();
-				if(!is_array($fieldIDs)) $fieldIDs = array();
+				$a['fields'] = [];
+				if(!is_array($fieldIDs)) $fieldIDs = [];
 				$template = $this->type->getMatrixTemplate($this);
 				foreach($fieldIDs as $fieldID) {
 					$f = $template->fieldgroup->getFieldContext((int) $fieldID);
@@ -202,9 +205,9 @@ class RepeaterMatrixField extends Field {
 	 * @throws WireException if given invalid field
 	 *
 	 */
-	public function ___getMatrixTypes($indexType = 'name', $valueType = 'type') {
+	public function ___getMatrixTypes(string $indexType = 'name', string $valueType = 'type'): array {
 
-		$matrixTypes = array();
+		$matrixTypes = [];
 		$language = $valueType === 'label' && $this->wire()->languages ? $this->wire()->user->language : null;
 		if($language && $language->isDefault()) $language = null;
 
@@ -247,9 +250,9 @@ class RepeaterMatrixField extends Field {
 	 * @return bool|int
 	 *
 	 */
-	public function getMatrixTypeByName($name) {
+	public function getMatrixTypeByName(string $name) {
 		$types = $this->getMatrixTypes();
-		return isset($types[$name]) ? $types[$name] : false;
+		return $types[$name] ?? false;
 	}
 	
 	/**
@@ -259,9 +262,9 @@ class RepeaterMatrixField extends Field {
 	 * @return string|bool
 	 *
 	 */
-	public function getMatrixTypeName($type) {
+	public function getMatrixTypeName(int $type) {
 		$types = $this->getMatrixTypes('type', 'name');
-		return isset($types[$type]) ? $types[$type] : false;
+		return $types[$type] ?? false;
 	}
 
 	/**
@@ -272,7 +275,7 @@ class RepeaterMatrixField extends Field {
 	 * @return string
 	 *
 	 */
-	public function getMatrixTypeLabel($type, $language = null) {
+	public function getMatrixTypeLabel($type, $language = null): string {
 		$languages = $this->wire()->languages;
 		if($language && $languages) {
 			if(!is_object($language)) $language = $languages->get($language);
@@ -281,11 +284,11 @@ class RepeaterMatrixField extends Field {
 		}
 		if($language) {
 			if(!$language->id) throw new WireException("Unknown language");
-			$a = $this->getMatrixTypesInfo(array('type' => $type));
+			$a = $this->getMatrixTypesInfo([ 'type' => $type ]);
 			$key = $language->isDefault() ? "label" : "label$language->id";
 			$label = empty($a[$key]) ? $a['label'] : $a[$key];
 		} else {
-			$label = $this->getMatrixTypesInfo(array('get' => 'label', 'type' => $type));
+			$label = $this->getMatrixTypesInfo([ 'get' => 'label', 'type' => $type ]);
 		}
 		return $label;
 	}
@@ -293,11 +296,11 @@ class RepeaterMatrixField extends Field {
 	/**
 	 * Convert a matrix type label into group and type label
 	 *
-	 * @param string $label
+	 * @param string|int|null $label
 	 * @return array
 	 *
 	 */
-	public function matrixTypeGroupAndLabel($label) {
+	public function matrixTypeGroupAndLabel($label): array {
 
 		$label = (string) $label;
 		if(strpos($label, '>>')) {
@@ -318,18 +321,18 @@ class RepeaterMatrixField extends Field {
 
 		if(!strlen($typeLabel)) $typeLabel = $label;
 
-		return array($groupLabel, $typeLabel);
+		return [ $groupLabel, $typeLabel ];
 	}
 	
 	/**
 	 * Get icon from given header string or blank if none found
 	 *
-	 * @param string $head
+	 * @param string|null|int $head
 	 * @param bool $remove Also remove it from given string? (default=false)
 	 * @return string
 	 *
 	 */
-	public function matrixTypeIcon(&$head, $remove = false) {
+	public function matrixTypeIcon(&$head, bool $remove = false): string {
 		if(!is_string($head)) return '';
 		if(strpos($head, 'icon-') === false) return '';
 		if(preg_match('/\bicon[-]([a-z][-a-z0-9]+)\b\s*/', $head, $matches)) {
@@ -354,7 +357,7 @@ class RepeaterMatrixField extends Field {
 	 * @todo needs testing before being changed to "public"
 	 *
 	 */
-	private function addFieldToMatrixType($addField, $matrixType, $beforeField = null, $save = true) {
+	private function addFieldToMatrixType($addField, $matrixType, $beforeField = null, bool $save = true) {
 
 		if(!$addField instanceof Field) {
 			$addFieldName = $addField;
@@ -390,7 +393,7 @@ class RepeaterMatrixField extends Field {
 		if($beforeField && !in_array($beforeField->id, $fieldIDs)) $beforeField = null;
 
 		// updated fieldIDs after adding new field
-		$newFieldIDs = array();
+		$newFieldIDs = [];
 
 		if($beforeField) {
 			// inserting new field before an existing field

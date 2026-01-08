@@ -1,7 +1,7 @@
 # ProcessWire ProFields: Repeater Matrix
 
 This is a commercially licensed and supported module, please do not distribute.
-Copyright 2023 by Ryan Cramer Design, LLC
+Copyright 2025 by Ryan Cramer Design, LLC
 
 
 ## ABOUT REPEATER MATRIX

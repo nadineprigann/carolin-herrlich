@@ -4,7 +4,7 @@
  * THIS IS PART OF A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2019 by Ryan Cramer Design, LLC
+ * Copyright 2025 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  *
  */

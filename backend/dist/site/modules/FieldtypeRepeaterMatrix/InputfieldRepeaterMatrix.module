@@ -6,12 +6,12 @@
  * THIS IS A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2023 by Ryan Cramer Design, LLC
+ * Copyright 2025 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  * 
  * PWPFRMI
  * 
- * @method array getAddMatrixTypes(array $options = array())
+ * @method array getAddMatrixTypes(array $options = [])
  * @method string renderAddMatrix(array $types)
  * @method string renderAddMatrixWrap($markup, $wrapClass)
  * @method string renderAddMatrixSpinner($off = '')
@@ -35,14 +35,14 @@
 
 class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldItemList {
 
-	public static function getModuleInfo() {
-		return array(
+	public static function getModuleInfo():array {
+		return [
 			'title' => __('ProFields: Repeater Matrix Inputfield', __FILE__), // Module Title
 			'summary' => __('Commercial module (Inputfield) providing multi-type repeaters.', __FILE__), // Module Summary
-			'version' => 9,
+			'version' => 13,
 			'requires' => 'FieldtypeRepeaterMatrix',
 			'href' => 'https://processwire.com/store/pro-fields/',
-		);
+		];
 	}
 
 	const addTypeSelect = 0; 
@@ -56,7 +56,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @var array
 	 * 
 	 */
-	protected $typesInfo = array();
+	protected $typesInfo = [];
 
 	/**
 	 * @var bool|null
@@ -98,7 +98,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @var array
 	 * 
 	 */
-	protected $imageExtensions = array('png', 'gif', 'jpg', 'svg', 'webp');
+	protected $imageExtensions = [ 'png', 'gif', 'jpg', 'svg', 'webp' ];
 
 	/**
 	 * Set config defaults
@@ -107,7 +107,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	public function __construct() {
 		parent::__construct();
 		$this->set('allowChangeType', 2);
-		$this->set('allowMatrixTypes', array()); 
+		$this->set('allowMatrixTypes', []); 
 		$this->set('addType', self::addTypeSelect);
 		$this->set('imageDefs', ''); 
 		$this->set('imageStyle', 'margin:10px; width:200px;'); 
@@ -141,8 +141,10 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return bool
 	 *
 	 */
-	public function useUikit() {
-		if($this->useUikit === null) $this->useUikit = wireInstanceOf($this->wire()->adminTheme, 'AdminThemeUikit');
+	public function useUikit(): bool {
+		if($this->useUikit === null) {
+			$this->useUikit = wireInstanceOf($this->wire()->adminTheme, 'AdminThemeUikit');
+		}
 		return $this->useUikit;
 	}
 
@@ -152,7 +154,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	public function undefinedLabel() {
+	public function undefinedLabel(): string {
 		return $this->_('None/undefined');
 	}
 
@@ -164,7 +166,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string Entity encoded string or HTML string
 	 *
 	 */
-	public function entityEncode($str, $markdown = false) {
+	public function entityEncode($str, $markdown = false): string {
 		$useIcon = $str && $str === $this->lastRepeaterItemLabel && strpos($str, ' > ') !== false;
 		$str = parent::entityEncode($str, $markdown);
 		if($useIcon) {
@@ -181,8 +183,8 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return int
 	 *
 	 */
-	protected function getRepeaterItemType(Page $page) {
-		$type = $page->get(FieldtypeRepeaterMatrix::typeFieldName);
+	protected function getRepeaterItemType(Page $page): int {
+		$type = (int) $page->get(FieldtypeRepeaterMatrix::typeFieldName);
 		return $type;
 	}
 
@@ -190,25 +192,25 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * Get the name of the repeater item type (if used)
 	 *
 	 * @param Page|int $type
-	 * @return int
+	 * @return string
 	 *
 	 */
-	protected function getRepeaterItemTypeName($type) {
+	protected function getRepeaterItemTypeName($type): string {
 		if($type instanceof Page) $type = $this->getRepeaterItemType($type);
 		$info = $this->getMatrixTypesInfo($type);
-		if($info === null) return '';
-		return isset($info['name']) ? $info['name'] : '';
+		if(empty($info)) return '';
+		return $info['name'] ?? '';
 	}
 
 	/**
 	 * Set the repeater item type
 	 * 
 	 * @param Page $page
-	 * @param int $type
+	 * @param int|string $type
 	 * @return bool
 	 *
 	 */
-	protected function setRepeaterItemType(Page $page, $type) {
+	protected function setRepeaterItemType(Page $page, $type): bool {
 		$currentType = $this->getRepeaterItemType($page);
 		if($currentType == $type) return false;
 		$info = $this->getMatrixTypesInfo($type);
@@ -220,19 +222,16 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	/**
 	 * Get matrix types verbose information 
 	 * 
-	 * @param int|null $type
+	 * @param int $type Matrix type or omit for all
 	 * @return array
 	 * 
 	 */
-	protected function getMatrixTypesInfo($type = null) {
+	protected function getMatrixTypesInfo(int $type = -1): array {
 		if(empty($this->typesInfo)) {
 			$field = $this->getField();
-			$this->typesInfo = $field->getMatrixTypesInfo(array('index' => 'type'));
+			$this->typesInfo = $field->getMatrixTypesInfo([ 'index' => 'type' ]);
 		}
-		if($type !== null) {
-			return isset($this->typesInfo[$type]) ? $this->typesInfo[$type] : null;
-		}
-		return $this->typesInfo;
+		return $type === -1 ? $this->typesInfo : $this->typesInfo[$type] ?? [];
 	}
 	
 	/**
@@ -242,7 +241,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return InputfieldWrapper
 	 * 
 	 */
-	protected function getRepeaterItemInputfields(Page $page) {
+	protected function getRepeaterItemInputfields(Page $page): InputfieldWrapper {
 	
 		$field = $this->getField();
 		$type = $this->getRepeaterItemType($page);
@@ -257,7 +256,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		} else {
 			// no type defined, we will show all inputs and ask them to select type
 			$fieldIDs = $field->get('repeaterFields');
-			if(!is_array($fieldIDs)) $fieldIDs = array();
+			if(!is_array($fieldIDs)) $fieldIDs = [];
 			$typeField = $this->wire()->fields->get(FieldtypeRepeaterMatrix::typeFieldName);
 			if(!$typeField) return new InputfieldWrapper();
 			$typeKey = array_search($typeField->id, $fieldIDs); 
@@ -327,10 +326,10 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * Get the next repeater ready page
 	 * 
 	 * @param array $notIDs
-	 * @return Page
+	 * @return Page|RepeaterMatrixPage
 	 * 
 	 */
-	protected function getNextReadyPage(array $notIDs) {
+	protected function getNextReadyPage(array $notIDs): Page {
 		$readyPage = parent::getNextReadyPage($notIDs);
 		$type = $this->wire()->input->get('repeater_add');
 		if($type !== null && ctype_digit("$type")) {
@@ -358,20 +357,20 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 *
 	 *
 	 */
-	public function ___getAddMatrixTypes(array $options = array()) {
+	public function ___getAddMatrixTypes(array $options = []): array {
 		
-		$defaults = array(
+		$defaults = [
 			'getAttrs' => false,
-		);
+		];
 
 		$options = array_merge($defaults, $options);
 		$config = $this->wire()->config;
-		$order = array();
+		$order = [];
 		$field = $this->getField();
 		$nameAttr = $this->attr('name');
-		$addTypes = array();
+		$addTypes = [];
 		$useImages = $this->addType == self::addTypeImages;
-		$images = $useImages ? $this->getAddTypeImages() : array();
+		$images = $useImages ? $this->getAddTypeImages() : [];
 		
 		for($n = 0; $n <= $field->getMaxMatrixTypes(); $n++) {
 			if(!$field->get("matrix{$n}_name")) continue;
@@ -411,15 +410,15 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 				$image = $images[$name];
 				if(strpos($image, '/') !== false) {
 					$image = ltrim($image, '/');
-					list($imageUrl, $imageFile) = array($config->urls->root . $image, $config->paths->root . $image);
+					list($imageUrl, $imageFile) = [ $config->urls->root . $image, $config->paths->root . $image ];
 				} else {
-					list($imageUrl, $imageFile) = array($this->imagesUrl() . $image, $this->imagesPath() . $image);
+					list($imageUrl, $imageFile) = [ $this->imagesUrl() . $image, $this->imagesPath() . $image ];
 				}
 				$ext = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
 				$image = in_array($ext, $this->imageExtensions) && is_file($imageFile) ? $imageUrl : '';
 			}
 		
-			$addType = array(
+			$addType = [
 				'n' => $n,
 				'name' => $name,
 				'label' => $label,
@@ -427,9 +426,9 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 				'typeLabel' => $typeLabel,
 				'icon' => $icon,
 				'image' => $image,
-			);
+			];
 			
-			if($options['getAttrs']) $addType['attrs'] = array(
+			if($options['getAttrs']) $addType['attrs'] = [
 				'id' => "{$nameAttr}_add_$n",
 				'class' => "{$this->repeaterClass}AddLink {$this->matrixClass}AddLink",
 				'href' => "#",
@@ -437,7 +436,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 				'data-label' => $typeLabel,
 				'data-group' => $groupLabel,
 				'data-noajax' => '',
-			);
+			];
 					
 			$addTypes[] = $addType; 
 		}
@@ -451,7 +450,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	public function renderAddSelectLabel() {
+	public function renderAddSelectLabel(): string {
 		return $this->_('Select type to add…');
 	}
 	
@@ -464,10 +463,11 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 *
 	 */
-	public function ___renderRepeaterLabel($label, $cnt, Page $page) {
+	public function ___renderRepeaterLabel($label, $cnt, Page $page): string {
 
 		$field = $this->getField();
 		$type = $page->get(FieldtypeRepeaterMatrix::typeFieldName);
+		$hasColor = false;
 
 		//if(!$type) return parent::___renderRepeaterLabel($label, $cnt, $page);
 
@@ -477,6 +477,11 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		} else if($type) {
 			$out = $field->get("matrix{$type}_head");
 			if(!$out) $out = "{matrix_type} [• {matrix_summary}]";
+			if(strpos($out, '#') !== false && preg_match('/(#[a-f\d]{3,})/i', $out, $matches)) {
+				$hasColor = $matches[1];
+				$out = str_replace($hasColor, '', $out);
+			}
+				
 		} else if($page->isUnpublished() && $page->hasStatus(Page::statusOn)) {
 			// editable new item
 			$out = '{matrix_type} [• ' . $this->_('New') . ']';
@@ -516,14 +521,23 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			}
 		}
 
-		$out = str_replace(array('{', '}'), ' ', $out);
+		$out = str_replace([ '{', '}' ], ' ', $out);
 		if($pos1 !== false) {
 			if($pos2 > $pos1) {
-				$out = str_replace(array('[', ']'), array('{', '}'), $out); // for de-emphasis
+				$out = str_replace([ '[', ']' ], [ '{', '}' ], $out); // for de-emphasis
 				$out = str_replace('{}', '', $out);
 				$out = rtrim($out, '• ');
 			}
 		}
+		
+		if(strpos($out, '#') !== false) {
+			$sp = html_entity_decode('&#8203;', 0, 'UTF-8');
+			$out = str_replace('#', "#$sp", $out);
+			if(strpos($out, "#{$sp}n") !== false) $out = preg_replace("/#{$sp}n\b/", "#$cnt", $out);
+		}
+
+		if($hasColor) $out .= " $hasColor"; 
+		
 		$this->lastRepeaterItemLabel = $out;
 
 		return $out;
@@ -534,13 +548,14 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 *
 	 * @param Page $page
 	 * @param Field $field
-	 * @param string $type
-	 * @param string $out
+	 * @param string|int $type
+	 * @param string|int $out
 	 * @return string
 	 *
 	 */
-	protected function renderRepeaterLabelPlaceholders(Page $page, Field $field, $type, $out) {
+	protected function renderRepeaterLabelPlaceholders(Page $page, Field $field, $type, $out): string {
 
+		$out = (string) $out;
 		$languages = $this->wire()->languages;
 		$label = '';
 		$nameLabel = $field->get("matrix{$type}_name");
@@ -561,15 +576,15 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		if(strpos($out, '{matrix_summary}') !== false) {
 			if(method_exists($page, 'summarize')) {
 				$summaryLabel = $page->summarize();
-				$summaryLabel = str_replace(array('{', '}'), ' ', $summaryLabel);
+				$summaryLabel = str_replace([ '{', '}' ], ' ', $summaryLabel);
 			} else {
 				$summaryLabel = $page->className();
 			}
 		}
 
 		$out = str_replace(
-			array('{matrix_name}', '{matrix_label}', '{matrix_group}', '{matrix_type}', '{matrix_summary}'),
-			array("$nameLabel", "$label", "$groupLabel", "$typeLabel", "$summaryLabel"),
+			[ '{matrix_name}', '{matrix_label}', '{matrix_group}', '{matrix_type}', '{matrix_summary}'],
+			[ "$nameLabel", "$label", "$groupLabel", "$typeLabel", "$summaryLabel" ],
 			$out
 		);
 
@@ -583,9 +598,9 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	protected function renderFooter($noAjaxAdd) {
+	protected function renderFooter($noAjaxAdd): string {
 
-		$types = $this->getAddMatrixTypes(array('getAttrs' => true)); 
+		$types = $this->getAddMatrixTypes([ 'getAttrs' => true ]); 
 		
 		foreach($types as $key => $type) {
 			$type['attrs']['data-noajax'] = ($noAjaxAdd ? '1' : '');
@@ -602,18 +617,18 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	public function ___renderAddMatrix(array $types = array()) {
+	public function ___renderAddMatrix(array $types = []): string {
 		
-		if(empty($types)) $types = $this->getAddMatrixTypes(array('getAttrs' => true));
+		if(empty($types)) $types = $this->getAddMatrixTypes([ 'getAttrs' => true ]);
 
 		$sanitizer = $this->wire()->sanitizer;
 		$addLabel = $this->renderAddLabel();
-		$labelKeys = array('label', 'typeLabel', 'groupLabel');
+		$labelKeys = [ 'label', 'typeLabel', 'groupLabel' ];
 		$customOut = '';
 		
 		$name = $this->attr('name');
 		$spinner = $this->renderAddMatrixSpinner();
-		$wrapClasses = array("{$this->repeaterClass}AddItem {$this->matrixClass}AddItem");
+		$wrapClasses = [ "{$this->repeaterClass}AddItem {$this->matrixClass}AddItem" ];
 		$qtyClass = "{$this->repeaterClass}ItemsQty {$this->matrixClass}ItemsQty";
 		$out = "<input class='$qtyClass' type='text' data-name='_{$name}_add_items' value='0' />"; // noAjaxAdd
 		
@@ -633,7 +648,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			$headline = null;
 			if(is_array($customOut)) list($headline, $customOut) = $customOut;
 			$addClass = "{$this->matrixClass}AddCustom";
-			$addClasses = array($addClass, 'pw-hidden');
+			$addClasses = [ $addClass, 'pw-hidden' ];
 			$addLinkClass = "{$this->matrixClass}CustomAddLink";
 			$wrapClasses[] = "pw-hidden";
 			if(strpos($customOut, $addClass) === false) {
@@ -672,9 +687,9 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	public function ___renderAddMatrixWrap($markup, $class) {
+	public function ___renderAddMatrixWrap(string $markup, string $class): string {
 		$useTag = 'p';
-		$blockTags = array('div', 'p', 'h');
+		$blockTags = [ 'div', 'p', 'h' ];
 		foreach($blockTags as $tag) {
 			if(stripos($markup, "</$tag>")) $useTag = 'div';
 			if($useTag === 'div') break;
@@ -689,7 +704,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	public function ___renderAddMatrixSpinner($off = '') {
+	public function ___renderAddMatrixSpinner(string $off = ''): string {
 		if(empty($off)) $off = ($this->addType == self::addTypeSelect ? 'none' : 'angle-double-right');
 		$off = "fa-$off";
 		$on = 'fa-spin fa-spinner';
@@ -707,7 +722,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	protected function ___renderAddMatrixCustom(array $types) {
 		// null for headline means "use default" while blank means "use none"
 		/** @var array|string $value */
-		$value = array(null, '<p>Custom content (hook not found)</p>'); 
+		$value = [ null, '<p>Custom content (hook not found)</p>' ]; 
 		return $value;
 	}
 
@@ -718,7 +733,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	protected function ___renderAddMatrixImages(array $types) {
+	protected function ___renderAddMatrixImages(array $types): string {
 		
 		$sanitizer = $this->wire()->sanitizer;
 		$out = '';
@@ -753,7 +768,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	public function ___renderAddMatrixSelect(array $types, $addLabel, $spinner) {
+	public function ___renderAddMatrixSelect(array $types, string $addLabel, string $spinner): string {
 		
 		$hideSelect = $this->addType != self::addTypeSelect;
 		$sanitizer = $this->wire()->sanitizer;
@@ -765,9 +780,9 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		$addLabel = $sanitizer->entities1($addLabel);
 		$fieldLabel = $sanitizer->entities1($this->label); 
 		
-		$optgroups = array();
-		$groupOptions = array();
-		$otherOptions = array();
+		$optgroups = [];
+		$groupOptions = [];
+		$otherOptions = [];
 
 		foreach($types as $type) {
 
@@ -778,7 +793,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			$option = "<option value='$id'>$label</option>";
 
 			if($group !== '') {
-				if(!isset($groupOptions[$group])) $groupOptions[$group] = array();
+				if(!isset($groupOptions[$group])) $groupOptions[$group] = [];
 				$groupOptions[$group][] = $option;
 			} else {
 				$otherOptions[] = $option;
@@ -802,7 +817,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			
 		if($uikit) {
 			$addLabel = wireIconMarkup('plus-circle', 'fw') . $addLabel;
-			$button = "<button class='uk-button uk-button-text'>$addLabel</button>";
+			$button = "<button type='button' class='uk-button uk-button-text'>$addLabel</button>";
 			$select = "<span $wrapAttr uk-form-custom='target: true'>$select$button&nbsp;$spinner</span>";
 		} else {
 			$select = "<span $wrapAttr>$select&nbsp;$spinner</span>";
@@ -817,12 +832,12 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * Render links for adding matrix items
 	 * 
 	 * @param array $types
-	 * @param $addLabel
-	 * @param $spinner
+	 * @param string $addLabel
+	 * @param string $spinner
 	 * @return string
 	 * 
 	 */
-	public function ___renderAddMatrixLinks(array $types, $addLabel, $spinner) {
+	public function ___renderAddMatrixLinks(array $types, string $addLabel, string $spinner): string {
 		
 		$hideLinks = $this->addType == self::addTypeSelect;
 		$out = '';
@@ -848,7 +863,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @throws WireException
 	 * 
 	 */
-	public function ___renderAddMatrixLink(array $type) {
+	public function ___renderAddMatrixLink(array $type): string {
 		$sanitizer = $this->wire()->sanitizer;
 		$attrStr = $this->getAttributesString($type['attrs']);
 		$label = $sanitizer->entities($type['label']);
@@ -859,12 +874,12 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	/**
 	 * Called before Inputfield::render
 	 *
-	 * @param Inputfield $parent
+	 * @param Inputfield|null $parent
 	 * @param bool $renderValueMode
 	 * @return bool
 	 *
 	 */
-	public function renderReady(Inputfield $parent = null, $renderValueMode = false) {
+	public function renderReady(?Inputfield $parent = null, $renderValueMode = false): bool {
 
 		$field = $this->field;
 		if(!$field) $field = $this->hasField;
@@ -877,7 +892,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 			$field->set('repeaterLoading', FieldtypeRepeater::loadingNew);
 		}
 
-		$classes = array('');
+		$classes = [ '' ];
 		if($this->getSetting('allowChangeType')) $classes[] = 'HasSettings';
 		if($this->useUikit()) $classes[] = 'MatrixUseUikit';
 		if($this->getSetting('addType') == self::addTypeSelect) $classes[] = 'MatrixUseAddSelect';
@@ -905,9 +920,11 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 
 	/**
 	 * Render the repeater items
+	 * 
+	 * @return string
 	 *
 	 */
-	public function ___render() {
+	public function ___render(): string {
 		return parent::___render();
 	}
 	
@@ -917,10 +934,10 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * Process the input from a submitted repeaters field
 	 *
 	 * @param WireInputData $input
-	 * @return $this
+	 * @return self
 	 *
 	 */
-	public function ___processInput(WireInputData $input) {
+	public function ___processInput(WireInputData $input): self {
 		
 		parent::___processInput($input);
 		
@@ -958,7 +975,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	public function set($key, $value) {
 		if($key === 'imageDefs') {
 			// clean imageDefs of anything not needed for DB storage
-			$a = array();
+			$a = [];
 			foreach(explode("\n", trim($value)) as $line) {
 				$pos = strpos($line, ':'); 
 				if($pos && strlen(trim(substr($line, $pos+1)))) $a[] = $line;
@@ -974,7 +991,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 * 
 	 */
-	public function imagesPath() {
+	public function imagesPath(): string {
 		$field = $this->getField();
 		return $this->wire()->config->paths->fieldTemplates . "$field->name/";
 	}
@@ -985,7 +1002,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return string
 	 *
 	 */
-	public function imagesUrl() {
+	public function imagesUrl(): string {
 		$field = $this->getField();
 		return $this->wire()->config->urls->fieldTemplates . "$field->name/";
 	}
@@ -994,7 +1011,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return array
 	 * 
 	 */
-	public function getImageExtensions() {
+	public function getImageExtensions(): array {
 		return $this->imageExtensions;
 	}
 
@@ -1003,11 +1020,11 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return array|string
 	 * 
 	 */
-	public function getAddTypeImages($getString = false) {
+	public function getAddTypeImages(bool $getString = false) {
 
 		$field = $this->getField();
-		$types = $field->getMatrixTypesInfo(array('get' => 'name', 'index' => 'name'));
-		$imagesByType = array();
+		$types = $field->getMatrixTypesInfo([ 'get' => 'name', 'index' => 'name' ]);
+		$imagesByType = [];
 		$defaultPath = $this->imagesPath();
 		
 		if(!is_dir($defaultPath)) $defaultPath = '';
@@ -1035,7 +1052,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 		}
 		
 		if($getString) {
-			$a = array();
+			$a = [];
 			foreach($imagesByType as $name => $imageUrl) {
 				$a[] = "$name:$imageUrl";
 			}
@@ -1051,7 +1068,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return InputfieldWrapper
 	 * 
 	 */
-	public function ___getConfigInputfields() {
+	public function ___getConfigInputfields(): InputfieldWrapper {
 		$inputfields = parent::___getConfigInputfields();
 		$field = $this->getField();
 	
@@ -1071,7 +1088,7 @@ class InputfieldRepeaterMatrix extends InputfieldRepeater implements InputfieldI
 	 * @return array
 	 * 
 	 */
-	public function ___getConfigAllowContext($field) {
+	public function ___getConfigAllowContext($field): array {
 		$a = parent::___getConfigAllowContext($field);
 		$a[] = 'allowMatrixTypes';
 		return $a;

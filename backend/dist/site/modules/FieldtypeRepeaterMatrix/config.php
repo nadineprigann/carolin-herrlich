@@ -9,7 +9,7 @@
  * THIS IS PART OF A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2023 by Ryan Cramer Design, LLC
+ * Copyright 2025 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  *
  * PWPFRMPA
@@ -76,7 +76,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 	 * @return string
 	 *
 	 */
-	public function getMatrixItemPrefix($n) {
+	public function getMatrixItemPrefix($n): string {
 		return "matrix{$n}_";
 	}
 
@@ -89,7 +89,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 	 * @return InputfieldWrapper
 	 * 
 	 */
-	public function getConfigInputfields(InputfieldWrapper $inputfields) {
+	public function getConfigInputfields(InputfieldWrapper $inputfields): InputfieldWrapper {
 		
 		$config = $this->wire()->config;
 		$modules = $this->wire()->modules;
@@ -243,11 +243,11 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 	/**
 	 * Get a single configurable matrix item in a Fieldset
 	 *
-	 * @param int $n Index of matrix item
+	 * @param int|string $n Index of matrix item
 	 * @return InputfieldFieldset
 	 *
 	 */
-	protected function getConfigInputfieldsMatrixItem($n) {
+	protected function getConfigInputfieldsMatrixItem($n): InputfieldFieldset {
 
 		$sanitizer = $this->wire()->sanitizer;
 		$modules = $this->wire()->modules;
@@ -427,7 +427,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		return $fieldset;
 	}
 
-	protected function getConfigInputfieldsMatrixImportItem() {
+	protected function getConfigInputfieldsMatrixImportItem(): InputfieldFieldset {
 	
 		$modules = $this->wire()->modules;
 		$field = $this->field;
@@ -477,7 +477,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		return $fieldset;
 	}
 	
-	public function getMatrixProperties($n = 0) {
+	public function getMatrixProperties($n = 0): array {
 		$languages = $this->wire()->languages;
 		$properties = array(
 			// POST name => property name
@@ -617,7 +617,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 	 * @return array Array of field IDs that were added
 	 * 
 	 */
-	protected function importMatrixType(Field $fromField, $fromType, Field $toField, $toType, $toSort) {
+	protected function importMatrixType(Field $fromField, int $fromType, Field $toField, int $toType, int $toSort): array {
 	
 		$fields = $this->wire()->fields;
 		$input = $this->wire()->input;
@@ -690,7 +690,7 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 	 * @return InputfieldWrapper
 	 * 
 	 */
-	public function getInputConfigInputfields(InputfieldRepeaterMatrix $inputfield, InputfieldWrapper $inputfields) {
+	public function getInputConfigInputfields(InputfieldRepeaterMatrix $inputfield, InputfieldWrapper $inputfields): InputfieldWrapper {
 		
 		$modules = $this->wire()->modules;
 		$field = $this->field;
@@ -844,4 +844,3 @@ class FieldtypeRepeaterMatrixConfigHelper extends Wire {
 		return $inputfields;
 	}
 }
-

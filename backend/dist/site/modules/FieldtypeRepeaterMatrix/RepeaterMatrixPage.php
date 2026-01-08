@@ -8,7 +8,7 @@
  * THIS IS PART OF A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2023 by Ryan Cramer Design, LLC
+ * Copyright 2025 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  * 
  * @property string $type
@@ -58,36 +58,29 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 */
 	public function getField($field) {
 
-		/*
-		$process = $this->wire('process');
-		
-		if($process instanceof WirePageEditor && !$this->wire('config')->ajax) {
-			// if repeater page is being edited directly in /processwire/repeaters/ ...
-			// then don't block white fields are allowed
-			$p = $process->getPage();
-			$id = $p ? $p->id : (int) $this->wire('input')->get('id');
-			if($id === $this->id) return parent::getField($field);
-		}
-		*/
-		
 		if($field === 'repeater_matrix_type') return $this->wire()->fields->get($field);
 		
 		$template = $this->template;
 		if(!$template) return null;
-		
+
+		$fail = false;
 		$value = $template->fieldgroup->getFieldContext($field, $this->matrix('context'));
 		if(!$value) $value = $template->fieldgroup->getField($field);
 		if(!$value) return null;
 		
 		$fieldIDs = $this->matrix('fieldIDs'); /** @var array $fieldIDs Field IDs used by this type */
+		
 		if($value->name != 'repeater_matrix_type' && !in_array($value->id, $fieldIDs)) {
-			if($this->matrix('n')) {
-				// this page has a matrix type and field is not in the type
-				$value = null;
-			}
+			// this page has a matrix type and field is not in the type
+			if($this->matrix('n')) $fail = true;
 		}
 		
-		return $value;
+		if($fail && $this->wire()->process instanceof WirePageEditor) {
+			// do not filter by matrix type when page is being directly edited
+			if($this->id === (int) $this->wire()->input->get('id')) $fail = false;
+		}
+		
+		return $fail ? null : $value;
 	}
 
 	/**
@@ -101,11 +94,12 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @return FieldsArray
 	 * 
 	 */
-	public function getFields() {
+	public function getFields(): FieldsArray {
 		
 		$context = $this->matrix('context');
 		$fieldIDs = $this->matrix('fieldIDs'); /** @var array $fieldIDs */
 		$value = new FieldsArray();
+		$this->wire($value);
 		
 		foreach($fieldIDs as $fieldID) {
 			$field = $this->template->fieldgroup->getFieldContext($fieldID, $context);
@@ -126,7 +120,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @return bool
 	 *
 	 */
-	public function hasField($field) {
+	public function hasField($field): bool {
 		$f = $this->getField($field);
 		return $f ? true : false;
 	}
@@ -142,7 +136,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @return int|null|string|array
 	 * 
 	 */
-	public function matrix($property) {
+	public function matrix(string $property) {
 	
 		if($property === 'type') $property = 'name';
 		if($property === 'name' && $this->matrixTypeName) return $this->matrixTypeName;
@@ -186,7 +180,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 				if(!$value) $value = $field->get($prefix . 'name');
 				break;
 			case 'fieldIDs':
-				$value = $field->get($prefix . 'fields');	
+				$value = $field ? $field->get($prefix . 'fields') : array();	
 				if(!is_array($value)) $value = array();
 				break;
 			case 'fields':
@@ -217,7 +211,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @return string|int
 	 * 
 	 */
-	public function getMatrixType($getNumber = false) {
+	public function getMatrixType(bool $getNumber = false) {
 		if($getNumber) return $this->matrix('n');
 		return $this->matrix('name');
 	}
@@ -230,7 +224,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @throws WireException If given an unrecognized matrix type name or number
 	 * 
 	 */
-	public function setMatrixType($name) {
+	public function setMatrixType($name): self {
 		$existingValue = (int) $this->get('repeater_matrix_type');
 		if(ctype_digit("$name") && $name === $existingValue) return $this;
 		$field = $this->getForField();
@@ -261,7 +255,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @return string
 	 * 
 	 */
-	public function getMatrixLabel($language = null) {
+	public function getMatrixLabel($language = null): string {
 		$languages = $this->wire()->languages;
 		$setLanguage = null;
 		if($languages && $language) {
@@ -282,8 +276,8 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @return array
 	 * 
 	 */
-	public function getMatrixInfo() {
-		$a = array(
+	public function getMatrixInfo(): array {
+		$a = [
 			'n' => $this->matrix('n'), 
 			'id' => $this->id, 
 			'type' => $this->matrix('name'),
@@ -291,9 +285,10 @@ class RepeaterMatrixPage extends RepeaterPage {
 			'label' => $this->matrix('label'), 
 			'status' => $this->status(true), 
 			'fields' => $this->getFields()->explode('name'),
+			'context' => $this->matrix('context'),
 			'forPage' => $this->getForPage()->path, 
 			'forField' => (string) $this->getForField(),
-		);
+		];
 		$languages = $this->wire()->languages;
 		if($languages) {
 			foreach($languages as $language) {
@@ -310,7 +305,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 	 * @return string
 	 *
 	 */
-	public function summarize() {
+	public function summarize(): string {
 		$out = '';
 		$sanitizer = $this->wire()->sanitizer;
 		foreach($this->matrix('fields') as $field) {
@@ -323,7 +318,7 @@ class RepeaterMatrixPage extends RepeaterPage {
 				if(method_exists($sanitizer, 'truncate')) {
 					$value = $sanitizer->truncate($value, 200);
 				} else {
-					$value = $sanitizer->text($value, array('maxLength' => 200));
+					$value = $sanitizer->text($value, [ 'maxLength' => 200 ]);
 				}
 				if(strlen($value)) $out = $value;
 			}
@@ -335,12 +330,14 @@ class RepeaterMatrixPage extends RepeaterPage {
 	/**
 	 * Render the matrix item
 	 * 
-	 * @param string $fieldName Optionally render just a field
-	 * @param string $file Optional render file, if providing a field name too
+	 * @param string $arg1 Field name: Optionally render just a field
+	 * @param string $arg2 File name: Optional render file, if providing a field name too
 	 * @return string
 	 *
 	 */
-	public function render($fieldName = '', $file = '') {
+	public function render(string $arg1 = '', string $arg2 = ''): string {
+		$fieldName = $arg1;
+		$file = $arg2;
 		$config = $this->wire()->config;
 		if($fieldName) return $this->renderField($fieldName, $file);
 		$name = $this->matrix('name');	

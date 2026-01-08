@@ -1,7 +1,7 @@
 /**
  * ProcessWire Repeater Matrix Inputfield Javascript
  *
- * Copyright 2023 by Ryan Cramer 
+ * Copyright 2025 by Ryan Cramer 
  *
  */
 
@@ -126,7 +126,7 @@ function InputfieldRepeaterMatrixEvents() {
 			if($addLink.length) {
 				customAdding = true;
 				// click the corresponding add link so its events fire
-				$addLink.click();
+				$addLink.trigger('click');
 				// if add link within dialog clicked then close the dialog
 				if($a.closest('.vex-dialog-input').length) vex.closeTop();
 				return false;
@@ -156,7 +156,7 @@ function InputfieldRepeaterMatrixEvents() {
 	 */
 	var eventAddTypeSelectInput = function(/*e*/) {
 		var id = $(this).val();
-		if(id.length) $('#' + id).click();
+		if(id.length) $('#' + id).trigger('click');
 		$(this).val('');
 		return false;
 	};
@@ -173,8 +173,8 @@ function InputfieldRepeaterMatrixEvents() {
 			var id = $(this).val();
 			var $link = $('#' + id); 
 			if($link.length) {
-				$this.closest('.vex-dialog-form').find('.vex-dialog-button-primary').click();
-				$link.click();
+				$this.closest('.vex-dialog-form').find('.vex-dialog-button-primary').trigger('click');
+				$link.trigger('click');
 				vex.closeTop();
 			}
 		}
@@ -291,4 +291,3 @@ var InputfieldRepeaterMatrixTools = {
 $(document).ready(function() {
 	InputfieldRepeaterMatrixEvents();
 }); 
-
