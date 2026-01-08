@@ -6,7 +6,7 @@ env:
   # port:
   # protocol:
   username: m3967ftp-f
-  remote-root: /home/m3967/Sites/
+  # remote-root:
 
 on:
   push:
@@ -70,7 +70,7 @@ jobs:
           server: ${{ env.server }}
           # port: ${{ env.port }}
           # protocol: ${{ env.protocol }}
-          server-dir: ${{ env.remote-root }}
+          # server-dir: ${{ env.remote-root }}
           username: ${{ env.username }}
           local-dir: frontend/dist/
           password: ${{ secrets.FRONTEND_PASSWORD }}

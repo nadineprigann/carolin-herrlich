@@ -1,5 +1,14 @@
 # RepeaterMatrix Changelog
 
+### Version 12-13, August 2025
+
+- Fixes and minor improvements
+- Now requires PHP 7.1 or newer
+
+### Version 11, September 2023
+
+- Maintenance release version
+
 ### Version 9, February 2023
 
 - Maintenance release version
@@ -60,5 +69,3 @@
 
     - getMatrixTypeLabel($type, Field $field = null, $language = null)
       Get the label for the given matrix type (name or number).
-
-

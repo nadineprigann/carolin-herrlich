@@ -6,10 +6,10 @@
  * THIS IS A COMMERCIAL MODULE: DO NOT DISTRIBUTE.
  * This file should NOT be uploaded to GitHub or available for download on any public site.
  *
- * Copyright 2023 by Ryan Cramer Design, LLC
+ * Copyright 2025 by Ryan Cramer Design, LLC
  * ryan@processwire.com
  * 
- * PWPFRMF
+ * PWPFRMF25
  * 
  * @method array getMatrixTypes(Field $field, $indexType = 'name', $valueType = 'type')
  *
@@ -17,15 +17,15 @@
 
 class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableModule {
 
-	public static function getModuleInfo() {
-		return array(
+	public static function getModuleInfo(): array {
+		return [
 			'title' => __('ProFields: Repeater Matrix', __FILE__), // Module Title
 			'summary' => __('Commercial module (Fieldtype) providing multi-type repeaters.', __FILE__), // Module Summary
-			'version' => 9,
+			'version' => 13,
 			'autoload' => false,
 			'installs' => 'InputfieldRepeaterMatrix',
 			'requires' => 'ProcessWire>=3.0.187, FieldtypeRepeater>=107, InputfieldRepeater>=109'
-		);
+		];
 	}
 
 	/**
@@ -41,14 +41,6 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	protected $repeaterMatrixConfigHelper = null;
 
 	/**
-	 * Construct
-	 * 
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
-
-	/**
 	 * API ready
 	 * 
 	 */
@@ -58,7 +50,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 		require_once(__DIR__ . '/RepeaterMatrixPage.php');
 		require_once(__DIR__ . '/RepeaterMatrixPageArray.php');
 		// todo: move this to store repeatersRootPageID natively in this module
-		$configData = $modules->getModuleConfigData('FieldtypeRepeater');
+		$configData = $modules->getConfig('FieldtypeRepeater');
 		$this->set('repeatersRootPageID', $configData['repeatersRootPageID']);
 		parent::wired();
 	}
@@ -71,7 +63,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @since 3.0.146
 	 *
 	 */
-	public function getFieldClass(array $a = array()) {
+	public function getFieldClass(array $a = []): string {
 		require_once(__DIR__ . '/RepeaterMatrixField.php');
 		return 'RepeaterMatrixField';
 	}
@@ -82,7 +74,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return string
 	 * 
 	 */
-	protected function getInputfieldClass() {
+	protected function getInputfieldClass(): string {
 		return 'InputfieldRepeaterMatrix';
 	}
 
@@ -92,7 +84,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return string
 	 *
 	 */
-	public function getPageClass() {
+	public function getPageClass(): string {
 		return __NAMESPACE__ . "\\RepeaterMatrixPage";
 	}
 
@@ -102,7 +94,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return string
 	 *
 	 */
-	public function getPageArrayClass() {
+	public function getPageArrayClass(): string {
 		return __NAMESPACE__ . "\\RepeaterMatrixPageArray";
 	}
 
@@ -114,7 +106,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @throws WireException
 	 *
 	 */
-	protected function getRepeaterTemplate(Field $field) {
+	protected function getRepeaterTemplate(Field $field): Template {
 		$template = parent::getRepeaterTemplate($field);
 		if(!$template->fieldgroup->hasField(self::typeFieldName)) {
 			$f = $this->wire()->fields->get(self::typeFieldName);
@@ -132,7 +124,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return Template
 	 * 
 	 */
-	public function getMatrixTemplate(Field $field) {
+	public function getMatrixTemplate(Field $field): Template {
 		return $this->getRepeaterTemplate($field);
 	}
 
@@ -140,11 +132,11 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * Get the current matrix field, using the given one if provided or auto-detect if not
 	 * 
 	 * @param Field|null $field
-	 * @return null|Field|RepeaterMatrixField
+	 * @return Field|RepeaterMatrixField
 	 * @throws WireException
 	 * 
 	 */
-	protected function getMatrixField($field = null) {
+	protected function getMatrixField(?Field $field = null): Field {
 		if($field === null && method_exists($this, 'getLastAccessField')) {
 			/** @var null|Field|RepeaterMatrixField $field */
 			$field = $this->getLastAccessField();
@@ -163,7 +155,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @deprecated Use RepeaterMatrixField::getMaxMatrixTypes()
 	 *
 	 */
-	public function getMaxMatrixTypes(Field $field) {
+	public function getMaxMatrixTypes(Field $field): int {
 		return ($field instanceof RepeaterMatrixField ? $field->getMaxMatrixTypes() : 0);
 	}
 
@@ -200,7 +192,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return array|string|null
 	 * 
 	 */
-	public function getMatrixTypesInfo(Field $field = null, array $options = array()) {
+	public function getMatrixTypesInfo(?Field $field = null, array $options = []) {
 		$field = $this->getMatrixField($field);
 		return $field->getMatrixTypesInfo($options);
 	}
@@ -221,8 +213,8 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return array
 	 * 
 	 */
-	public function getAllMatrixTypesInfo() {
-		$a = array();
+	public function getAllMatrixTypesInfo(): array {
+		$a = [];
 		foreach($this->getMatrixFields() as $name => $field) {
 			$a[$name] = $this->getMatrixTypesInfo($field); 
 		}
@@ -235,15 +227,15 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return array|Field[] RepeaterMatrix Field objects indexed by field name
 	 * 
 	 */
-	public function getMatrixFields() {
-		$a = array();
+	public function getMatrixFields(): array {
+		$a = [];
 		$fields = $this->wire()->fields;
 		if(method_exists($fields, 'findByType')) {
-			$a = $fields->findByType('FieldtypeRepeaterMatrix', array(
+			$a = $fields->findByType('FieldtypeRepeaterMatrix', [
 				'inherit' => true,
 				'valueType' => 'field',
 				'indexType' => 'name',
-			));
+			]);
 		} else {
 			foreach($this->wire()->fields as $field) {
 				if($field instanceof RepeaterMatrixField || $field->type instanceof FieldtypeRepeaterMatrix) {
@@ -266,7 +258,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @throws WireException if given invalid field
 	 * 
 	 */
-	public function ___getMatrixTypes(Field $field = null, $indexType = 'name', $valueType = 'type') {
+	public function ___getMatrixTypes(?Field $field = null, string $indexType = 'name', string $valueType = 'type'): array {
 		$field = $this->getMatrixField($field); 
 		return $field->getMatrixTypes($indexType, $valueType);
 	}
@@ -281,9 +273,9 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return bool|int
 	 * 
 	 */
-	public function getMatrixTypeByName($name, Field $field = null) {
+	public function getMatrixTypeByName(string $name, ?Field $field = null) {
 		$types = $this->getMatrixTypes($field);
-		return isset($types[$name]) ? $types[$name] : false;
+		return $types[$name] ?? false;
 	}
 
 	/**
@@ -295,9 +287,9 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @deprecated Use RepeaterMatrixField::getMatrixTypeName()
 	 * 
 	 */
-	public function getMatrixTypeName($type, Field $field = null) {
+	public function getMatrixTypeName(int $type, ?Field $field = null) {
 		$types = $this->getMatrixTypes($field, 'type', 'name');
-		return isset($types[$type]) ? $types[$type] : false;
+		return $types[$type] ?? false;
 	}
 
 	/**
@@ -310,7 +302,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @deprecated Use RepeaterMatrixField::getMatrixTypeLabel()
 	 * 
 	 */
-	public function getMatrixTypeLabel($type, Field $field = null, $language = null) {
+	public function getMatrixTypeLabel($type, ?Field $field = null, $language = null): string {
 		$field = $this->getMatrixField($field); 
 		return $field->getMatrixTypeLabel($type, $language);
 	}
@@ -318,15 +310,15 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	/**
 	 * Update a DatabaseQuerySelect object to match a Page
 	 *
-	 * @param DatabaseQuerySelect $query
+	 * @param DatabaseQuerySelect|PageFinderDatabaseQuerySelect $query
 	 * @param string $table
 	 * @param string $subfield
 	 * @param string $operator
 	 * @param string $value
-	 * @return DatabaseQuerySelect
+	 * @return DatabaseQuerySelect|PageFinderDatabaseQuerySelect
 	 *
 	 */
-	public function getMatchQuery($query, $table, $subfield, $operator, $value) {
+	public function getMatchQuery($query, $table, $subfield, $operator, $value): DatabaseQuerySelect {
 
 		if($subfield == 'type' || $subfield == self::typeFieldName) {
 			$subfield = self::typeFieldName;
@@ -349,14 +341,14 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return array
 	 *
 	 */
-	public function ___getSelectorInfo(Field $field, array $data = array()) {
+	public function ___getSelectorInfo(Field $field, array $data = []): array {
 		$info = parent::___getSelectorInfo($field, $data); 
 		// make the type selection field a select with labeled options, rather than an anonymous integer
-		$info['subfields'][self::typeFieldName] = array(
-			'operators' => array('=', '!='), 
+		$info['subfields'][self::typeFieldName] = [
+			'operators' => [ '=', '!=' ], 
 			'input' => 'select',
 			'options' => $this->getMatrixTypes($field, 'type', 'label'),
-		);
+		];
 		return $info;
 	}
 	
@@ -368,7 +360,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return array
 	 *
 	 */
-	public function ___exportConfigData(Field $field, array $data) {
+	public function ___exportConfigData(Field $field, array $data): array {
 
 		$data = parent::___exportConfigData($field, $data);
 
@@ -376,7 +368,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 		
 		foreach($data as $key => $value) {
 			if(!preg_match('/^matrix\d+_fields$/', $key) || !is_array($value)) continue;
-			$fieldNames = array();
+			$fieldNames = [];
 			foreach($value as $fieldId) {
 				$f = $fields->get((int) $fieldId);
 				if(!$f) continue;
@@ -397,7 +389,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 *	indexed by property name containing errors that occurred during import of config data.
 	 *
 	 */
-	public function ___importConfigData(Field $field, array $data) {
+	public function ___importConfigData(Field $field, array $data): array {
 
 		if(!$field->type instanceof FieldtypeRepeaterMatrix) return $data;
 
@@ -405,14 +397,14 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 
 		foreach($data as $key => $value) {
 			if(!preg_match('/^matrix\d+_fields$/', $key) || !is_array($value)) continue;
-			$fieldIds = array();
+			$fieldIds = [];
 			foreach($value as $fieldName) {
 				$f = $fields->get($fieldName);
 				if($f) {
 					$fieldIds[] = $f->id;
 				} else {
-					if(!isset($data['errors'])) $data['errors'] = array();
-					if(!isset($data['errors'][$key])) $data['errors'][$key] = array();
+					if(!isset($data['errors'])) $data['errors'] = [];
+					if(!isset($data['errors'][$key])) $data['errors'][$key] = [];
 					$data['errors'][$key][] = "Cannot find field '$fieldName' for '$key'";
 				}
 			}
@@ -424,20 +416,19 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 		return $data;
 	}
 
-
 	/**
 	 * @param Field $field
 	 * @return FieldtypeRepeaterMatrixConfigHelper
 	 *
 	 */
-	public function getRepeaterMatrixConfigHelper(Field $field) {
+	public function getRepeaterMatrixConfigHelper(Field $field): FieldtypeRepeaterMatrixConfigHelper {
 		if($this->repeaterMatrixConfigHelper && $field->id === $this->repeaterMatrixConfigHelper->getField()->id) {
 			return $this->repeaterMatrixConfigHelper;
 		}
 		$template = $this->getRepeaterTemplate($field);
 		require_once(__DIR__ . '/config.php');
 		$this->repeaterMatrixConfigHelper = new FieldtypeRepeaterMatrixConfigHelper($field, $template);
-		return $this->repeaterMatrixConfigHelper;
+		return $this->wire($this->repeaterMatrixConfigHelper);
 	}
 	
 	/**
@@ -447,7 +438,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return InputfieldWrapper
 	 *
 	 */
-	public function ___getConfigInputfields(Field $field) {
+	public function ___getConfigInputfields(Field $field): InputfieldWrapper {
 
 		$inputfields = parent::___getConfigInputfields($field);
 
@@ -489,7 +480,7 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	 * @return InputfieldWrapper
 	 *
 	 */
-	public function getModuleConfigInputfields(array $data) {
+	public function getModuleConfigInputfields(array $data): InputfieldWrapper {
 		$inputfields = parent::getModuleConfigInputfields($data);
 		return $inputfields;
 	}
@@ -534,4 +525,3 @@ class FieldtypeRepeaterMatrix extends FieldtypeRepeater implements ConfigurableM
 	}
 
 }
-
