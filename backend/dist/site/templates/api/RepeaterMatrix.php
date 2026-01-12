@@ -30,6 +30,16 @@ class RepeaterMatrix {
         $item->images = Images::get($images);
       }
 
+      if ($matrixItem->type === 'type_home_slide') {
+        $item->title = Helper::formatText($matrixItem->title);
+        $item->date_start = Helper::formatText($matrixItem->date_start);
+        $item->date_end = Helper::formatText($matrixItem->date_end);
+        $item->text = Helper::formatText($matrixItem->text);
+        $item->image = Images::get($matrixItem->image);
+        $item->categories = Helper::getPageReferences($matrixItem->select_category);
+        $item->link = Helper::getPageReference($matrixItem->select_page);
+      }
+
       // if ($matrixItem->type === 'type_image') {
       //   $image = $matrixItem->image;
       //   if (!$image) continue;

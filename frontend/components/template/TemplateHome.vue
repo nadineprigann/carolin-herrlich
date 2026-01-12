@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 interface TemplateHome extends Page {
   fields: {
-    meta_description: string
     title: string
+    subtitle: string
+    custom_links: LinkItem[]
+    slider: MatrixTypeHomeSlide[]
+    meta_description: string
   }
 }
 
@@ -16,6 +19,13 @@ const { fields } = toRefs(props.data)
 <template>
   <main class="template-home">
     <FieldText element="h2" :text="fields.title" />
+    <FieldText element="h3" :text="fields.subtitle" />
+    <FieldLink
+      v-for="(link, index) in fields.custom_links"
+      :key="index"
+      :link="link"
+    />
+    <SliderMatrix :items="fields.slider" />
   </main>
 </template>
 

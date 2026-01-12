@@ -10,12 +10,14 @@ const TemplateCatchAll = resolveComponent('TemplateCatchAll')
 const TemplateHttpStatus = resolveComponent('TemplateHttpStatus')
 const TemplateBasicPage = resolveComponent('TemplateBasicPage')
 const TemplateHome = resolveComponent('TemplateHome')
+const TemplateLevelA = resolveComponent('TemplateLevelA')
 // Register new templates here...
 
 const template = computed(() => {
   if (meta.template === 'http-status') return TemplateHttpStatus
   if (meta.template === 'basic-page') return TemplateBasicPage
   if (meta.template === 'home') return TemplateHome
+  if (meta.template === 'level-a') return TemplateLevelA
   // ... and match them here
 
   // If no matching component was found, fall back to "catch all" component

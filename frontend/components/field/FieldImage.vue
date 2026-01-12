@@ -35,7 +35,7 @@ const srcset = computed(() => {
     :srcset="srcset"
     :sizes="sizes"
     :loading="props.loading"
-    :alt="props.image.description"
+    :alt="props.image.alt_text"
     :class="classes"
     class="field-image"
   />
@@ -43,7 +43,7 @@ const srcset = computed(() => {
     v-else-if="props.image && !props.image.resized"
     :src="props.image.urls[0].url"
     :loading="props.loading"
-    :alt="props.image.description"
+    :alt="props.image.alt_text"
     :class="classes"
     class="field-image"
   />
