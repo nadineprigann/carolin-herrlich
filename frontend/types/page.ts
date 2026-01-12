@@ -21,7 +21,11 @@ declare global {
   }
 
   interface Image {
-    description: string
+    alt_text: string
+    long_description?: string
+    caption: string
+    copyright: string
+    select_license: PageReference
     ratio: number
     resized: boolean
     urls: ImageUrl[]

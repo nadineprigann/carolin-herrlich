@@ -8,7 +8,11 @@ class Image {
 
     $response = new \StdClass();
     $response->urls = [];
-    $response->description = $image->description;
+    $response->alt_text = $image->alt_text;
+    $response->long_description = $image->long_description;
+    $response->caption = $image->caption;
+    $response->copyright = $image->copyright;
+    $response->license = Helper::getPageReference($image->select_license);
     // $response->ext = $image->ext;
     $response->ratio = $image->ratio;
 
