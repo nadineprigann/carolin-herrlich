@@ -21,7 +21,7 @@ class Navigation {
       $route = self::createRoute($page);
 
       // Add nested children if enabled
-      if ($includeNestedChildren && $page->template->name === 'level-a') {
+      if ($includeNestedChildren) {
         $route->children = self::getNestedChildren($page);
       }
 
