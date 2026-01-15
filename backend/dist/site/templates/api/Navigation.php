@@ -3,7 +3,8 @@
 class Navigation {
   static protected $languageSupportPageNames = null;
 
-  public static function get($pages = null) {
+  // add parameter to determine whether to include nested children. Default = false. Add true to include nested children.
+  public static function get($pages = null, $includeNestedChildren = true) {
     $routes = [];
 
     self::$languageSupportPageNames = wire('modules')->isInstalled('LanguageSupportPageNames');
@@ -17,13 +18,52 @@ class Navigation {
     }
 
     foreach ($pages as $page) {
-      array_push($routes, self::createRoute($page));
+      $route = self::createRoute($page);
+
+      // Add nested children if enabled
+      if ($includeNestedChildren && $page->template->name === 'level-a') {
+        $route->children = self::getNestedChildren($page);
+      }
+
+      array_push($routes, $route);
     }
 
     // Add dynamic routes
     // array_push($routes, self::createDynamicRoute(wire('pages')->get('template=parentTemplate'), 'childTemplate', ':name'));
 
     return $routes;
+  }
+
+  /*
+   * Get nested children for navigation structure based on specific templates
+   * Returns array of route objects for the children
+   * Excludes templates that don't have navigable nested children
+   */
+  private static function getNestedChildren($page) {
+    $nestedRoutes = [];
+
+    // Templates to exclude from nested child fetching
+    $excludeTemplates = ['home', 'blog'];
+
+    // Skip if this page's template is in the exclude list
+    if (in_array($page->template->name, $excludeTemplates)) {
+      return $nestedRoutes;
+    }
+
+    // Only fetch nested children if parent has specific template 'level-a'
+    if ($page->template->name !== 'level-a') {
+      return $nestedRoutes;
+    }
+
+    // Get first-level children. Ensures to not include pages that are trashed, even if they have the right parent
+    $children = $page->children('status<' . Page::statusTrash);
+
+    foreach ($children as $child) {
+      // Create route object for each nested child without further nesting
+      array_push($nestedRoutes, self::createRoute($child));
+    }
+
+    return $nestedRoutes;
   }
 
   private static function createRoute($page) {
