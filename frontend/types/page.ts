@@ -39,7 +39,7 @@ declare global {
   interface Meta {
     alternate: Alternate[]
     id: number
-    // name: string
+    name?: string
     template: string
     url: string
   }
@@ -63,5 +63,11 @@ declare global {
     id: number
     title: string
     value?: string
+  }
+
+  interface OverviewItem extends PageReference {
+    fields: {
+      image: Image
+    }
   }
 }
