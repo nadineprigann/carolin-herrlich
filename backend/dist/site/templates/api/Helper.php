@@ -186,6 +186,12 @@ class Helper {
     return $item;
   }
 
+  public static function getPageFields(Page $page) {
+    $page->of(true);
+    // return all the fields of the passed page object.
+    return self::getFields($page);
+  }
+
   public static function getParents($page, $selector = 'template!=home', $returnArray = true) {
     $pages = $page->parents($selector);
     $array = [];
@@ -215,6 +221,7 @@ class Helper {
     }
     return $array;
   }
+
 
   public static function getPageReferences($pages) {
     if ($pages instanceof PageArray) {
@@ -278,9 +285,9 @@ class Helper {
     // $columns = $field->columns;
     foreach ($field as $row) {
       $item = [
-        'key' => $row->table_key,
+        'key' => self::formatText($row->title),
         // 'key' => self::formatText($row->table_key),
-        'value' => $row->table_value
+        'value' => self::formatText($row->value)
         // 'value' => self::formatText($row->table_value)
       ];
       array_push($array, $item);

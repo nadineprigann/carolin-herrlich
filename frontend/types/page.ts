@@ -83,4 +83,9 @@ declare global {
       },
     ]
   }
+
+  interface RowItem {
+    key: string
+    value: string
+  }
 }
