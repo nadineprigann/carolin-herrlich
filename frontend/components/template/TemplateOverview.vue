@@ -3,10 +3,7 @@ interface TemplateOverview extends Page {
   fields: {
     meta_description: string
     text: string
-    related_content: {
-      context: string
-      in_depth: []
-    }
+    related_content: RelatedContent
   }
   children: OverviewItem[]
 }

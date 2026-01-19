@@ -70,4 +70,17 @@ declare global {
       image: Image
     }
   }
+
+  interface RelatedContent {
+    [
+      {
+        context: string
+        in_depth: [
+          {
+            item: PageReference
+          },
+        ]
+      },
+    ]
+  }
 }

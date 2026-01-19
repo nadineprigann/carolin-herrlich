@@ -2,7 +2,11 @@
 const props = defineProps<{
   related: {
     context: string
-    in_depth: []
+    in_depth: [
+      {
+        item: PageReference
+      },
+    ]
   }
 }>()
 
