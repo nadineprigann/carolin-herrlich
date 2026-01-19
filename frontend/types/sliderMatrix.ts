@@ -10,8 +10,4 @@ declare global {
     select_category?: PageReference[]
     select_page: PageReference[]
   }
-
-  interface MatrixTypeContentSlide extends MatrixItem {
-    image: Image
-  }
 }
