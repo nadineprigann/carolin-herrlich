@@ -16,13 +16,19 @@ const props = defineProps<{
 }>()
 
 const { fields, children } = toRefs(props.data)
+
+const labels = reactive({
+  info: 'Infos zu dieser Seite',
+})
 </script>
 
 <template>
   <main class="template-overview">
     <FieldText element="h2" :text="fields.title" />
-    <!-- Infos zu dieser Seite, auch i18n bedenken! -->
-    <FieldText :text="fields.text" />
+    <div class="info-section">
+      <div class="label" v-html="labels.info" />
+      <FieldText :text="fields.text" />
+    </div>
     <OverviewList :items="children" />
     <RelatedContent :related="fields.related_content" />
   </main>
