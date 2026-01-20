@@ -14,11 +14,11 @@ const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <main class="template-basic-page">
+  <main class="template-level-a">
     <FieldText element="h2" :text="fields.title" />
   </main>
 </template>
 
 <style lang="scss" scoped>
-// .template-basic-page {}
+// .template-level-a {}
 </style>
