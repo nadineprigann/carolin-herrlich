@@ -6,16 +6,25 @@ interface TemplateOverview extends Page {
     related_content: RelatedContent
   }
   children: OverviewItem[]
+  items: OverviewItem[]
 }
 
 const props = defineProps<{
   data: TemplateOverview
 }>()
 
-const { fields, children } = toRefs(props.data)
+const { fields, children, items } = toRefs(props.data)
 
 const labels = reactive({
   info: 'Infos zu dieser Seite',
+})
+
+const showChildren = computed(() => {
+  return children?.value?.length > 0
+})
+
+const showItems = computed(() => {
+  return items?.value?.length > 0
 })
 </script>
 
@@ -26,7 +35,8 @@ const labels = reactive({
       <div class="label" v-html="labels.info" />
       <FieldText :text="fields.text" />
     </div>
-    <OverviewList :items="children" />
+    <OverviewList v-if="showChildren" :items="children" />
+    <OverviewList v-if="showItems" :items="items" />
     <RelatedContent :related="fields.related_content" />
   </main>
 </template>
