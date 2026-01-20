@@ -20,7 +20,7 @@ const { fields } = toRefs(props.data)
     <FieldText element="h2" :text="fields.title" />
     <FieldText v-if="fields.subtitle" :text="fields.subtitle" />
     <FieldMatrix :items="fields.content" />
-    <RelatedContent :related="fields.related_content" />
+    <!-- <RelatedContent :related="fields.related_content" /> -->
   </main>
 </template>
 
