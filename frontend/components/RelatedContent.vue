@@ -15,12 +15,18 @@ const labels = reactive({
   in_depth: 'Vertiefung',
 })
 
+const relatedItem = computed(() => {
+  return props.related?.[0] ?? null
+})
+
 const showContext = computed(() => {
-  return props.related[0].context
+  return relatedItem.value?.context
 })
+
 const showInDepth = computed(() => {
-  return props.related[0].in_depth.length > 0
+  return (relatedItem.value?.in_depth?.length ?? 0) > 0
 })
+
 const showRelatedContent = computed(() => {
   return showContext.value || showInDepth.value
 })
