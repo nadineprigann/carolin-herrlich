@@ -27,7 +27,7 @@ const labels = reactive({
       <FieldText :text="fields.text" />
     </div>
     <OverviewList :items="children" />
-    <RelatedContent :related="fields.related_content" />
+    <!-- <RelatedContent :related="fields.related_content" /> -->
   </main>
 </template>
 
