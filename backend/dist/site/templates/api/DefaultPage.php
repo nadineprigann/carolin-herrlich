@@ -58,7 +58,7 @@ class DefaultPage {
     $response->fields = Helper::getFields($page);
 
     // Include children for the following templates
-    $includeChildren = ['overview'];
+    $includeChildren = ['overview', 'tools'];
     if (in_array($page->template->name, $includeChildren)) {
       $response->children = Helper::getPages($page->children);
     }
