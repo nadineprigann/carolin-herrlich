@@ -39,6 +39,44 @@ if (wire()->config->_frontendUrl) {
   });
 }
 
+/**
+ * Restrict selectable categories in Page Reference fields based on the template of the page being edited as well as mapped contextsthat are associated with each category.
+ *
+ * This hook runs when ProcessWire determines which pages
+ * are selectable for an InputfieldPage (Page Reference).
+ */
+$wire->addHookAfter('InputfieldPage::getSelectablePages', function($event) {
+  $input = $event->object;
+  $page  = $input->hasPage;
+
+  // only apply this hook to the field "select_category" when editing a page.
+  $field = $event->object->hasField;
+  if(!$field || $field->name !== 'select_category') return;
+  if(!$page) return;
+
+  // map templates to contexts (context template). each category as well as the template that holds the field is assigned to a context. when new categories in different contexts are needed, just map them here.
+  $map = [
+    'tool'  => 'werkzeugpalette',
+    'event' => 'veranstaltung',
+    // 'shop' => 'shop',
+  ];
+
+  $tpl = $page->template->name;
+  if(!isset($map[$tpl])) return;
+
+  // resolve the context page dynamically.
+  $context = wire('pages')->get("template=context, name={$map[$tpl]}");
+  if(!$context->id) return;
+
+  // Override the selectable pages for this field. Only category pages:
+   // - using the correct category template
+   // - referencing the resolved context
+   // This replaces the default selectable PageArray.
+  $event->return = $event->pages->find(
+    "template=category, select_context=$context"
+  );
+});
+
 // On-demand mirroring of remote files to local environment
 // wire()->addHookAfter('Pagefile::url', null, 'mirrorFiles');
 // wire()->addHookAfter('Pagefile::filename', null, 'mirrorFiles');
