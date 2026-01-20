@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 interface TemplateBasicPage extends Page {
   fields: {
-    meta_description: string
-    text: string
-    title: string
+    subtitle?: string
+    image: Image
+    content?: MatrixItem[]
+    related_content?: RelatedContent
   }
 }
 
@@ -17,7 +18,9 @@ const { fields } = toRefs(props.data)
 <template>
   <main class="template-basic-page">
     <FieldText element="h2" :text="fields.title" />
-    <FieldTextarea :text="fields.text" />
+    <FieldText v-if="fields.subtitle" :text="fields.subtitle" />
+    <FieldMatrix :items="fields.content" />
+    <RelatedContent :related="fields.related_content" />
   </main>
 </template>
 

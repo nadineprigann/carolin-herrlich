@@ -7,15 +7,10 @@ const props = defineProps<{
 // TODO: Ideally, this would be possible by just passing the component name as a string
 // see https://nuxt.com/docs/guide/directory-structure/components/#dynamic-components
 const SliderMatrixTypeHomeSlide = resolveComponent('SliderMatrixTypeHomeSlide')
-const SliderMatrixTypeContentSlide = resolveComponent(
-  'SliderMatrixTypeContentSlide',
-)
 // Register new types here...
 
 const type = computed(() => {
   if (props.item.type === 'type_home_slide') return SliderMatrixTypeHomeSlide
-  if (props.item.type === 'type_content_slide')
-    return SliderMatrixTypeContentSlide
   // ... and match them here
 })
 </script>

@@ -30,6 +30,33 @@ class RepeaterMatrix {
         $item->images = Images::get($images);
       }
 
+      if ($matrixItem->type === 'type_slider') {
+        $images = $matrixItem->images;
+        if (!$images->count) continue;
+        $item->images = Images::get($images);
+      }
+
+      if ($matrixItem->type === 'type_accordion') {
+           $select = $matrixItem->select_accordion;
+          // NOTE: I do not use getPage as I want a flatter hierarchy in the frontend. Therefore, I only use the fields of the accordion page not the page itself
+
+          // Page reference always returns PageArray, so we need to fetch the first page item (backend is configured to only allow for one page to be selected, so this is safe) within it to make it work within getPageFields as it expects a single page.
+          $page = $select instanceof PageArray ? $select->first() : null;
+
+          // assign this fetched page to the accordion field if it exists otherwise return null
+          $item->accordion = $page
+            ? Helper::getPageFields($page)
+            : null;
+      }
+
+      if ($matrixItem->type === 'type_table') {
+        $item->title = Helper::formatText($matrixItem->title);
+
+        $table = $matrixItem->table;
+        if (!$table || !count($table)) continue;
+        $item->table = Helper::getTable($table);
+      }
+
       if ($matrixItem->type === 'type_home_slide') {
         $item->title = Helper::formatText($matrixItem->title);
         $item->date_start = Helper::formatText($matrixItem->date_start);

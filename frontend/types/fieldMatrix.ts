@@ -5,16 +5,26 @@ declare global {
     type: string
   }
 
+  interface MatrixTypeText extends MatrixItem {
+    text: string
+  }
+
   interface MatrixTypeImages extends MatrixItem {
     images: Image[]
   }
 
-  interface MatrixTypeSection extends MatrixItem {
-    title: string
-    name: string
+  interface MatrixTypeSlider extends MatrixItem {
+    images: Image[]
   }
 
-  interface MatrixTypeText extends MatrixItem {
-    text: string
+  interface MatrixTypeAccordion extends MatrixItem {
+    title: string
+    subtitle?: string
+    accordion: MatrixItem[]
+  }
+
+  interface MatrixTypeTable extends MatrixItem {
+    title: string
+    table: RowItem[]
   }
 }
