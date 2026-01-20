@@ -63,6 +63,16 @@ class DefaultPage {
       $response->children = Helper::getPages($page->children);
     }
 
+    // Include categories as items for these templates
+    $includeItems = ['overview-tools'];
+    if (in_array($page->template->name, $includeItems)) {
+      $parent = wire('pages')->get("template=categories");
+      $categories = wire('pages')->find(
+        "template=category, parent=$parent, select_context=1257"
+      );
+      $response->items = Helper::getPages($categories);
+    }
+
     return $response;
   }
 }
