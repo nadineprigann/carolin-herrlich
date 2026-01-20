@@ -29,7 +29,7 @@ class Navigation {
     }
 
     // Add dynamic routes
-    // array_push($routes, self::createDynamicRoute(wire('pages')->get('template=parentTemplate'), 'childTemplate', ':name'));
+    array_push($routes, self::createDynamicRoute(wire('pages')->get('template=overview-tools'), 'tools', ':tools'));
 
     return $routes;
   }
