@@ -67,8 +67,10 @@ class DefaultPage {
     $includeItems = ['overview-tools'];
     if (in_array($page->template->name, $includeItems)) {
       $parent = wire('pages')->get("template=categories");
+      $context = wire('pages')->get("template=context, name=werkzeugpalette");
+
       $categories = wire('pages')->find(
-        "template=category, parent=$parent, select_context=1257"
+        "template=category, parent_id={$parent->id}, select_context={$context->id}"
       );
       $response->items = Helper::getPages($categories);
     }
