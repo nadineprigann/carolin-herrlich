@@ -88,4 +88,11 @@ declare global {
     key: string
     value: string
   }
+
+  interface childItem {
+    subtitle: string
+    select_category: PageReference[]
+    content?: MatrixItem[]
+    related_content?: RelatedContent
+  }
 }
