@@ -14,6 +14,8 @@ const TemplateLevelA = resolveComponent('TemplateLevelA')
 const TemplateOverview = resolveComponent('TemplateOverview')
 const TemplateTools = resolveComponent('TemplateTools')
 const TemplateTool = resolveComponent('TemplateTool')
+const TemplateBlog = resolveComponent('TemplateBlog')
+const TemplateBlogPost = resolveComponent('TemplateBlogPost')
 // Register new templates here...
 
 const template = computed(() => {
@@ -25,6 +27,8 @@ const template = computed(() => {
   if (meta.template === 'overview-tools') return TemplateOverview
   if (meta.template === 'tools') return TemplateTools
   if (meta.template === 'tool') return TemplateTool
+  if (meta.template === 'blog') return TemplateBlog
+  if (meta.template === 'blog-post') return TemplateBlogPost
   // ... and match them here
 
   // If no matching component was found, fall back to "catch all" component
