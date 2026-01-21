@@ -36,7 +36,7 @@ const linkTo = computed(() => {
 <template>
   <FieldImage :image="props.item.fields.image" />
   <NuxtLink :to="linkTo" class="nav-item">
-    <div class="overviewitem" v-html="props.item.fields.title" />
+    <div class="overviewitem" v-text="props.item.fields.title" />
   </NuxtLink>
 </template>
 

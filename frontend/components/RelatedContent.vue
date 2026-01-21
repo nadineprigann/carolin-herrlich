@@ -40,11 +40,11 @@ const showRelatedContent = computed(() => {
       :key="`related-${index}`"
     >
       <div v-if="showContext" class="context-section">
-        <div class="label" v-html="labels.context" />
+        <div class="label" v-text="labels.context" />
         <FieldText class="text" :text="related.context" />
       </div>
       <div v-if="showInDepth" class="in-depth-section">
-        <div class="label" v-html="labels.in_depth" />
+        <div class="label" v-text="labels.in_depth" />
         <InDepthList :items="related.in_depth" />
       </div>
     </template>

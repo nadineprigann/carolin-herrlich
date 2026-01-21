@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
   <NuxtLink :to="props.item.meta.url" class="in-depth-item">
-    <div class="in-depth-item" v-html="props.item.fields.title" />
+    <div class="in-depth-item" v-text="props.item.fields.title" />
   </NuxtLink>
 </template>
 
