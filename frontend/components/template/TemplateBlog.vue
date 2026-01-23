@@ -10,7 +10,6 @@ const props = defineProps<{
 const { fields } = toRefs(props.data)
 
 const label = reactive({
-  random: 'Zufällige Einträge',
   current: 'Aktuell',
   archive: 'Archiv',
 })
