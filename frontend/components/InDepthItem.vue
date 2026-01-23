@@ -2,10 +2,14 @@
 const props = defineProps<{
   item: PageReference
 }>()
+
+const showItem = computed(() => {
+  return props.item?.fields && props.item?.meta
+})
 </script>
 
 <template>
-  <NuxtLink :to="props.item.meta.url" class="in-depth-item">
+  <NuxtLink v-if="showItem" :to="props.item.meta.url" class="in-depth-item">
     <div class="in-depth-item" v-text="props.item.fields.title" />
   </NuxtLink>
 </template>
