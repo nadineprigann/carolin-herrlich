@@ -3,13 +3,18 @@ const props = defineProps<{
   child: childItem
 }>()
 
+// TODO: fix computed property to return boolean
+const showChild = computed(() => {
+  return props.child?.fields && props.child?.meta
+})
+
 const isEvent = computed(() => {
-  return props.child.meta.template === 'event'
+  return props.child?.meta.template === 'event'
 })
 </script>
 
 <template>
-  <NuxtLink :to="props.child.meta.url" class="child-link">
+  <NuxtLink v-if="showChild" :to="props.child.meta.url" class="child-link">
     <div class="child-title" v-text="props.child.fields.title" />
     <FieldText
       v-if="isEvent"
