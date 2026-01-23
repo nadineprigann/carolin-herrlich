@@ -5,8 +5,8 @@ interface TemplateOverview extends Page {
     text: string
     related_content: RelatedContent
   }
-  children: OverviewItem[]
-  items: OverviewItem[]
+  children: OverviewItem[] // child pages like on grundlagen overview page etc.
+  items: OverviewItem[] // categories like on tools overview page
 }
 
 const props = defineProps<{
