@@ -27,4 +27,8 @@ declare global {
     title: string
     table: RowItem[]
   }
+
+  interface MatrixTypeButton extends MatrixItem {
+    external_link_title: string
+  }
 }

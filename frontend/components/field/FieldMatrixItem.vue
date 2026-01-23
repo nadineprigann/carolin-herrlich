@@ -11,6 +11,7 @@ const FieldMatrixTypeImages = resolveComponent('FieldMatrixTypeImages')
 const FieldMatrixTypeSlider = resolveComponent('FieldMatrixTypeSlider')
 const FieldMatrixTypeAccordion = resolveComponent('FieldMatrixTypeAccordion')
 const FieldMatrixTypeTable = resolveComponent('FieldMatrixTypeTable')
+const FieldMatrixTypeButton = resolveComponent('FieldMatrixTypeButton')
 // Register new types here...
 
 const type = computed(() => {
@@ -19,6 +20,7 @@ const type = computed(() => {
   if (props.item.type === 'type_slider') return FieldMatrixTypeSlider
   if (props.item.type === 'type_accordion') return FieldMatrixTypeAccordion
   if (props.item.type === 'type_table') return FieldMatrixTypeTable
+  if (props.item.type === 'type_button') return FieldMatrixTypeButton
   // ... and match them here
 })
 </script>
