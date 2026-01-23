@@ -95,4 +95,13 @@ declare global {
     content?: MatrixItem[]
     related_content?: RelatedContent
   }
+
+  interface ProjectItem extends Page {
+    fields: {
+      image: Image
+      images: Image[]
+      table: RowItem[]
+      related_content?: RelatedConten
+    }
+  }
 }

@@ -20,6 +20,8 @@ const TemplateEvents = resolveComponent('TemplateEvents')
 const TemplateEvent = resolveComponent('TemplateEvent')
 const TemplateOffers = resolveComponent('TemplateOffers')
 const TemplateSummary = resolveComponent('TemplateSummary')
+const TemplateProjects = resolveComponent('TemplateProjects')
+const TemplateProject = resolveComponent('TemplateProject')
 // Register new templates here...
 
 const template = computed(() => {
@@ -37,6 +39,8 @@ const template = computed(() => {
   if (meta.template === 'event') return TemplateEvent
   if (meta.template === 'offers') return TemplateOffers
   if (meta.template === 'summary') return TemplateSummary
+  if (meta.template === 'projects') return TemplateProjects
+  if (meta.template === 'project') return TemplateProject
   // ... and match them here
 
   // If no matching component was found, fall back to "catch all" component
