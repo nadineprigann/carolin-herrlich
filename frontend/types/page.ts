@@ -88,4 +88,20 @@ declare global {
     key: string
     value: string
   }
+
+  interface childItem {
+    subtitle: string
+    select_category: PageReference[]
+    content?: MatrixItem[]
+    related_content?: RelatedContent
+  }
+
+  interface ProjectItem extends Page {
+    fields: {
+      image: Image
+      images: Image[]
+      table: RowItem[]
+      related_content?: RelatedConten
+    }
+  }
 }

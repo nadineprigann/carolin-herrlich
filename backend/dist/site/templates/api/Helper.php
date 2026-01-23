@@ -325,6 +325,7 @@ class Helper {
 
     // Remove entities (added by HTML Entity Encoder)
     $field = wire('sanitizer')->unentities($field);
+    $field = wire('sanitizer')->purify($field);
 
     return $field;
   }

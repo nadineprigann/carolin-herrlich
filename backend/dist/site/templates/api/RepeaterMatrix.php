@@ -85,6 +85,12 @@ class RepeaterMatrix {
       //   $item->media_id = $media_id;
       // }
 
+       if ($matrixItem->type === 'type_button') {
+        $button_title = $matrixItem->external_link_title;
+        if (!$button_title) continue;
+        $item->button_title = Helper::formatText($button_title);
+      }
+
       array_push($matrix, $item);
     }
 

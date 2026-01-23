@@ -58,6 +58,7 @@ $wire->addHookAfter('InputfieldPage::getSelectablePages', function($event) {
   $map = [
     'tool'  => 'werkzeugpalette',
     'event' => 'veranstaltung',
+    'blog-post'  => 'blog',
     // 'shop' => 'shop',
   ];
 

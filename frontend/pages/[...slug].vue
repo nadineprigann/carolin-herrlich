@@ -13,6 +13,15 @@ const TemplateHome = resolveComponent('TemplateHome')
 const TemplateLevelA = resolveComponent('TemplateLevelA')
 const TemplateOverview = resolveComponent('TemplateOverview')
 const TemplateTools = resolveComponent('TemplateTools')
+const TemplateTool = resolveComponent('TemplateTool')
+const TemplateBlog = resolveComponent('TemplateBlog')
+const TemplateBlogPost = resolveComponent('TemplateBlogPost')
+const TemplateEvents = resolveComponent('TemplateEvents')
+const TemplateEvent = resolveComponent('TemplateEvent')
+const TemplateOffers = resolveComponent('TemplateOffers')
+const TemplateSummary = resolveComponent('TemplateSummary')
+const TemplateProjects = resolveComponent('TemplateProjects')
+const TemplateProject = resolveComponent('TemplateProject')
 // Register new templates here...
 
 const template = computed(() => {
@@ -23,6 +32,15 @@ const template = computed(() => {
   if (meta.template === 'overview') return TemplateOverview
   if (meta.template === 'overview-tools') return TemplateOverview
   if (meta.template === 'tools') return TemplateTools
+  if (meta.template === 'tool') return TemplateTool
+  if (meta.template === 'blog') return TemplateBlog
+  if (meta.template === 'blog-post') return TemplateBlogPost
+  if (meta.template === 'events') return TemplateEvents
+  if (meta.template === 'event') return TemplateEvent
+  if (meta.template === 'offers') return TemplateOffers
+  if (meta.template === 'summary') return TemplateSummary
+  if (meta.template === 'projects') return TemplateProjects
+  if (meta.template === 'project') return TemplateProject
   // ... and match them here
 
   // If no matching component was found, fall back to "catch all" component
