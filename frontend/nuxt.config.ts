@@ -53,5 +53,11 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    prerender: {
+      ignore: ['/permakultur-basics/werkzeugpalette/werkzeuge?*'],
+    },
+  },
+
   compatibilityDate: '2024-12-25',
 })
