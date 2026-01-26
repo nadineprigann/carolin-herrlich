@@ -1,6 +1,15 @@
 <script lang="ts" setup>
 // Get page data from API
 const { data } = await useApi().getPage()
+
+// If no data is returned, throw 404 error
+// if (!data.value) {
+//   throw createError({
+//     statusCode: 404,
+//     statusMessage: 'Page not published',
+//   })
+// }
+
 const { meta, fields } = data.value as Page
 
 // Pick component based on backend template
