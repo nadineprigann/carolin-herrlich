@@ -101,7 +101,7 @@ declare global {
       image: Image
       images: Image[]
       table: RowItem[]
-      related_content?: RelatedConten
+      related_content?: RelatedContent
     }
   }
 }
