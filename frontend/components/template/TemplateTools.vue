@@ -6,10 +6,10 @@ interface TemplateTools extends Page {
 }
 
 const props = defineProps<{
-  data: TemplateTools
+  data?: TemplateTools
 }>()
 
-const { fields } = toRefs(props.data)
+const fields = computed(() => props.data?.fields)
 const route = useRoute()
 
 const label = reactive({
@@ -25,24 +25,30 @@ const listTitle = computed(() => {
     : label.all
 })
 
-const randomChildren = computed(() => {
-  return props.data.children
-    .slice()
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3)
-})
+// const randomChildren = computed(() => {
+//   return props.data.children
+//     .slice()
+//     .sort(() => 0.5 - Math.random())
+//     .slice(0, 3)
+// })
+
+const randomChildren = computed(() =>
+  props.data?.children?.length
+    ? [...props.data.children].sort(() => 0.5 - Math.random()).slice(0, 3)
+    : [],
+)
 
 const showChildren = computed(() => {
-  return props.data.children?.length > 0
+  return props.data?.children?.length > 0
 })
 
 const showRandomChildren = computed(() => {
-  return props.data.children?.length > 3
+  return props.data?.children?.length > 3
 })
 </script>
 
 <template>
-  <main class="template-tools">
+  <main v-if="data" class="template-tools">
     <FieldText element="h2" :text="fields.title" />
     <div>
       <FieldText class="random-label" element="h3" :text="listTitle" />
