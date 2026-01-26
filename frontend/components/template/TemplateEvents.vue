@@ -4,10 +4,10 @@ interface TemplateEvents extends Page {
 }
 
 const props = defineProps<{
-  data: TemplateEvents
+  data?: TemplateEvents
 }>()
 
-const { fields } = toRefs(props.data)
+const fields = computed(() => props.data?.fields)
 
 const label = reactive({
   current: 'Aktuell',
@@ -15,12 +15,12 @@ const label = reactive({
 })
 
 const showChildren = computed(() => {
-  return props.data.children?.length > 0
+  return props.data?.children?.length > 0
 })
 </script>
 
 <template>
-  <main class="template-events">
+  <main v-if="data" class="template-events">
     <FieldText element="h2" :text="fields.title" />
     <div class="current-events">
       <FieldText class="random-label" element="h3" :text="label.current" />

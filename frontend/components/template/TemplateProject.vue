@@ -4,14 +4,14 @@ interface TemplateProject extends Page {
 }
 
 const props = defineProps<{
-  data: TemplateProject
+  data?: TemplateProject
 }>()
 
 const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <main class="template-project">
+  <main v-if="data" class="template-project">
     <FieldText element="h2" :text="fields.title" />
     <FieldText v-if="fields.subtitle" element="h2" :text="fields.subtitle" />
     <FieldMatrix :items="fields.content" />

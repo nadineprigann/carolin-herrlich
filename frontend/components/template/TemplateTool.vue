@@ -4,14 +4,14 @@ interface TemplateTool extends Page {
 }
 
 const props = defineProps<{
-  data: TemplateTool
+  data?: TemplateTool
 }>()
 
-const { fields } = toRefs(props.data)
+const fields = computed(() => props.data?.fields)
 </script>
 
 <template>
-  <main class="template-tool">
+  <main v-if="fields" class="template-tool">
     <FieldText element="h2" :text="fields.title" />
     <FieldText v-if="fields.subtitle" element="h2" :text="fields.subtitle" />
     <FieldMatrix :items="fields.content" />

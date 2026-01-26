@@ -4,18 +4,18 @@ interface TemplateProjects extends Page {
 }
 
 const props = defineProps<{
-  data: TemplateProjects
+  data?: TemplateProjects
 }>()
 
-const { fields } = toRefs(props.data)
+const fields = computed(() => props.data?.fields)
 
 const showChildren = computed(() => {
-  return props.data.children?.length > 0
+  return props.data?.children?.length > 0
 })
 </script>
 
 <template>
-  <main class="template-projects">
+  <main v-if="data" class="template-projects">
     <FieldText element="h2" :text="fields.title" />
     <div>
       <ProjectItemList v-if="showChildren" :children="props.data.children" />

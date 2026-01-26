@@ -6,14 +6,14 @@ interface TemplateEvent extends Page {
 }
 
 const props = defineProps<{
-  data: TemplateEvent
+  data?: TemplateEvent
 }>()
 
 const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <main class="template-event">
+  <main v-if="data" class="template-event">
     <FieldText element="h2" :text="fields.title" />
     <FieldText v-if="fields.subtitle" element="h2" :text="fields.subtitle" />
     <FieldMatrix :items="fields.content" />
