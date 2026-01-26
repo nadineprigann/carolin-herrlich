@@ -3,8 +3,9 @@ const props = defineProps<{
   row: RowItem
 }>()
 
+// makes sure row is only shown when all fields are popluated
 const showRow = computed(() => {
-  return props.row?.key && props.row?.value.value
+  return props.row?.key.length > 0 && props.row?.value.length > 0
 })
 </script>
 
