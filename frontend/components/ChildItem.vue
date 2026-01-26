@@ -3,10 +3,10 @@ const props = defineProps<{
   child: childItem
 }>()
 
-// TODO: fix computed property to return boolean
-const showChild = computed(() => {
-  return props.child?.fields && props.child?.meta
-})
+const showChild = computed(
+  () =>
+    typeof props.child?.meta?.url === 'string' && props.child?.fields != null,
+)
 
 const isEvent = computed(() => {
   return props.child?.meta.template === 'event'
