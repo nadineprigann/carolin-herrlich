@@ -37,16 +37,12 @@ class RepeaterMatrix {
       }
 
       if ($matrixItem->type === 'type_accordion') {
-           $select = $matrixItem->select_accordion;
-          // NOTE: I do not use getPage as I want a flatter hierarchy in the frontend. Therefore, I only use the fields of the accordion page not the page itself
+        $page = $matrixItem->select_accordion;
 
-          // Page reference always returns PageArray, so we need to fetch the first page item (backend is configured to only allow for one page to be selected, so this is safe) within it to make it work within getPageFields as it expects a single page.
-          $page = $select instanceof PageArray ? $select->first() : null;
-
-          // assign this fetched page to the accordion field if it exists otherwise return null
-          $item->accordion = $page
-            ? Helper::getPageFields($page)
-            : null;
+        // NullPage has id = 0
+        $item->accordion = $page->id
+          ? Helper::getPageFields($page)
+          : null;
       }
 
       if ($matrixItem->type === 'type_table') {

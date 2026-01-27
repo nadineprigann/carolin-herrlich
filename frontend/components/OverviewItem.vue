@@ -30,14 +30,16 @@ const linkTo = computed(() => {
 </script>
 
 <template>
-  <FieldImage :image="props.item.fields.image" />
-  <NuxtLink :to="linkTo" class="nav-item">
-    <div class="overviewitem" v-text="props.item.fields.title" />
-  </NuxtLink>
+  <li class="overview-item">
+    <FieldImage :image="props.item.fields.image" class="image" />
+    <NuxtLink :to="linkTo" class="link">
+      <FieldText class="title" element="h5" :text="props.item.fields.title" />
+    </NuxtLink>
+  </li>
 </template>
 
 <style lang="scss" scoped>
-.item-item {
+.overview-item {
   // @include link-default;
 }
 </style>

@@ -31,10 +31,10 @@ const showItems = computed(() => {
 <template>
   <main class="template-overview">
     <FieldText element="h2" :text="fields.title" />
-    <div class="info-section">
-      <div class="label" v-text="labels.info" />
-      <FieldText :text="fields.text" />
-    </div>
+    <section class="info-section">
+      <FieldText element="h4" class="label" :text="labels.info" />
+      <FieldTextarea :text="fields.text" />
+    </section>
     <OverviewList v-if="showChildren" :items="children" />
     <OverviewList v-if="showItems" :items="items" />
     <RelatedContent :related="fields.related_content" />

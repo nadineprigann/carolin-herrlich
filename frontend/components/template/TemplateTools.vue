@@ -44,14 +44,14 @@ const showRandomChildren = computed(() => {
 <template>
   <main class="template-tools">
     <FieldText element="h2" :text="fields.title" />
-    <div>
-      <FieldText class="random-label" element="h3" :text="listTitle" />
+    <section>
+      <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="props.data.children" />
-    </div>
-    <div>
-      <FieldText class="random-label" element="h3" :text="label.random" />
+    </section>
+    <section>
+      <FieldText class="label" element="h3" :text="label.random" />
       <ChildList v-if="showRandomChildren" :children="randomChildren" />
-    </div>
+    </section>
   </main>
 </template>
 

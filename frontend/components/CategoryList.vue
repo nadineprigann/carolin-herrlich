@@ -5,15 +5,17 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="category-list">
+  <ul class="category-list">
     <CategoryItem
       v-for="category in props.categories"
       :key="category.name"
       :category="category"
     />
-  </div>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
-// .category-list {}
+.category-list {
+  @include list-reset;
+}
 </style>

@@ -10,10 +10,10 @@ const showRow = computed(() => {
 </script>
 
 <template>
-  <div v-if="showRow" class="row-item">
+  <li v-if="showRow" class="row-item">
     <FieldText :text="props.row.key" class="row-key" />
     <FieldText :text="props.row.value" class="row-value" />
-  </div>
+  </li>
 </template>
 
 <style lang="scss" scoped>

@@ -42,13 +42,6 @@ body {
 
 a {
   @include link-reset;
-
-  text-decoration-line: underline;
-  text-decoration-color: #fcc000;
-
-  :hover {
-    text-shadow: 0 4px 4px 0 #fcc000;
-  }
 }
 
 audio,
@@ -88,7 +81,7 @@ li {
 
 ul,
 ol {
-  // padding-inline-start: 1.25em;
+  padding-inline-start: 1.25em;
 }
 
 em {

@@ -33,22 +33,22 @@ const showRelatedContent = computed(() => {
 </script>
 
 <template>
-  <div v-if="showRelatedContent" class="related-content-section">
+  <section v-if="showRelatedContent" class="related-content-section">
     <!-- NOTE: Structure used due to the repeater logic wich in turn is necessary to be able to limit in-depth list backendwise. Could use repeater-components but seemed overkill. -->
     <template
       v-for="(content, index) in props.related"
       :key="`related-${index}`"
     >
-      <div v-if="showContext" class="context-section">
-        <div class="label" v-text="labels.context" />
-        <FieldText class="text" :text="content.context" />
-      </div>
-      <div v-if="showInDepth" class="in-depth-section">
-        <div class="label" v-text="labels.in_depth" />
+      <section v-if="showContext" class="context-section">
+        <FieldText element="h4" class="label" :text="labels.context" />
+        <FieldTextarea class="text" :text="content.context" />
+      </section>
+      <section v-if="showInDepth" class="in-depth-section">
+        <FieldText element="h4" class="label" :text="labels.in_depth" />
         <InDepthList :items="content.in_depth" />
-      </div>
+      </section>
     </template>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>

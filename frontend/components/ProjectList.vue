@@ -5,15 +5,17 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="project-item-list">
+  <ul class="project-item-list">
     <ProjectItem
       v-for="(child, index) in props.children"
       :key="`child-${index}`"
       :child="child"
     />
-  </div>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
-// .project-item-list {}
+.project-item-list {
+  @include list-reset;
+}
 </style>

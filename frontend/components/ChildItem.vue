@@ -11,18 +11,24 @@ const showChild = computed(() => {
 const isEvent = computed(() => {
   return props.child?.meta.template === 'event'
 })
+
+const showDescription = computed(() => {
+  return isEvent.value && props.child?.fields.long_description.length > 0
+})
 </script>
 
 <template>
-  <NuxtLink v-if="showChild" :to="props.child.meta.url" class="child-link">
-    <div class="child-title" v-text="props.child.fields.title" />
-    <FieldText
-      v-if="isEvent"
-      class="child-description"
-      :text="props.child.fields.long_description"
-    />
-    <CategoryList :categories="props.child.fields.select_category" />
-  </NuxtLink>
+  <li class="child-item">
+    <NuxtLink v-if="showChild" :to="props.child.meta.url" class="link">
+      <FieldText element="h5" class="title" :text="props.child.fields.title" />
+      <FieldTextarea
+        v-if="showDescription"
+        class="description"
+        :text="props.child.fields.long_description"
+      />
+      <CategoryList :categories="props.child.fields.select_category" />
+    </NuxtLink>
+  </li>
 </template>
 
 <style lang="scss" scoped>

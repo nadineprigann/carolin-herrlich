@@ -13,7 +13,7 @@ const { fields } = toRefs(props.data)
 <template>
   <main class="template-project">
     <FieldText element="h2" :text="fields.title" />
-    <FieldText v-if="fields.subtitle" element="h2" :text="fields.subtitle" />
+    <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
     <ImageSlider :slides="fields.images" />
     <RowList :table="fields.table" />
     <RelatedContent :related="fields.related_content" />

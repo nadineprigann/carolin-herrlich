@@ -5,15 +5,17 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="overview-list">
+  <ul class="overview-list">
     <OverviewItem
       v-for="(item, index) in props.items"
       :key="`overview-item-${index}`"
       :item="item"
     />
-  </div>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
-// .overview-list {}
+.overview-list {
+  @include list-reset;
+}
 </style>

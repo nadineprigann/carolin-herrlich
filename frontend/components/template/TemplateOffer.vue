@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-interface TemplateOffers extends Page {
+interface TemplateOffer extends Page {
   fields: {
     meta_description: string
     content: MatrixItem[]
@@ -7,19 +7,19 @@ interface TemplateOffers extends Page {
 }
 
 const props = defineProps<{
-  data: TemplateOffers
+  data: TemplateOffer
 }>()
 
 const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <main class="template-offers">
+  <main class="template-offer">
     <FieldText element="h2" :text="fields.title" />
     <FieldMatrix :items="fields.content" />
   </main>
 </template>
 
 <style lang="scss" scoped>
-// .template-offers {}
+// .template-offer {}
 </style>

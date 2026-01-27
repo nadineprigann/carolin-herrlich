@@ -1,6 +1,13 @@
 export const useLayoutStore = defineStore('layout', () => {
   const layout = ref({
     template: '',
+    openOverlay: {
+      checkout: false,
+      blog: false,
+      tools: false,
+      events: false,
+      project: false,
+    },
   })
 
   return {
