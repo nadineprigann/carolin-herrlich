@@ -2,10 +2,14 @@
 const props = defineProps<{
   item: MatrixTypeAccordion
 }>()
+
+const showAccordion = computed(() => {
+  return props.item.accordion != null
+})
 </script>
 
 <template>
-  <div class="field-matrix-type-accordion">
+  <div v-if="showAccordion" class="field-matrix-type-accordion">
     <FieldText :text="props.item.accordion.title" />
     <FieldText
       v-if="props.item.accordion.subtitle"
