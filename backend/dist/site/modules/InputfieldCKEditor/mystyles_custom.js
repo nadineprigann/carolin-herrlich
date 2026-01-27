@@ -19,13 +19,7 @@
  */
 
 CKEDITOR.stylesSet.add("mystyles", [
-  {
-    name: "Zwischenüberschrift",
-    element: "h6"
-  },
-  {
-    name: "Testimonial",
-    element: "cite"
-  },
-  { name: "Highlight", element: "span", attributes: { class: "highlight" } }
+  { name: "Highlight", element: "span", attributes: { class: "highlight" } },
+  { name: "Fussnote", element: "sup", attributes: { class: "footnote" } }
+  // { name: "Zweispaltig", element: "div", attributes: { class: "columns" } }
 ]);

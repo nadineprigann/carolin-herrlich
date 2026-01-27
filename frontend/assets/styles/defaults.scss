@@ -42,6 +42,13 @@ body {
 
 a {
   @include link-reset;
+
+  text-decoration-line: underline;
+  text-decoration-color: #fcc000;
+
+  :hover {
+    text-shadow: 0 4px 4px 0 #fcc000;
+  }
 }
 
 audio,
@@ -66,6 +73,13 @@ h6 {
   overflow-wrap: break-word;
 }
 
+h6 {
+  margin: 0 0 1.25em;
+
+  //  font-size: 1em;
+  font-weight: bold;
+}
+
 p,
 li {
   // hyphens: auto;
@@ -74,7 +88,7 @@ li {
 
 ul,
 ol {
-  padding-inline-start: 1.25em;
+  // padding-inline-start: 1.25em;
 }
 
 em {
@@ -126,4 +140,41 @@ button {
 
 ::selection {
   background-color: var(--selection-color);
+}
+
+// TODO: mirror styles for ckeditor text fields and vice versa. corresponing file: site/modules/InputfieldCKEditor/contents-inline_custom.css
+
+blockquote {
+  margin-left: 2em;
+
+  // font-size: 1em;
+
+  > p {
+    display: inline;
+  }
+
+  > p::before,
+  > p::after {
+    color: #fcc000;
+  }
+
+  > p::before {
+    margin-right: 0.15em;
+    content: '“';
+  }
+
+  > p::after {
+    margin-left: 0.15em;
+    content: '”';
+  }
+}
+
+.highlight {
+  padding: 1px 2px;
+  background-color: #fcc000;
+}
+
+.footnote {
+  padding: 1px 2px;
+  background-color: #fcc000;
 }
