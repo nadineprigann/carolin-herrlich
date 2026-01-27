@@ -5,7 +5,6 @@ const props = defineProps<{
 </script>
 
 <template>
-  <!-- TODO: could be improved by a flatter output from backend -->
   <div class="field-matrix-type-accordion">
     <FieldText :text="props.item.accordion.title" />
     <FieldText
