@@ -18,7 +18,7 @@ const TemplateBlog = resolveComponent('TemplateBlog')
 const TemplateBlogPost = resolveComponent('TemplateBlogPost')
 const TemplateEvents = resolveComponent('TemplateEvents')
 const TemplateEvent = resolveComponent('TemplateEvent')
-const TemplateOffers = resolveComponent('TemplateOffers')
+const TemplateOffer = resolveComponent('TemplateOffer')
 const TemplateSummary = resolveComponent('TemplateSummary')
 const TemplateProjects = resolveComponent('TemplateProjects')
 const TemplateProject = resolveComponent('TemplateProject')
@@ -37,7 +37,7 @@ const template = computed(() => {
   if (meta.template === 'blog-post') return TemplateBlogPost
   if (meta.template === 'events') return TemplateEvents
   if (meta.template === 'event') return TemplateEvent
-  if (meta.template === 'offers') return TemplateOffers
+  if (meta.template === 'offer') return TemplateOffer
   if (meta.template === 'summary') return TemplateSummary
   if (meta.template === 'projects') return TemplateProjects
   if (meta.template === 'project') return TemplateProject
