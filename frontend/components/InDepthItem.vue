@@ -9,13 +9,11 @@ const showItem = computed(() => {
 </script>
 
 <template>
-  <NuxtLink v-if="showItem" :to="props.item.meta.url" class="in-depth-item">
-    <FieldText
-      element="h5"
-      class="in-depth-item"
-      :text="props.item.fields.title"
-    />
-  </NuxtLink>
+  <li class="in-depth-item">
+    <NuxtLink v-if="showItem" :to="props.item.meta.url" class="link">
+      <FieldText element="h5" class="title" :text="props.item.fields.title" />
+    </NuxtLink>
+  </li>
 </template>
 
 <style lang="scss" scoped>

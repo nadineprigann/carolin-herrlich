@@ -22,15 +22,15 @@ const showChildren = computed(() => {
 <template>
   <main class="template-blog">
     <FieldText element="h2" :text="fields.title" />
-    <div class="current-posts">
+    <section class="current-posts">
       <FieldText class="random-label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
-    </div>
+    </section>
     <!-- TODO: implement archive functionality: checkbox to mark posts as archived, filter here. successively: automatically move posts older than X months to archive -->
-    <!-- <div class="archive-posts">
+    <!-- <section class="archive-posts">
       <FieldText class="random-label" element="h3" :text="label.archive" />
       <ChildList :children="" />
-    </div> -->
+    </section> -->
   </main>
 </template>
 

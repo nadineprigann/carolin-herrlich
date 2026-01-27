@@ -15,5 +15,7 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-// .image-slider {}
+.image-slider {
+  @include list-reset;
+}
 </style>

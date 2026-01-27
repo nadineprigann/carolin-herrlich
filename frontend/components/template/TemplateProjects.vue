@@ -17,9 +17,7 @@ const showChildren = computed(() => {
 <template>
   <main class="template-projects">
     <FieldText element="h2" :text="fields.title" />
-    <div>
-      <ProjectList v-if="showChildren" :children="props.data.children" />
-    </div>
+    <ProjectList v-if="showChildren" :children="props.data.children" />
   </main>
 </template>
 

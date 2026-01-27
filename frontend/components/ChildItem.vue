@@ -18,19 +18,17 @@ const showDescription = computed(() => {
 </script>
 
 <template>
-  <NuxtLink v-if="showChild" :to="props.child.meta.url" class="child-link">
-    <FieldText
-      element="h5"
-      class="child-title"
-      :text="props.child.fields.title"
-    />
-    <FieldTextarea
-      v-if="showDescription"
-      class="child-description"
-      :text="props.child.fields.long_description"
-    />
-    <CategoryList :categories="props.child.fields.select_category" />
-  </NuxtLink>
+  <li class="child-item">
+    <NuxtLink v-if="showChild" :to="props.child.meta.url" class="link">
+      <FieldText element="h5" class="title" :text="props.child.fields.title" />
+      <FieldTextarea
+        v-if="showDescription"
+        class="description"
+        :text="props.child.fields.long_description"
+      />
+      <CategoryList :categories="props.child.fields.select_category" />
+    </NuxtLink>
+  </li>
 </template>
 
 <style lang="scss" scoped>

@@ -10,17 +10,16 @@ const showChild = computed(() => {
 </script>
 
 <template>
-  <NuxtLink v-if="showChild" :to="props.child.meta.url" class="child-link">
-    <FieldImage
-      v-if="props.child?.fields.image"
-      :image="props.child.fields.image"
-    />
-    <FieldText
-      class="child-title"
-      element="h4"
-      :text="props.child.fields.title"
-    />
-  </NuxtLink>
+  <li v-if="showChild" class="project-item">
+    <NuxtLink :to="props.child.meta.url" class="link">
+      <FieldImage
+        v-if="props.child?.fields.image"
+        :image="props.child.fields.image"
+        class="image"
+      />
+      <FieldText class="title" element="h4" :text="props.child.fields.title" />
+    </NuxtLink>
+  </li>
 </template>
 
 <style lang="scss" scoped>

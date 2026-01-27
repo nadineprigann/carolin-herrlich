@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="in-depth-list">
+  <ul class="in-depth-list">
     <!-- NOTE: Structure used due to the repeater logic wich in turn is necessary to be able to limit in-depth list backendwise. Could use repeater-components but seemed overkill. -->
     <template v-for="in_depth in props.items">
       <InDepthItem
@@ -16,9 +16,11 @@ const props = defineProps<{
         :item="item"
       />
     </template>
-  </div>
+  </ul>
 </template>
 
 <style lang="scss" scoped>
-// .in-depth-list {}
+.in-depth-list {
+  @include list-reset;
+}
 </style>
