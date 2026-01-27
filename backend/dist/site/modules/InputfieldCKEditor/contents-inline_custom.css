@@ -1,0 +1,221 @@
+/**
+ * contents-inline.css
+ *
+ * CKEditor editor styles for inline mode editor
+ *
+ * See also: contents-inline.scss
+ *
+ * PLEASE NOTE:
+ *
+ * It's possible this file may be out of date since it is in /site/ rather than /wire/,
+ * and the version of this file will reflect whatever version you had when you first
+ * installed this copy of ProcessWire.
+ *
+ * If you intend to use this, you may first want to get the newest copy out of:
+ * /wire/modules/Inputfield/InputfieldCKEditor/contents-inline.css
+ *
+ * Original file copyright (as included with CKEditor):
+ * Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.html or http://ckeditor.com/license
+ *
+ */
+
+.InputfieldForm .InputfieldCKEditorInline {
+  font-family: Arial, sans-serif;
+}
+
+.InputfieldForm .InputfieldCKEditorInline p,
+.InputfieldForm .InputfieldCKEditorInline li,
+.InputfieldForm .InputfieldCKEditorInline dl,
+.InputfieldForm .InputfieldCKEditorInline td {
+  font-size: 1em;
+  color: #333;
+  /* background: #fff; */
+}
+.InputfieldForm .InputfieldCKEditorInline a {
+  color: #444;
+  background: none;
+  text-decoration-line: underline;
+  text-decoration-color: #fcc000 !important;
+}
+.InputfieldForm .InputfieldCKEditorInline a:hover {
+  color: #222;
+  text-shadow: 0 4px 4px 0 #fcc000;
+}
+.InputfieldForm .InputfieldCKEditorInline i,
+.InputfieldForm .InputfieldCKEditorInline em {
+  font-style: italic;
+}
+.InputfieldForm .InputfieldCKEditorInline b,
+.InputfieldForm .InputfieldCKEditorInline strong {
+  font-weight: bold;
+}
+.InputfieldForm .InputfieldCKEditorInline strong em,
+.InputfieldForm .InputfieldCKEditorInline em strong {
+  font-weight: bold;
+  font-style: italic;
+}
+/* .InputfieldForm .InputfieldCKEditorInline small {
+  font-size: 0.875em;
+} */
+.InputfieldForm .InputfieldCKEditorInline ul li,
+.InputfieldForm .InputfieldCKEditorInline ol li {
+  list-style: disc;
+  display: list-item;
+  margin-left: -1em !important;
+}
+.InputfieldForm .InputfieldCKEditorInline ol li {
+  list-style: decimal;
+}
+
+.InputfieldForm .InputfieldCKEditorInline blockquote {
+  font-style: normal;
+  font-size: 1em;
+  margin-left: 2em;
+  border: none !important;
+
+  > p {
+    display: inline;
+  }
+
+  > p::before,
+  > p::after {
+    color: #fcc000;
+  }
+
+  > p::before {
+    content: "“";
+    margin-right: 0.15em;
+  }
+
+  > p::after {
+    content: "”";
+    margin-left: 0.15em;
+  }
+}
+/* .InputfieldForm .InputfieldCKEditorInline h1,
+.InputfieldForm .InputfieldCKEditorInline h2,
+.InputfieldForm .InputfieldCKEditorInline h3,
+.InputfieldForm .InputfieldCKEditorInline h4,
+.InputfieldForm .InputfieldCKEditorInline h5 {
+  color: #222;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  text-transform: none;
+}
+.InputfieldForm .InputfieldCKEditorInline h1 {
+  font-size: 2em;
+}
+.InputfieldForm .InputfieldCKEditorInline h2 {
+  font-size: 1.7em;
+}
+.InputfieldForm .InputfieldCKEditorInline h3 {
+  font-size: 1.5em;
+}
+.InputfieldForm .InputfieldCKEditorInline h4 {
+  font-size: 1.3em;
+}
+.InputfieldForm .InputfieldCKEditorInline h5 {
+  font-size: 1.2em;
+} */
+.InputfieldForm .InputfieldCKEditorInline h6 {
+  font-size: 1em !important;
+  font-weight: bold;
+  margin: 0 0 1.25em 0;
+}
+/*
+.InputfieldForm .InputfieldCKEditorInline table td,
+.InputfieldForm .InputfieldCKEditorInline table th {
+  padding: 3px;
+}
+.InputfieldForm .InputfieldCKEditorInline table th {
+  font-weight: bold;
+}
+.InputfieldForm .InputfieldCKEditorInline img .cke_anchor {
+  display: inline;
+}
+.InputfieldForm .InputfieldCKEditorInline figure {
+  display: table;
+  margin: 1em 0;
+}
+.InputfieldForm .InputfieldCKEditorInline figure figcaption {
+  display: table-caption;
+  caption-side: bottom;
+  line-height: 1.3em;
+  color: #777;
+  font-size: 13px;
+}
+.InputfieldForm .InputfieldCKEditorInline img.right,
+.InputfieldForm .InputfieldCKEditorInline img.align_right,
+.InputfieldForm .InputfieldCKEditorInline img.align-right,
+.InputfieldForm .InputfieldCKEditorInline figure.right,
+.InputfieldForm .InputfieldCKEditorInline figure.align_right,
+.InputfieldForm .InputfieldCKEditorInline figure.align-right {
+  /* RCD */
+/* float: right;
+  margin-left: 15px;
+  margin-right: 0;
+  margin-top: 0;
+}
+.InputfieldForm .InputfieldCKEditorInline img.left,
+.InputfieldForm .InputfieldCKEditorInline img.align_left,
+.InputfieldForm .InputfieldCKEditorInline img.align-left,
+.InputfieldForm .InputfieldCKEditorInline figure.left,
+.InputfieldForm .InputfieldCKEditorInline figure.align_left,
+.InputfieldForm .InputfieldCKEditorInline figure.align-left { */
+/* RCD */
+/* float: left;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 15px;
+}
+.InputfieldForm .InputfieldCKEditorInline img.align_center,
+.InputfieldForm .InputfieldCKEditorInline img.align-center,
+.InputfieldForm .InputfieldCKEditorInline figure.align_center,
+.InputfieldForm .InputfieldCKEditorInline figure.align-center { */
+/* RCD */
+/* display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.InputfieldForm .InputfieldCKEditorInline p.alt-font {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.InputfieldForm .InputfieldCKEditorInline p.small {
+  font-size: 0.875em;
+}
+
+.InputfieldForm .InputfieldCKEditorInline sub,
+.InputfieldForm .InputfieldCKEditorInline sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.InputfieldForm .InputfieldCKEditorInline sup {
+  top: -0.5em;
+}
+.InputfieldForm .InputfieldCKEditorInline sub {
+  bottom: -0.25em;
+}*/
+
+.InputfieldForm .InputfieldCKEditorInline sup.footnote {
+  background-color: #fcc000;
+  padding: 1px 2px;
+}
+
+/*.InputfieldForm .InputfieldCKEditorInline sup.figure {
+  background-color: #dfdfdf;
+  padding: 1px 2px;
+}*/
+
+.InputfieldForm .InputfieldCKEditorInline span.highlight {
+  background-color: #fcc000;
+  padding: 1px 2px;
+}
+
+.InputfieldForm .InputfieldCKEditorInline .columns {
+  column-count: 2;
+  column-gap: 2em;
+}
