@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
   <div class="field-matrix-type-button">
-    <CustomButton :label="props.item.button_title" />
+    <OverlayButton :label="props.item.button_title" :overlay="'checkout'" />
   </div>
 </template>
 
