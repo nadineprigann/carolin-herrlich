@@ -15,7 +15,11 @@ const showChild = computed(() => {
       v-if="props.child?.fields.image"
       :image="props.child.fields.image"
     />
-    <div class="child-title" v-text="props.child.fields.title" />
+    <FieldText
+      class="child-title"
+      element="h4"
+      :text="props.child.fields.title"
+    />
   </NuxtLink>
 </template>
 

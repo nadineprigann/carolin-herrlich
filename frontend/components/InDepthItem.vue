@@ -10,7 +10,11 @@ const showItem = computed(() => {
 
 <template>
   <NuxtLink v-if="showItem" :to="props.item.meta.url" class="in-depth-item">
-    <div class="in-depth-item" v-text="props.item.fields.title" />
+    <FieldText
+      element="h5"
+      class="in-depth-item"
+      :text="props.item.fields.title"
+    />
   </NuxtLink>
 </template>
 

@@ -6,7 +6,11 @@ const props = defineProps<{
 
 <template>
   <!-- <NuxtLink :to="props.category.meta.url" class="nav-item"> -->
-  <div class="category-item" v-text="props.category.fields.title" />
+  <FieldText
+    element="h5"
+    class="category-item"
+    :text="props.category.fields.title"
+  />
   <!-- </NuxtLink> -->
 </template>
 

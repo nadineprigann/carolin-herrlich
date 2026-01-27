@@ -18,7 +18,7 @@ const { fields } = toRefs(props.data)
 <template>
   <main class="template-basic-page">
     <FieldText element="h2" :text="fields.title" />
-    <FieldText v-if="fields.subtitle" :text="fields.subtitle" />
+    <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
     <FieldMatrix :items="fields.content" />
     <RelatedContent :related="fields.related_content" />
   </main>

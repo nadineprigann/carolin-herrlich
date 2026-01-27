@@ -10,9 +10,10 @@ const showAccordion = computed(() => {
 
 <template>
   <div v-if="showAccordion" class="field-matrix-type-accordion">
-    <FieldText :text="props.item.accordion.title" />
+    <FieldText element="h4" :text="props.item.accordion.title" />
     <FieldText
       v-if="props.item.accordion.subtitle"
+      element="h5"
       :text="props.item.accordion.subtitle"
     />
     <FieldMatrix :items="props.item.accordion.content" />

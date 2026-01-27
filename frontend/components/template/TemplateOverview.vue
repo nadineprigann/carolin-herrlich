@@ -32,8 +32,8 @@ const showItems = computed(() => {
   <main class="template-overview">
     <FieldText element="h2" :text="fields.title" />
     <div class="info-section">
-      <div class="label" v-text="labels.info" />
-      <FieldText :text="fields.text" />
+      <FieldText element="h4" class="label" :text="labels.info" />
+      <FieldTextarea :text="fields.text" />
     </div>
     <OverviewList v-if="showChildren" :items="children" />
     <OverviewList v-if="showItems" :items="items" />

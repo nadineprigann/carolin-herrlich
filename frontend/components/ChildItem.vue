@@ -19,8 +19,12 @@ const showDescription = computed(() => {
 
 <template>
   <NuxtLink v-if="showChild" :to="props.child.meta.url" class="child-link">
-    <div class="child-title" v-text="props.child.fields.title" />
     <FieldText
+      element="h5"
+      class="child-title"
+      :text="props.child.fields.title"
+    />
+    <FieldTextarea
       v-if="showDescription"
       class="child-description"
       :text="props.child.fields.long_description"
