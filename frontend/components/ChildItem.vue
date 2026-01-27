@@ -11,13 +11,17 @@ const showChild = computed(() => {
 const isEvent = computed(() => {
   return props.child?.meta.template === 'event'
 })
+
+const showDescription = computed(() => {
+  return isEvent.value && props.child?.fields.long_description.length > 0
+})
 </script>
 
 <template>
   <NuxtLink v-if="showChild" :to="props.child.meta.url" class="child-link">
     <div class="child-title" v-text="props.child.fields.title" />
     <FieldText
-      v-if="isEvent"
+      v-if="showDescription"
       class="child-description"
       :text="props.child.fields.long_description"
     />
