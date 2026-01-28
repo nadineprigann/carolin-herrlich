@@ -4,16 +4,24 @@ interface Props {
   image: Image
   sizes?: string
   loading?: 'eager' | 'lazy'
+  show_caption?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   sizes: '100vw',
   loading: 'lazy',
+  show_caption: true,
 })
 
-const classes = computed(() => {
+const modeClass = computed(() => {
   return {
     'is-portrait': isPortrait.value,
+  }
+})
+
+const figCaptionClass = computed(() => {
+  return {
+    'is-hidden': !props.show_caption,
   }
 })
 
@@ -53,7 +61,7 @@ const longDescId = computed(() => {
       :loading="props.loading"
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
-      :class="classes"
+      :class="modeClass"
       class="image"
     />
     <img
@@ -62,10 +70,10 @@ const longDescId = computed(() => {
       :loading="props.loading"
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
-      :class="classes"
+      :class="modeClass"
       class="image"
     />
-    <figcaption class="image-caption">
+    <figcaption :class="figCaptionClass" class="image-caption">
       <span class="caption">{{ props.image.caption }}</span>
       <a class="link" :href="props.image.external_link">
         <span> © {{ props.image.external_link_title }}</span>
@@ -87,15 +95,13 @@ const longDescId = computed(() => {
 
 <style lang="scss" scoped>
 // .field-image {}
+.image-caption {
+  &.is-hidden {
+    @include visually-hidden;
+  }
+}
+
 .long-description {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
+  @include visually-hidden;
 }
 </style>
