@@ -22,6 +22,7 @@ const TemplateOffer = resolveComponent('TemplateOffer')
 const TemplateSummary = resolveComponent('TemplateSummary')
 const TemplateProjects = resolveComponent('TemplateProjects')
 const TemplateProject = resolveComponent('TemplateProject')
+const TemplateChapter = resolveComponent('TemplateChapter')
 // Register new templates here...
 
 const template = computed(() => {
@@ -41,7 +42,7 @@ const template = computed(() => {
   if (meta.template === 'summary') return TemplateSummary
   if (meta.template === 'projects') return TemplateProjects
   if (meta.template === 'project') return TemplateProject
-  // ... and match them here
+  if (meta.template === 'chapter') return TemplateChapter
 
   // If no matching component was found, fall back to "catch all" component
   return TemplateCatchAll
