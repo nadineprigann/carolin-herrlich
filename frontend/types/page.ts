@@ -24,7 +24,9 @@ declare global {
     alt_text: string
     long_description?: string
     caption: string
-    copyright: string
+    year?: string
+    external_link_title: string
+    external_link: string
     select_license: PageReference
     ratio: number
     resized: boolean

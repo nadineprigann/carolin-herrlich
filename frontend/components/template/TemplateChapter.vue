@@ -1,21 +1,22 @@
 <script lang="ts" setup>
-interface TemplateBasicPage extends Page {
+interface TemplateChapter extends Page {
   fields: {
     subtitle?: string
+    image: Image
     content?: MatrixItem[]
     related_content?: RelatedContent
   }
 }
 
 const props = defineProps<{
-  data: TemplateBasicPage
+  data: TemplateChapter
 }>()
 
 const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <main class="template-basic-page">
+  <main class="template-chapter">
     <FieldText element="h2" :text="fields.title" />
     <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
     <FieldMatrix :items="fields.content" />
@@ -24,5 +25,5 @@ const { fields } = toRefs(props.data)
 </template>
 
 <style lang="scss" scoped>
-// .template-basic-page {}
+// .template-chapter {}
 </style>
