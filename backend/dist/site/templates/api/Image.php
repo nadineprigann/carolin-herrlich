@@ -11,7 +11,9 @@ class Image {
     $response->alt_text = $image->alt_text;
     $response->long_description = $image->long_description;
     $response->caption = $image->caption;
-    $response->copyright = $image->copyright;
+    $response->year = $image->year;
+    $response->external_link_title = $image->external_link_title;
+    $response->external_link = $image->external_link;
     $response->license = Helper::getPageReference($image->select_license);
     // $response->ext = $image->ext;
     $response->ratio = $image->ratio;
