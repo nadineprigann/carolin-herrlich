@@ -20,9 +20,8 @@ const linkTo = computed(() => {
     // console.log('category link for overview item', route.path)
     return {
       path: route.path + 'werkzeuge/',
-      // TODO: make this query param language-aware
       query: {
-        kategorie: props.item.meta.name,
+        filter: props.item.meta.name,
       },
     }
     // Normal page navigation
