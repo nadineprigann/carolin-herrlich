@@ -66,6 +66,30 @@ class Navigation {
     return $nestedRoutes;
   }
 
+  // return breadcrums for a given page
+  public static function getBreadcrumbs(Page $page) {
+
+  // No breadcrumbs on home itself
+    if ($page->template->name === 'home') return;
+
+    $breadcrumbs = [];
+
+    // Get all parents of the current page. Exclude home and hierarchical pages for purely visual structure (Level A) from breadcrumbs
+    $items = $page->parents('template!=home, template!=level-a')->add($page);
+    $last  = $items->last();
+
+    foreach ($items as $item) {
+      // Create route object for each breadcrumb item
+      $route = self::createRoute($item);
+      // Determine if breadcrumb is clickable, except the last item bc = current page
+      $route->meta->clickable = $item->id !== $last->id;
+
+      $breadcrumbs[] = $route;
+    }
+
+    return $breadcrumbs;
+  }
+
   private static function createRoute($page) {
     $page->of(true);
     $item = new \StdClass();

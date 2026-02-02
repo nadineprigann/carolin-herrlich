@@ -10,12 +10,13 @@ const props = defineProps<{
   data: TemplateOffer
 }>()
 
-const { fields } = toRefs(props.data)
+const { fields, breadcrumbs } = toRefs(props.data)
 </script>
 
 <template>
   <main class="template-offer">
     <FieldText element="h2" :text="fields.title" />
+    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldMatrix :items="fields.content" />
   </main>
 </template>

@@ -52,6 +52,7 @@ declare global {
       meta_description?: string
       title: string
     }
+    breadcrumbs?: Route[]
   }
 
   interface PageReference {

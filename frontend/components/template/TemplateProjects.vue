@@ -7,7 +7,7 @@ const props = defineProps<{
   data: TemplateProjects
 }>()
 
-const { fields } = toRefs(props.data)
+const { fields, breadcrumbs } = toRefs(props.data)
 
 const showChildren = computed(() => {
   return props.data.children?.length > 0
@@ -17,6 +17,7 @@ const showChildren = computed(() => {
 <template>
   <main class="template-projects">
     <FieldText element="h2" :text="fields.title" />
+    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <ProjectList v-if="showChildren" :children="props.data.children" />
   </main>
 </template>
