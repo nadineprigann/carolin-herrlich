@@ -25,6 +25,7 @@ const noteVisible = ref(false)
 const closeNote = () => {
   noteVisible.value = false
   currentNote.value = {} as Note
+  layout.currentFootnote = null
 }
 
 const showInDepth = computed(() => {
@@ -75,7 +76,7 @@ watch(
     </template>
     <!-- TODO: maybe use vue-portal to render the footnote outside of this section? -->
     <!-- pass evaluated local currentNote to FootNote component for rendering -->
-    <FootNote v-if="showFootnote" :note="currentNote" @close="closeNote" />
+    <FootNote v-if="showFootnote" :note="currentNote" @click="closeNote" />
   </section>
 </template>
 
