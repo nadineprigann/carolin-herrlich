@@ -1,13 +1,9 @@
 <script lang="ts" setup>
+import { ref, watch } from 'vue'
+const layout = useLayoutStore()
+
 const props = defineProps<{
-  related: {
-    context: string
-    in_depth: [
-      {
-        item: PageReference
-      },
-    ]
-  }
+  related: RelatedContent
 }>()
 
 const labels = reactive({
@@ -23,6 +19,14 @@ const showContext = computed(() => {
   return relatedItem.value?.context
 })
 
+const currentNote = ref({} as Note)
+const noteVisible = ref(false)
+
+const closeNote = () => {
+  noteVisible.value = false
+  currentNote.value = {} as Note
+}
+
 const showInDepth = computed(() => {
   return (relatedItem.value?.in_depth?.length ?? 0) > 0
 })
@@ -30,6 +34,25 @@ const showInDepth = computed(() => {
 const showRelatedContent = computed(() => {
   return showContext.value || showInDepth.value
 })
+
+const showFootnote = computed(() => {
+  return Object.keys(currentNote.value).length > 0 && noteVisible.value
+})
+
+// watch for store which gets its updates from FieldMatrixTypeText.vue on note click to compare stored note number to context prop to evaluate current note (stored in currentNote)
+watch(
+  () => layout.currentFootnote,
+  (footnote) => {
+    if (!footnote) return
+    // on change, find the note in the related content table with the matching key by comparing to the footenote stored in layoutStore
+    const note = relatedItem.value?.context?.find((n) => n.number === footnote)
+    // if found, set the activeNote and visible to true
+    if (note) {
+      currentNote.value = note
+      noteVisible.value = true
+    }
+  },
+)
 </script>
 
 <template>
@@ -41,13 +64,18 @@ const showRelatedContent = computed(() => {
     >
       <section v-if="showContext" class="context-section">
         <FieldText element="h4" class="label" :text="labels.context" />
-        <FieldTextarea class="text" :text="content.context" />
+        <!-- <FieldTextarea class="text" :text="content.context" /> -->
+
+        <!-- <RowList :table="related.table" /> -->
       </section>
       <section v-if="showInDepth" class="in-depth-section">
         <FieldText element="h4" class="label" :text="labels.in_depth" />
         <InDepthList :items="content.in_depth" />
       </section>
     </template>
+    <!-- TODO: maybe use vue-portal to render the footnote outside of this section? -->
+    <!-- pass evaluated local currentNote to FootNote component for rendering -->
+    <FootNote v-if="showFootnote" :note="currentNote" @close="closeNote" />
   </section>
 </template>
 

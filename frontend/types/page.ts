@@ -77,7 +77,7 @@ declare global {
   interface RelatedContent {
     [
       {
-        context: string
+        context: Note[]
         in_depth: [
           {
             item: PageReference
@@ -87,12 +87,17 @@ declare global {
     ]
   }
 
+  interface Note {
+    number: number
+    text: string
+  }
+
   interface RowItem {
     key: string
     value: string
   }
 
-  interface childItem {
+  interface ChildItem {
     subtitle: string
     select_category: PageReference[]
     content?: MatrixItem[]

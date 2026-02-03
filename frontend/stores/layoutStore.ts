@@ -7,7 +7,9 @@ export const useLayoutStore = defineStore('layout', () => {
       tools: false,
       events: false,
       project: false,
+      footnote: false,
     },
+    currentFootnote: null as number | null,
   })
 
   return {
