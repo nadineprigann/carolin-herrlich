@@ -16,7 +16,7 @@ const relatedItem = computed(() => {
 })
 
 const showContext = computed(() => {
-  return relatedItem.value?.context
+  return relatedItem.value?.context.length > 0
 })
 
 const currentNote = ref({} as Note)
@@ -65,9 +65,7 @@ watch(
     >
       <section v-if="showContext" class="context-section">
         <FieldText element="h4" class="label" :text="labels.context" />
-        <!-- <FieldTextarea class="text" :text="content.context" /> -->
-
-        <!-- <RowList :table="related.table" /> -->
+        <NumberRowList :table="relatedItem.context" />
       </section>
       <section v-if="showInDepth" class="in-depth-section">
         <FieldText element="h4" class="label" :text="labels.in_depth" />
