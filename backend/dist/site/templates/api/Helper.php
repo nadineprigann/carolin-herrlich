@@ -132,7 +132,10 @@ class Helper {
       }
 
       if ($field->type instanceof FieldtypeTable) {
-        $pdata[$field->name] = self::getTable($value);
+        // choose parser by field name (or pattern)
+        $pdata[$field->name] = ($field->name === 'context')
+          ? self::getNumberTable($value)
+          : self::getTable($value);
         continue;
       }
 
@@ -288,6 +291,23 @@ class Helper {
         'key' => self::formatText($row->title),
         // 'key' => self::formatText($row->table_key),
         'value' => self::formatText($row->value)
+        // 'value' => self::formatText($row->table_value)
+      ];
+      array_push($array, $item);
+    }
+    return $array;
+  }
+
+  public static function getNumberTable($field) {
+    $array = [];
+    if (!$field) return $array;
+    // TODO: make code more universal by looking up columns dynamically
+    // $columns = $field->columns;
+    foreach ($field as $row) {
+      $item = [
+        'number' => self::formatText($row->number),
+        // 'key' => self::formatText($row->table_key),
+        'text' => self::formatText($row->text)
         // 'value' => self::formatText($row->table_value)
       ];
       array_push($array, $item);

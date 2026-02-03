@@ -17,11 +17,10 @@ const linkTo = computed(() => {
 
   // if template category, build link with query param
   if (template === 'category') {
-    // console.log('category link for overview item', route.path)
     return {
       path: route.path + 'werkzeuge/',
       query: {
-        category: props.item.meta.name,
+        filter: props.item.meta.name,
       },
     }
     // Normal page navigation

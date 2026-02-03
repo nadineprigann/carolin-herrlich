@@ -9,7 +9,7 @@ const props = defineProps<{
   data: TemplateTools
 }>()
 
-const { fields } = toRefs(props.data)
+const { fields, breadcrumbs } = toRefs(props.data)
 const route = useRoute()
 
 const label = reactive({
@@ -44,6 +44,7 @@ const showRandomChildren = computed(() => {
 <template>
   <main class="template-tools">
     <FieldText element="h2" :text="fields.title" />
+    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <section>
       <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="props.data.children" />

@@ -7,7 +7,7 @@ const props = defineProps<{
 <template>
   <div class="field-matrix-type-table">
     <FieldText element="h4" :text="props.item.title" />
-    <RowList :table="props.item.table" />
+    <TextRowList :table="props.item.table" />
   </div>
 </template>
 

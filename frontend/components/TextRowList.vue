@@ -5,8 +5,8 @@ const props = defineProps<{
 </script>
 
 <template>
-  <ul class="row-list">
-    <RowItem
+  <ul class="text-row-list">
+    <TextRowItem
       v-for="(row, index) in props.table"
       :key="`row-${index}`"
       :row="row"
@@ -15,7 +15,7 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-.row-list {
+.text-row-list {
   @include list-reset;
 }
 </style>

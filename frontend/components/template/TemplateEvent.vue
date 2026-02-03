@@ -9,13 +9,14 @@ const props = defineProps<{
   data: TemplateEvent
 }>()
 
-const { fields } = toRefs(props.data)
+const { fields, breadcrumbs } = toRefs(props.data)
 </script>
 
 <template>
   <main class="template-event">
     <FieldText element="h2" :text="fields.title" />
     <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
+    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldMatrix :items="fields.content" />
     <CustomButton
       v-if="fields.external_link"

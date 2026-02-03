@@ -13,7 +13,7 @@ const props = defineProps<{
   data: TemplateOverview
 }>()
 
-const { fields, children, items } = toRefs(props.data)
+const { fields, children, items, breadcrumbs } = toRefs(props.data)
 
 const labels = reactive({
   info: 'Infos zu dieser Seite',
@@ -31,6 +31,7 @@ const showItems = computed(() => {
 <template>
   <main class="template-overview">
     <FieldText element="h2" :text="fields.title" />
+    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <section class="info-section">
       <FieldText element="h4" class="label" :text="labels.info" />
       <FieldTextarea :text="fields.text" />
