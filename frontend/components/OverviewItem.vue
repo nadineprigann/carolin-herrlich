@@ -21,6 +21,11 @@ const linkTo = computed(() => {
       path: route.path + 'werkzeuge/',
       query: {
         filter: props.item.meta.name,
+        // for when multiple filters are needed in the future. keep existing filters with ...route.query and add other filters and categories to it
+        // ...route.query,
+        // category: 'tools',
+        // tag: 'permakultur',
+        // sort: 'date',
       },
     }
     // Normal page navigation
