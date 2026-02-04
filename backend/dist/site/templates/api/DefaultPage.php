@@ -72,7 +72,11 @@ class DefaultPage {
       $context = wire('pages')->get("template=context, name=werkzeugpalette");
 
       $categories = wire('pages')->find(
-        "template=category, parent_id={$parent->id}, select_context={$context->id}"
+        "template=category, parent_id={$parent->id}, select_context={$context->id}, is_overview_category=1",
+        [
+          'sort' => 'title',
+          'limit' => 1000,
+        ]
       );
       $response->items = Helper::getPages($categories);
     }
