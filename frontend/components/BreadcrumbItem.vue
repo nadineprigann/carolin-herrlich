@@ -12,8 +12,9 @@ const isClickable = computed(() => {
 
 // depending on whether the breadcrumb is a filter link, append saved filter query parameters from history state. saved by ChildItem.vue when navigating to the detail page.
 const linkTo = computed(() => {
-  // identify the item on which to append the history state filters (if any) by template
-  const isFilterCrumb = props.breadcrumb.meta?.template === 'tools'
+  // identify the item on which to append the history state filters (if any) by template array
+  const templates = ['tools', 'blog', 'events']
+  const isFilterCrumb = templates.includes(props.breadcrumb.meta?.template)
   // if not the filter breadcrumb, return normal path (path for other breadcrumbs like permakultur-basics/werkzeugpalette)
   if (!isFilterCrumb) return props.breadcrumb.path
   // client-only: state exists only in the browser
