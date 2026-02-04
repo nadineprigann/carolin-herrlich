@@ -1,5 +1,0 @@
-// rmf-checkbox
-return [
-  'type' => 'checkbox',
-  'label' => '$1',
-];
