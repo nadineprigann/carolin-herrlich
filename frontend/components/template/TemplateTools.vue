@@ -17,11 +17,10 @@ const label = reactive({
   all: 'Alle',
 })
 
-// use route query to set list title if filtered by category
+// use route query to set list title if filtered by a filter
 const listTitle = computed(() => {
-  return route.query.category
-    ? route.query.category.charAt(0).toUpperCase() +
-        route.query.category.slice(1)
+  return route.query.filter
+    ? route.query.filter.charAt(0).toUpperCase() + route.query.filter.slice(1)
     : label.all
 })
 

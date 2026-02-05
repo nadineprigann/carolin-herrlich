@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
 const props = defineProps<{
   child: childItem
 }>()
@@ -15,11 +18,19 @@ const isEvent = computed(() => {
 const showDescription = computed(() => {
   return isEvent.value && props.child?.fields.long_description.length > 0
 })
+
+// save current list filters in navigation state when linking to detail page
+const linkTo = computed(() => {
+  return {
+    path: props.child.meta.url,
+    state: { listFilters: { ...route.query } },
+  }
+})
 </script>
 
 <template>
   <li class="child-item">
-    <NuxtLink v-if="showChild" :to="props.child.meta.url" class="link">
+    <NuxtLink v-if="showChild" :to="linkTo" class="link">
       <FieldText element="h5" class="title" :text="props.child.fields.title" />
       <FieldTextarea
         v-if="showDescription"
