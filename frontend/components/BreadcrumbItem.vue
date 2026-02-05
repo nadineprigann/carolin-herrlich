@@ -113,7 +113,7 @@ onBeforeRouteLeave(() => {
         class="title"
         :text="props.breadcrumb.meta.title"
       />
-      <!-- show filter titles regardless of them being clickable or not but rather shows them only for the breadcrumb that matches an entry in the templates array. see linkTo  -->
+      <!-- show filter titles regardless of them being clickable or not but rather shows them only for the breadcrumb that matches an entry in the templates array. see linkTo.child pages are considered bc hostory.state gets called  -->
       <template v-if="showFilterTitles">
         <FieldText
           v-for="(filterTitle, index) in visibleFilterTitles"
