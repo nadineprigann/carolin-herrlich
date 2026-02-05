@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const { toUppercase } = useToUppercase()
+const { normalizeToArray } = useNormalizeArray()
 
 const props = defineProps<{
   breadcrumb: Route
@@ -46,16 +47,6 @@ const linkTo = computed(() => {
   }
   return props.breadcrumb.path
 })
-
-// this is for visual rendering only. helper to normalize query param values to array regardless if single string (only one filter selected) or array (multiple filters selected). makes sure that rendering titles of these filters in template never fails due to unexpected data type.
-function normalizeToArray(value) {
-  // if value is an array, return as is
-  if (Array.isArray(value)) return value
-  // if value is a string, wrap in array
-  if (typeof value === 'string') return [value]
-  // if value is undefined or of unexpected type, return empty array
-  return []
-}
 
 // this is for visual rendering only. make sure that filter titles are correctly displayed
 const filterTitles = computed(() => {
