@@ -38,7 +38,7 @@ const linkTo = computed(() => {
   if (!process.client) return props.breadcrumb.path
 
   // if filters where saved, re-apply them to the template URL
-  if (savedFilters.value && Object.keys(savedFilters.value).length > 0) {
+  if (savedFilters.value.length > 0) {
     return {
       path: props.breadcrumb.path,
       query: { filter: savedFilters.value },
@@ -113,6 +113,16 @@ onBeforeRouteLeave(() => {
         class="title"
         :text="props.breadcrumb.meta.title"
       />
+      <!-- show filter titles regardless of them being clickable or not but rather shows them only for the breadcrumb that matches an entry in the templates array. see linkTo  -->
+      <template v-if="showFilterTitles">
+        <FieldText
+          v-for="(filterTitle, index) in visibleFilterTitles"
+          :key="`filter-title-${index}`"
+          element="h5"
+          class="filter-title"
+          :text="filterTitle"
+        />
+      </template>
     </NuxtLink>
     <template v-else>
       <FieldText
