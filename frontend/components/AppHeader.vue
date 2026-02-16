@@ -2,7 +2,7 @@
 // const defaultsStore = useDefaultsStore()
 // const { defaults } = storeToRefs(defaultsStore)
 
-const navVisible = ref(true)
+const navVisible = ref(false)
 
 const toggleNavigation = () => {
   navVisible.value = !navVisible.value
