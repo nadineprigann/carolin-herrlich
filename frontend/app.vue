@@ -1,3 +1,8 @@
+<script lang="ts" setup>
+const breakpointsStore = useBreakpointsStore()
+onMounted(() => breakpointsStore.init())
+</script>
+
 <template>
   <div class="app">
     <NuxtPage />
