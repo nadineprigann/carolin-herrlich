@@ -13,8 +13,8 @@ const showLink = computed(() => {
 
 <template>
   <NuxtLink v-if="showLink" :to="link.select_page.meta.url" class="field-link">
-    <div v-if="link.alt_text" v-html="link.alt_text" />
-    <div v-else v-html="link.select_page.fields.title" />
+    <FieldText v-if="link.alt_text" :text="link.alt_text" />
+    <FieldText v-else :text="link.select_page.fields.title" />
   </NuxtLink>
 </template>
 
