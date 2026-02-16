@@ -40,12 +40,11 @@ const toggleNavigation = () => {
   top: 0;
   right: 0;
   z-index: 3;
+  padding: var(--gutter);
 
-  // padding: var(--gutter);
-
-  // @media (min-width: $medium) {
-  //   padding: var(--gutter) calc(var(--gutter) * 2) 0 var(--gutter);
-  // }
+  @media (min-width: $medium) {
+    padding: var(--gutter) calc(var(--gutter) * 2) 0 var(--gutter);
+  }
 }
 
 .open,
