@@ -7,7 +7,7 @@ export const useBreakpointsStore = defineStore('breakpoints', () => {
   })
 
   const isSmall = ref(false)
-  const isDesktop = ref(false)
+  const isMedium = ref(false)
   const isLarge = ref(false)
 
   function update() {
@@ -15,7 +15,7 @@ export const useBreakpointsStore = defineStore('breakpoints', () => {
     if (!breakpoints.value.small) return
 
     isSmall.value = breakpoints.value.small!.matches
-    isDesktop.value = breakpoints.value.medium!.matches
+    isMedium.value = breakpoints.value.medium!.matches
     isLarge.value = breakpoints.value.large!.matches
   }
 
@@ -43,7 +43,7 @@ export const useBreakpointsStore = defineStore('breakpoints', () => {
   return {
     breakpoints,
     isSmall,
-    isDesktop,
+    isMedium,
     isLarge,
     init,
     update,

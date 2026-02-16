@@ -39,5 +39,9 @@ const handleToggleSubNav = (id: number) => {
   width: 100%;
   height: 100%;
   background-color: var(--white);
+
+  @media (min-width: $medium) {
+    display: flex;
+  }
 }
 </style>

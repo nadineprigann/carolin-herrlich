@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const breakpointsStore = useBreakpointsStore()
-const { isLarge } = storeToRefs(breakpointsStore)
+const { isMedium } = storeToRefs(breakpointsStore)
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
@@ -36,14 +36,14 @@ const isCurrent = computed(() => {
 
 // only toggles the subnav of the item that was clicked due to putting the click event on the specific nav item
 const toggleSubNav = () => {
-  // do not emit on large screens as it is shown by default
-  if (isLarge.value || !showChildren.value) return
+  // do not emit on medium screens as it is shown by default
+  if (isMedium.value || !showChildren.value) return
   emit('toggle-sub-nav', props.item.meta.id)
 }
 
 const showSubNav = computed(() => {
-  // if we are on large screens and the item has children, ignore current and show them all. if we're on smaller screens, only show the children of the current item. no watcher needed since computed reacts to changes in isLarge and currentSubNav
-  if (isLarge.value && showChildren.value) return true
+  // if we are on medium screens and the item has children, ignore current and show them all. if we're on smaller screens, only show the children of the current item. no watcher needed since computed reacts to changes in isMedium and currentSubNav
+  if (isMedium.value && showChildren.value) return true
   return isCurrent.value
 })
 
