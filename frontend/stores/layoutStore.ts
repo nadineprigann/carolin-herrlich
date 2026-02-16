@@ -8,6 +8,7 @@ export const useLayoutStore = defineStore('layout', () => {
       events: false,
       project: false,
       footnote: false,
+      navigation: false,
     },
     currentFootnote: null as number | null,
   })

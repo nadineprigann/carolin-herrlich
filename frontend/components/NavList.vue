@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 const defaultsStore = useDefaultsStore()
 const { defaults } = storeToRefs(defaultsStore)
-
-const props = defineProps<{
-  isVisible: boolean
-}>()
+const layoutStore = useLayoutStore()
+const { layout } = storeToRefs(layoutStore)
 
 const visibleRoutes = computed(() => {
   return defaults.value.navigation.filter(
@@ -14,7 +12,7 @@ const visibleRoutes = computed(() => {
 </script>
 
 <template>
-  <nav v-if="props.isVisible" class="nav" aria-label="Navigation">
+  <nav v-if="layout.openOverlay.navigation" class="nav" aria-label="Navigation">
     <ul class="nav-list">
       <NavItem v-for="item in visibleRoutes" :key="item.name" :item="item" />
     </ul>

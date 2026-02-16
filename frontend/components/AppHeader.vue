@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 // const defaultsStore = useDefaultsStore()
 // const { defaults } = storeToRefs(defaultsStore)
-
-const navVisible = ref(false)
+const layoutStore = useLayoutStore()
+const { layout } = storeToRefs(layoutStore)
 
 const toggleNavigation = () => {
-  navVisible.value = !navVisible.value
+  layout.value.openOverlay.navigation = !layout.value.openOverlay.navigation
 }
 </script>
 
@@ -14,10 +14,10 @@ const toggleNavigation = () => {
     <!-- <h1>{{ defaults.appTitle }}</h1> -->
     <SiteLogo />
     <button class="button" @click="toggleNavigation">
-      <span v-if="navVisible" class="close" />
+      <span v-if="layout.openOverlay.navigation" class="close" />
       <span v-else class="open" />
     </button>
-    <NavList :is-visible="navVisible" />
+    <NavList />
     <!-- <LanguageSwitch /> -->
   </header>
 </template>
