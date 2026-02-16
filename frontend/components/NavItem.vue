@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 const breakpointsStore = useBreakpointsStore()
 const { isLarge } = storeToRefs(breakpointsStore)
+const layoutStore = useLayoutStore()
+const { layout } = storeToRefs(layoutStore)
 
 const emit = defineEmits(['toggle-sub-nav'])
 
@@ -45,6 +47,10 @@ const showSubNav = computed(() => {
   if (isLarge.value && showChildren.value) return true
   return isCurrent.value
 })
+
+const closeNav = () => {
+  layout.value.openOverlay.navigation = false
+}
 </script>
 
 <template>
@@ -55,7 +61,7 @@ const showSubNav = computed(() => {
       @click="toggleSubNav"
       v-text="props.item.meta.title"
     />
-    <NuxtLink v-else :to="props.item.meta.url" class="link">
+    <NuxtLink v-else :to="props.item.meta.url" class="link" @click="closeNav">
       <span class="title" v-text="props.item.meta.title" />
     </NuxtLink>
     <!-- use classic ul tag for sub-navigation to prevent recursive component issues. This happens even though I'm making sure to only fetch one level deep from the backend. Dedicated components don't work either.  -->
