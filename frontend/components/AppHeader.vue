@@ -46,6 +46,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   width: 100%;
+  background-color: var(--white);
 }
 
 .button {
