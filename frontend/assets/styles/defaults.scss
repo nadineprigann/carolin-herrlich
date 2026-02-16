@@ -20,6 +20,8 @@
 html {
   @include fs-html;
 
+  height: 100%;
+
   // https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior
   // &:focus-within {
   //   scroll-behavior: smooth;
@@ -30,6 +32,7 @@ body {
   @include ff-regular;
   @include fs-body;
 
+  height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

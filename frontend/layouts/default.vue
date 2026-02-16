@@ -12,7 +12,8 @@ const componentStyle = computed(() => {
 <template>
   <div class="layout-default">
     <AppHeader />
-    <div :style="componentStyle">
+    <!-- :style="componentStyle" -->
+    <div>
       <slot />
     </div>
     <!-- <AppFooter /> -->

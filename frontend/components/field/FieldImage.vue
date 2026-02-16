@@ -94,7 +94,22 @@ const longDescId = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-// .field-image {}
+.field-image {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto; /* img gets space, caption only as-needed */
+  width: auto;
+  height: 100%;
+  min-height: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+  }
+}
+
 .image-caption {
   &.is-hidden {
     @include visually-hidden;
