@@ -17,12 +17,17 @@ const showChildren = computed(() => {
   return hasChildren.value && props.item.children.length > 0
 })
 
-const className = computed(() => {
-  return props.item.meta.template === 'level-a' ? 'nav-item' : 'sub-nav-item'
+// evalute if item is top level. level-a and blog is only used for semantic structure for the user
+const isTopLevel = computed(() => {
+  return (
+    props.item.meta.template === 'level-a' ||
+    props.item.meta.template === 'blog'
+  )
 })
 
-// only render link for non-level-a items. level-a is only used for semantic structure for the user
-const isLevelA = computed(() => props.item.meta.template === 'level-a')
+const className = computed(() => {
+  return isTopLevel.value ? 'nav-item' : 'sub-nav-item'
+})
 
 const isCurrent = computed(() => {
   return props.item.meta.id === props.currentSubNav
@@ -45,7 +50,7 @@ const showSubNav = computed(() => {
 <template>
   <li :class="className">
     <span
-      v-if="isLevelA"
+      v-if="isTopLevel"
       class="title"
       @click="toggleSubNav"
       v-text="props.item.meta.title"
