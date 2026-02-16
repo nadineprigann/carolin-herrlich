@@ -2,8 +2,11 @@
 const breakpointsStore = useBreakpointsStore()
 const { isLarge } = storeToRefs(breakpointsStore)
 
+const emit = defineEmits(['toggle-sub-nav'])
+
 const props = defineProps<{
-  item: Route
+  item: Routes
+  currentSubNav: number | null
 }>()
 
 const hasChildren = computed(() => {
@@ -21,40 +24,38 @@ const className = computed(() => {
 // only render link for non-level-a items. level-a is only used for semantic structure for the user
 const isLevelA = computed(() => props.item.meta.template === 'level-a')
 
-const isSubNavVisible = ref(false)
-
-const handleSubNavVisibility = () => {
-  isLarge.value
-    ? (isSubNavVisible.value = true)
-    : (isSubNavVisible.value = false)
-}
+const isCurrent = computed(() => {
+  return props.item.meta.id === props.currentSubNav
+})
 
 // only toggles the subnav of the item that was clicked due to putting the click event on the specific nav item
 const toggleSubNav = () => {
-  // do not toggle on large screens as it is shown by default
+  // do not emit on large screens as it is shown by default
   if (isLarge.value || !showChildren.value) return
-  isSubNavVisible.value = !isSubNavVisible.value
+  emit('toggle-sub-nav', props.item.meta.id)
 }
 
-watch(
-  isLarge,
-  (newValue) => {
-    // note: newValue is necessary to be able to pass the updated value of isLarge to other refs
-    isSubNavVisible.value = newValue
-  },
-  { immediate: true }, // make sure it updates right when component initializes, not only on breakpoint change
-)
+const showSubNav = computed(() => {
+  // if we are on large screens and the item has children, ignore current and show them all. if we're on smaller screens, only show the children of the current item. no watcher needed since computed reacts to changes in isLarge and currentSubNav
+  if (isLarge.value && showChildren.value) return true
+  return isCurrent.value
+})
 </script>
 
 <template>
-  <li :class="className" @click="toggleSubNav">
-    <span v-if="isLevelA" class="title" v-text="props.item.meta.title" />
+  <li :class="className">
+    <span
+      v-if="isLevelA"
+      class="title"
+      @click="toggleSubNav"
+      v-text="props.item.meta.title"
+    />
     <NuxtLink v-else :to="props.item.meta.url" class="link">
       <span class="title" v-text="props.item.meta.title" />
     </NuxtLink>
     <!-- use classic ul tag for sub-navigation to prevent recursive component issues. This happens even though I'm making sure to only fetch one level deep from the backend. Dedicated components don't work either.  -->
     <template v-if="showChildren">
-      <ul v-show="isSubNavVisible" class="sub-nav-list">
+      <ul v-show="showSubNav" class="sub-nav-list">
         <NavItem
           v-for="child in props.item.children"
           :key="`sub-${child.name}`"

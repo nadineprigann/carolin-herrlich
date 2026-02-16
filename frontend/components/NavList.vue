@@ -9,12 +9,24 @@ const visibleRoutes = computed(() => {
     (item) => item.meta.template !== 'home',
   )
 })
+
+const currentSubNav = ref<number | null>(null)
+
+const handleToggleSubNav = (id: number) => {
+  currentSubNav.value = currentSubNav.value === id ? null : id
+}
 </script>
 
 <template>
   <nav v-if="layout.openOverlay.navigation" class="nav" aria-label="Navigation">
     <ul class="nav-list">
-      <NavItem v-for="item in visibleRoutes" :key="item.name" :item="item" />
+      <NavItem
+        v-for="item in visibleRoutes"
+        :key="item.name"
+        :item="item"
+        :current-sub-nav="currentSubNav"
+        @toggle-sub-nav="handleToggleSubNav"
+      />
     </ul>
   </nav>
 </template>
