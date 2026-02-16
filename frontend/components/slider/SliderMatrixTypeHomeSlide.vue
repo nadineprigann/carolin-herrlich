@@ -10,16 +10,16 @@ const showCategories = computed(() => {
 
 <template>
   <div v-if="props.item.title" class="slider-matrix-type-home-slide">
-    <NuxtLink :to="props.item.link.meta.url" class="icon">
-      <div class="title" v-html="props.item.title" />
+    <NuxtLink :to="props.item.link.meta.url" class="link">
+      <div class="title" v-text="props.item.title" />
       <div v-if="props.item.date_start" class="dates">
-        <span v-html="props.item.date_start" />
-        <span v-if="props.item.date_end" v-html="props.item.date_end" />
+        <span v-text="props.item.date_start" />
+        <span v-if="props.item.date_end" v-text="props.item.date_end" />
       </div>
       <FieldTextarea v-if="props.item.text" :text="props.item.text" />
-      <FieldImage :image="props.item.image" />
-      <CategoryList v-if="showCategories" :categories="props.item.categories" />
     </NuxtLink>
+    <FieldImage :image="props.item.image" />
+    <CategoryList v-if="showCategories" :categories="props.item.categories" />
   </div>
 </template>
 
