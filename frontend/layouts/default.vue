@@ -1,7 +1,20 @@
+<script lang="ts" setup>
+const layoutStore = useLayoutStore()
+const { layout } = storeToRefs(layoutStore)
+
+const componentStyle = computed(() => {
+  return {
+    paddingTop: layout.value.headerHeight + 'px',
+  }
+})
+</script>
+
 <template>
   <div class="layout-default">
     <AppHeader />
-    <slot />
+    <div :style="componentStyle">
+      <slot />
+    </div>
     <!-- <AppFooter /> -->
   </div>
 </template>
