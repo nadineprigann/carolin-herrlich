@@ -4,13 +4,13 @@ interface Props {
   image: Image
   sizes?: string
   loading?: 'eager' | 'lazy'
-  show_caption?: boolean
+  showCaption?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   sizes: '100vw',
   loading: 'lazy',
-  show_caption: true,
+  showCaption: true,
 })
 
 const modeClass = computed(() => {
@@ -21,7 +21,7 @@ const modeClass = computed(() => {
 
 const figCaptionClass = computed(() => {
   return {
-    'is-hidden': !props.show_caption,
+    'is-hidden': !props.showCaption,
   }
 })
 
@@ -94,7 +94,22 @@ const longDescId = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-// .field-image {}
+.field-image {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto; /* img gets space, caption only as-needed */
+  width: auto;
+  height: 100%;
+  min-height: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+  }
+}
+
 .image-caption {
   &.is-hidden {
     @include visually-hidden;

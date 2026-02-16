@@ -2,6 +2,42 @@
 const props = defineProps<{
   items?: MatrixItem[]
 }>()
+
+const currentSlide = ref(0)
+let interval: number | undefined
+const delay = 3000
+
+const firstSlide = computed(() => props.items?.[0])
+const slideCount = computed(() => props.items?.length)
+const lastSlide = computed(() => currentSlide.value === slideCount.value - 1)
+
+const prev = () => {
+  if (firstSlide.value) {
+    currentSlide.value = slideCount.value - 1
+  } else {
+    currentSlide.value--
+  }
+}
+
+const next = () => {
+  currentSlide.value = (currentSlide.value + 1) % slideCount.value
+}
+
+const autoplay = () => {
+  interval = setInterval(next, delay)
+}
+
+onMounted(() => {
+  if (slideCount.value > 1) autoplay()
+})
+
+onActivated(() => {
+  if (slideCount.value > 1) autoplay()
+})
+
+onDeactivated(() => {
+  clearInterval(interval)
+})
 </script>
 
 <template>
@@ -15,5 +51,9 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-// .slider-matrix {}
+.slider-matrix {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+}
 </style>
