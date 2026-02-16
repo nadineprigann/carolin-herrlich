@@ -10,10 +10,8 @@ const visibleRoutes = computed(() => {
   )
 })
 
-const currentSubNav = ref<number | null>(null)
-
 const handleToggleSubNav = (id: number) => {
-  currentSubNav.value = currentSubNav.value === id ? null : id
+  layout.value.currentSubNav = layout.value.currentSubNav === id ? null : id
 }
 </script>
 
@@ -24,7 +22,6 @@ const handleToggleSubNav = (id: number) => {
         v-for="item in visibleRoutes"
         :key="item.name"
         :item="item"
-        :current-sub-nav="currentSubNav"
         @toggle-sub-nav="handleToggleSubNav"
       />
     </ul>

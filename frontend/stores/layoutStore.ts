@@ -11,6 +11,7 @@ export const useLayoutStore = defineStore('layout', () => {
       navigation: false,
     },
     currentFootnote: null as number | null,
+    currentSubNav: null as number | null,
   })
 
   return {

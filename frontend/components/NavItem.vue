@@ -8,7 +8,6 @@ const emit = defineEmits(['toggle-sub-nav'])
 
 const props = defineProps<{
   item: Routes
-  currentSubNav: number | null
 }>()
 
 const hasChildren = computed(() => {
@@ -32,7 +31,7 @@ const className = computed(() => {
 })
 
 const isCurrent = computed(() => {
-  return props.item.meta.id === props.currentSubNav
+  return props.item.meta.id === layout.value.currentSubNav
 })
 
 // only toggles the subnav of the item that was clicked due to putting the click event on the specific nav item
