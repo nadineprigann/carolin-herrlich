@@ -96,8 +96,7 @@ const longDescId = computed(() => {
 <style lang="scss" scoped>
 .field-image {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto; /* img gets space, caption only as-needed */
-  width: auto;
+  grid-template-rows: minmax(0, 1fr) auto; // image gets the rest, content gets space as intrinsically needed
   height: 100%;
   min-height: 0;
 
@@ -107,6 +106,16 @@ const longDescId = computed(() => {
     height: 100%;
     min-height: 0;
     object-fit: contain;
+  }
+
+  &.is-portrait {
+    // height: 100%;
+    // margin: 0 auto;
+
+    img {
+      // width: auto;
+      // height: 100%;
+    }
   }
 }
 
