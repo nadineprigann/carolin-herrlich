@@ -42,7 +42,7 @@ onMounted(() => {
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 2; // higher than 1 due to links on home
   display: flex;
   justify-content: space-between;
   width: 100%;
