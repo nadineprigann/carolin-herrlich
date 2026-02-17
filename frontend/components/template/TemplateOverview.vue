@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+const breakpointsStore = useBreakpointsStore()
+const { isMedium } = storeToRefs(breakpointsStore)
+
 interface TemplateOverview extends Page {
   fields: {
     meta_description: string
@@ -19,11 +22,11 @@ const labels = reactive({
   info: 'Infos zu dieser Seite',
 })
 
-const showChildren = computed(() => {
+const hasChildren = computed(() => {
   return children?.value?.length > 0
 })
 
-const showItems = computed(() => {
+const hasItems = computed(() => {
   return items?.value?.length > 0
 })
 
@@ -32,6 +35,17 @@ const infoVisible = ref(false)
 function showInfo() {
   infoVisible.value = !infoVisible.value
 }
+
+const coverImages = computed(() => {
+  const images = []
+  if (!hasChildren.value) return
+  children.value.forEach((child) => images.push(child.fields.image))
+  return images
+})
+
+const showSlider = computed(() => {
+  return coverImages.value.length > 0 && !isMedium.value
+})
 
 onDeactivated(() => {
   infoVisible.value = false
@@ -51,8 +65,9 @@ onDeactivated(() => {
       />
       <FieldTextarea v-show="infoVisible" :text="fields.text" />
     </section>
-    <OverviewList v-if="showChildren" :items="children" />
-    <OverviewList v-if="showItems" :items="items" />
+    <ImageSlider v-if="showSlider" :slides="coverImages" />
+    <OverviewList v-if="hasChildren" :items="children" />
+    <OverviewList v-if="hasItems" :items="items" />
     <RelatedContent :related="fields.related_content" />
   </main>
 </template>

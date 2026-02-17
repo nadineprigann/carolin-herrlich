@@ -12,5 +12,15 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-// .image-slide {}
+.image-slide {
+  width: 100%;
+  height: 100%;
+
+  // overflow: hidden;
+
+  /* The actual <img class="image"> inside FieldImage */
+  // :deep(img) {
+  //   // object-fit: cover;
+  // }
+}
 </style>
