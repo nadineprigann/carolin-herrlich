@@ -98,14 +98,14 @@ const longDescId = computed(() => {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto; // image gets the rest, content gets space as intrinsically needed
   height: 100%;
-  min-height: 0;
+  min-height: 0; // allow image to shrink within the grid
 
   img {
     display: block;
     width: 100%;
     height: 100%;
     min-height: 0;
-    object-fit: contain;
+    object-fit: cover;
   }
 
   &.is-portrait {
