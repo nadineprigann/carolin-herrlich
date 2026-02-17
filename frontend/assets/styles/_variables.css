@@ -25,6 +25,15 @@
 
   /* https://cubic-bezier.com/#.55,0,.1,1 */
   --swift-out: cubic-bezier(0.55, 0, 0.1, 1);
+
+  /* Durations */
+  --xshort: 100ms;
+  --short: 250ms;
+  --medium: 300ms;
+  --long: 350ms;
+  --xlong: 750ms;
+  --xxlong: 850ms;
+  --xxxlong: 1500ms;
 }
 
 /* Breakpoints have to be kept in sync with the ones defined in _breakpoints.scss */
