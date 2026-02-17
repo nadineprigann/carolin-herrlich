@@ -40,6 +40,7 @@ body {
 // https://www.joshwcomeau.com/css/custom-css-reset/#nine-root-stacking-context-10
 // stylelint-disable-next-line selector-id-pattern
 #__nuxt {
+  height: 100%;
   isolation: isolate;
 }
 

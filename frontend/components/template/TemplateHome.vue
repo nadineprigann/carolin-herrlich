@@ -17,14 +17,16 @@ const { fields } = toRefs(props.data)
 </script>
 
 <template>
-  <main class="template-home" :style="componentStyle">
-    <FieldText element="h3" :text="fields.subtitle" />
-    <section class="links">
-      <FieldLink
-        v-for="(link, index) in fields.custom_links"
-        :key="index"
-        :link="link"
-      />
+  <main class="template-home">
+    <section class="content">
+      <FieldText element="h3" :text="fields.subtitle" />
+      <div class="links">
+        <FieldLink
+          v-for="(link, index) in fields.custom_links"
+          :key="index"
+          :link="link"
+        />
+      </div>
     </section>
     <SliderMatrix :items="fields.slider" />
   </main>
@@ -32,14 +34,9 @@ const { fields } = toRefs(props.data)
 
 <style lang="scss" scoped>
 .template-home {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr); /* text, then slider */
+  min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   overflow: hidden;
-}
-
-.subtitle {
-  flex: 1 1 0;
-  min-height: 0;
 }
 </style>

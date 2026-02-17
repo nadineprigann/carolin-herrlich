@@ -30,7 +30,7 @@ const showCategories = computed(() => {
   display: grid;
 
   // implicitly create two rows, one for the image and one for the content
-  // grid-template-rows: auto auto; // content gets space as needed, image gets the rest;
+  grid-template-rows: minmax(0, 1fr) auto; // content gets space as needed, image gets the rest;
   height: 100%;
   overflow: hidden;
 }
@@ -46,23 +46,9 @@ const showCategories = computed(() => {
   //   overflow: hidden;
   // }
 
-  // /* The actual <img class="image"> inside FieldImage */
-  // :deep(img.image) {
-  //   display: block;
-  //   width: 100%;
-  //   height: 100%;
-  //   min-height: 0;
-  //   object-fit: contain;
-  // }
-
-  // &.isPortrait {
-  //   height: 100%;s
-  //   margin: 0 auto;
-
-  //   img {
-  //     width: auto;
-  //     height: 100%;
-  //   }
-  // }
+  /* The actual <img class="image"> inside FieldImage */
+  :deep(img) {
+    object-fit: cover;
+  }
 }
 </style>

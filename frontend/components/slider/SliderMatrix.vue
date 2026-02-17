@@ -53,7 +53,7 @@ onDeactivated(() => {
 <style lang="scss" scoped>
 .slider-matrix {
   position: relative;
-  flex: 1 1 0;
+  flex: 1 1 0; // allow to grow and shrink, but start at 0 to prevent overflow when there are no items
   min-height: 0;
 }
 </style>
