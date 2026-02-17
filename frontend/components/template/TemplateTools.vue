@@ -71,8 +71,8 @@ onBeforeRouteLeave(() => {
 
 <template>
   <main class="template-tools">
-    <FieldText element="h2" :text="fields.title" />
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
+    <FieldText element="h2" :text="fields.title" />
     <section>
       <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="props.data.children" />

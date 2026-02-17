@@ -17,9 +17,9 @@ const { fields, breadcrumbs } = toRefs(props.data)
 
 <template>
   <main class="template-chapter">
+    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" />
     <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
-    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldMatrix :items="fields.content" />
     <RelatedContent :related="fields.related_content" />
   </main>
