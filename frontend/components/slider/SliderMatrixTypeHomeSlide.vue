@@ -39,23 +39,11 @@ const showCategories = computed(() => {
   grid-template-rows: minmax(0, 1fr) auto; // content gets space as needed, image gets the rest;
   height: 100%;
   overflow: hidden;
-}
-
-.image {
-  min-height: 0; // allow image to shrink within the grid
-
-  /* FieldImage renders <figure class="field-image"> */
-  // :deep(.field-image) {
-  //   display: grid;
-  //   grid-template-rows: minmax(0, 1fr) auto; /* img gets space, caption only as-needed */
-  //   min-height: 0;
-  //   overflow: hidden;
-  // }
 
   /* The actual <img class="image"> inside FieldImage */
-  :deep(img) {
-    object-fit: cover;
-  }
+  // :deep(img) {
+  //   object-fit: cover;
+  // }
 }
 
 .header {
