@@ -44,9 +44,13 @@ onMounted(() => {
   left: 0;
   z-index: 1;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   background-color: var(--white);
+
+  @media (min-width: $medium) {
+    justify-content: center;
+  }
 }
 
 .button {
