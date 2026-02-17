@@ -19,7 +19,7 @@ const { fields } = toRefs(props.data)
 <template>
   <main class="template-home">
     <section class="content">
-      <FieldText element="h3" :text="fields.subtitle" />
+      <FieldText element="h3" :text="fields.subtitle" class="subtitle" />
       <div class="links">
         <FieldLink
           v-for="(link, index) in fields.custom_links"
@@ -34,9 +34,20 @@ const { fields } = toRefs(props.data)
 
 <style lang="scss" scoped>
 .template-home {
+  position: relative; // for links positioning
   display: grid;
   grid-template-rows: auto minmax(0, 1fr); /* text, then slider */
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   overflow: hidden;
+}
+
+.subtitle {
+  text-align: center;
+}
+
+.links {
+  position: absolute;
+  top: 10%;
+  z-index: 1;
 }
 </style>
