@@ -26,15 +26,30 @@ const showChildren = computed(() => {
 const showItems = computed(() => {
   return items?.value?.length > 0
 })
+
+const infoVisible = ref(false)
+
+function showInfo() {
+  infoVisible.value = !infoVisible.value
+}
+
+onDeactivated(() => {
+  infoVisible.value = false
+})
 </script>
 
 <template>
   <main class="template-overview">
-    <FieldText element="h2" :text="fields.title" />
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
+    <FieldText element="h2" :text="fields.title" />
     <section class="info-section">
-      <FieldText element="h4" class="label" :text="labels.info" />
-      <FieldTextarea :text="fields.text" />
+      <FieldText
+        element="h4"
+        class="label"
+        :text="labels.info"
+        @click="showInfo"
+      />
+      <FieldTextarea v-show="infoVisible" :text="fields.text" />
     </section>
     <OverviewList v-if="showChildren" :items="children" />
     <OverviewList v-if="showItems" :items="items" />
