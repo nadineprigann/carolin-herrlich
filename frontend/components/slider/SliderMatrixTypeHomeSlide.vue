@@ -13,11 +13,17 @@ const showCategories = computed(() => {
     <FieldImage :image="props.item.image" :show-caption="false" class="image" />
     <section class="content">
       <NuxtLink :to="props.item.link.meta.url" class="link">
-        <div class="title" v-text="props.item.title" />
-        <div v-if="props.item.date_start" class="dates">
-          <span v-text="props.item.date_start" />
-          <span v-if="props.item.date_end" v-text="props.item.date_end" />
-        </div>
+        <section class="header">
+          <div class="title" v-text="props.item.title" />
+          <div v-if="props.item.date_start" class="dates">
+            <span class="date-start" v-text="props.item.date_start" />
+            <span
+              v-if="props.item.date_end"
+              class="date-end"
+              v-text="props.item.date_end"
+            />
+          </div>
+        </section>
         <FieldTextarea v-if="props.item.text" :text="props.item.text" />
       </NuxtLink>
       <CategoryList v-if="showCategories" :categories="props.item.categories" />
@@ -49,6 +55,20 @@ const showCategories = computed(() => {
   /* The actual <img class="image"> inside FieldImage */
   :deep(img) {
     object-fit: cover;
+  }
+}
+
+.header {
+  @media (min-width: $medium) {
+    display: flex;
+    flex-wrap: wrap; // allow wrapping to multiple lines if needed
+    justify-content: space-between;
+  }
+}
+
+.date-end {
+  &::before {
+    content: ' – ';
   }
 }
 </style>
