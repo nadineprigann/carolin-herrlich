@@ -40,6 +40,17 @@ const showFootnote = computed(() => {
   return Object.keys(currentNote.value).length > 0 && noteVisible.value
 })
 
+const contextVisible = ref(false)
+const depthVisible = ref(false)
+
+function toggleContext() {
+  contextVisible.value = !contextVisible.value
+}
+
+function toggleDepth() {
+  depthVisible.value = !depthVisible.value
+}
+
 // watch for store which gets its updates from FieldMatrixTypeText.vue on note click to compare stored note number to context prop to evaluate current note (stored in currentNote)
 watch(
   () => layout.currentFootnote,
@@ -63,13 +74,24 @@ watch(
       v-for="(content, index) in props.related"
       :key="`related-${index}`"
     >
+      <!-- TODO: if no children, use disabled state. necessary to show at all times for consistent layout on overview page (with cover image). if rendered only when content is there, in-depth moves up and its content is flashed. OR: dynamically with refs. -->
       <section v-if="showContext" class="context-section">
-        <FieldText element="h4" class="label" :text="labels.context" />
-        <NumberRowList :table="relatedItem.context" />
+        <FieldText
+          element="h4"
+          class="label"
+          :text="labels.context"
+          @click="toggleContext"
+        />
+        <NumberRowList v-if="contextVisible" :table="relatedItem.context" />
       </section>
       <section v-if="showInDepth" class="in-depth-section">
-        <FieldText element="h4" class="label" :text="labels.in_depth" />
-        <InDepthList :items="content.in_depth" />
+        <FieldText
+          element="h4"
+          class="label"
+          :text="labels.in_depth"
+          @click="toggleDepth"
+        />
+        <InDepthList v-if="depthVisible" :items="content.in_depth" />
       </section>
     </template>
     <!-- TODO: maybe use vue-portal to render the footnote outside of this section? -->
