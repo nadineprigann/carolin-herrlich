@@ -73,7 +73,7 @@ onDeactivated(() => {
           :text="labels.info"
           @click="toggleInfo"
         />
-        <FieldTextarea v-show="infoVisible" :text="fields.text" />
+        <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
       <ImageSlider v-if="showSlider" :slides="coverImages" />
       <!-- <OverviewList v-if="hasChildren" :items="children" /> -->
@@ -121,7 +121,6 @@ onDeactivated(() => {
 
 .content-section {
   position: relative;
-  z-index: 1;
 
   // grid-template-rows: auto auto auto minmax(0, 1fr) auto; // give all elements the space they need and let slider take the remaining space. OR categories under it. but for now: no grid on mobile to stack all according to its space.
   height: 100%;
@@ -132,15 +131,44 @@ onDeactivated(() => {
   }
 }
 
+.info-section {
+  position: relative;
+  z-index: 1; // above slider on mobile, but below content on desktop
+  background-color: var(--white);
+}
+
+.text {
+  position: absolute;
+  width: 100%;
+  height: 30vh; // keep in sync with slider height in ImageSlider.vue to cover slider while reading
+  background-color: var(--white);
+
+  @media (min-width: $medium) {
+    // reset stuff on desktop
+    position: static;
+    height: auto;
+    background-color: none;
+  }
+}
+
 .overview-list {
   @include list-reset;
 
+  position: relative;
+  z-index: 3; // above all content, also cover image
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
   @media (min-width: $medium) {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.breadcrumbs,
+.title,
+.related {
+  position: relative;
+  z-index: 3; // above all content, also cover image
 }
 
 .cover {
@@ -153,7 +181,7 @@ onDeactivated(() => {
   @media (min-width: $medium) {
     position: absolute;
     inset: 0; // shorthand for top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 0;
+    z-index: 2; // cover over info section but under other content like breadcrumbs and title
     display: block;
     width: 100vw;
     height: 100%;
@@ -170,12 +198,5 @@ onDeactivated(() => {
       object-fit: cover;
     }
   }
-}
-
-.breadcrumbs,
-.title,
-.related {
-  position: relative;
-  z-index: 2;
 }
 </style>
