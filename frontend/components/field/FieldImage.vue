@@ -5,17 +5,20 @@ interface Props {
   sizes?: string
   loading?: 'eager' | 'lazy'
   showCaption?: boolean
+  mode?: 'slider' | 'default'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   sizes: '100vw',
   loading: 'lazy',
   showCaption: true,
+  mode: 'default',
 })
 
 const modeClass = computed(() => {
   return {
     'is-portrait': isPortrait.value,
+    'is-slider': props.mode === 'slider',
   }
 })
 
@@ -53,7 +56,7 @@ const longDescId = computed(() => {
 </script>
 
 <template>
-  <figure v-if="props.image" class="field-image">
+  <figure v-if="props.image" class="field-image" :class="modeClass">
     <img
       v-if="props.image && props.image.resized"
       :srcset="srcset"
@@ -61,7 +64,6 @@ const longDescId = computed(() => {
       :loading="props.loading"
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
-      :class="modeClass"
       class="image"
     />
     <img
@@ -70,17 +72,16 @@ const longDescId = computed(() => {
       :loading="props.loading"
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
-      :class="modeClass"
       class="image"
     />
     <figcaption :class="figCaptionClass" class="image-caption">
       <span class="caption">{{ props.image.caption }}</span>
       <a class="link" :href="props.image.external_link">
-        <span> © {{ props.image.external_link_title }}</span>
+        <span> © {{ props.image.external_link_title }}. </span>
       </a>
       <span v-if="props.image.year" class="year">, {{ props.image.year }}</span>
       <span class="license"
-        >.&nbsp;{{ text.license }}{{ props.image.license.fields.title }}.
+        >{{ text.license }}{{ props.image.license.fields.title }}.
       </span>
     </figcaption>
     <p
@@ -110,18 +111,45 @@ const longDescId = computed(() => {
     // object-fit: cover;
   }
 
-  &.is-portrait {
-    // height: 100%;
-    // margin: 0 auto;
+  // &.is-portrait {
+  //   width: auto;
+  //   height: 100%;
+
+  //   // margin: 0 auto;
+
+  //   img {
+  //     width: auto;
+  //     height: 100%;
+  //   }
+  // }
+
+  &.is-slider {
+    display: inline-grid; /* shrink-wrap to content width */
+    flex: 0 0 auto; /* prevent shrinking in flex container */
+    width: auto;
+    scroll-snap-align: start;
 
     img {
-      // width: auto;
-      // height: 100%;
+      display: block;
+      width: auto;
+      height: 100%;
     }
   }
 }
 
 .image-caption {
+  // width: 100%;
+  // max-width: max-content;
+
+  // word-break: break-word;
+  // overflow-wrap: anywhere;
+
+  .is-slider & {
+    width: 100%;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
   &.is-hidden {
     @include visually-hidden;
   }
