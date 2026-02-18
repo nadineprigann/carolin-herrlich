@@ -102,6 +102,8 @@ watch(
 
 <style lang="scss" scoped>
 .related-content-section {
+  @include center-content;
+
   @media (min-width: $medium) {
     // is set on parent template, so make sure to alwys set it to make it work on desktop
     grid-row: 2 / 3;

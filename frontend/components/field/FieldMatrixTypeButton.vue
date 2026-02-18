@@ -11,5 +11,7 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-// .field-matrix-type-button {}
+.field-matrix-type-button {
+  @include center-content;
+}
 </style>
