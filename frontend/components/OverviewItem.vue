@@ -43,8 +43,11 @@ function resetCurrentItem() {
 </script>
 
 <template>
-  <li class="overview-item" @mouseenter="getCurrentItem">
-    <!-- @mouseleave="resetCurrentItem" -->
+  <li
+    class="overview-item"
+    @mouseenter="getCurrentItem"
+    @mouseleave="resetCurrentItem"
+  >
     <!-- <FieldImage
       :image="props.item.fields.image"
       class="image"
