@@ -66,8 +66,5 @@ function resetCurrentItem() {
 
 .link {
   @include link-default;
-
-  position: relative;
-  z-index: 1;
 }
 </style>
