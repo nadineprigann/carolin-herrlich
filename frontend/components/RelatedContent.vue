@@ -101,5 +101,11 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-// .related-content-section {}
+.related-content-section {
+  @media (min-width: $medium) {
+    // is set on parent template, so make sure to alwys set it to make it work on desktop
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+  }
+}
 </style>

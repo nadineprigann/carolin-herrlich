@@ -95,18 +95,18 @@ onDeactivated(() => {
           @current-item="handleCurrentItem"
         />
       </ul>
-      <!-- TODO: maybe use vue-portal to init it in the child but then render it here to prevent transition issues -->
-      <template v-if="hasCoverImage">
-        <transition name="t-fade">
-          <div v-if="currentItem" :key="currentItem.index" class="cover">
-            <FieldImage
-              :image="currentItem.fields?.image"
-              :show-caption="false"
-            />
-          </div>
-        </transition>
-      </template>
     </section>
+    <!-- TODO: maybe use vue-portal to init it in the child but then render it here to prevent transition issues -->
+    <template v-if="hasCoverImage">
+      <transition name="t-fade">
+        <div v-if="currentItem" :key="currentItem.index" class="cover">
+          <FieldImage
+            :image="currentItem.fields?.image"
+            :show-caption="false"
+          />
+        </div>
+      </transition>
+    </template>
     <RelatedContent :related="fields.related_content" class="related" />
   </main>
 </template>
@@ -121,9 +121,14 @@ onDeactivated(() => {
   display: grid;
 
   // keep myzel height the same as the subtraction value for the cover image in OverviewItem.vue
+
   grid-template-rows: 1fr 3em; // content, then myzel section. fixed height leads to problems when myzel is not there. see RelatedContent.vue but makes it possible to overflow to the bottom when myzel accordions are toggled.
-  min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   // overflow: hidden;
+  min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
+
+  @media (min-width: $medium) {
+    grid-template-columns: minmax(0, 1fr) 70% minmax(0, 1fr); // minmax to prevent overflow of cover bc it basically says removes the implicit minimum width of 1fr which makes the image "obey"
+  }
 }
 
 .content-section {
@@ -135,6 +140,10 @@ onDeactivated(() => {
   @media (min-width: $medium) {
     display: grid;
     grid-template-rows: auto auto minmax(0, 1fr) auto; // give all elements the space they need and let the info section take the remaining space
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+
+    // width: var(--content-width);
   }
 }
 
@@ -145,6 +154,10 @@ onDeactivated(() => {
   ); // above slider on mobile, but below content on desktop
 
   background-color: var(--white);
+
+  @media (min-width: $medium) {
+    background-color: transparent;
+  }
 }
 
 .text {
@@ -189,20 +202,15 @@ onDeactivated(() => {
   overflow: hidden;
 
   @media (min-width: $medium) {
-    position: absolute;
-    inset: 0; // shorthand for top: 0; left: 0; right: 0; bottom: 0;
     z-index: var(
       --s-cover-image
-    ); // cover over info section but under other content like breadcrumbs and title
+    ); // cover over info section but under other content like breadcrumbs and title. works without position due to grid
 
     display: block;
+    grid-row: 1 / 2;
+    grid-column: 1 / 3;
     width: 100vw;
     height: 100%;
-
-    // height: calc(
-    //   100vh - 3em
-    // ); // TODO: maybe fetch grid row height of parent dynamically and store in CSS var to subtract it from 100vh here -> prevents to overlap myzel-section. but: auto does not create overflow to the bottom when toggling the sections, it rather extends the row to the top. thus hard-coded for now. Keep in sync with grid row height in TemplateOverview.vue
-
     pointer-events: none;
 
     img {
