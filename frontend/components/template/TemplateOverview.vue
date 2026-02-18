@@ -127,7 +127,7 @@ onDeactivated(() => {
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
 
   @media (min-width: $medium) {
-    grid-template-columns: minmax(0, 1fr) 70% minmax(0, 1fr); // minmax to prevent overflow of cover bc it basically says removes the implicit minimum width of 1fr which makes the image "obey"
+    grid-template-columns: minmax(0, 1fr) var(--content-width) minmax(0, 1fr); // minmax to prevent overflow of cover bc it basically says removes the implicit minimum width of 1fr which makes the image "obey"
   }
 }
 
