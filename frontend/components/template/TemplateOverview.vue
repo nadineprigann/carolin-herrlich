@@ -213,8 +213,7 @@ onDeactivated(() => {
     height: 100%;
     pointer-events: none;
 
-    img {
-      width: 100%;
+    :deep(img) {
       height: 100%;
       object-fit: cover;
     }

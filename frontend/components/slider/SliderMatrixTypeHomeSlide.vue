@@ -40,10 +40,10 @@ const showCategories = computed(() => {
   height: 100%;
   overflow: hidden;
 
-  /* The actual <img class="image"> inside FieldImage */
-  // :deep(img) {
-  //   object-fit: cover;
-  // }
+  :deep(img) {
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .header {

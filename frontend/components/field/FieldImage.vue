@@ -103,9 +103,11 @@ const longDescId = computed(() => {
   img {
     display: block;
     width: 100%;
-    height: 100%;
+    min-width: 0;
+    height: auto;
     min-height: 0;
-    object-fit: cover;
+
+    // object-fit: cover;
   }
 
   &.is-portrait {
