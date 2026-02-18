@@ -31,8 +31,9 @@ const hasItems = computed(() => {
 })
 
 const infoVisible = ref(false)
+const currentItem = ref<OverviewItem | null>(null)
 
-function showInfo() {
+function toggleInfo() {
   infoVisible.value = !infoVisible.value
 }
 
@@ -47,6 +48,14 @@ const showSlider = computed(() => {
   return coverImages.value.length > 0 && !isMedium.value
 })
 
+const hasCoverImage = computed(() => {
+  return currentItem.value?.fields?.image
+})
+
+const handleCurrentItem = (item: OverviewItem | null) => {
+  currentItem.value = item
+}
+
 onDeactivated(() => {
   infoVisible.value = false
 })
@@ -54,24 +63,119 @@ onDeactivated(() => {
 
 <template>
   <main class="template-overview">
-    <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
-    <section class="info-section">
-      <FieldText
-        element="h4"
-        class="label"
-        :text="labels.info"
-        @click="showInfo"
-      />
-      <FieldTextarea v-show="infoVisible" :text="fields.text" />
+    <section class="content-section">
+      <BreadcrumbList :breadcrumbs="breadcrumbs" class="breadcrumbs" />
+      <FieldText element="h2" :text="fields.title" class="title" />
+      <section class="info-section">
+        <FieldText
+          element="h4"
+          class="label"
+          :text="labels.info"
+          @click="toggleInfo"
+        />
+        <FieldTextarea v-show="infoVisible" :text="fields.text" />
+      </section>
+      <ImageSlider v-if="showSlider" :slides="coverImages" />
+      <!-- <OverviewList v-if="hasChildren" :items="children" /> -->
+
+      <ul v-if="hasChildren" class="overview-list">
+        <OverviewItem
+          v-for="(child, index) in children"
+          :key="`overview-item-${index}`"
+          :item="child"
+          :hovered-item="currentItem"
+          @current-item="handleCurrentItem"
+        />
+      </ul>
+      <OverviewList v-if="hasItems" :items="items" />
+      <!-- TODO: maybe use vue-portal to init it in the child but then render it here to prevent transition issues -->
+      <template v-if="hasCoverImage">
+        <transition name="t-fade">
+          <div v-if="currentItem" :key="currentItem.index" class="cover">
+            <FieldImage
+              :image="currentItem.fields?.image"
+              :show-caption="false"
+            />
+          </div>
+        </transition>
+      </template>
     </section>
-    <ImageSlider v-if="showSlider" :slides="coverImages" />
-    <OverviewList v-if="hasChildren" :items="children" />
-    <OverviewList v-if="hasItems" :items="items" />
-    <RelatedContent :related="fields.related_content" />
+    <RelatedContent :related="fields.related_content" class="related" />
   </main>
 </template>
 
+<style lang="scss">
+// defined in _transitions.scss, variables in _variables.scss
+@include t-fade($duration: var(--xshort));
+</style>
+
 <style lang="scss" scoped>
-// .template-overview {}
+.template-overview {
+  display: grid;
+
+  // keep myzel height the same as the subtraction value for the cover image in OverviewItem.vue
+  grid-template-rows: 1fr 3em; /* text, then slider */
+  min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
+  // overflow: hidden;
+}
+
+.content-section {
+  position: relative;
+  z-index: 1;
+
+  // grid-template-rows: auto auto auto minmax(0, 1fr) auto; // give all elements the space they need and let slider take the remaining space. OR categories under it. but for now: no grid on mobile to stack all according to its space.
+  height: 100%;
+
+  @media (min-width: $medium) {
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto; // give all elements the space they need and let the info section take the remaining space
+  }
+}
+
+.overview-list {
+  @include list-reset;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: $medium) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cover {
+  display: none;
+
+  // border-top-left-radius: var(--border-radius-small);
+  // border-top-right-radius: var(--border-radius-small);
+  overflow: hidden;
+
+  @media (min-width: $medium) {
+    position: absolute;
+    inset: 0; // shorthand for top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    display: block;
+    width: 100vw;
+    height: 100%;
+
+    // height: calc(
+    //   100vh - 3em
+    // ); // TODO: maybe fetch grid row height of parent dynamically and store in CSS var to subtract it from 100vh here -> prevents to overlap myzel-section. but: auto does not create overflow to the bottom when toggling the sections, it rather extends the row to the top. thus hard-coded for now. Keep in sync with grid row height in TemplateOverview.vue
+
+    pointer-events: none;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.breadcrumbs,
+.title,
+.related {
+  position: relative;
+  z-index: 2;
+}
 </style>
