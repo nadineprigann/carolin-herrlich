@@ -19,8 +19,8 @@ const props = defineProps<{
   // overflow: hidden;
 
   /* The actual <img class="image"> inside FieldImage */
-  // :deep(img) {
-  //   // object-fit: cover;
-  // }
+  :deep(img) {
+    object-fit: contain;
+  }
 }
 </style>
