@@ -66,7 +66,7 @@ onDeactivated(() => {
     <section class="content-section">
       <BreadcrumbList :breadcrumbs="breadcrumbs" class="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
-      <section class="info-section">
+      <section v-if="fields.text" class="info-section">
         <FieldText
           element="h4"
           class="label"
@@ -114,7 +114,7 @@ onDeactivated(() => {
   display: grid;
 
   // keep myzel height the same as the subtraction value for the cover image in OverviewItem.vue
-  grid-template-rows: 1fr 3em; /* text, then slider */
+  grid-template-rows: 1fr 3em; // content, then myzel section. fixed height leads to problems when myzel is not there. see RelatedContent.vue but makes it possible to overflow to the bottom when myzel accordions are toggled.
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   // overflow: hidden;
 }
@@ -170,6 +170,7 @@ onDeactivated(() => {
 
   @media (min-width: $medium) {
     grid-template-columns: repeat(3, 1fr);
+    grid-row: 4; // make sure to always set to last row to prevent layout breaking when info-section is empty and therefore not rendered
   }
 }
 
