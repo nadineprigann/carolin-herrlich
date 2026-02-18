@@ -48,6 +48,6 @@ const { fields } = toRefs(props.data)
 .links {
   position: absolute;
   top: 10%;
-  z-index: 1;
+  z-index: var(--m-upper-content); // above slider
 }
 </style>

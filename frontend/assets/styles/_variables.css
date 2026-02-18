@@ -34,6 +34,25 @@
   --xlong: 750ms;
   --xxlong: 850ms;
   --xxxlong: 1500ms;
+
+  /* Stacking Layers (z-index in central place)  */
+
+  /* like dropdown lists, toggleable content e.g. info-section on mobile */
+  --xs-dropdown: 100;
+  --s-cover-image: 200;
+
+  /* content above cover image on overview */
+  --m-upper-content: 300;
+  --l-header: 600;
+
+  /* nav, filters */
+  --xl-overlay: 700;
+
+  /* --xxl-overlay: 800; */
+
+  /* --z-long: 350; */
+
+  /* --z-: 750; */
 }
 
 /* Breakpoints have to be kept in sync with the ones defined in _breakpoints.scss */

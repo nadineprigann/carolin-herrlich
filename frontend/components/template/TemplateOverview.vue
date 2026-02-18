@@ -133,7 +133,10 @@ onDeactivated(() => {
 
 .info-section {
   position: relative;
-  z-index: 1; // above slider on mobile, but below content on desktop
+  z-index: var(
+    --xs-dropdown
+  ); // above slider on mobile, but below content on desktop
+
   background-color: var(--white);
 }
 
@@ -151,24 +154,23 @@ onDeactivated(() => {
   }
 }
 
+.breadcrumbs,
+.title,
+.overview-list,
+.related {
+  position: relative;
+  z-index: var(--m-upper-content); // above all content, also cover image
+}
+
 .overview-list {
   @include list-reset;
 
-  position: relative;
-  z-index: 3; // above all content, also cover image
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
   @media (min-width: $medium) {
     grid-template-columns: repeat(3, 1fr);
   }
-}
-
-.breadcrumbs,
-.title,
-.related {
-  position: relative;
-  z-index: 3; // above all content, also cover image
 }
 
 .cover {
@@ -181,7 +183,10 @@ onDeactivated(() => {
   @media (min-width: $medium) {
     position: absolute;
     inset: 0; // shorthand for top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 2; // cover over info section but under other content like breadcrumbs and title
+    z-index: var(
+      --s-cover-image
+    ); // cover over info section but under other content like breadcrumbs and title
+
     display: block;
     width: 100vw;
     height: 100%;

@@ -25,7 +25,7 @@ const toggleNavigation = () => {
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 2; // higher than 1 due to links on home
+  z-index: var(--l-header); // higher than 1 due to links on home
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -42,7 +42,7 @@ const toggleNavigation = () => {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: var(--xl-overlay);
   padding: var(--gutter);
 
   @media (min-width: $medium) {
