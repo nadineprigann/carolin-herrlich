@@ -6,11 +6,13 @@ const props = defineProps<{
 
 <template>
   <div class="field-matrix-type-table">
-    <FieldText element="h4" :text="props.item.title" />
+    <FieldText v-if="props.item.title" element="h4" :text="props.item.title" />
     <TextRowList :table="props.item.table" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-// .field-matrix-type-table {}
+.field-matrix-type-table {
+  @include center-content;
+}
 </style>

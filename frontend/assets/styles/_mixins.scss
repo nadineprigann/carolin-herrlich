@@ -98,3 +98,11 @@
   white-space: nowrap;
   border: 0;
 }
+
+@mixin center-content {
+  @media (min-width: $medium) {
+    width: var(--content-width);
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

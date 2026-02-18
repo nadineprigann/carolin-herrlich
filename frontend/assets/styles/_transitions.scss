@@ -9,3 +9,29 @@
     opacity: 0;
   }
 }
+
+@mixin t-slide(
+  $name: 't-slide',
+  $duration: 1500ms,
+  $easing: ease,
+  $delay: 0ms
+) {
+  .#{$name}-enter-active,
+  .#{$name}-leave-active {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    transition: opacity $duration $easing $delay;
+  }
+
+  .#{$name}-enter-from,
+  .#{$name}-leave-to {
+    opacity: 0;
+  }
+
+  .#{$name}-enter-to,
+  .#{$name}-leave-from {
+    opacity: 1;
+  }
+}

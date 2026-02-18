@@ -20,10 +20,10 @@ const labels = reactive({
 <template>
   <main class="template-summary">
     <div class="title-section">
+      <BreadcrumbList :breadcrumbs="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
       <FieldText element="h2" :text="labels.header" class="title" />
     </div>
-    <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldTextarea v-if="fields.text" :text="fields.text" />
     <RelatedContent :related="fields.related_content" />
   </main>

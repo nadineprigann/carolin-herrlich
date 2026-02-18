@@ -21,8 +21,8 @@ const showChildren = computed(() => {
 
 <template>
   <main class="template-blog">
-    <FieldText element="h2" :text="fields.title" />
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
+    <FieldText element="h2" :text="fields.title" />
     <section class="current-posts">
       <FieldText class="random-label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />

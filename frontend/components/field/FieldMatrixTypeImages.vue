@@ -15,5 +15,8 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-// .field-matrix-type-images {}
+.field-matrix-type-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 </style>

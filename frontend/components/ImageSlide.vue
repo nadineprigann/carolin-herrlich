@@ -12,5 +12,15 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-// .image-slide {}
+.image-slide {
+  width: 100%;
+  height: 100%;
+
+  // overflow: hidden;
+
+  :deep(img) {
+    height: 100%;
+    object-fit: contain;
+  }
+}
 </style>

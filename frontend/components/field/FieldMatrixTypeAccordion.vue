@@ -21,5 +21,7 @@ const showAccordion = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-// .field-matrix-type-accordion {}
+.field-matrix-type-accordion {
+  @include center-content;
+}
 </style>

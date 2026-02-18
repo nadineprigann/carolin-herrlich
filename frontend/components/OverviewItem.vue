@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
+const emit = defineEmits(['current-item'])
 
 const props = defineProps<{
   item: OverviewItem
@@ -31,15 +32,27 @@ const linkTo = computed(() => {
     // Normal page navigation
   } else return url
 })
+
+function getCurrentItem() {
+  emit('current-item', props.item)
+}
+
+function resetCurrentItem() {
+  emit('current-item', null)
+}
 </script>
 
 <template>
-  <li class="overview-item">
-    <FieldImage
+  <li
+    class="overview-item"
+    @mouseenter="getCurrentItem"
+    @mouseleave="resetCurrentItem"
+  >
+    <!-- <FieldImage
       :image="props.item.fields.image"
       class="image"
       :show_caption="false"
-    />
+    /> -->
     <NuxtLink :to="linkTo" class="link">
       <FieldText class="title" element="h5" :text="props.item.fields.title" />
     </NuxtLink>
@@ -49,5 +62,9 @@ const linkTo = computed(() => {
 <style lang="scss" scoped>
 .overview-item {
   // @include link-default;
+}
+
+.link {
+  @include link-default;
 }
 </style>

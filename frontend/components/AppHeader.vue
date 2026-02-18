@@ -1,27 +1,10 @@
 <script lang="ts" setup>
-// const defaultsStore = useDefaultsStore()
-// const { defaults } = storeToRefs(defaultsStore)
-import debounce from 'lodash-es/debounce'
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
 const toggleNavigation = () => {
   layout.value.openOverlay.navigation = !layout.value.openOverlay.navigation
 }
-
-const header = ref<HTMLElement | null>(null)
-
-const getHeaderHeight = () => {
-  if (!header.value) return
-  layout.value.headerHeight = header.value.offsetHeight
-}
-
-const onResize = debounce(getHeaderHeight, 150)
-
-onMounted(() => {
-  getHeaderHeight()
-  window.addEventListener('resize', onResize)
-})
 </script>
 
 <template>
@@ -42,11 +25,15 @@ onMounted(() => {
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: var(--l-header); // higher than 1 due to links on home
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   background-color: var(--white);
+
+  @media (min-width: $medium) {
+    justify-content: center;
+  }
 }
 
 .button {
@@ -55,7 +42,7 @@ onMounted(() => {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 3;
+  z-index: var(--xl-overlay);
   padding: var(--gutter);
 
   @media (min-width: $medium) {

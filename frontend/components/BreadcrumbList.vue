@@ -21,5 +21,6 @@ const showBreadcrumbs = computed(() => {
 <style lang="scss" scoped>
 .breadcrumb-list {
   @include list-reset;
+  @include center-content;
 }
 </style>

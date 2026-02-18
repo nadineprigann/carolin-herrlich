@@ -17,5 +17,8 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .category-list {
   @include list-reset;
+
+  display: flex;
+  flex-wrap: wrap; // allow wrapping to multiple lines if needed
 }
 </style>
