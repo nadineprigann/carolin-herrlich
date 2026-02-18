@@ -30,6 +30,10 @@ const hasItems = computed(() => {
   return items?.value?.length > 0
 })
 
+const hasContent = computed(() => {
+  return hasChildren.value || hasItems.value
+})
+
 const infoVisible = ref(false)
 const currentItem = ref<OverviewItem | null>(null)
 
@@ -37,10 +41,14 @@ function toggleInfo() {
   infoVisible.value = !infoVisible.value
 }
 
+// account for children from regular overview pages AND for items (categories) from overview-tools page
 const coverImages = computed(() => {
   const images = []
-  if (!hasChildren.value) return
-  children.value.forEach((child) => images.push(child.fields.image))
+  if (hasChildren.value) {
+    children.value.forEach((child) => images.push(child.fields.image))
+  } else if (hasItems.value) {
+    items.value.forEach((item) => images.push(item.fields.image))
+  } else return []
   return images
 })
 
@@ -76,18 +84,17 @@ onDeactivated(() => {
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
       <ImageSlider v-if="showSlider" :slides="coverImages" />
-      <!-- <OverviewList v-if="hasChildren" :items="children" /> -->
 
-      <ul v-if="hasChildren" class="overview-list">
+      <ul v-if="hasContent" class="overview-list">
+        <!-- use children if there are any, otherwise use items (categories on tools overview page) -->
         <OverviewItem
-          v-for="(child, index) in children"
+          v-for="(child, index) in children ?? items"
           :key="`overview-item-${index}`"
           :item="child"
           :hovered-item="currentItem"
           @current-item="handleCurrentItem"
         />
       </ul>
-      <OverviewList v-if="hasItems" :items="items" />
       <!-- TODO: maybe use vue-portal to init it in the child but then render it here to prevent transition issues -->
       <template v-if="hasCoverImage">
         <transition name="t-fade">
