@@ -5,7 +5,7 @@ interface Props {
   sizes?: string
   loading?: 'eager' | 'lazy'
   showCaption?: boolean
-  mode?: 'slider' | 'default'
+  mode?: 'content' | 'overview' | 'default'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,7 +18,8 @@ const props = withDefaults(defineProps<Props>(), {
 const modeClass = computed(() => {
   return {
     'is-portrait': isPortrait.value,
-    'is-slider': props.mode === 'slider',
+    'is-content': props.mode === 'content',
+    'is-overview': props.mode === 'overview',
   }
 })
 
@@ -123,12 +124,18 @@ const longDescId = computed(() => {
   //   }
   // }
 
-  &.is-slider {
-    display: inline-grid; /* shrink-wrap to content width */
-    flex: 0 0 auto; /* prevent shrinking in flex container */
-    width: auto;
-    scroll-snap-align: start;
+  // slider auf overview-pages on mobile
+  &.is-overview {
+    width: 100%;
+    height: 100%;
 
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &.is-content {
     img {
       display: block;
       width: auto;
