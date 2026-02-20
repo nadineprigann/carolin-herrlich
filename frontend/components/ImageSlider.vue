@@ -2,6 +2,7 @@
 const props = defineProps<{
   slides: Image[]
   mode?: 'content' | 'overview' | 'default'
+  showCaption?: boolean
 }>()
 
 const currentSlide = ref(0)
@@ -69,6 +70,7 @@ onUnmounted(stopAutoplay)
         :key="`overview-slide-${currentSlide}`"
         :slide="currentItem"
         :mode="props.mode"
+        :show-caption="props.showCaption"
       />
     </transition>
     <template v-else-if="isContent">
@@ -77,6 +79,7 @@ onUnmounted(stopAutoplay)
         :key="`content-slide-${index}`"
         :slide="slide"
         :mode="props.mode"
+        :show-caption="props.showCaption"
       />
     </template>
     <ImageSlide
@@ -84,6 +87,7 @@ onUnmounted(stopAutoplay)
       :key="`slide-${currentSlide}`"
       :slide="currentItem"
       :mode="props.mode"
+      :show-caption="props.showCaption"
     />
   </ul>
 </template>

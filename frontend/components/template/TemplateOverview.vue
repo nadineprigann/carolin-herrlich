@@ -83,7 +83,12 @@ onDeactivated(() => {
         />
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
-      <ImageSlider v-if="showSlider" :slides="coverImages" :mode="'overview'" />
+      <ImageSlider
+        v-if="showSlider"
+        :slides="coverImages"
+        :mode="'overview'"
+        :show-caption="false"
+      />
 
       <ul v-if="hasContent" class="overview-list">
         <!-- use children if there are any, otherwise use items (categories on tools overview page) -->
