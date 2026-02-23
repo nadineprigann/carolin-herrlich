@@ -135,7 +135,9 @@ onBeforeRouteLeave(() => {
 </template>
 
 <style lang="scss" scoped>
-.breadcrumb-item {
+.breadcrumb-item,
+.link {
   // @include link-default;
+  display: flex;
 }
 </style>

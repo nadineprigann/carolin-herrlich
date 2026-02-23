@@ -31,10 +31,8 @@ const { fields, breadcrumbs } = toRefs(props.data)
 </template>
 
 <style lang="scss" scoped>
-.template-chapter {
-  .title,
-  .subtitle {
-    @include center-content;
-  }
+.title,
+.subtitle {
+  @include center-content;
 }
 </style>

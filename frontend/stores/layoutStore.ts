@@ -3,9 +3,10 @@ export const useLayoutStore = defineStore('layout', () => {
     template: '',
     openOverlay: {
       checkout: false,
-      blog: false,
-      tools: false,
-      events: false,
+      // blog: false,
+      // tools: false,
+      // events: false,
+      filter: false,
       project: false,
       footnote: false,
       navigation: false,

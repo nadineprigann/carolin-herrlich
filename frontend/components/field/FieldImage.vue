@@ -5,7 +5,7 @@ interface Props {
   sizes?: string
   loading?: 'eager' | 'lazy'
   showCaption?: boolean
-  mode?: 'slider' | 'default'
+  mode?: 'content' | 'overview' | 'default'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -15,10 +15,20 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'default',
 })
 
+// const emit = defineEmits<{
+//   (e: 'image-width', width: number): void
+// }>()
+// const imageElement = ref<HTMLImageElement | null>(null)
+// // const imageWidth = ref(0)
+
+const isOverview = computed(() => props.mode === 'overview')
+const isContent = computed(() => props.mode === 'content')
+
 const modeClass = computed(() => {
   return {
     'is-portrait': isPortrait.value,
-    'is-slider': props.mode === 'slider',
+    'is-content': isContent.value,
+    'is-overview': isOverview.value,
   }
 })
 
@@ -53,12 +63,42 @@ const id = useId()
 const longDescId = computed(() => {
   return props.image?.long_description?.length ? `long-description-${id}` : null
 })
+
+// const onImageLoad = async () => {
+//   if (!isContent.value) return
+//   await nextTick() // ensures layout is settled
+//   // nextTick(() => {
+//   if (!imageElement.value) return
+//   const width = Math.round(imageElement.value.getBoundingClientRect().width)
+//   emit('image-width', width)
+//   console.log('image loaded')
+//   // })
+// }
+
+// const imageWidthStyle = computed(() => {
+//   if (!isContent.value) return {}
+//   // if (imageWidth.value) {
+//   //   return { width: `${imageWidth.value}px` }
+//   // }
+//   return imageWidth.value ? { '--media-w': `${imageWidth.value}px` } : {}
+// })
+
+// onMounted(async () => {
+//   if (!isContent.value) return
+//   await nextTick()
+//   if (imageElement.value?.complete && imageElement.value.naturalWidth > 0) {
+//     // image already loaded (cached / SSR); run handler manually
+//     onImageLoad()
+//   }
+// })
 </script>
 
 <template>
+  <!-- :style="imageWidthStyle" -->
   <figure v-if="props.image" class="field-image" :class="modeClass">
     <img
       v-if="props.image && props.image.resized"
+      ref="imageElement"
       :srcset="srcset"
       :sizes="sizes"
       :loading="props.loading"
@@ -66,23 +106,25 @@ const longDescId = computed(() => {
       :aria-describedby="longDescId"
       class="image"
     />
+    <!-- @load="onImageLoad" -->
     <img
       v-else-if="props.image && !props.image.resized"
+      ref="imageElement"
       :src="props.image.urls[0].url"
       :loading="props.loading"
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
       class="image"
     />
+    <!-- @load="onImageLoad" -->
     <figcaption :class="figCaptionClass" class="image-caption">
       <span class="caption">{{ props.image.caption }}</span>
       <a class="link" :href="props.image.external_link">
-        <span> © {{ props.image.external_link_title }}. </span>
+        <span> © {{ props.image.external_link_title }}</span>
       </a>
       <span v-if="props.image.year" class="year">, {{ props.image.year }}</span>
-      <span class="license"
-        >{{ text.license }}{{ props.image.license.fields.title }}.
-      </span>
+      <!-- {{ text.license }} -->
+      <span class="license">. {{ props.image.license.fields.title }}. </span>
     </figcaption>
     <p
       v-if="props.image.long_description.length"
@@ -123,12 +165,18 @@ const longDescId = computed(() => {
   //   }
   // }
 
-  &.is-slider {
-    display: inline-grid; /* shrink-wrap to content width */
-    flex: 0 0 auto; /* prevent shrinking in flex container */
-    width: auto;
-    scroll-snap-align: start;
+  // slider auf overview-pages on mobile
+  &.is-overview {
+    width: 100%;
+    height: 100%;
 
+    img {
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &.is-content {
     img {
       display: block;
       width: auto;
@@ -141,14 +189,14 @@ const longDescId = computed(() => {
   // width: 100%;
   // max-width: max-content;
 
-  // word-break: break-word;
-  // overflow-wrap: anywhere;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 
-  .is-slider & {
-    width: 100%;
-    word-break: break-word;
-    overflow-wrap: anywhere;
-  }
+  // .is-content & {
+  //   width: 100%;
+  //   word-break: break-word;
+  //   overflow-wrap: anywhere;
+  // }
 
   &.is-hidden {
     @include visually-hidden;

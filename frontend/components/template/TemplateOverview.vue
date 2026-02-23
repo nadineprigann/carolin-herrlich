@@ -9,14 +9,14 @@ interface TemplateOverview extends Page {
     related_content: RelatedContent
   }
   children: OverviewItem[] // child pages like on grundlagen overview page etc.
-  items: OverviewItem[] // categories like on tools overview page
+  categories: Category[] // categories like on tools overview page
 }
 
 const props = defineProps<{
   data: TemplateOverview
 }>()
 
-const { fields, children, items, breadcrumbs } = toRefs(props.data)
+const { fields, children, categories, breadcrumbs } = toRefs(props.data)
 
 const labels = reactive({
   info: 'Infos zu dieser Seite',
@@ -26,12 +26,12 @@ const hasChildren = computed(() => {
   return children?.value?.length > 0
 })
 
-const hasItems = computed(() => {
-  return items?.value?.length > 0
+const hasCategories = computed(() => {
+  return categories?.value?.length > 0
 })
 
 const hasContent = computed(() => {
-  return hasChildren.value || hasItems.value
+  return hasChildren.value || hasCategories.value
 })
 
 const infoVisible = ref(false)
@@ -46,8 +46,8 @@ const coverImages = computed(() => {
   const images = []
   if (hasChildren.value) {
     children.value.forEach((child) => images.push(child.fields.image))
-  } else if (hasItems.value) {
-    items.value.forEach((item) => images.push(item.fields.image))
+  } else if (hasCategories.value) {
+    categories.value.forEach((category) => images.push(category.fields.image))
   } else return []
   return images
 })
@@ -83,12 +83,17 @@ onDeactivated(() => {
         />
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
-      <ImageSlider v-if="showSlider" :slides="coverImages" />
+      <ImageSlider
+        v-if="showSlider"
+        :slides="coverImages"
+        :mode="'overview'"
+        :show-caption="false"
+      />
 
       <ul v-if="hasContent" class="overview-list">
-        <!-- use children if there are any, otherwise use items (categories on tools overview page) -->
+        <!-- use children if there are any, otherwise use categories (categories on tools overview page) -->
         <OverviewItem
-          v-for="(child, index) in children ?? items"
+          v-for="(child, index) in children ?? categories"
           :key="`overview-item-${index}`"
           :item="child"
           :hovered-item="currentItem"

@@ -65,11 +65,31 @@ class DefaultPage {
       $response->children = Helper::getPages($page->children);
     }
 
-    // Include categories as items for these templates
-    $includeItems = ['overview-tools'];
-    if (in_array($page->template->name, $includeItems)) {
+    // Include categories as categories for these templates
+    // config-style rules for the templates that should include the categories (filter pages and tools)
+    $rules = [
+      'overview-tools' => [
+        'parent' => 'template=categories',
+        'context' => 'template=context, name=werkzeugpalette',
+      ],
+      'tools' => [
+        'parent' => 'template=categories',
+        'context' => 'template=context, name=werkzeugpalette',
+      ],
+      // Example: another template using a different context
+      // 'template' => [
+      //   'parent' => 'template=categories',
+      //   'context' => 'template=context, name=xyz',
+      // ],
+    ];
+
+    $template = $page->template->name;
+    // If the template of the current page is listed in the rules, get the categories for this template
+    if (isset($rules[$template])) {
       $parent = wire('pages')->get("template=categories");
-      $context = wire('pages')->get("template=context, name=werkzeugpalette");
+      // Get the context page defined in the rules for this template
+      $contextSelector = $rules[$template]['context'];
+      $context = wire('pages')->get($contextSelector);
 
       $categories = wire('pages')->find(
         "template=category, parent_id={$parent->id}, select_context={$context->id}, is_overview_category=1",
@@ -78,7 +98,7 @@ class DefaultPage {
           'limit' => 1000,
         ]
       );
-      $response->items = Helper::getPages($categories);
+      $response->categories = Helper::getPages($categories);
     }
 
     return $response;

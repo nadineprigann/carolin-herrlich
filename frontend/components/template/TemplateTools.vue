@@ -4,13 +4,14 @@ const { normalizeToArray } = useNormalizeArray()
 
 interface TemplateTools extends Page {
   children: childItem[]
+  categories: Category[]
 }
 
 const props = defineProps<{
   data: TemplateTools
 }>()
 
-const { fields, breadcrumbs } = toRefs(props.data)
+const { fields, categories, breadcrumbs } = toRefs(props.data)
 const route = useRoute()
 const { toUppercase } = useToUppercase()
 
@@ -48,6 +49,15 @@ const showChildren = computed(() => {
   return props.data.children?.length > 0
 })
 
+// filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. also update the query from within filter button > maybe use composable for this for other templates
+const filteredChildren = computed(() => {
+  return props.data.children?.filter((child) => {
+    // check if child has category that matches selected filter(s)
+    // if no filter is selected, show all children
+    return true
+  })
+})
+
 const showRandomChildren = computed(() => {
   return props.data.children?.length > 3
 })
@@ -73,17 +83,21 @@ onBeforeRouteLeave(() => {
   <main class="template-tools">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" />
-    <section>
+    <FilterBar />
+    <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="props.data.children" />
     </section>
-    <section>
+    <section class="random">
       <FieldText class="label" element="h3" :text="label.random" />
       <ChildList v-if="showRandomChildren" :children="randomChildren" />
     </section>
+    <FilterOverlay :filters="categories" :template="'tools'" />
   </main>
 </template>
 
 <style lang="scss" scoped>
-// .template-tools {}
+.template-tools {
+  @include center-content;
+}
 </style>

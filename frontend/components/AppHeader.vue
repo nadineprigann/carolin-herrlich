@@ -42,7 +42,7 @@ const toggleNavigation = () => {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: var(--xl-overlay);
+  z-index: var(--xxl-overlay);
   padding: var(--gutter);
 
   @media (min-width: $medium) {
@@ -68,13 +68,13 @@ const toggleNavigation = () => {
 
 .open {
   &::before {
-    content: '\2630';
+    content: var(--nav);
   }
 }
 
 .close {
   &::before {
-    content: '\00D7';
+    content: var(--s-close);
   }
 }
 </style>

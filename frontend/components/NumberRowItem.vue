@@ -17,5 +17,12 @@ const showRow = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-// .number-row-item {}
+.number-row-item {
+  display: grid;
+  grid-template-columns: 2em 1fr;
+}
+
+.number {
+  // TODO: format number as monospace or so to make sure that number swith more digits have the same width
+}
 </style>
