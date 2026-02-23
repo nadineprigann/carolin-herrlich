@@ -17,13 +17,17 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .field-matrix-type-images {
-  display: flex;
+  @media (min-width: $small) {
+    display: flex;
+  }
 
   // grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .image {
-  width: 50%;
-  max-width: 50%;
+  @media (min-width: $small) {
+    width: 50%;
+    max-width: 50%;
+  }
 }
 </style>
