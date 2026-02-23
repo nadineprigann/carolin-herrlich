@@ -120,12 +120,11 @@ const longDescId = computed(() => {
     <figcaption :class="figCaptionClass" class="image-caption">
       <span class="caption">{{ props.image.caption }}</span>
       <a class="link" :href="props.image.external_link">
-        <span> © {{ props.image.external_link_title }}. </span>
+        <span> © {{ props.image.external_link_title }}</span>
       </a>
       <span v-if="props.image.year" class="year">, {{ props.image.year }}</span>
-      <span class="license"
-        >{{ text.license }}{{ props.image.license.fields.title }}.
-      </span>
+      <!-- {{ text.license }} -->
+      <span class="license">. {{ props.image.license.fields.title }}. </span>
     </figcaption>
     <p
       v-if="props.image.long_description.length"
