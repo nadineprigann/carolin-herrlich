@@ -22,5 +22,7 @@ const showBreadcrumbs = computed(() => {
 .breadcrumb-list {
   @include list-reset;
   @include center-content;
+
+  display: flex;
 }
 </style>
