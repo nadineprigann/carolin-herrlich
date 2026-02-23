@@ -68,13 +68,13 @@ const toggleNavigation = () => {
 
 .open {
   &::before {
-    content: '\2630';
+    content: var(--nav);
   }
 }
 
 .close {
   &::before {
-    content: '\00D7';
+    content: var(--s-close);
   }
 }
 </style>

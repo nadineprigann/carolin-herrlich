@@ -6,6 +6,11 @@
   --focus-color: rgb(0 140 255 / 20%);
   --selection-color: var(--focus-color);
 
+  /* Button Contents */
+  --s-close: '\00D7';
+  --l-close: '\2715';
+  --nav: '\2630';
+
   /* Typography */
   --fs-root: 0.625em;
   --lh-root: 1.25;

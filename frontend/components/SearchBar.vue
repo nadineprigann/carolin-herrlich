@@ -42,8 +42,7 @@ const labels = reactive({
 
     // width: var(--gutter);
     // height: var(--gutter);
-    // content: '\2715'; // larger multiplication sign
-    content: '\00d7';
+    content: var(--s-close);
   }
 }
 </style>
