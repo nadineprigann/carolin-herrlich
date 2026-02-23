@@ -14,8 +14,8 @@ const openOverlay = () => {
 }
 
 const buttonClass = computed(() => [
-  'refine-button',
-  `refine-button-${props.overlay}`,
+  'overlay-button',
+  `overlay-button-${props.overlay}`,
 ])
 </script>
 
@@ -27,7 +27,7 @@ const buttonClass = computed(() => [
 </template>
 
 <style lang="scss" scoped>
-.refine-button {
+.overlay-button {
   @include button-default;
 
   // &-checkout { }
