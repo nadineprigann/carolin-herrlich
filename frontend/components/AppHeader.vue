@@ -42,7 +42,7 @@ const toggleNavigation = () => {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: var(--xl-overlay);
+  z-index: var(--xxl-overlay);
   padding: var(--gutter);
 
   @media (min-width: $medium) {

@@ -35,7 +35,7 @@ const handleToggleSubNav = (id: number) => {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: var(--xl-overlay);
   width: 100%;
   height: 100%;
   background-color: var(--white);
