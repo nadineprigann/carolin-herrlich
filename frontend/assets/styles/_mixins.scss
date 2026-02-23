@@ -37,8 +37,9 @@
   @include button-reset;
   @include focus-default;
 
-  padding: 0.25em 0.5em;
-  background-color: rgb(240 240 240);
+  padding: 0.35em 0.5em 0.25em; // different paddings to visually center label
+  border: 1px solid var(--black);
+  border-radius: 1em;
 }
 
 @mixin link-reset {
