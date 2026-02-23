@@ -73,11 +73,12 @@ onBeforeRouteLeave(() => {
   <main class="template-tools">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" />
-    <section>
+    <FilterBar />
+    <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="props.data.children" />
     </section>
-    <section>
+    <section class="random">
       <FieldText class="label" element="h3" :text="label.random" />
       <ChildList v-if="showRandomChildren" :children="randomChildren" />
     </section>
@@ -85,5 +86,7 @@ onBeforeRouteLeave(() => {
 </template>
 
 <style lang="scss" scoped>
-// .template-tools {}
+.template-tools {
+  @include center-content;
+}
 </style>
