@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
   <section class="filter-bar">
-    <RefineButton />
+    <OverlayButton overlay="filter" />
     <SearchBar />
   </section>
 </template>
