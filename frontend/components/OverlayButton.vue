@@ -1,34 +1,37 @@
 <script lang="ts" setup>
-const layoutStore = useLayoutStore()
 const props = defineProps<{
   url?: string
-  overlay: 'checkout' | 'blog' | 'tools' | 'events' | 'project'
-  label: string
+  overlay: 'checkout' | 'filter' | 'project'
 }>()
 
-const handleClick = () => {
-  layoutStore.layout.openOverlay[props.overlay] = true
+const label = reactive({
+  refine: 'Verfeinern',
+})
+
+const openOverlay = () => {
+  layout.value.openOverlay[props.overlay] =
+    !layout.value.openOverlay[props.overlay]
 }
 
 const buttonClass = computed(() => [
-  'overlay-button',
-  `overlay-button-${props.overlay}`,
+  'refine-button',
+  `refine-button-${props.overlay}`,
 ])
 </script>
 
 <template>
   <!-- TODO: temporarily opens overlay to check-out via mail. later: navigate to shop detail of item this button was used (prop!) -->
-  <button :class="buttonClass" type="button" @click="handleClick">
-    {{ props.label }}
+  <button class="button" :class="buttonClass" @click="openOverlay">
+    <span class="label" v-text="label.refine" />
   </button>
 </template>
 
 <style lang="scss" scoped>
-.overlay-button {
+.refine-button {
+  @include button-default;
+
   // &-checkout { }
-  // &-blog { }
-  // &-tools { }
-  // &-events { }
+  // &-filter { }
   // &-project { }
 }
 </style>
