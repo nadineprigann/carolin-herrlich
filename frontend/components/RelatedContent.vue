@@ -41,7 +41,7 @@ const showFootnote = computed(() => {
 })
 
 const contextVisible = ref(false)
-const depthVisible = ref(false)
+const depthVisible = ref(true) // default is visible
 
 function toggleContext() {
   contextVisible.value = !contextVisible.value
