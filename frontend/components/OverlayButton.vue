@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+const layoutStore = useLayoutStore()
+const { layout } = storeToRefs(layoutStore)
+
 const props = defineProps<{
   url?: string
   overlay: 'checkout' | 'filter' | 'project'
