@@ -186,7 +186,7 @@ onUnmounted(stopAutoplay)
     display: none;
   }
 
-  // TODO: use darker grey to be able to see the buttons on white and on any image, maybe add hover state to it. tabbable?
+  // TODO: use darker grey to be able to see the buttons on white and on any image, also thinner, not bold, maybe add hover state to it. tabbable?
   &::before {
     display: block;
     width: 15%;

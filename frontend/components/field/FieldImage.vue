@@ -182,6 +182,12 @@ const longDescId = computed(() => {
     }
   }
 
+  // &.is-project {
+  //   img {
+  //     padding: 5em;
+  //   }
+  // }
+
   // content slider from repeater-matrix
   &.is-content {
     img {
