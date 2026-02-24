@@ -7,7 +7,7 @@ const props = defineProps<{
   data: TemplateProject
 }>()
 
-const { fields } = toRefs(props.data)
+const { fields, breadcrumbs } = toRefs(props.data)
 
 const label = reactive({
   header: 'Projektinfos',
@@ -24,6 +24,7 @@ const label = reactive({
         :text="fields.subtitle"
         class="subtitle"
       />
+      <BreadcrumbList :breadcrumbs="breadcrumbs" />
       <ImageSlider
         :slides="fields.images"
         class="slider"
@@ -54,7 +55,7 @@ const label = reactive({
 
 .slideshow {
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   height: calc(
     100% - var(--blank-line)
   ); // account for project infos below the fold
