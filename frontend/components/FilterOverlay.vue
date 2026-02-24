@@ -20,7 +20,10 @@ const closeOverlay = () => {
   layout.value.openOverlay.filter = false
 }
 
-const applyFilters = () => {}
+const applyFilters = () => {
+  // ... applying logic
+  closeOverlay()
+}
 const resetFilters = () => {}
 
 const labels = reactive({
