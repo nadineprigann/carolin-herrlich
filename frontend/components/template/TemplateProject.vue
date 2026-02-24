@@ -29,7 +29,7 @@ const label = reactive({
         :slides="fields.images"
         class="slider"
         :mode="'project'"
-        :show-caption="false"
+        :show-caption="true"
         :autoplay="false"
       />
     </section>
