@@ -37,7 +37,7 @@ export default defineNuxtConfig({
     // },
   },
 
-  modules: ['@pinia/nuxt'],
+  modules: ['@pinia/nuxt', '@formkit/nuxt'],
 
   imports: {
     dirs: ['types'],
@@ -51,6 +51,11 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  formkit: {
+    // Experimental support for auto loading (see note): https://formkit.com/getting-started/installation
+    autoImport: true,
   },
 
   compatibilityDate: '2024-12-25',
