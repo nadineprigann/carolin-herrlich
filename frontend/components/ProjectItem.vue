@@ -18,6 +18,7 @@ const showChild = computed(() => {
           :image="props.child.fields.image"
           class="image"
           :show-caption="false"
+          :mode="'projects'"
         />
         <FieldText
           class="title"
@@ -35,24 +36,8 @@ const showChild = computed(() => {
   display: flex;
   height: 30vh;
 
-  // TODO: how to set this within field img OR how to control overrides better? on screens above mobile, all images should be cover, is-portrait as well
-  :deep(img) {
-    max-width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  :deep(.is-portrait img) {
-    object-fit: contain;
-  }
-
   @media (min-width: $mobile) {
     margin: 0 auto; // centers the item if it has less width than the container, e.g. on mobile
-
-    /* portrait class is on the FIGURE, not on the IMG */
-    :deep(.is-portrait img) {
-      object-fit: cover;
-    }
   }
 }
 
