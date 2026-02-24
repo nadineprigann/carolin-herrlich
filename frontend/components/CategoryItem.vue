@@ -13,5 +13,6 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .category-item {
   // @include link-default;
+  @include button-default;
 }
 </style>
