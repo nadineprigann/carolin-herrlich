@@ -15,18 +15,31 @@ const { fields, breadcrumbs } = toRefs(props.data)
 <template>
   <main class="template-event">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
-    <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
-    <FieldMatrix :items="fields.content" />
-    <CustomButton
-      v-if="fields.external_link"
-      :url="fields.external_link"
-      :label="fields.external_link_title"
+    <FieldText
+      v-if="fields.subtitle"
+      element="h3"
+      :text="fields.subtitle"
+      class="subtitle"
     />
+    <FieldText element="h2" :text="fields.title" class="title" />
+    <FieldMatrix :items="fields.content" />
+    <section class="sign-up">
+      <OverlayButton
+        v-if="fields.external_link"
+        :url="fields.external_link"
+        :label="fields.external_link_title"
+      />
+      <CheckOutOverlay :template="'event'" :title="fields.title" />
+    </section>
     <RelatedContent :related="fields.related_content" />
   </main>
 </template>
 
 <style lang="scss" scoped>
 // .template-event {}
+.title,
+.subtitle,
+.sign-up {
+  @include center-content;
+}
 </style>

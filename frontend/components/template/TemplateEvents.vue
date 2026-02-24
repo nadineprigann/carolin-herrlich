@@ -7,7 +7,7 @@ const props = defineProps<{
   data: TemplateEvents
 }>()
 
-const { fields, breadcrumbs } = toRefs(props.data)
+const { fields, breadcrumbs, categories } = toRefs(props.data)
 
 const label = reactive({
   current: 'Aktuell',
@@ -23,7 +23,7 @@ const showChildren = computed(() => {
   <main class="template-events">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
-    <FilterBar />
+    <FilterBar :overlay="'checkout'" />
     <section class="current-events">
       <FieldText class="random-label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
@@ -33,6 +33,11 @@ const showChildren = computed(() => {
       <FieldText class="random-label" element="h3" :text="label.archive" />
       <ChildList :children="" />
     </section> -->
+    <CheckOutOverlay
+      :filters="categories"
+      :template="'events'"
+      :title="fields.title"
+    />
   </main>
 </template>
 
