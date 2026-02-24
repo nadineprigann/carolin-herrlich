@@ -33,7 +33,6 @@ const isProject = computed(() => props.mode === 'project')
 const classes = computed(() => {
   return {
     component: [
-      // hasSingleSlide.value ? 'has-single-slide' : '',
       isOverview.value ? 'is-overview' : '',
       isProject.value ? 'is-project' : '',
       isContent.value ? 'is-content' : '',
@@ -42,13 +41,19 @@ const classes = computed(() => {
       'prev',
       lastSlide.value ? 'last-slide' : '',
       firstSlide.value ? 'first-slide' : '',
+      hasSingleSlide.value ? 'has-single-slide' : '',
     ],
     next: [
       'next',
       lastSlide.value ? 'last-slide' : '',
       firstSlide.value ? 'first-slide' : '',
+      hasSingleSlide.value ? 'has-single-slide' : '',
     ],
   }
+})
+
+const hasSingleSlide = computed(() => {
+  return slideCount.value < 2
 })
 
 const currentItem = computed(() => {
@@ -177,9 +182,9 @@ onUnmounted(stopAutoplay)
   cursor: pointer;
   transform: translateY(-50%);
 
-  // .has-single-slide & {
-  //   display: none;
-  // }
+  &.has-single-slide {
+    display: none;
+  }
 
   // TODO: use darker grey to be able to see the buttons on white and on any image, maybe add hover state to it. tabbable?
   &::before {
