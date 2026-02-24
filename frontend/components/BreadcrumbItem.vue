@@ -39,7 +39,7 @@ const linkTo = computed(() => {
   if (!process.client) return props.breadcrumb.path
 
   // if filters where saved, re-apply them to the template URL
-  if (savedFilters.value.length > 0) {
+  if (savedFilters.value?.length > 0) {
     return {
       path: props.breadcrumb.path,
       query: { filter: savedFilters.value },

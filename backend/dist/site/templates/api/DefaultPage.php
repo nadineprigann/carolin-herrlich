@@ -71,11 +71,17 @@ class DefaultPage {
       'overview-tools' => [
         'parent' => 'template=categories',
         'context' => 'template=context, name=werkzeugpalette',
+        'extra' => 'is_overview_category=1',
       ],
       'tools' => [
         'parent' => 'template=categories',
         'context' => 'template=context, name=werkzeugpalette',
-      ],
+        'extra' => 'is_overview_category=1',
+        ],
+        'events' => [
+          'parent' => 'template=categories',
+          'context' => 'template=context, name=veranstaltung',
+        ],
       // Example: another template using a different context
       // 'template' => [
       //   'parent' => 'template=categories',
@@ -91,8 +97,20 @@ class DefaultPage {
       $contextSelector = $rules[$template]['context'];
       $context = wire('pages')->get($contextSelector);
 
+      // Base selector
+      $selectorParts = [
+        "template=category",
+        "parent_id={$parent->id}",
+        "select_context={$context->id}",
+      ];
+
+      // Add extra only if it exists
+      if (!empty($rules[$template]['extra'])) {
+        $selectorParts[] = $rules[$template]['extra'];
+      }
+
       $categories = wire('pages')->find(
-        "template=category, parent_id={$parent->id}, select_context={$context->id}, is_overview_category=1",
+        implode(', ', $selectorParts),
         [
           'sort' => 'title',
           'limit' => 1000,

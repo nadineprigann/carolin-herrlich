@@ -5,7 +5,7 @@ interface Props {
   sizes?: string
   loading?: 'eager' | 'lazy'
   showCaption?: boolean
-  mode?: 'content' | 'overview' | 'default'
+  mode?: 'content' | 'overview' | 'default' | 'projects' | 'project'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,12 +23,16 @@ const props = withDefaults(defineProps<Props>(), {
 
 const isOverview = computed(() => props.mode === 'overview')
 const isContent = computed(() => props.mode === 'content')
+const isProjects = computed(() => props.mode === 'projects')
+const isProject = computed(() => props.mode === 'project')
 
 const modeClass = computed(() => {
   return {
     'is-portrait': isPortrait.value,
     'is-content': isContent.value,
     'is-overview': isOverview.value,
+    'is-projects': isProjects.value,
+    'is-project': isProject.value,
   }
 })
 
@@ -137,6 +141,7 @@ const longDescId = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+// TODO: how to handle overrides better? CSS vars or more generic props or a combi? https://chatgpt.com/c/699c3bbb-3ec4-838a-a951-848a3bb43c72
 .field-image {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto; // image gets the rest, content gets space as intrinsically needed
@@ -165,8 +170,9 @@ const longDescId = computed(() => {
   //   }
   // }
 
-  // slider auf overview-pages on mobile
-  &.is-overview {
+  // slider auf overview-pages on mobile. project can't use the same prop bc we change CSS upstream in ImageSlider.vue and ImageSlide.vue. also. separations of concerns.
+  &.is-overview,
+  &.is-project {
     width: 100%;
     height: 100%;
 
@@ -176,11 +182,41 @@ const longDescId = computed(() => {
     }
   }
 
+  // &.is-project {
+  //   img {
+  //     padding: 5em;
+  //   }
+  // }
+
+  // content slider from repeater-matrix
   &.is-content {
     img {
       display: block;
       width: auto;
       height: 100%;
+    }
+  }
+
+  // projects-overview
+  &.is-projects {
+    img {
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &.is-portrait {
+      img {
+        object-fit: contain;
+      }
+    }
+
+    @media (min-width: $mobile) {
+      &.is-portrait {
+        img {
+          object-fit: cover;
+        }
+      }
     }
   }
 }

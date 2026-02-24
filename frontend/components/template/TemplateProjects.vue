@@ -17,11 +17,15 @@ const showChildren = computed(() => {
 <template>
   <main class="template-projects">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
+    <FieldText element="h2" :text="fields.title" class="title" />
     <ProjectList v-if="showChildren" :children="props.data.children" />
   </main>
 </template>
 
 <style lang="scss" scoped>
 // .template-projects {}
+
+.title {
+  @include center-content;
+}
 </style>

@@ -32,6 +32,11 @@ const linkTo = computed(() => {
   <li class="child-item">
     <NuxtLink v-if="showChild" :to="linkTo" class="link">
       <FieldText element="h5" class="title" :text="props.child.fields.title" />
+      <FieldText
+        element="h5"
+        class="subtitle"
+        :text="props.child.fields.subtitle"
+      />
       <FieldTextarea
         v-if="showDescription"
         class="description"

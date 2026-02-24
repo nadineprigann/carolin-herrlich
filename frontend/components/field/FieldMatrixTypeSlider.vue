@@ -20,6 +20,7 @@ const props = defineProps<{
 </script>
 
 <template>
+  <!-- TODO: change this to another comp called ContentSlider or so.  -->
   <ImageSlider :slides="item.images" :mode="'content'" :show-caption="false" />
   <!-- <ul class="field-matrix-type-slider"> -->
   <!-- <div class="swiper-wrapper"> -->

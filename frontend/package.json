@@ -30,6 +30,9 @@
     "stylelint-config-standard-vue": "1.0.0"
   },
   "dependencies": {
+    "@formkit/core": "^1.7.2",
+    "@formkit/nuxt": "^1.7.2",
+    "@formkit/vue": "^1.7.2",
     "@pinia/nuxt": "0.5.1",
     "lodash-es": "^4.17.23",
     "pinia": "2.1.7",

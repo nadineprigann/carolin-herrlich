@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 const props = defineProps<{
   // item:
+  overlay: 'checkout' | 'filter'
 }>()
 </script>
 
 <template>
   <section class="filter-bar">
-    <OverlayButton overlay="filter" />
+    <OverlayButton :overlay="props.overlay" />
     <SearchBar />
   </section>
 </template>

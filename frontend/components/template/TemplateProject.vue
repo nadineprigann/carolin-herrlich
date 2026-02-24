@@ -7,19 +7,68 @@ const props = defineProps<{
   data: TemplateProject
 }>()
 
-const { fields } = toRefs(props.data)
+const { fields, breadcrumbs } = toRefs(props.data)
+
+const label = reactive({
+  header: 'Projektinfos',
+})
 </script>
 
 <template>
   <main class="template-project">
-    <FieldText element="h2" :text="fields.title" />
-    <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
-    <ImageSlider :slides="fields.images" />
-    <RowList :table="fields.table" />
-    <RelatedContent :related="fields.related_content" />
+    <section class="slideshow">
+      <FieldText element="h2" :text="fields.title" class="title" />
+      <FieldText
+        v-if="fields.subtitle"
+        element="h3"
+        :text="fields.subtitle"
+        class="subtitle"
+      />
+      <BreadcrumbList :breadcrumbs="breadcrumbs" />
+      <ImageSlider
+        :slides="fields.images"
+        class="slider"
+        :mode="'project'"
+        :show-caption="true"
+        :autoplay="false"
+      />
+    </section>
+    <section class="content">
+      <FieldText element="h4" :text="label.header" class="header" />
+      <TextRowList :table="fields.table" />
+      <RelatedContent :related="fields.related_content" />
+    </section>
   </main>
 </template>
 
 <style lang="scss" scoped>
-// .template-project {}
+.template-project {
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+}
+
+.title,
+.subtitle,
+.content {
+  @include center-content;
+}
+
+.slideshow {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  height: calc(
+    100% - var(--blank-line)
+  ); // account for project infos below the fold
+
+  scroll-snap-align: start;
+}
+
+.slider {
+  height: 100%;
+}
+
+.content {
+  min-height: 100%;
+  scroll-snap-align: start;
+}
 </style>

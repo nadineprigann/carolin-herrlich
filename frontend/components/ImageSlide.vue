@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const props = defineProps<{
   slide: Image
-  mode?: 'content' | 'overview' | 'default'
+  mode?: 'content' | 'overview' | 'default' | 'project'
   showCaption?: boolean
 }>()
 

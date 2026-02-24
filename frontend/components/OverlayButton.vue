@@ -4,10 +4,11 @@ const { layout } = storeToRefs(layoutStore)
 
 const props = defineProps<{
   url?: string
-  overlay: 'checkout' | 'filter' | 'project'
+  label?: string
+  overlay: 'checkout' | 'filter'
 }>()
 
-const label = reactive({
+const altLabel = reactive({
   refine: 'Verfeinern',
 })
 
@@ -20,18 +21,25 @@ const buttonClass = computed(() => [
   'overlay-button',
   `overlay-button-${props.overlay}`,
 ])
+
+const buttonLabel = computed(() => {
+  return props.label ? props.label : altLabel.refine
+})
 </script>
 
 <template>
   <!-- TODO: temporarily opens overlay to check-out via mail. later: navigate to shop detail of item this button was used (prop!) -->
   <button class="button" :class="buttonClass" @click="openOverlay">
-    <span class="label" v-text="label.refine" />
+    <span class="label" v-text="buttonLabel" />
   </button>
 </template>
 
 <style lang="scss" scoped>
 .overlay-button {
   @include button-default;
+
+  display: block;
+  max-width: max-content;
 
   // &-checkout { }
   // &-filter { }
