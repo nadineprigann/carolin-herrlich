@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 interface Props {
   slides: Image[]
-  mode?: 'content' | 'overview' | 'default'
+  mode?: 'content' | 'overview' | 'default' | 'project'
   showCaption?: boolean
   autoplay: boolean
 }
@@ -20,6 +20,7 @@ const modeClass = computed(() => {
   return {
     'is-content': props.mode === 'content',
     'is-overview': props.mode === 'overview',
+    'is-project': props.mode === 'project',
   }
 })
 
@@ -28,6 +29,7 @@ const slideCount = computed(() => props.slides?.length)
 const lastSlide = computed(() => currentSlide.value === slideCount.value - 1)
 const isOverview = computed(() => props.mode === 'overview')
 const isContent = computed(() => props.mode === 'content')
+const isProject = computed(() => props.mode === 'project')
 
 const currentItem = computed(() => {
   if (!props.slides) return

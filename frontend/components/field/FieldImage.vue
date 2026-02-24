@@ -5,7 +5,7 @@ interface Props {
   sizes?: string
   loading?: 'eager' | 'lazy'
   showCaption?: boolean
-  mode?: 'content' | 'overview' | 'default' | 'projects'
+  mode?: 'content' | 'overview' | 'default' | 'projects' | 'project'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
 const isOverview = computed(() => props.mode === 'overview')
 const isContent = computed(() => props.mode === 'content')
 const isProjects = computed(() => props.mode === 'projects')
+const isProject = computed(() => props.mode === 'project')
 
 const modeClass = computed(() => {
   return {
@@ -31,6 +32,7 @@ const modeClass = computed(() => {
     'is-content': isContent.value,
     'is-overview': isOverview.value,
     'is-projects': isProjects.value,
+    'is-project': isProject.value,
   }
 })
 
@@ -168,8 +170,9 @@ const longDescId = computed(() => {
   //   }
   // }
 
-  // slider auf overview-pages on mobile
-  &.is-overview {
+  // slider auf overview-pages on mobile. project can't use the same prop bc we change CSS upstream in ImageSlider.vue and ImageSlide.vue. also. separations of concerns.
+  &.is-overview,
+  &.is-project {
     width: 100%;
     height: 100%;
 
