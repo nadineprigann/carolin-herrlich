@@ -83,7 +83,7 @@ onBeforeRouteLeave(() => {
   <main class="template-tools">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" />
-    <FilterBar />
+    <FilterBar :overlay="'filter'" />
     <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="props.data.children" />
