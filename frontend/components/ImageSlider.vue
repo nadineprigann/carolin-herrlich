@@ -1,9 +1,16 @@
 <script lang="ts" setup>
-const props = defineProps<{
+interface Props {
   slides: Image[]
   mode?: 'content' | 'overview' | 'default'
   showCaption?: boolean
-}>()
+  autoplay: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  autoplay: false,
+  showCaption: true,
+  mode: 'default',
+})
 
 const currentSlide = ref(0)
 let interval: number | undefined
@@ -43,17 +50,17 @@ function stopAutoplay() {
   interval = undefined
 }
 
-function autoplay() {
+function startAutoplay() {
   stopAutoplay()
   interval = setInterval(next, delay)
 }
 
 onMounted(() => {
-  if (slideCount.value > 1 && isOverview.value) autoplay()
+  if (slideCount.value > 1 && props.autoplay) startAutoplay()
 })
 
 onActivated(() => {
-  if (slideCount.value > 1 && isOverview.value) autoplay()
+  if (slideCount.value > 1 && props.autoplay) startAutoplay()
 })
 
 onDeactivated(() => {

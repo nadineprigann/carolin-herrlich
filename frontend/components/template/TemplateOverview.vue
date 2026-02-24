@@ -88,6 +88,7 @@ onDeactivated(() => {
         :slides="coverImages"
         :mode="'overview'"
         :show-caption="false"
+        :autoplay="true"
       />
 
       <ul v-if="hasContent" class="overview-list">
