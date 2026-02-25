@@ -33,11 +33,14 @@ const toggleAccordion = () => {
       :items="props.item.accordion.content"
       class="content"
     />
+    <CheckOutOverlay :template="'offer'" :title="props.item.accordion.title" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .field-matrix-type-accordion {
   @include center-content;
+
+  position: relative;
 }
 </style>

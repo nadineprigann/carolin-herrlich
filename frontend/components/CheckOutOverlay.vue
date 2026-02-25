@@ -6,7 +6,7 @@ const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
 const props = defineProps<{
-  template: 'event' | 'shop'
+  template: 'event' | 'shop' | 'offer'
   title: string
 }>()
 
@@ -33,7 +33,7 @@ const props = defineProps<{
 // const hasCyclical = ref(false)
 
 const labels = reactive({
-  buttonClose: 'CheckOut schliessen',
+  buttonClose: 'Check-Out schliessen',
   title: 'Check-Out von ',
   description:
     'Fülle die Felder aus und klicke anschließend auf "Absenden", um deine Infos und Fragen abzusenden und damit den Check-Out abzuschliessen.',
