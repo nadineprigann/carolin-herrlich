@@ -87,8 +87,9 @@ onDeactivated(() => {
         v-if="showSlider"
         :slides="coverImages"
         :mode="'overview'"
-        :show-caption="false"
+        :caption="false"
         :autoplay="true"
+        :controls="false"
       />
 
       <ul v-if="hasContent" class="overview-list">
@@ -106,10 +107,7 @@ onDeactivated(() => {
     <template v-if="hasCoverImage">
       <transition name="t-fade">
         <div v-if="currentItem" :key="currentItem.index" class="cover">
-          <FieldImage
-            :image="currentItem.fields?.image"
-            :show-caption="false"
-          />
+          <FieldImage :image="currentItem.fields?.image" :caption="false" />
         </div>
       </transition>
     </template>

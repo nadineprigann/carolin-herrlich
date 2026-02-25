@@ -2,14 +2,16 @@
 interface Props {
   slides: Image[]
   mode?: 'content' | 'overview' | 'default' | 'project'
-  showCaption?: boolean
-  autoplay: boolean
+  caption?: boolean
+  autoplay?: boolean
+  controls?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   autoplay: false,
-  showCaption: true,
+  caption: true,
   mode: 'default',
+  controls: true,
 })
 
 const currentSlide = ref(0)
@@ -105,7 +107,7 @@ onUnmounted(stopAutoplay)
           :key="`overview-slide-${currentSlide}`"
           :slide="currentItem"
           :mode="props.mode"
-          :show-caption="props.showCaption"
+          :caption="props.caption"
         />
       </transition>
       <template v-else-if="isContent">
@@ -114,7 +116,7 @@ onUnmounted(stopAutoplay)
           :key="`content-slide-${index}`"
           :slide="slide"
           :mode="props.mode"
-          :show-caption="props.showCaption"
+          :caption="props.caption"
         />
       </template>
       <ImageSlide
@@ -122,11 +124,13 @@ onUnmounted(stopAutoplay)
         :key="`slide-${currentSlide}`"
         :slide="currentItem"
         :mode="props.mode"
-        :show-caption="props.showCaption"
+        :caption="props.caption"
       />
     </ul>
-    <button type="button" :class="classes.prev" @click="prev" />
-    <button type="button" :class="classes.next" @click="next" />
+    <section v-if="props.controls" class="controls">
+      <button type="button" :class="classes.prev" @click="prev" />
+      <button type="button" :class="classes.next" @click="next" />
+    </section>
   </section>
 </template>
 

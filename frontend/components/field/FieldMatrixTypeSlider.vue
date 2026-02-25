@@ -21,7 +21,13 @@ const props = defineProps<{
 
 <template>
   <!-- TODO: change this to another comp called ContentSlider or so.  -->
-  <ImageSlider :slides="item.images" :mode="'content'" :show-caption="false" />
+  <ImageSlider
+    :slides="item.images"
+    :mode="'content'"
+    :caption="false"
+    :autoplay="false"
+    :controls="false"
+  />
   <!-- <ul class="field-matrix-type-slider"> -->
   <!-- <div class="swiper-wrapper"> -->
   <!-- <swiper
@@ -49,7 +55,7 @@ const props = defineProps<{
         :image="image"
         class="image"
         :mode="'content'"
-        :show-caption="false"
+        :caption="false"
       /> -->
   <!-- </swiper-slide>
   </swiper> -->

@@ -17,7 +17,7 @@ const showChild = computed(() => {
           v-if="props.child?.fields.image"
           :image="props.child.fields.image"
           class="image"
-          :show-caption="false"
+          :caption="false"
           :mode="'projects'"
         />
         <FieldText

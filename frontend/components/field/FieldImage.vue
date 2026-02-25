@@ -4,14 +4,14 @@ interface Props {
   image: Image
   sizes?: string
   loading?: 'eager' | 'lazy'
-  showCaption?: boolean
+  caption?: boolean
   mode?: 'content' | 'overview' | 'default' | 'projects' | 'project'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   sizes: '100vw',
   loading: 'lazy',
-  showCaption: true,
+  caption: true,
   mode: 'default',
 })
 
@@ -38,7 +38,7 @@ const modeClass = computed(() => {
 
 const figCaptionClass = computed(() => {
   return {
-    'is-hidden': !props.showCaption,
+    'is-hidden': !props.caption,
   }
 })
 
@@ -170,7 +170,7 @@ const longDescId = computed(() => {
   //   }
   // }
 
-  // slider auf overview-pages on mobile. project can't use the same prop bc we change CSS upstream in ImageSlider.vue and ImageSlide.vue. also. separations of concerns.
+  // slider auf overview-pages on mobile. project can't use the same prop bc we change CSS upstream in ImageSlider.vue and ImageSlide.vue. also, separations of concerns.
   &.is-overview,
   &.is-project {
     width: 100%;

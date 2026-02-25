@@ -10,7 +10,7 @@ const showCategories = computed(() => {
 
 <template>
   <div v-if="props.item.title" class="slider-matrix-type-home-slide">
-    <FieldImage :image="props.item.image" :show-caption="false" class="image" />
+    <FieldImage :image="props.item.image" :caption="false" class="image" />
     <section class="content">
       <NuxtLink :to="props.item.link.meta.url" class="link">
         <section class="header">

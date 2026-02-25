@@ -2,7 +2,7 @@
 const props = defineProps<{
   slide: Image
   mode?: 'content' | 'overview' | 'default' | 'project'
-  showCaption?: boolean
+  caption?: boolean
 }>()
 
 const modeClass = computed(() => {
@@ -57,7 +57,7 @@ onActivated(() => {
       :image="props.slide"
       class="image"
       :mode="props.mode"
-      :show-caption="props.showCaption"
+      :caption="props.caption"
     />
     <!-- @image-width="handleImageWidth" -->
     <!-- :loading="loadingMode" -->
