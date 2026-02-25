@@ -33,8 +33,8 @@ const toggleAccordion = () => {
       v-if="accordionVisible"
       :items="props.item.accordion.content"
       class="content"
+      :accordion-title="props.item.accordion.title"
     />
-    <CheckOutOverlay :template="'offer'" :title="props.item.accordion.title" />
   </div>
 </template>
 

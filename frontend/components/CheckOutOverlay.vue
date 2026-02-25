@@ -69,8 +69,11 @@ const labels = reactive({
   reset: 'Zurücksetzen',
 })
 
+// use accordion title for form title if available, otherwise use the one from props (e.g. from template). accordion stores in store when toggling, overlay uses it should it get rendered
 const formTitle = computed(() => {
-  return `${labels.title} ${props.title}`
+  return layout.value.openOverlay.checkoutTitle
+    ? `${labels.title} ${layout.value.openOverlay.checkoutTitle}`
+    : `${labels.title} ${props.title}`
 })
 
 const showOverlay = computed(() => {
@@ -79,6 +82,7 @@ const showOverlay = computed(() => {
 
 const closeOverlay = () => {
   layout.value.openOverlay.checkout = false
+  layout.value.openOverlay.checkoutTitle = null
 }
 
 const send = () => {
