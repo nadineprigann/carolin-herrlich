@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const props = defineProps<{
   items?: MatrixItem[]
+  title?: string
 }>()
 </script>
 
@@ -11,6 +12,7 @@ const props = defineProps<{
       :key="`item-${index}`"
       :item="item"
     />
+    <CheckOutOverlay :template="'offer'" :title="props.title" />
   </div>
 </template>
 

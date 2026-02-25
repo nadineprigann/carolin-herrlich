@@ -18,7 +18,7 @@ const { fields, breadcrumbs } = toRefs(props.data)
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
     <FieldText element="h3" :text="fields.subtitle" class="subtitle" />
-    <FieldMatrix :items="fields.content" />
+    <FieldMatrix :items="fields.content" :title="fields.title" />
   </main>
 </template>
 
