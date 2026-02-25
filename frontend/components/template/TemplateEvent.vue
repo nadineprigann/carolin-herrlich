@@ -29,7 +29,7 @@ const { fields, breadcrumbs } = toRefs(props.data)
         :url="fields.external_link"
         :label="fields.external_link_title"
       />
-      <CheckOutOverlay :template="'event'" :title="fields.title" />
+      <CheckOutOverlay :title="fields.title" />
     </section>
     <RelatedContent :related="fields.related_content" />
   </main>

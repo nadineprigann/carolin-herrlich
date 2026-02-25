@@ -6,7 +6,7 @@ const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
 const props = defineProps<{
-  template: 'event' | 'shop' | 'offer'
+  // template: 'event' | 'shop' | 'offer'
   title: string
 }>()
 
