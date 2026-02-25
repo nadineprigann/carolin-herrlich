@@ -56,9 +56,12 @@ class DefaultPage {
     $response = new \StdClass();
     $response->meta = Helper::getMeta($page);
     $response->fields = Helper::getFields($page);
-    // get psge-specific breadcrumbs
+    // get page-specific breadcrumbs
     $response->breadcrumbs = Navigation::getBreadcrumbs($page);
-
+    $chapterNav = Navigation::getChapterNav($page);
+    if ($chapterNav) {
+      $response->nav = $chapterNav;
+    }
     // Include children for the following templates
     $includeChildren = ['overview', 'tools', 'blog', 'events', 'projects'];
     if (in_array($page->template->name, $includeChildren)) {
