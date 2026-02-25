@@ -12,6 +12,7 @@ const props = defineProps<{
       :overlay="'checkout'"
       :accordion-title="props.accordionTitle"
     />
+    <CheckOutOverlay :title="props.accordionTitle" />
   </div>
 </template>
 

@@ -6,7 +6,7 @@ const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
 const props = defineProps<{
-  template: 'event' | 'shop' | 'offer'
+  // template: 'event' | 'shop' | 'offer'
   title: string
 }>()
 
@@ -101,6 +101,11 @@ watchEffect(() => {
   // const advanced = props.template !== 'tools'
   // hasChronological.value = advanced
   // hasCyclical.value = advanced
+})
+
+onDeactivated(() => {
+  // reset overlay state when navigating away while overlay is open
+  closeOverlay()
 })
 </script>
 

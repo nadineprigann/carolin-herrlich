@@ -23,7 +23,7 @@ const showChildren = computed(() => {
   <main class="template-events">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
-    <FilterBar :overlay="'checkout'" />
+    <FilterBar :overlay="'filter'" />
     <section class="current-events">
       <FieldText class="random-label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
@@ -33,7 +33,7 @@ const showChildren = computed(() => {
       <FieldText class="random-label" element="h3" :text="label.archive" />
       <ChildList :children="" />
     </section> -->
-    <CheckOutOverlay
+    <FilterOverlay
       :filters="categories"
       :template="'events'"
       :title="fields.title"

@@ -24,7 +24,6 @@ const { fields, breadcrumbs } = toRefs(props.data)
       class="subtitle"
     />
     <FieldMatrix :items="fields.content" />
-    <CheckOutOverlay :template="'offer'" :title="fields.title" />
   </main>
 </template>
 

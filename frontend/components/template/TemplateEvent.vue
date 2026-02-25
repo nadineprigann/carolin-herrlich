@@ -28,8 +28,9 @@ const { fields, breadcrumbs } = toRefs(props.data)
         v-if="fields.external_link"
         :url="fields.external_link"
         :label="fields.external_link_title"
+        :overlay="'checkout'"
       />
-      <CheckOutOverlay :template="'event'" :title="fields.title" />
+      <CheckOutOverlay :title="fields.title" />
     </section>
     <RelatedContent :related="fields.related_content" />
   </main>
