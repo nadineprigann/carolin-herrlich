@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { FormKitProvider } from '@formkit/vue'
-import { de } from '@formkit/i18n'
+// import { FormKitProvider } from '@formkit/vue'
+// import { de } from '@formkit/i18n'
 
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
@@ -11,21 +11,21 @@ const props = defineProps<{
 }>()
 
 // use FormKitProvider to set up the configuration for FormKit in this component. This way, we can easily override default messages and locales for validation and UI strings. better: set this in a specific config file and import it in main.ts
-const localFormKitConfig = {
-  locales: { de },
-  locale: 'de',
-  // override only what you want:
-  // messages: {
-  //   de: {
-  //     validation: {
-  //       required: 'Bitte dieses Feld ausfüllen.',
-  //       email: 'Bitte eine gültige E-Mail-Adresse eingeben.',
-  //     },
-  //     // you can also override UI strings, e.g. submit/incomplete, etc.
-  //     // ui: { ... }
-  //   },
-  // },
-}
+// const localFormKitConfig = {
+//   locales: { de },
+//   locale: 'de',
+// override only what you want:
+// messages: {
+//   de: {
+//     validation: {
+//       required: 'Bitte dieses Feld ausfüllen.',
+//       email: 'Bitte eine gültige E-Mail-Adresse eingeben.',
+//     },
+//     // you can also override UI strings, e.g. submit/incomplete, etc.
+//     // ui: { ... }
+//   },
+// },
+// }
 
 // const hasAlphabetical = ref(false)
 // const hasCategorical = ref(false)
