@@ -9,13 +9,15 @@ const showBreadcrumbs = computed(() => {
 </script>
 
 <template>
-  <ul v-if="showBreadcrumbs" class="breadcrumb-list">
-    <BreadcrumbItem
-      v-for="breadcrumb in props.breadcrumbs"
-      :key="breadcrumb.name"
-      :breadcrumb="breadcrumb"
-    />
-  </ul>
+  <nav aria-label="Breadcrumb">
+    <ul v-if="showBreadcrumbs" class="breadcrumb-list">
+      <BreadcrumbItem
+        v-for="breadcrumb in props.breadcrumbs"
+        :key="breadcrumb.name"
+        :breadcrumb="breadcrumb"
+      />
+    </ul>
+  </nav>
 </template>
 
 <style lang="scss" scoped>
