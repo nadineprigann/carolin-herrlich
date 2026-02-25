@@ -28,6 +28,8 @@ const resetFilters = () => {}
 
 const labels = reactive({
   title: 'Ansicht verfeinern',
+  description:
+    'Wähle Filter aus und klicke anschließend auf „Anwenden“, um die Liste zu aktualisieren.',
   alphabetical: {
     title: 'Alphabetisch',
     aToZ: 'A-Z',
@@ -88,10 +90,7 @@ watchEffect(() => {
 
     <section class="content">
       <FieldText :id="titleId" element="h2" :text="labels.title" />
-      <p :id="descId" class="description">
-        Wähle Filter aus und klicke anschließend auf „Anwenden“, um die Liste zu
-        aktualisieren.
-      </p>
+      <p :id="descId" class="description" v-text="labels.description" />
       <div
         v-if="hasAlphabetical"
         role="group"
