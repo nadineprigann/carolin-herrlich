@@ -12,7 +12,7 @@ const props = defineProps<{
   data: TemplateChapter
 }>()
 
-const { fields, breadcrumbs } = toRefs(props.data)
+const { fields, breadcrumbs, nav } = toRefs(props.data)
 </script>
 
 <template>
@@ -26,6 +26,7 @@ const { fields, breadcrumbs } = toRefs(props.data)
       class="subtitle"
     />
     <FieldMatrix :items="fields.content" />
+    <ChapterNav :items="nav" />
     <RelatedContent :related="fields.related_content" />
   </main>
 </template>

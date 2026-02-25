@@ -1,0 +1,53 @@
+<script lang="ts" setup>
+const props = defineProps<{
+  items: Route
+}>()
+
+const showChapterNav = computed(() => {
+  return hasPrev.value || hasNext.value
+})
+
+const hasPrev = computed(() => {
+  return props.items.prev !== null
+})
+
+const hasNext = computed(() => {
+  return props.items.next !== null
+})
+</script>
+
+<template>
+  <nav
+    v-if="showChapterNav"
+    class="chapter-nav"
+    aria-label="Chapter navigation"
+  >
+    <!-- do not loop through items to be able to render each button separately for better control over. position, rendering and ARIA labels -->
+    <ChapterNavButton
+      v-if="hasPrev"
+      :key="`chapter-nav-button-prev`"
+      :item="props.items.prev"
+      :direction="'prev'"
+    />
+    <ChapterNavButton
+      v-if="hasNext"
+      :key="`chapter-nav-button-next`"
+      :item="props.items.next"
+      :direction="'next'"
+    />
+  </nav>
+</template>
+
+<style lang="scss" scoped>
+.chapter-nav {
+  @include center-content;
+
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    auto
+  ); // only  use as much space as each button needs
+
+  justify-content: space-between;
+}
+</style>

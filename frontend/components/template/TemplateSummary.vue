@@ -10,7 +10,7 @@ const props = defineProps<{
   data: TemplateSummary
 }>()
 
-const { fields, breadcrumbs } = toRefs(props.data)
+const { fields, breadcrumbs, nav } = toRefs(props.data)
 
 const labels = reactive({
   header: ' des Kapitels',
@@ -25,6 +25,7 @@ const labels = reactive({
       <FieldText element="h2" :text="labels.header" class="title" />
     </div>
     <FieldTextarea v-if="fields.text" :text="fields.text" />
+    <ChapterNav :items="nav" />
     <RelatedContent :related="fields.related_content" />
   </main>
 </template>
