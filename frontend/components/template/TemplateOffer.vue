@@ -16,11 +16,16 @@ const { fields, breadcrumbs } = toRefs(props.data)
 <template>
   <main class="template-offer">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
+    <FieldText element="h2" :text="fields.title" class="title" />
+    <FieldText element="h3" :text="fields.subtitle" class="subtitle" />
     <FieldMatrix :items="fields.content" />
   </main>
 </template>
 
 <style lang="scss" scoped>
 // .template-offer {}
+.title,
+.subtitle {
+  @include center-content;
+}
 </style>
