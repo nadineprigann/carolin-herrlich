@@ -102,6 +102,11 @@ watchEffect(() => {
   // hasChronological.value = advanced
   // hasCyclical.value = advanced
 })
+
+onDeactivated(() => {
+  // reset overlay state when navigating away while overlay is open
+  closeOverlay()
+})
 </script>
 
 <template>
