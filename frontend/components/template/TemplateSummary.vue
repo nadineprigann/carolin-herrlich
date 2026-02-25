@@ -30,5 +30,7 @@ const labels = reactive({
 </template>
 
 <style lang="scss" scoped>
-// .template-summary {}
+.template-summary {
+  @include center-content;
+}
 </style>
