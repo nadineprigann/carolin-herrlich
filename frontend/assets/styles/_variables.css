@@ -31,6 +31,7 @@
   --gutter-l: 4rem; */
 
   --content-width: 70vw;
+  --title-width: 50%; /* percent cuz within already centered content */
 
   /* Easing */
 
