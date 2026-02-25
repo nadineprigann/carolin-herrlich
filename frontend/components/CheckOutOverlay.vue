@@ -69,7 +69,7 @@ const labels = reactive({
   reset: 'Zurücksetzen',
 })
 
-// use accordion title for form title if available, otherwise use the one from props (e.g. from template). accordion stores in store when toggling, overlay uses it should it get rendered
+// use accordion title for form title if available, otherwise use the one from props (e.g. from template like event). OverlayButton.vue stores accordion title in store when used within one and clicked, overlay can use it here
 const formTitle = computed(() => {
   return layout.value.openOverlay.checkoutTitle
     ? `${labels.title} ${layout.value.openOverlay.checkoutTitle}`
