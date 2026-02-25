@@ -16,22 +16,24 @@ const toggleAccordion = () => {
 
 <template>
   <div v-if="showAccordion" class="field-matrix-type-accordion">
-    <FieldText
-      element="h4"
-      :text="props.item.accordion.title"
-      class="title"
-      @click="toggleAccordion"
-    />
-    <FieldText
-      v-if="props.item.accordion.subtitle"
-      element="h5"
-      :text="props.item.accordion.subtitle"
-      class="subtitle"
-    />
+    <div class="header" @click="toggleAccordion">
+      <FieldText
+        element="h4"
+        :text="props.item.accordion.title"
+        class="title"
+      />
+      <FieldText
+        v-if="props.item.accordion.subtitle"
+        element="h5"
+        :text="props.item.accordion.subtitle"
+        class="subtitle"
+      />
+    </div>
     <FieldMatrix
       v-if="accordionVisible"
       :items="props.item.accordion.content"
       class="content"
+      :accordion-title="props.item.accordion.title"
     />
   </div>
 </template>
@@ -39,5 +41,14 @@ const toggleAccordion = () => {
 <style lang="scss" scoped>
 .field-matrix-type-accordion {
   @include center-content;
+
+  position: relative;
+}
+
+.header {
+  @media (min-width: $tablet) {
+    display: flex;
+    align-items: baseline;
+  }
 }
 </style>

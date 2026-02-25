@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const props = defineProps<{
   item: MatrixItem
+  accordionTitle?: string
 }>()
 
 // Pick component based on matrix type
@@ -26,7 +27,12 @@ const type = computed(() => {
 </script>
 
 <template>
-  <component :is="type" :item="item" class="field-matrix-item" />
+  <component
+    :is="type"
+    :item="item"
+    :accordion-title="accordionTitle"
+    class="field-matrix-item"
+  />
 </template>
 
 <style lang="scss" scoped>

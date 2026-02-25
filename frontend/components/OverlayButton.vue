@@ -6,6 +6,7 @@ const props = defineProps<{
   url?: string
   label?: string
   overlay: 'checkout' | 'filter'
+  accordionTitle?: string
 }>()
 
 const altLabel = reactive({
@@ -13,8 +14,11 @@ const altLabel = reactive({
 })
 
 const openOverlay = () => {
-  layout.value.openOverlay[props.overlay] =
-    !layout.value.openOverlay[props.overlay]
+  // when opening the checkout overlay, set title to accordion title if available to make sure that nomatter the state (open / closed) of the accordion, the overlay title is correct -> fetch it right before opening the overlay accordionTitle gets passed down all the way from FieldMatrix.vue to always use the correct title for this instance (button can only live within an accordion, so title should always be available)
+  if (props.accordionTitle)
+    layout.value.openOverlay.checkoutTitle = props.accordionTitle
+  // always use deterministic toggling for global overlays like checkout, so that they open and close correctly no matter the current state of the accordion (if button is in accordion) or other components.
+  layout.value.openOverlay[props.overlay] = true
 }
 
 const buttonClass = computed(() => [

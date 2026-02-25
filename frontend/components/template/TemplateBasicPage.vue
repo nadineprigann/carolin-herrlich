@@ -17,8 +17,13 @@ const { fields, breadcrumbs } = toRefs(props.data)
 <template>
   <main class="template-basic-page">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
-    <FieldText v-if="fields.subtitle" element="h3" :text="fields.subtitle" />
+    <FieldText element="h2" :text="fields.title" class="title" />
+    <FieldText
+      v-if="fields.subtitle"
+      element="h3"
+      :text="fields.subtitle"
+      class="subtitle"
+    />
     <FieldMatrix :items="fields.content" />
     <RelatedContent :related="fields.related_content" />
   </main>
@@ -26,4 +31,8 @@ const { fields, breadcrumbs } = toRefs(props.data)
 
 <style lang="scss" scoped>
 // .template-basic-page {}
+.title,
+.subtitle {
+  @include center-content;
+}
 </style>

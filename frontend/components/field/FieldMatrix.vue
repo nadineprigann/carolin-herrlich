@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const props = defineProps<{
   items?: MatrixItem[]
+  accordionTitle?: string
 }>()
 </script>
 
@@ -10,6 +11,7 @@ const props = defineProps<{
       v-for="(item, index) in props.items"
       :key="`item-${index}`"
       :item="item"
+      :accordion-title="props.accordionTitle"
     />
   </div>
 </template>

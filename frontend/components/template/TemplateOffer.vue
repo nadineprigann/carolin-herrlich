@@ -16,11 +16,22 @@ const { fields, breadcrumbs } = toRefs(props.data)
 <template>
   <main class="template-offer">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
+    <FieldText element="h2" :text="fields.title" class="title" />
+    <FieldText
+      v-if="fields.subtitle"
+      element="h3"
+      :text="fields.subtitle"
+      class="subtitle"
+    />
     <FieldMatrix :items="fields.content" />
+    <CheckOutOverlay :template="'offer'" :title="fields.title" />
   </main>
 </template>
 
 <style lang="scss" scoped>
 // .template-offer {}
+.title,
+.subtitle {
+  @include center-content;
+}
 </style>

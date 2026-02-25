@@ -1,31 +1,31 @@
 <script lang="ts" setup>
-import { FormKitProvider } from '@formkit/vue'
-import { de } from '@formkit/i18n'
+// import { FormKitProvider } from '@formkit/vue'
+// import { de } from '@formkit/i18n'
 
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
 const props = defineProps<{
-  template: 'event' | 'shop'
+  template: 'event' | 'shop' | 'offer'
   title: string
 }>()
 
 // use FormKitProvider to set up the configuration for FormKit in this component. This way, we can easily override default messages and locales for validation and UI strings. better: set this in a specific config file and import it in main.ts
-const localFormKitConfig = {
-  locales: { de },
-  locale: 'de',
-  // override only what you want:
-  // messages: {
-  //   de: {
-  //     validation: {
-  //       required: 'Bitte dieses Feld ausfüllen.',
-  //       email: 'Bitte eine gültige E-Mail-Adresse eingeben.',
-  //     },
-  //     // you can also override UI strings, e.g. submit/incomplete, etc.
-  //     // ui: { ... }
-  //   },
-  // },
-}
+// const localFormKitConfig = {
+//   locales: { de },
+//   locale: 'de',
+// override only what you want:
+// messages: {
+//   de: {
+//     validation: {
+//       required: 'Bitte dieses Feld ausfüllen.',
+//       email: 'Bitte eine gültige E-Mail-Adresse eingeben.',
+//     },
+//     // you can also override UI strings, e.g. submit/incomplete, etc.
+//     // ui: { ... }
+//   },
+// },
+// }
 
 // const hasAlphabetical = ref(false)
 // const hasCategorical = ref(false)
@@ -33,38 +33,47 @@ const localFormKitConfig = {
 // const hasCyclical = ref(false)
 
 const labels = reactive({
-  title: 'CheckOut von ',
+  buttonClose: 'Check-Out schliessen',
+  title: 'Check-Out von ',
+  description:
+    'Fülle die Felder aus und klicke anschließend auf "Absenden", um deine Infos und Fragen abzusenden und damit den Check-Out abzuschliessen.',
   firstName: {
     label: 'Vorname',
-    help: 'Gib hier deinen Vornamen ein',
+    help: 'Gib hier deinen Vornamen ein.',
     placeholder: 'Vorname',
+    error: 'Bitte gib deinen Vornamen ein.',
   },
   lastName: {
     label: 'Nachname',
-    help: 'Gib hier deinen Nachnamen ein',
+    help: 'Gib hier deinen Nachnamen ein.',
     placeholder: 'Nachname',
+    error: 'Bitte gib deinen Nachnamen ein.',
   },
   pronouns: {
     label: 'Pronomen',
-    help: 'Gib hier dein(e) Pronomen ein',
+    help: 'Gib hier dein(e) Pronomen ein.',
     placeholder: 'sie / ihr, they / them, ...',
   },
   mail: {
     label: 'E-Mail',
-    help: 'Gib hier deine E-Mail-Adresse ein',
+    help: 'Gib hier deine E-Mail-Adresse ein.',
     placeholder: 'beispiel@domain.com',
+    error: 'Bitte gib eine gültige E-Mail-Adresse ein.',
   },
   message: {
-    label: 'Deine Fragen',
-    help: 'Gib hier deine Fragen ein',
+    label: 'Fragen',
+    help: 'Gib hier deine Fragen oder Anmerkungen ein.',
     placeholder: 'Ich interessiere mich für ...',
   },
   submit: 'Absenden',
   reset: 'Zurücksetzen',
 })
 
+// use accordion title for form title if available, otherwise use the one from props (e.g. from template). accordion stores in store when toggling, overlay uses it should it get rendered
 const formTitle = computed(() => {
-  return `${labels.title} ${props.title}`
+  return layout.value.openOverlay.checkoutTitle
+    ? `${labels.title} ${layout.value.openOverlay.checkoutTitle}`
+    : `${labels.title} ${props.title}`
 })
 
 const showOverlay = computed(() => {
@@ -73,6 +82,7 @@ const showOverlay = computed(() => {
 
 const closeOverlay = () => {
   layout.value.openOverlay.checkout = false
+  layout.value.openOverlay.checkoutTitle = null
 }
 
 const send = () => {
@@ -81,8 +91,8 @@ const send = () => {
 }
 const reset = () => {}
 
-const titleId = `filter-titel`
-const descId = `filter-beschreibung`
+const titleId = `checkout-titel`
+const descId = `checkout-beschreibung`
 
 // show sections of filters based on template
 watchEffect(() => {
@@ -105,18 +115,150 @@ watchEffect(() => {
     class="checkout-overlay"
     @keydown.esc.prevent.stop="closeOverlay"
   >
-    <FieldText :id="titleId" element="h2" :text="formTitle" class="title" />
+    <button
+      type="button"
+      class="close"
+      :aria-label="labels.buttonClose"
+      @click="closeOverlay"
+    >
+      <span class="label" />
+    </button>
+    <form class="form" @submit.prevent="send">
+      <div class="content">
+        <FieldText :id="titleId" element="h2" :text="formTitle" class="title" />
+        <p :id="descId" class="description" v-text="labels.description" />
+        <div class="field">
+          <label for="firstName" v-text="labels.firstName.label" />
+          <input
+            id="firstName"
+            type="text"
+            name="firstName"
+            autocomplete="given-name"
+            :placeholder="labels.firstName.placeholder"
+            class="input"
+            required
+            :aria-describedby="'firstName-help firstName-error'"
+          />
+          <FieldText
+            id="firstName-help"
+            class="help"
+            element="p"
+            :text="labels.firstName.help"
+          />
+          <!-- <FieldText
+            id="firstName-error"
+            class="error"
+            element="p"
+            :text="labels.firstName.error"
+          /> -->
+        </div>
+        <div class="field">
+          <label for="lastName" v-text="labels.lastName.label" />
+          <input
+            id="lastName"
+            type="text"
+            name="lastName"
+            autocomplete="family-name"
+            :placeholder="labels.lastName.placeholder"
+            class="input"
+            required
+            :aria-describedby="'lastName-help lastName-error'"
+          />
+          <FieldText
+            id="lastName-help"
+            class="help"
+            element="p"
+            :text="labels.lastName.help"
+          />
+          <!-- <FieldText
+            id="lastName-error"
+            class="error"
+            element="p"
+            :text="labels.lastName.error"
+          /> -->
+        </div>
+        <div class="field">
+          <label for="pronouns" v-text="labels.pronouns.label" />
+          <input
+            id="pronouns"
+            type="text"
+            autocomplete="off"
+            name="pronouns"
+            :placeholder="labels.pronouns.placeholder"
+            class="input"
+            :aria-describedby="'pronouns-help'"
+          />
+          <FieldText
+            id="pronouns-help"
+            class="help"
+            element="p"
+            :text="labels.pronouns.help"
+          />
+        </div>
+        <div class="field">
+          <label for="mail" v-text="labels.mail.label" />
+          <input
+            id="mail"
+            type="email"
+            name="mail"
+            autocomplete="email"
+            :placeholder="labels.mail.placeholder"
+            class="input"
+            required
+            :aria-describedby="'mail-help mail-error'"
+          />
+          <FieldText
+            id="mail-help"
+            class="help"
+            element="p"
+            :text="labels.mail.help"
+          />
+          <!-- <FieldText
+            id="mail-error"
+            class="error"
+            element="p"
+            :text="labels.mail.error"
+          /> -->
+        </div>
+        <div class="field">
+          <label for="message" v-text="labels.message.label" />
+          <textarea
+            id="message"
+            name="message"
+            autocomplete="off"
+            :placeholder="labels.message.placeholder"
+            class="input"
+            :aria-describedby="'message-help'"
+          ></textarea>
+          <FieldText
+            id="message-help"
+            class="help"
+            element="p"
+            :text="labels.message.help"
+          />
+        </div>
+      </div>
+      <div class="controls">
+        <button type="submit" class="apply">
+          <span class="label" v-text="labels.submit" />
+        </button>
+        <button type="button" class="reset" @click="reset">
+          <span class="label" v-text="labels.reset" />
+        </button>
+      </div>
+    </form>
+
     <!-- <FormKitProvider :config="localFormKitConfig"> -->
-    <FormKit
+    <!-- <FormKit
       type="form"
       :actions="false"
       :actions-class="'actions'"
       :form-class="'form'"
       @submit="submit"
-    >
-      <!-- <div class="wrapper"> -->
-      <!-- submit-label="Bestellen" -->
-      <FormKit
+    > -->
+    <!-- <div class="wrapper"> -->
+    <!-- submit-label="Bestellen" -->
+    <!-- <FormKit
         type="text"
         name="firstName"
         :label="labels.firstName.label"
@@ -165,17 +307,10 @@ watchEffect(() => {
         validation="optional"
         autocomplete="off"
         class="input"
-      />
-      <!-- </div> -->
-      <div class="controls">
-        <button type="button" class="apply" @click="send">
-          <span class="label" v-text="labels.submit" />
-        </button>
-        <button type="button" class="reset" @click="reset">
-          <span class="label" v-text="labels.reset" />
-        </button>
-      </div>
-    </FormKit>
+      /> -->
+    <!-- </div>
+
+    </FormKit> -->
     <!-- <button
       type="button"
       class="close"
@@ -265,6 +400,8 @@ watchEffect(() => {
   top: 0;
   left: 0;
   z-index: var(--xl-overlay);
+  display: grid;
+  grid-template-rows: auto minmax(auto, 1fr);
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -273,8 +410,8 @@ watchEffect(() => {
 }
 
 .close,
-.apply,
-.back {
+.send,
+.reset {
   @include button-reset;
 }
 
@@ -300,28 +437,50 @@ watchEffect(() => {
 }
 
 // FormKit
-.formkit-form {
+// .formkit-form {
+.form {
   @include center-content;
 
-  display: grid;
-
-  // grid-template-rows: minmax(0, 1fr) auto;
-  grid-template-rows: repeat(3, auto);
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
-  // min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
-// .wrapper {
-//   display: grid;
-//   grid-template-rows: repeat(3, auto);
-//   grid-template-columns: repeat(2, minmax(0, 1fr));
-// }
+.title {
+  max-width: var(--title-width);
 
-.formkit-input {
-  // @include input-default;
+  @media (min-width: $tablet) {
+    grid-column: span 2;
+    margin-left: 0; // reset centering from parent
+  }
+}
 
-  width: 100% !important;
+.content {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: $tablet) {
+    display: grid;
+    grid-template-rows: repeat(3, auto) 1fr auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  // gap: 0.25rem;
+}
+
+// .formkit-input {
+.input {
+  @include input-default;
+
+  grid-column: span 1;
+
+  // width: 100% !important;
 }
 
 .buttons {
@@ -330,16 +489,14 @@ watchEffect(() => {
   max-width: 80vw;
 }
 
-.controls,
-.formkit-actions .actions {
-  grid-row: 5 / 6;
-  grid-column: 2 / 3;
-
-  // justify-content: flex-end;
+.formkit-actions .actions,
+.controls {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.apply,
-.back {
+.send,
+.reset {
   @include button-default;
 }
 </style>
