@@ -12,7 +12,6 @@ const props = defineProps<{
       :key="`item-${index}`"
       :item="item"
     />
-    <CheckOutOverlay :template="'offer'" :title="props.title" />
   </div>
 </template>
 
