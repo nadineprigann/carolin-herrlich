@@ -10,7 +10,7 @@ const props = defineProps<{
   data: TemplateOffer
 }>()
 
-const { fields, breadcrumbs } = toRefs(props.data)
+const { fields, breadcrumbs, nav } = toRefs(props.data)
 </script>
 
 <template>
@@ -24,6 +24,7 @@ const { fields, breadcrumbs } = toRefs(props.data)
       class="subtitle"
     />
     <FieldMatrix :items="fields.content" />
+    <ChapterNav :items="nav" />
   </main>
 </template>
 

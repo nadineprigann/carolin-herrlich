@@ -89,6 +89,42 @@ class Navigation {
 
     return $breadcrumbs;
   }
+  // TODO: add const which holds all templates and prefixes, then resolve via selector builder to be able to maintain templates in one place
+  // private const CHAPTER_NAV_TEMPLATES = ['chapter', 'summary', 'offer'];
+  // Template eligibility: chapter, summary, offer-* (prefix)
+  private static function isChapterNavEligible(Page $page): bool {
+    // add templates that will receive the chapter nav. exact match and prefix etc. possible.
+    $eligibleTemplates = ['chapter', 'summary', 'offer'];
+    $template = $page->template->name;
+
+    foreach ($eligibleTemplates as $eligible) {
+      if ($template === $eligible || str_starts_with($template, $eligible . '-')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Returns prev/next route objects for "chapter navigation" or null if not applicable.
+  // - Only active on templates: chapter, summary, offer, offer-*
+  // - Navigates horizontally through eligible siblings (same parent) ordered by sort
+  // - If current page is last (no next), returns only prev, and vice versa
+  public static function getChapterNav(Page $page): ?\StdClass {
+    if (!self::isChapterNavEligible($page)) return null;
+
+
+    // Eligible siblings only (same parent)
+    $selector = "template=chapter|summary|offer|offer*, sort=sort, status<" . Page::statusTrash;
+
+    $prev = $page->prev($selector);
+    $next = $page->next($selector);
+
+    $nav = new \StdClass();
+    $nav->prev = ($prev && $prev->id) ? self::createRoute($prev) : null;
+    $nav->next = ($next && $next->id) ? self::createRoute($next) : null;
+
+    return $nav;
+  }
 
   private static function createRoute($page) {
     $page->of(true);

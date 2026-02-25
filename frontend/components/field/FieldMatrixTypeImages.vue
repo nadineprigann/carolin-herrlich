@@ -20,8 +20,6 @@ const props = defineProps<{
   @media (min-width: $small) {
     display: flex;
   }
-
-  // grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .image {
