@@ -444,15 +444,23 @@ watchEffect(() => {
 }
 
 .title {
-  grid-column: span 2;
   max-width: var(--title-width);
-  margin-left: 0; // reset centering from parent
+
+  @media (min-width: $tablet) {
+    grid-column: span 2;
+    margin-left: 0; // reset centering from parent
+  }
 }
 
 .content {
-  display: grid;
-  grid-template-rows: repeat(3, auto) 1fr auto;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: $tablet) {
+    display: grid;
+    grid-template-rows: repeat(3, auto) 1fr auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .field {
