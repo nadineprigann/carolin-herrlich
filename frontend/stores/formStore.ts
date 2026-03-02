@@ -49,11 +49,6 @@ export const useFormStore = defineStore('form', () => {
   // then, create a computed property that flattens the selected filters to an array of titles whenever selected changes
   const selectedTitles = computed(() => flattenSelectedToTitles(selected))
 
-  // const updateQueryParams = computed(() => {
-  //   query: { filter: selectedTitles.value },
-  //   state: { listFilters: { ...route.query }},
-  // }
-
   const clear = () => {
     Object.assign(selected, JSON.parse(JSON.stringify(initial))) // reset selected filters to initial values by creating a deep copy of the initial object
   }
