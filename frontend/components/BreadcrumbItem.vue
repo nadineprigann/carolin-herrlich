@@ -67,12 +67,12 @@ const showFilterTitles = computed(() => {
 watch(
   filterTitles,
   (newTitles) => {
-    if (newTitles.length > 0) {
-      // setTimeout(() => {
-      // console.log(visibleFilterTitles.value, '->', newTitles)
-      visibleFilterTitles.value = newTitles
-      // }, 500)
-    }
+    // if (newTitles.length > 0) {
+    // setTimeout(() => {
+    // console.log(visibleFilterTitles.value, '->', newTitles)
+    visibleFilterTitles.value = newTitles
+    // }, 500)
+    // }
 
     // delay clear (match your transition duration)
     // setTimeout(() => {
