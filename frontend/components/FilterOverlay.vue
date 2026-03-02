@@ -3,6 +3,7 @@ const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 const formStore = useFormStore()
 const { selected, clear } = storeToRefs(formStore)
+const { setQuery, resetQuery } = useUpdateQuery()
 
 const props = defineProps<{
   // to get these filters, make sure to fetch them from the backend. therefore, adjust in DefaultPage.php: the template for which the categories have to be returned; with the specific context of the parent template
@@ -24,17 +25,19 @@ const closeOverlay = () => {
 }
 
 const draft = reactive(JSON.parse(JSON.stringify(selected.value)))
-// create a a deep copy of the selected filters from the store object to only update the store when applying filters
+// create a deep copy of the selected filters from the store object to only update the store when applying filters
 
 const applyFilters = () => {
   // update store with selected filters from draft only when applying filters
-  Object.assign(selected.value, draft) // or structuredClone(draft)
+  Object.assign(selected.value, draft) // update selected filters in store
+  setQuery() // update query with selected filters to make them available BreadcrumbItem and ChildItem for routing and visual purposes. Defined in useUpdateQuery composable.
   closeOverlay()
 }
 
 const resetFilters = () => {
-  clear() // reset selected filters in store to initial values
-  Object.assign(draft, JSON.parse(JSON.stringify(selected.value))) // reset draft to initial values to update the UI accordingly
+  Object.assign(draft, JSON.parse(JSON.stringify(selected.value))) // reset local draft to initial values to update the UI accordingly
+  formStore.clear() // reset selected filters in store to initial values. defined in formStore
+  resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
   closeOverlay()
 }
 
