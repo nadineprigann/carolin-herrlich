@@ -81,10 +81,14 @@ class DefaultPage {
         'context' => 'template=context, name=werkzeugpalette',
         'extra' => 'is_overview_category=1',
         ],
-        'events' => [
-          'parent' => 'template=categories',
-          'context' => 'template=context, name=veranstaltung',
-        ],
+      'events' => [
+        'parent' => 'template=categories',
+        'context' => 'template=context, name=veranstaltung',
+      ],
+      'blog' => [
+        'parent' => 'template=categories',
+        'context' => 'template=context, name=blog',
+      ],
       // Example: another template using a different context
       // 'template' => [
       //   'parent' => 'template=categories',

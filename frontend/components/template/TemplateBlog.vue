@@ -7,7 +7,7 @@ const props = defineProps<{
   data: TemplateBlog
 }>()
 
-const { fields, breadcrumbs } = toRefs(props.data)
+const { fields, breadcrumbs, categories } = toRefs(props.data)
 
 const label = reactive({
   current: 'Aktuell',
@@ -23,6 +23,7 @@ const showChildren = computed(() => {
   <main class="template-blog">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" />
+    <FilterBar :overlay="'filter'" />
     <section class="current-posts">
       <FieldText class="random-label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
@@ -32,6 +33,11 @@ const showChildren = computed(() => {
       <FieldText class="random-label" element="h3" :text="label.archive" />
       <ChildList :children="" />
     </section> -->
+    <FilterOverlay
+      :filters="categories"
+      :template="'blog'"
+      :title="fields.title"
+    />
   </main>
 </template>
 

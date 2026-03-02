@@ -12,6 +12,7 @@ const props = defineProps<{
       :overlay="'checkout'"
       :accordion-title="props.accordionTitle"
     />
+    <!-- overlay renders here bc button is only used in conjunction with it: no putting two separate comps in different places (global approach). prop gets passed downstream all the way from FieldMatrix.vue (where accordion renders its content) -->
     <CheckOutOverlay :title="props.accordionTitle" />
   </div>
 </template>

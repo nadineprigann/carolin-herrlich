@@ -1,8 +1,12 @@
 <script lang="ts" setup>
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
+const formStore = useFormStore()
+const { selected, clear } = storeToRefs(formStore)
+const { setQuery, resetQuery } = useUpdateQuery()
 
 const props = defineProps<{
+  // to get these filters, make sure to fetch them from the backend. therefore, adjust in DefaultPage.php: the template for which the categories have to be returned; with the specific context of the parent template
   filters: Category[]
   template: 'tools' | 'blog' | 'events'
 }>()
@@ -20,20 +24,42 @@ const closeOverlay = () => {
   layout.value.openOverlay.filter = false
 }
 
+const draft = reactive(JSON.parse(JSON.stringify(selected.value)))
+// create a deep copy of the selected filters from the store object to only update the store when applying filters
+
 const applyFilters = () => {
-  // ... applying logic
+  // update store with selected filters from draft only when applying filters
+  Object.assign(selected.value, draft) // update selected filters in store
+  setQuery() // update query with selected filters to make them available BreadcrumbItem and ChildItem for routing and visual purposes. Defined in useUpdateQuery composable.
   closeOverlay()
 }
-const resetFilters = () => {}
+
+const resetFilters = () => {
+  Object.assign(draft, JSON.parse(JSON.stringify(selected.value))) // reset local draft to initial values to update the UI accordingly
+  formStore.clear() // reset selected filters in store to initial values. defined in formStore
+  resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
+  closeOverlay()
+}
 
 const labels = reactive({
+  buttonClose: 'Filter schließen',
   title: 'Ansicht verfeinern',
   description:
     'Wähle Filter aus und klicke anschließend auf „Anwenden“, um die Liste zu aktualisieren.',
   alphabetical: {
     title: 'Alphabetisch',
-    aToZ: 'A-Z',
-    zToA: 'Z-A',
+    aToZ: {
+      label: 'A-Z',
+      value: 'az',
+      name: 'radio-alphabetical',
+      id: 'filterAlphabeticalAZ',
+    },
+    zToA: {
+      label: 'Z-A',
+      value: 'za',
+      name: 'radio-alphabetical',
+      id: 'filterAlphabeticalZA',
+    },
   },
   categorical: {
     title: 'Kategorisch',
@@ -87,86 +113,106 @@ onDeactivated(() => {
     <button
       type="button"
       class="close"
-      aria-label="Filter schließen"
+      :aria-label="labels.buttonClose"
       @click="closeOverlay"
     >
       <span class="label" />
     </button>
 
-    <section class="content">
-      <FieldText :id="titleId" element="h2" :text="labels.title" />
-      <p :id="descId" class="description" v-text="labels.description" />
-      <div
-        v-if="hasAlphabetical"
-        role="group"
-        :aria-labelledby="`${titleId}-alphabetisch`"
-      >
-        <FieldText
-          :id="`${titleId}-alphabetisch`"
-          element="h3"
-          :text="labels.alphabetical.title"
-        />
-        <div class="buttons">
-          <FilterButton :title="labels.alphabetical.aToZ" />
-          <FilterButton :title="labels.alphabetical.zToA" />
+    <form class="form" @submit.prevent="send">
+      <section class="content">
+        <FieldText :id="titleId" element="h2" :text="labels.title" />
+        <p :id="descId" class="description" v-text="labels.description" />
+        <div
+          v-if="hasAlphabetical"
+          role="group"
+          :aria-labelledby="`${titleId}-alphabetisch`"
+        >
+          <FieldText
+            :id="`${titleId}-alphabetisch`"
+            element="h3"
+            :text="labels.alphabetical.title"
+          />
+          <FormRadio
+            :id="labels.alphabetical.aToZ.id"
+            v-model="draft.alphabetical"
+            :label="labels.alphabetical.aToZ.label"
+            :value="labels.alphabetical.aToZ.value"
+            :name="labels.alphabetical.aToZ.name"
+          />
+          <FormRadio
+            :id="labels.alphabetical.zToA.id"
+            v-model="draft.alphabetical"
+            :label="labels.alphabetical.zToA.label"
+            :value="labels.alphabetical.zToA.value"
+            :name="labels.alphabetical.zToA.name"
+          />
+          <!-- <div class="buttons">
+            <FilterButton :title="labels.alphabetical.aToZ" />
+            <FilterButton :title="labels.alphabetical.zToA" />
+          </div> -->
         </div>
-      </div>
-      <div
-        v-if="hasCategorical"
-        role="group"
-        :aria-labelledby="`${titleId}-kategorisch`"
-      >
-        <FieldText
-          :id="`${titleId}-kategorisch`"
-          element="h3"
-          :text="labels.categorical.title"
-        />
-        <div class="buttons">
-          <FilterButton v-for="item in filters" :key="item.id" :filter="item" />
+        <div
+          v-if="hasCategorical"
+          role="group"
+          :aria-labelledby="`${titleId}-kategorisch`"
+        >
+          <FieldText
+            :id="`${titleId}-kategorisch`"
+            element="h3"
+            :text="labels.categorical.title"
+          />
+          <div class="buttons">
+            <!-- <FilterButton
+              v-for="item in filters"
+              :key="item.id"
+              :filter="item"
+            /> -->
+          </div>
         </div>
-      </div>
-      <div
-        v-if="hasChronological"
-        role="group"
-        :aria-labelledby="`${titleId}-chronologisch`"
-      >
-        <FieldText
-          :id="`${titleId}-chronologisch`"
-          element="h3"
-          :text="labels.chronological.title"
-        />
-        <div class="buttons">
-          <FilterButton :title="labels.chronological.currFut" />
-          <FilterButton :title="labels.chronological.futCurr" />
+        <div
+          v-if="hasChronological"
+          role="group"
+          :aria-labelledby="`${titleId}-chronologisch`"
+        >
+          <FieldText
+            :id="`${titleId}-chronologisch`"
+            element="h3"
+            :text="labels.chronological.title"
+          />
+          <div class="buttons">
+            <!-- <FilterButton :title="labels.chronological.currFut" />
+            <FilterButton :title="labels.chronological.futCurr" /> -->
+          </div>
         </div>
-      </div>
-      <div
-        v-if="hasCyclical"
-        role="group"
-        :aria-labelledby="`${titleId}-zyklisch`"
-      >
-        <FieldText
-          :id="`${titleId}-zyklisch`"
-          element="h3"
-          :text="labels.cyclical.title"
-        />
-        <div class="buttons">
-          <FilterButton :title="labels.cyclical.spring" />
-          <FilterButton :title="labels.cyclical.summer" />
-          <FilterButton :title="labels.cyclical.autumn" />
-          <FilterButton :title="labels.cyclical.winter" />
+        <div
+          v-if="hasCyclical"
+          role="group"
+          :aria-labelledby="`${titleId}-zyklisch`"
+        >
+          <FieldText
+            :id="`${titleId}-zyklisch`"
+            element="h3"
+            :text="labels.cyclical.title"
+          />
+          <div class="buttons">
+            <!-- <FilterButton :title="labels.cyclical.spring" />
+            <FilterButton :title="labels.cyclical.summer" />
+            <FilterButton :title="labels.cyclical.autumn" />
+            <FilterButton :title="labels.cyclical.winter" /> -->
+          </div>
         </div>
-      </div>
-      <!-- TODO: get array of selected filters and only on apply, update query and store them in store to make them availbale for parent to filter their children -->
-    </section>
-    <div class="controls">
-      <button type="button" class="apply" @click="applyFilters">
-        <span class="label" v-text="labels.apply" />
-      </button>
-      <button type="button" class="reset" @click="resetFilters">
-        <span class="label" v-text="labels.reset" />
-      </button>
-    </div>
+        <!-- TODO: get array of selected filters and only on apply, update query and store them in store to make them availbale for parent to filter their children -->
+      </section>
+      <section class="controls">
+        <button type="button" class="apply" @click="applyFilters">
+          <span class="label" v-text="labels.apply" />
+        </button>
+        <button type="button" class="reset" @click="resetFilters">
+          <span class="label" v-text="labels.reset" />
+        </button>
+      </section>
+    </form>
   </section>
 </template>
 
