@@ -39,29 +39,37 @@ const labels = reactive({
     'Fülle die Felder aus und klicke anschließend auf "Absenden", um deine Infos und Fragen abzusenden und damit den Check-Out abzuschliessen.',
   firstName: {
     label: 'Vorname',
+    id: 'firstName',
     help: 'Gib hier deinen Vornamen ein.',
     placeholder: 'Vorname',
     error: 'Bitte gib deinen Vornamen ein.',
+    autocomplete: 'given-name',
   },
   lastName: {
     label: 'Nachname',
+    id: 'lastName',
     help: 'Gib hier deinen Nachnamen ein.',
     placeholder: 'Nachname',
     error: 'Bitte gib deinen Nachnamen ein.',
+    autocomplete: 'family-name',
   },
   pronouns: {
     label: 'Pronomen',
+    id: 'pronouns',
     help: 'Gib hier dein(e) Pronomen ein.',
     placeholder: 'sie / ihr, they / them, ...',
   },
   mail: {
     label: 'E-Mail',
+    id: 'mail',
     help: 'Gib hier deine E-Mail-Adresse ein.',
     placeholder: 'beispiel@domain.com',
     error: 'Bitte gib eine gültige E-Mail-Adresse ein.',
+    autocomplete: 'email',
   },
   message: {
     label: 'Fragen',
+    id: 'message',
     help: 'Gib hier deine Fragen oder Anmerkungen ein.',
     placeholder: 'Ich interessiere mich für ...',
   },
@@ -128,129 +136,63 @@ onDeactivated(() => {
     >
       <span class="label" />
     </button>
+
     <form class="form" @submit.prevent="send">
-      <div class="content">
+      <section class="content">
         <FieldText :id="titleId" element="h2" :text="formTitle" class="title" />
         <p :id="descId" class="description" v-text="labels.description" />
-        <div class="field">
-          <label for="firstName" v-text="labels.firstName.label" />
-          <input
-            id="firstName"
-            type="text"
-            name="firstName"
-            autocomplete="given-name"
-            :placeholder="labels.firstName.placeholder"
-            class="input"
-            required
-            :aria-describedby="'firstName-help firstName-error'"
-          />
-          <FieldText
-            id="firstName-help"
-            class="help"
-            element="p"
-            :text="labels.firstName.help"
-          />
-          <!-- <FieldText
-            id="firstName-error"
-            class="error"
-            element="p"
-            :text="labels.firstName.error"
-          /> -->
-        </div>
-        <div class="field">
-          <label for="lastName" v-text="labels.lastName.label" />
-          <input
-            id="lastName"
-            type="text"
-            name="lastName"
-            autocomplete="family-name"
-            :placeholder="labels.lastName.placeholder"
-            class="input"
-            required
-            :aria-describedby="'lastName-help lastName-error'"
-          />
-          <FieldText
-            id="lastName-help"
-            class="help"
-            element="p"
-            :text="labels.lastName.help"
-          />
-          <!-- <FieldText
-            id="lastName-error"
-            class="error"
-            element="p"
-            :text="labels.lastName.error"
-          /> -->
-        </div>
-        <div class="field">
-          <label for="pronouns" v-text="labels.pronouns.label" />
-          <input
-            id="pronouns"
-            type="text"
-            autocomplete="off"
-            name="pronouns"
-            :placeholder="labels.pronouns.placeholder"
-            class="input"
-            :aria-describedby="'pronouns-help'"
-          />
-          <FieldText
-            id="pronouns-help"
-            class="help"
-            element="p"
-            :text="labels.pronouns.help"
-          />
-        </div>
-        <div class="field">
-          <label for="mail" v-text="labels.mail.label" />
-          <input
-            id="mail"
-            type="email"
-            name="mail"
-            autocomplete="email"
-            :placeholder="labels.mail.placeholder"
-            class="input"
-            required
-            :aria-describedby="'mail-help mail-error'"
-          />
-          <FieldText
-            id="mail-help"
-            class="help"
-            element="p"
-            :text="labels.mail.help"
-          />
-          <!-- <FieldText
-            id="mail-error"
-            class="error"
-            element="p"
-            :text="labels.mail.error"
-          /> -->
-        </div>
-        <div class="field">
-          <label for="message" v-text="labels.message.label" />
-          <textarea
-            id="message"
-            name="message"
-            autocomplete="off"
-            :placeholder="labels.message.placeholder"
-            class="input"
-            :aria-describedby="'message-help'"
-          ></textarea>
-          <FieldText
-            id="message-help"
-            class="help"
-            element="p"
-            :text="labels.message.help"
-          />
-        </div>
-      </div>
-      <div class="controls">
+        <FormInput
+          :id="labels.firstName.id"
+          :label="labels.firstName.label"
+          :help="labels.firstName.help"
+          :error="labels.firstName.error"
+          :placeholder="labels.firstName.placeholder"
+          :autocomplete="labels.firstName.autocomplete"
+          :required="true"
+        />
+        <FormInput
+          :id="labels.lastName.id"
+          :label="labels.lastName.label"
+          :help="labels.lastName.help"
+          :error="labels.lastName.error"
+          :placeholder="labels.lastName.placeholder"
+          :autocomplete="labels.lastName.autocomplete"
+          :required="true"
+        />
+        <FormInput
+          :id="labels.pronouns.id"
+          :label="labels.pronouns.label"
+          :help="labels.pronouns.help"
+          :error="labels.pronouns.error"
+          :placeholder="labels.pronouns.placeholder"
+          :autocomplete="labels.pronouns.autocomplete"
+        />
+        <FormInput
+          :id="labels.mail.id"
+          :label="labels.mail.label"
+          :help="labels.mail.help"
+          :error="labels.mail.error"
+          :placeholder="labels.mail.placeholder"
+          :autocomplete="labels.mail.autocomplete"
+          :required="true"
+        />
+        <FormInput
+          :id="labels.message.id"
+          :label="labels.message.label"
+          :help="labels.message.help"
+          :error="labels.message.error"
+          :placeholder="labels.message.placeholder"
+          :autocomplete="labels.message.autocomplete"
+        />
+      </section>
+      <section class="controls">
         <button type="submit" class="apply">
           <span class="label" v-text="labels.submit" />
         </button>
         <button type="button" class="reset" @click="reset">
           <span class="label" v-text="labels.reset" />
         </button>
-      </div>
+      </section>
     </form>
 
     <!-- <FormKitProvider :config="localFormKitConfig"> -->
