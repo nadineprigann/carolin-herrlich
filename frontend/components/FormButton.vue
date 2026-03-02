@@ -27,7 +27,7 @@ const selectFilter = () => {
 <template>
   <button
     type="button"
-    class="filter-button"
+    class="form-button"
     :aria-pressed="props.selected"
     @click="selectFilter"
   >
@@ -36,7 +36,7 @@ const selectFilter = () => {
 </template>
 
 <style lang="scss" scoped>
-.filter-button {
+.form-button {
   @include button-default;
 }
 </style>

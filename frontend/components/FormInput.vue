@@ -10,11 +10,13 @@ interface Props {
   placeholder: string
   autocomplete?: string // autocomplete attr for input, e.g. "given-name". helps AT. see https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
   required?: boolean // pass true if required
+  emit?: boolean // whether to emit the entered value to the parent component. for now stay dumb and do not emit, can be added later if needed
 }
 
 const props = withDefaults(defineProps<Props>(), {
   required: false,
   autocomplete: 'off',
+  emit: false, // for now stay dumb and do not emit selected value to parent component. can be added later if needed
 })
 
 // compute help and error texts for ARIA
