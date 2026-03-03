@@ -35,3 +35,31 @@
     opacity: 1;
   }
 }
+
+@mixin t-legal(
+  $name: 't-legal',
+  $duration: 3000ms,
+  $easing: ease,
+  $delay: 0ms
+) {
+  .#{$name}-enter-active,
+  .#{$name}-leave-active {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    transition: opacity $duration $easing $delay;
+  }
+
+  .#{$name}-enter-from,
+  .#{$name}-leave-to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  .#{$name}-enter-to,
+  .#{$name}-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
