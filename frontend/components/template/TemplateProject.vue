@@ -59,6 +59,14 @@ const label = reactive({
   @include ff-sans;
 }
 
+.title {
+  @include fs-xlarge;
+}
+
+.header {
+  @include fs-medium;
+}
+
 .slideshow {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);

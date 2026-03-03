@@ -104,5 +104,10 @@ onBeforeRouteLeave(() => {
 .title,
 .label {
   @include ff-sans;
+  @include fs-medium;
+}
+
+.title {
+  @include fs-xlarge;
 }
 </style>

@@ -242,4 +242,12 @@ onDeactivated(() => {
 .link-title {
   @include ff-sans;
 }
+
+.title {
+  @include fs-xlarge;
+}
+
+.link-title {
+  @include fs-medium;
+}
 </style>

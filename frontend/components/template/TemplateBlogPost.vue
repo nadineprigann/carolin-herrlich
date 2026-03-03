@@ -32,5 +32,6 @@ const { fields, breadcrumbs } = toRefs(props.data)
 .subtitle {
   @include center-content;
   @include ff-sans;
+  @include fs-xlarge;
 }
 </style>

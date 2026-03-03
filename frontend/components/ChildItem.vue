@@ -56,5 +56,6 @@ const linkTo = computed(() => {
 .title,
 .subtitle {
   @include ff-sans;
+  @include fs-medium;
 }
 </style>

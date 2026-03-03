@@ -25,7 +25,7 @@ const showChildren = computed(() => {
     <FieldText element="h2" :text="fields.title" class="title" />
     <!-- <FilterBar :overlay="'filter'" /> -->
     <section class="current-posts">
-      <FieldText class="random-label" element="h3" :text="label.current" />
+      <FieldText class="label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
     </section>
     <!-- TODO: implement archive functionality: checkbox to mark posts as archived, filter here. successively: automatically move posts older than X months to archive -->
@@ -49,5 +49,13 @@ const showChildren = computed(() => {
 .title,
 .random-label {
   @include ff-sans;
+}
+
+.title {
+  @include fs-xlarge;
+}
+
+.label {
+  @include fs-medium;
 }
 </style>

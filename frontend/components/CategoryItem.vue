@@ -18,5 +18,6 @@ const props = defineProps<{
 
 .title {
   @include ff-sans;
+  @include fs-small;
 }
 </style>

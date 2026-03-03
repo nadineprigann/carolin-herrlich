@@ -113,6 +113,7 @@ watch(
 
 .label {
   @include ff-sans;
+  @include fs-medium;
 
   cursor: pointer;
 }

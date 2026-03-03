@@ -85,6 +85,7 @@ const closeNav = () => {
 
 .title {
   @include ff-sans;
+  @include fs-medium;
 }
 
 .sub-nav-list {

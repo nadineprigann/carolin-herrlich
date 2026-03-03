@@ -38,5 +38,6 @@ const { fields, breadcrumbs } = toRefs(props.data)
 .title,
 .subtitle {
   @include ff-sans;
+  @include fs-xlarge;
 }
 </style>

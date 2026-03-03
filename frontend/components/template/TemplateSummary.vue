@@ -34,4 +34,9 @@ const labels = reactive({
 .template-summary {
   @include center-content;
 }
+
+.title {
+  @include ff-sans;
+  @include fs-xlarge;
+}
 </style>

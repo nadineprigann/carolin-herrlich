@@ -91,5 +91,6 @@ function resetCurrentItem() {
 
 .title {
   @include ff-sans;
+  @include fs-medium;
 }
 </style>

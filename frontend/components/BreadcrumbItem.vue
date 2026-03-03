@@ -155,5 +155,6 @@ onBeforeRouteLeave(() => {
 .title,
 .filter-title {
   @include ff-sans;
+  @include fs-small;
 }
 </style>
