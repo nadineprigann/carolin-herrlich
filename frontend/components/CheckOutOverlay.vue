@@ -351,7 +351,7 @@ onDeactivated(() => {
 
 .send,
 .reset {
-  @include button-reset;
+  @include button-default;
 }
 
 .description {
@@ -421,10 +421,5 @@ onDeactivated(() => {
 .controls {
   display: flex;
   justify-content: flex-end;
-}
-
-.send,
-.reset {
-  @include button-default;
 }
 </style>
