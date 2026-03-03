@@ -23,7 +23,7 @@ const showChildren = computed(() => {
   <main class="template-events">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
-    <FilterBar :overlay="'filter'" />
+    <!-- <FilterBar :overlay="'filter'" /> -->
     <section class="current-events">
       <FieldText class="random-label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
