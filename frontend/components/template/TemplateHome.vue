@@ -46,6 +46,19 @@ const { fields } = toRefs(props.data)
   @include fs-large;
 
   text-align: center;
+
+  @media (min-width: $xsmall) {
+    max-width: 70vw;
+    margin: 0 auto;
+  }
+
+  @media (min-width: $tablet) {
+    max-width: 55vw;
+  }
+
+  @media (min-width: $desktop) {
+    max-width: 40vw;
+  }
 }
 
 .links {
