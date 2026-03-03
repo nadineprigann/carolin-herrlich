@@ -31,12 +31,13 @@ const linkTo = computed(() => {
 <template>
   <li class="child-item">
     <NuxtLink v-if="showChild" :to="linkTo" class="link">
-      <FieldText element="h5" class="title" :text="props.child.fields.title" />
       <FieldText
+        v-if="isEvent"
         element="h5"
         class="subtitle"
         :text="props.child.fields.subtitle"
       />
+      <FieldText element="h5" class="title" :text="props.child.fields.title" />
       <FieldTextarea
         v-if="showDescription"
         class="description"
@@ -50,5 +51,10 @@ const linkTo = computed(() => {
 <style lang="scss" scoped>
 .child-item {
   // @include link-default;
+}
+
+.title,
+.subtitle {
+  @include ff-sans;
 }
 </style>

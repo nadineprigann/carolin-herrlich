@@ -236,4 +236,10 @@ onDeactivated(() => {
 .link {
   @include link-default;
 }
+
+.title,
+.label,
+.link-title {
+  @include ff-sans;
+}
 </style>

@@ -42,6 +42,8 @@ const { fields } = toRefs(props.data)
 }
 
 .subtitle {
+  @include ff-sans;
+
   text-align: center;
 }
 

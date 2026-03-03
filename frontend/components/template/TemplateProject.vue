@@ -19,12 +19,12 @@ const label = reactive({
     <section class="slideshow">
       <BreadcrumbList :breadcrumbs="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
-      <FieldText
+      <!-- <FieldText
         v-if="fields.subtitle"
         element="h3"
         :text="fields.subtitle"
         class="subtitle"
-      />
+      /> -->
       <ImageSlider
         :slides="fields.images"
         class="slider"
@@ -52,6 +52,11 @@ const label = reactive({
 .subtitle,
 .content {
   @include center-content;
+}
+
+.title,
+.header {
+  @include ff-sans;
 }
 
 .slideshow {

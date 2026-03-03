@@ -24,7 +24,11 @@ const showCategories = computed(() => {
             />
           </div>
         </section>
-        <FieldTextarea v-if="props.item.text" :text="props.item.text" />
+        <FieldTextarea
+          v-if="props.item.text"
+          :text="props.item.text"
+          class="text"
+        />
       </NuxtLink>
       <CategoryList v-if="showCategories" :categories="props.item.categories" />
     </section>
@@ -58,5 +62,12 @@ const showCategories = computed(() => {
   &::before {
     content: ' – ';
   }
+}
+
+.title,
+.date-start,
+.date-end,
+.text {
+  @include ff-sans;
 }
 </style>

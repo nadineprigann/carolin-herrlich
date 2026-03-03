@@ -82,7 +82,7 @@ onBeforeRouteLeave(() => {
 <template>
   <main class="template-tools">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
+    <FieldText element="h2" :text="fields.title" class="title" />
     <!-- <FilterBar :overlay="'filter'" /> -->
     <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
@@ -99,5 +99,10 @@ onBeforeRouteLeave(() => {
 <style lang="scss" scoped>
 .template-tools {
   @include center-content;
+}
+
+.title,
+.label {
+  @include ff-sans;
 }
 </style>

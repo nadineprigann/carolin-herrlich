@@ -1,5 +1,13 @@
 @mixin ff-regular {
-  font-family: sans-serif;
+  font-family: 'IBM Plex Serif', sans-serif;
+}
+
+@mixin ff-sans {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+@mixin fw-bold {
+  font-weight: 700;
 }
 
 @mixin fs-html {

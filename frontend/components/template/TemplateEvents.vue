@@ -45,4 +45,9 @@ const showChildren = computed(() => {
 .template-events {
   @include center-content;
 }
+
+.title,
+.random-label {
+  @include ff-sans;
+}
 </style>

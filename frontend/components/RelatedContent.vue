@@ -110,4 +110,10 @@ watch(
     grid-column: 2 / 3;
   }
 }
+
+.label {
+  @include ff-sans;
+
+  cursor: pointer;
+}
 </style>

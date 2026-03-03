@@ -15,4 +15,8 @@ const props = defineProps<{
   // @include link-default;
   @include button-default;
 }
+
+.title {
+  @include ff-sans;
+}
 </style>

@@ -56,6 +56,8 @@ const showChild = computed(() => {
 }
 
 .title {
+  @include ff-sans;
+
   justify-self: center;
 
   @media (min-width: $mobile) {

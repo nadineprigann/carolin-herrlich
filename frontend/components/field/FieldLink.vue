@@ -13,11 +13,15 @@ const showLink = computed(() => {
 
 <template>
   <NuxtLink v-if="showLink" :to="link.select_page.meta.url" class="field-link">
-    <FieldText v-if="link.alt_text" :text="link.alt_text" />
-    <FieldText v-else :text="link.select_page.fields.title" />
+    <FieldText v-if="link.alt_text" :text="link.alt_text" class="title" />
+    <FieldText v-else :text="link.select_page.fields.title" class="title" />
   </NuxtLink>
 </template>
 
 <style lang="scss" scoped>
 // .field-link {}
+
+.title {
+  @include ff-sans;
+}
 </style>

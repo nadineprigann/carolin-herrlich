@@ -27,5 +27,6 @@ const showChildren = computed(() => {
 
 .title {
   @include center-content;
+  @include ff-sans;
 }
 </style>

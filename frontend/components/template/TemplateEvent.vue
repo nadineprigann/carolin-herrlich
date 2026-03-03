@@ -43,4 +43,9 @@ const { fields, breadcrumbs } = toRefs(props.data)
 .sign-up {
   @include center-content;
 }
+
+.title,
+.subtitle {
+  @include ff-sans;
+}
 </style>

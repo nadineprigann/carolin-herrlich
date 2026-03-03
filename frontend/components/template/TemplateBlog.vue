@@ -22,7 +22,7 @@ const showChildren = computed(() => {
 <template>
   <main class="template-blog">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
+    <FieldText element="h2" :text="fields.title" class="title" />
     <!-- <FilterBar :overlay="'filter'" /> -->
     <section class="current-posts">
       <FieldText class="random-label" element="h3" :text="label.current" />
@@ -44,5 +44,10 @@ const showChildren = computed(() => {
 <style lang="scss" scoped>
 .template-blog {
   @include center-content;
+}
+
+.title,
+.random-label {
+  @include ff-sans;
 }
 </style>

@@ -36,6 +36,7 @@
 @mixin button-default {
   @include button-reset;
   @include focus-default;
+  @include ff-sans;
 
   padding: 0.35em 0.5em 0.25em; // different paddings to visually center label
   border: 1px solid var(--black);

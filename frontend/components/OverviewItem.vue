@@ -88,4 +88,8 @@ function resetCurrentItem() {
 .link {
   @include link-default;
 }
+
+.title {
+  @include ff-sans;
+}
 </style>

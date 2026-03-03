@@ -20,4 +20,8 @@ const showItem = computed(() => {
 .in-depth-item {
   // @include link-default;
 }
+
+.title {
+  @include ff-sans;
+}
 </style>

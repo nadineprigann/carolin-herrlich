@@ -151,4 +151,9 @@ onBeforeRouteLeave(() => {
   // @include link-default;
   display: flex;
 }
+
+.title,
+.filter-title {
+  @include ff-sans;
+}
 </style>
