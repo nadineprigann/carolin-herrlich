@@ -42,5 +42,7 @@ const showChildren = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-// .template-blog {}
+.template-blog {
+  @include center-content;
+}
 </style>
