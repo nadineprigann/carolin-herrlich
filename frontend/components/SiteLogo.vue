@@ -101,9 +101,22 @@
 </template>
 
 <style lang="scss" scoped>
-// .site-logo {}
+.site-logo {
+  width: 4.5em;
+
+  @media (min-width: $tablet) {
+    width: 7em;
+  }
+
+  @media (min-width: $desktop) {
+    width: 10em;
+  }
+}
+
 .link {
   @include link-default;
+
+  display: inline-block;
 }
 
 // TODO: add custom font here as well
