@@ -20,6 +20,7 @@ const { fields, children, categories, breadcrumbs } = toRefs(props.data)
 
 const labels = reactive({
   info: 'Infos zu dieser Seite',
+  all: 'Alle',
 })
 
 const hasChildren = computed(() => {
@@ -64,6 +65,10 @@ const handleCurrentItem = (item: OverviewItem | null) => {
   currentItem.value = item
 }
 
+const linkToAll = computed(() => {
+  return props.data.meta.url + 'werkzeuge/'
+})
+
 onDeactivated(() => {
   infoVisible.value = false
 })
@@ -101,6 +106,9 @@ onDeactivated(() => {
           :hovered-item="currentItem"
           @current-item="handleCurrentItem"
         />
+        <NuxtLink v-if="hasCategories" :to="linkToAll" class="link">
+          <FieldText element="h5" class="link-title" :text="labels.all" />
+        </NuxtLink>
       </ul>
     </section>
     <!-- TODO: maybe use vue-portal to init it in the child but then render it here to prevent transition issues -->
@@ -222,5 +230,9 @@ onDeactivated(() => {
       object-fit: cover;
     }
   }
+}
+
+.link {
+  @include link-default;
 }
 </style>
