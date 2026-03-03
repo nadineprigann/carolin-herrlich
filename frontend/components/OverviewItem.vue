@@ -1,12 +1,26 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 const emit = defineEmits(['current-item'])
+const formStore = useFormStore()
+const { selected } = storeToRefs(formStore)
 
 const props = defineProps<{
   item: OverviewItem
 }>()
 
 const route = useRoute()
+
+const categoryObject = computed<PageReference>(() => ({
+  // create category object from item by using its props and type it as PAgeRefernece (category). this way, its guaranteed that the type always matches. this type is also use dfor filters in filter overlay.
+  title: props.item.fields.title,
+  meta: {
+    alternate: props.item.meta.alternate,
+    id: props.item.meta.id,
+    name: props.item.meta.name,
+    template: props.item.meta.template,
+    url: props.item.meta.url,
+  },
+}))
 
 // custom link for overview item when it has template category
 const linkTo = computed(() => {
@@ -33,6 +47,12 @@ const linkTo = computed(() => {
   } else return url
 })
 
+const onNavigateCategory = () => {
+  // set selected category in store to keep filters synced in a central place.
+  if (props.item.meta.template !== 'category') return
+  selected.value.categories = [categoryObject.value]
+}
+
 function getCurrentItem() {
   emit('current-item', props.item)
 }
@@ -48,7 +68,7 @@ function resetCurrentItem() {
     @mouseenter="getCurrentItem"
     @mouseleave="resetCurrentItem"
   >
-    <NuxtLink :to="linkTo" class="link">
+    <NuxtLink :to="linkTo" class="link" @click="onNavigateCategory">
       <FieldText class="title" element="h5" :text="props.item.fields.title" />
     </NuxtLink>
   </li>

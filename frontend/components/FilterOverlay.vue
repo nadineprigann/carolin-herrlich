@@ -7,7 +7,7 @@ const { setQuery, resetQuery } = useUpdateQuery()
 
 const props = defineProps<{
   // to get these filters, make sure to fetch them from the backend. therefore, adjust in DefaultPage.php: the template for which the categories have to be returned; with the specific context of the parent template
-  filters: Category[]
+  filters: PageReference[]
   template: 'tools' | 'blog' | 'events'
 }>()
 
