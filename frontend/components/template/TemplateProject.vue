@@ -17,6 +17,7 @@ const label = reactive({
 <template>
   <main class="template-project">
     <section class="slideshow">
+      <BreadcrumbList :breadcrumbs="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
       <FieldText
         v-if="fields.subtitle"
@@ -24,7 +25,6 @@ const label = reactive({
         :text="fields.subtitle"
         class="subtitle"
       />
-      <BreadcrumbList :breadcrumbs="breadcrumbs" />
       <ImageSlider
         :slides="fields.images"
         class="slider"
