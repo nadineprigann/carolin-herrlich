@@ -23,9 +23,9 @@ const showChildren = computed(() => {
   <main class="template-events">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
-    <FilterBar :overlay="'filter'" />
+    <!-- <FilterBar :overlay="'filter'" /> -->
     <section class="current-events">
-      <FieldText class="random-label" element="h3" :text="label.current" />
+      <FieldText class="label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
     </section>
     <!-- TODO: implement archive functionality: checkbox to mark posts as archived, filter here. successively: automatically move posts older than X months to archive -->
@@ -44,5 +44,18 @@ const showChildren = computed(() => {
 <style lang="scss" scoped>
 .template-events {
   @include center-content;
+}
+
+.title,
+.label {
+  @include ff-sans;
+}
+
+.title {
+  @include fs-xlarge;
+}
+
+.label {
+  @include fs-medium;
 }
 </style>

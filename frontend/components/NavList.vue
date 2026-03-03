@@ -56,20 +56,26 @@ const handleToggleSubNav = (id: number) => {
         @toggle-sub-nav="handleToggleSubNav"
       />
     </ul>
+    <AppFooter />
   </nav>
 </template>
 
 <style lang="scss" scoped>
-.nav-list {
-  @include list-reset;
-
+.nav {
   position: fixed;
   top: 0;
   left: 0;
   z-index: var(--xl-overlay);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
   background-color: var(--white);
+}
+
+.nav-list {
+  @include list-reset;
 
   @media (min-width: $medium) {
     display: flex;

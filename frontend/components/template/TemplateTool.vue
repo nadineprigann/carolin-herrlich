@@ -20,7 +20,7 @@ const { fields, breadcrumbs } = toRefs(props.data)
       :text="fields.subtitle"
       class="subtitle"
     />
-    <CategoryList :categories="fields.select_category" class="categories" />
+    <!-- <CategoryList :categories="fields.select_category" class="categories" /> -->
     <FieldMatrix :items="fields.content" />
     <RelatedContent :related="fields.related_content" />
   </main>
@@ -33,5 +33,11 @@ const { fields, breadcrumbs } = toRefs(props.data)
 .subtitle,
 .categories {
   @include center-content;
+}
+
+.title,
+.subtitle {
+  @include ff-sans;
+  @include fs-xlarge;
 }
 </style>

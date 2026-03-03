@@ -33,7 +33,7 @@ const props = defineProps<{
 // const hasCyclical = ref(false)
 
 const labels = reactive({
-  buttonClose: 'Check-Out schliessen',
+  overlayTitle: 'Check-Out',
   title: 'Check-Out von ',
   description:
     'Fülle die Felder aus und klicke anschließend auf "Absenden", um deine Infos und Fragen abzusenden und damit den Check-Out abzuschliessen.',
@@ -128,14 +128,7 @@ onDeactivated(() => {
     class="checkout-overlay"
     @keydown.esc.prevent.stop="closeOverlay"
   >
-    <button
-      type="button"
-      class="close"
-      :aria-label="labels.buttonClose"
-      @click="closeOverlay"
-    >
-      <span class="label" />
-    </button>
+    <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
 
     <form class="form" @submit.prevent="send">
       <section class="content">
@@ -356,21 +349,9 @@ onDeactivated(() => {
   backdrop-filter: blur(var(--bg-blur));
 }
 
-.close,
 .send,
 .reset {
   @include button-reset;
-}
-
-.close {
-  position: relative;
-  z-index: var(--xxl-overlay);
-  justify-self: flex-end;
-  padding: var(--gutter);
-
-  &::before {
-    content: var(--l-close);
-  }
 }
 
 .description {

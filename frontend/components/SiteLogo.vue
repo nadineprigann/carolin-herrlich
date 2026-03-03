@@ -45,11 +45,11 @@
           </radialGradient>
         </defs>
         <g class="cls-13">
-          <text class="cls-2" transform="translate(180.74 86.46)">
+          <text class="cls-2 text" transform="translate(180.74 86.46)">
             <tspan x="0" y="0">herrliche</tspan>
           </text>
         </g>
-        <text class="cls-3" transform="translate(172.11 138.9)">
+        <text class="cls-3 text" transform="translate(172.11 138.9)">
           <tspan x="0" y="0" class="cls-6">PER</tspan>
           <tspan x="116.8" y="0" class="cls-14">MA</tspan>
           <tspan x="213.83" y="0" class="cls-4">K</tspan>
@@ -101,9 +101,22 @@
 </template>
 
 <style lang="scss" scoped>
-// .site-logo {}
+.site-logo {
+  width: 4.5em;
+
+  @media (min-width: $tablet) {
+    width: 7em;
+  }
+
+  @media (min-width: $desktop) {
+    width: 10em;
+  }
+}
+
 .link {
   @include link-default;
+
+  display: inline-block;
 }
 
 // TODO: add custom font here as well
@@ -112,6 +125,15 @@
 .cls-2,
 .cls-3 {
   fill: #5c5f58;
+}
+
+.cls-2 {
+  @include ff-regular;
+}
+
+.cls-3 {
+  @include ff-sans;
+  @include fw-bold;
 }
 
 .cls-4 {

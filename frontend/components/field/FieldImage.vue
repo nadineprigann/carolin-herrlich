@@ -222,6 +222,7 @@ const longDescId = computed(() => {
 }
 
 .image-caption {
+  @include fs-xsmall; // should be set on single elements
   // width: 100%;
   // max-width: max-content;
 

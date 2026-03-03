@@ -1,11 +1,25 @@
 @import '~/assets/styles/_variables.css';
 
-// @font-face {
-//   font-family: '';
-//   font-style: normal;
-//   font-weight: 400;
-//   src: url('~/assets/fonts/XXXXX.woff2') format('woff2');
-// }
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: url('~/assets/fonts/IBMPlexSerif-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Serif';
+  font-style: normal;
+  font-weight: 700;
+  src: url('~/assets/fonts/IBMPlexSerif-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('~/assets/fonts/IBMPlexSans-Regular.woff2') format('woff2');
+}
 
 * {
   margin: 0;
@@ -71,10 +85,12 @@ h6 {
 }
 
 h6 {
+  @include ff-sans;
+  @include fw-bold;
+
   margin: 0 0 1.25em;
 
-  //  font-size: 1em;
-  font-weight: bold;
+  // font-size: 1em;
 }
 
 p,
@@ -95,7 +111,7 @@ em {
 
 strong {
   // Before adjusting, make sure a matching webfont weight is implemented
-  // font-weight: 700;
+  @include fw-bold;
 }
 
 sup,

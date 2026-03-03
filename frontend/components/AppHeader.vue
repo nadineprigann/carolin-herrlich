@@ -74,7 +74,7 @@ const toggleNavigation = () => {
 
 .close {
   &::before {
-    content: var(--s-close);
+    content: var(--l-close);
   }
 }
 </style>

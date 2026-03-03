@@ -82,8 +82,8 @@ onBeforeRouteLeave(() => {
 <template>
   <main class="template-tools">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" />
-    <FilterBar :overlay="'filter'" />
+    <FieldText element="h2" :text="fields.title" class="title" />
+    <!-- <FilterBar :overlay="'filter'" /> -->
     <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="props.data.children" />
@@ -99,5 +99,15 @@ onBeforeRouteLeave(() => {
 <style lang="scss" scoped>
 .template-tools {
   @include center-content;
+}
+
+.title,
+.label {
+  @include ff-sans;
+  @include fs-medium;
+}
+
+.title {
+  @include fs-xlarge;
 }
 </style>

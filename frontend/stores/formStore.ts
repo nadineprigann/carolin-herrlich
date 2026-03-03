@@ -39,7 +39,7 @@ export const useFormStore = defineStore('form', () => {
     ]
 
       // remove empties + dedupe, keep order
-      .map((t) => (t ?? '').toString().trim()) // convert nulls to empty strings, trim whitespace
+      .map((t) => (t ?? '').toString().trim().toLowerCase()) // convert nulls to empty strings, trim whitespace, convert to lowercase
       .filter(Boolean)
 
     // dedupe, keep order

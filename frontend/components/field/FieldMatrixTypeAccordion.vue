@@ -51,4 +51,17 @@ const toggleAccordion = () => {
     align-items: baseline;
   }
 }
+
+.title,
+.subtitle {
+  @include ff-sans;
+}
+
+.title {
+  @include fs-medium;
+}
+
+.subtitle {
+  @include fs-small;
+}
 </style>

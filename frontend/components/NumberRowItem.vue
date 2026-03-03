@@ -22,7 +22,12 @@ const showRow = computed(() => {
   grid-template-columns: 2em 1fr;
 }
 
+.number,
+.text {
+  @include fs-small;
+}
+
 .number {
-  // TODO: format number as monospace or so to make sure that number swith more digits have the same width
+  text-align: right;
 }
 </style>

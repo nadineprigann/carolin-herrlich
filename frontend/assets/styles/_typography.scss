@@ -1,5 +1,13 @@
 @mixin ff-regular {
-  font-family: sans-serif;
+  font-family: 'IBM Plex Serif', sans-serif;
+}
+
+@mixin ff-sans {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+@mixin fw-bold {
+  font-weight: 700;
 }
 
 @mixin fs-html {
@@ -9,6 +17,75 @@
   // Place vw-based font-sizes here to make REM scale accordingly
 }
 
+// captions of images
+// m: 11px
+// d: 12px
+@mixin fs-xsmall {
+  font-size: 0.75em;
+
+  @media (min-width: $desktop) {
+    font-size: 0.65em;
+  }
+}
+
+// breadcrumbs, chapter nav counter, categories, context text, subtitle accordion, imrpint and privacy links in footer
+// m: 12px
+// d: 16px
+@mixin fs-small {
+  font-size: 0.85em;
+
+  @media (min-width: $desktop) {
+    font-size: 0.8em;
+  }
+}
+
+// m: 14px
+// d: 20px
 @mixin fs-body {
-  font-size: 1.6em;
+  font-size: 1.4em;
+
+  @media (min-width: $tablet) {
+    font-size: 1.7em;
+  }
+
+  @media (min-width: $desktop) {
+    font-size: 2em;
+  }
+}
+
+// accordion titles, overview buttons, related headings, nav, list titles in events, blog, tools,
+// m: 16px
+// d: 22px
+@mixin fs-medium {
+  font-size: 1.15em;
+
+  @media (min-width: $desktop) {
+    font-size: 1.1em;
+  }
+}
+
+// home subtitle
+// m: 20px
+// d: 35px
+@mixin fs-large {
+  font-size: 1.45em;
+
+  @media (min-width: $desktop) {
+    font-size: 1.65em;
+  }
+}
+
+// site titles
+// m: 24px
+// d: 40px
+@mixin fs-xlarge {
+  font-size: 1.7em;
+
+  @media (min-width: $tablet) {
+    font-size: 1.85em;
+  }
+
+  @media (min-width: $desktop) {
+    font-size: 2em;
+  }
 }

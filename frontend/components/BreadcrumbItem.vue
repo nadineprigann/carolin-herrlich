@@ -22,12 +22,23 @@ const savedFilters = computed(() => {
   // depending on router/nuxt version, use route.state or window.history.state. typing as well as nullish coalescing in one line
   const state = (route as any).state ?? window.history.state
   // check if query param is set (for initial page visit with pre-selecred category) or...
-  return (
-    route.query.filter ||
-    // ...if history state has saved filters (when navigating back from a detail page with filters applied)
-    (process.client && state?.listFilters?.filter)
+  // IMPORTANT: check for key presence, not truthiness to make sure that history is only used when the key is truly not present but ignore it when empty (after reset). This prevents: “query cleared → fallback to state”.
+  const hasQueryFilterKey = Object.prototype.hasOwnProperty.call(
+    route.query,
+    'filter',
   )
+
+  return hasQueryFilterKey
+    ? route.query.filter
+    : // ...if history state has saved filters (when navigating back from a detail page with filters applied)
+      process.client && state?.listFilters?.filter
+  // state?.listFilters?.filter
 })
+
+// const savedFilterArray = computed(() =>
+//   // normalize saved titles with the helper function to always work with an array
+//   normalizeToArray(savedFilters.value).filter(Boolean)
+// )
 
 // used for routing only. depending on whether breadcrumb is a link with filter possibility, append saved filter query params using savedFilters. state was saved by ChildItem.vue when navigating to the detail page.
 const linkTo = computed(() => {
@@ -139,5 +150,11 @@ onBeforeRouteLeave(() => {
 .link {
   // @include link-default;
   display: flex;
+}
+
+.title,
+.filter-title {
+  @include ff-sans;
+  @include fs-small;
 }
 </style>

@@ -2,12 +2,12 @@
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 const formStore = useFormStore()
-const { selected, clear } = storeToRefs(formStore)
+const { selected } = storeToRefs(formStore)
 const { setQuery, resetQuery } = useUpdateQuery()
 
 const props = defineProps<{
   // to get these filters, make sure to fetch them from the backend. therefore, adjust in DefaultPage.php: the template for which the categories have to be returned; with the specific context of the parent template
-  filters: Category[]
+  filters: PageReference[]
   template: 'tools' | 'blog' | 'events'
 }>()
 
@@ -34,10 +34,10 @@ const applyFilters = () => {
   closeOverlay()
 }
 
-const resetFilters = () => {
-  Object.assign(draft, JSON.parse(JSON.stringify(selected.value))) // reset local draft to initial values to update the UI accordingly
+const resetFilters = async () => {
   formStore.clear() // reset selected filters in store to initial values. defined in formStore
-  resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
+  Object.assign(draft, JSON.parse(JSON.stringify(formStore.initial))) // reset local draft to initial values to update the UI accordingly
+  await resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
   closeOverlay()
 }
 

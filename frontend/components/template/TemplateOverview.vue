@@ -20,6 +20,7 @@ const { fields, children, categories, breadcrumbs } = toRefs(props.data)
 
 const labels = reactive({
   info: 'Infos zu dieser Seite',
+  all: 'Alle',
 })
 
 const hasChildren = computed(() => {
@@ -64,6 +65,10 @@ const handleCurrentItem = (item: OverviewItem | null) => {
   currentItem.value = item
 }
 
+const linkToAll = computed(() => {
+  return props.data.meta.url + 'werkzeuge/'
+})
+
 onDeactivated(() => {
   infoVisible.value = false
 })
@@ -93,14 +98,18 @@ onDeactivated(() => {
       />
 
       <ul v-if="hasContent" class="overview-list">
-        <!-- use children if there are any, otherwise use categories (categories on tools overview page) -->
+        <!-- use children if there are any, otherwise use categories (categories on tools overview page). for now, without filter implemented, do not show overview items on tools -->
+        <!-- v-for="(child, index) in children ?? categories" -->
         <OverviewItem
-          v-for="(child, index) in children ?? categories"
+          v-for="(child, index) in children"
           :key="`overview-item-${index}`"
           :item="child"
           :hovered-item="currentItem"
           @current-item="handleCurrentItem"
         />
+        <NuxtLink v-if="hasCategories" :to="linkToAll" class="link">
+          <FieldText element="h5" class="link-title" :text="labels.all" />
+        </NuxtLink>
       </ul>
     </section>
     <!-- TODO: maybe use vue-portal to init it in the child but then render it here to prevent transition issues -->
@@ -222,5 +231,23 @@ onDeactivated(() => {
       object-fit: cover;
     }
   }
+}
+
+.link {
+  @include link-default;
+}
+
+.title,
+.label,
+.link-title {
+  @include ff-sans;
+}
+
+.title {
+  @include fs-xlarge;
+}
+
+.link-title {
+  @include fs-medium;
 }
 </style>

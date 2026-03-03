@@ -83,6 +83,11 @@ const closeNav = () => {
   @include link-default;
 }
 
+.title {
+  @include ff-sans;
+  @include fs-medium;
+}
+
 .sub-nav-list {
   @include list-reset;
 }

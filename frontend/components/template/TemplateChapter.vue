@@ -35,5 +35,7 @@ const { fields, breadcrumbs, nav } = toRefs(props.data)
 .title,
 .subtitle {
   @include center-content;
+  @include ff-sans;
+  @include fs-xlarge;
 }
 </style>
