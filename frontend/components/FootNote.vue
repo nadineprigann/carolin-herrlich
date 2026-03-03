@@ -23,6 +23,7 @@ const props = defineProps<{
 .note-section {
   position: fixed;
   bottom: 0;
+  left: 0;
   display: flex;
   width: 100%;
 }
