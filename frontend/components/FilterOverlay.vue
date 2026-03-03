@@ -2,7 +2,7 @@
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 const formStore = useFormStore()
-const { selected, clear } = storeToRefs(formStore)
+const { selected } = storeToRefs(formStore)
 const { setQuery, resetQuery } = useUpdateQuery()
 
 const props = defineProps<{
