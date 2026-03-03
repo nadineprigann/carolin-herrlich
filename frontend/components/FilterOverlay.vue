@@ -34,10 +34,10 @@ const applyFilters = () => {
   closeOverlay()
 }
 
-const resetFilters = () => {
-  Object.assign(draft, JSON.parse(JSON.stringify(selected.value))) // reset local draft to initial values to update the UI accordingly
+const resetFilters = async () => {
   formStore.clear() // reset selected filters in store to initial values. defined in formStore
-  resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
+  Object.assign(draft, JSON.parse(JSON.stringify(formStore.initial))) // reset local draft to initial values to update the UI accordingly
+  await resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
   closeOverlay()
 }
 

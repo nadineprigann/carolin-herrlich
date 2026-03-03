@@ -22,12 +22,23 @@ const savedFilters = computed(() => {
   // depending on router/nuxt version, use route.state or window.history.state. typing as well as nullish coalescing in one line
   const state = (route as any).state ?? window.history.state
   // check if query param is set (for initial page visit with pre-selecred category) or...
-  return (
-    route.query.filter ||
-    // ...if history state has saved filters (when navigating back from a detail page with filters applied)
-    (process.client && state?.listFilters?.filter)
+  // IMPORTANT: check for key presence, not truthiness to make sure that history is only used when the key is truly not present but ignore it when empty (after reset). This prevents: “query cleared → fallback to state”.
+  const hasQueryFilterKey = Object.prototype.hasOwnProperty.call(
+    route.query,
+    'filter',
   )
+
+  return hasQueryFilterKey
+    ? route.query.filter
+    : // ...if history state has saved filters (when navigating back from a detail page with filters applied)
+      process.client && state?.listFilters?.filter
+  // state?.listFilters?.filter
 })
+
+// normalize saved titles with the helper function to always work with an array
+const savedFilterArray = computed(() =>
+  normalizeToArray(savedFilters.value).filter(Boolean),
+)
 
 // used for routing only. depending on whether breadcrumb is a link with filter possibility, append saved filter query params using savedFilters. state was saved by ChildItem.vue when navigating to the detail page.
 const linkTo = computed(() => {
@@ -39,10 +50,10 @@ const linkTo = computed(() => {
   if (!process.client) return props.breadcrumb.path
 
   // if filters where saved, re-apply them to the template URL
-  if (savedFilters.value?.length > 0) {
+  if (savedFilterArray.value?.length > 0) {
     return {
       path: props.breadcrumb.path,
-      query: { filter: savedFilters.value },
+      query: { filter: savedFilterArray.value },
     }
   }
   return props.breadcrumb.path
@@ -50,11 +61,8 @@ const linkTo = computed(() => {
 
 // this is for visual rendering only. make sure that filter titles are correctly displayed
 const filterTitles = computed(() => {
-  // normalize saved titles with the helper function to always work with an array
-  const normalizedTitles = normalizeToArray(savedFilters.value)
-
   // remove empty values with Boolean, limit to 3, format to uppercase with the useToUppercase composable and return
-  return normalizedTitles.filter(Boolean).slice(0, 3).map(toUppercase)
+  return savedFilterArray.value.filter(Boolean).slice(0, 3).map(toUppercase)
 })
 
 // only show filter titles if at least one exists and breadcrumb component has mounted to avoid flashing too early (normally right when navigation starts on prev page because query params are available immediately but target page is not yet mounted)

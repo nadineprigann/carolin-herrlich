@@ -30,7 +30,7 @@ export function useUpdateQuery() {
       query,
       state: {
         ...(window.history.state ?? {}),
-        listFilters: {},
+        listFilters: { filter: [] },
       },
     })
   }
