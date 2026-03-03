@@ -98,9 +98,10 @@ onDeactivated(() => {
       />
 
       <ul v-if="hasContent" class="overview-list">
-        <!-- use children if there are any, otherwise use categories (categories on tools overview page) -->
+        <!-- use children if there are any, otherwise use categories (categories on tools overview page). for now, without filter implemented, do not show overview items on tools -->
+        <!-- v-for="(child, index) in children ?? categories" -->
         <OverviewItem
-          v-for="(child, index) in children ?? categories"
+          v-for="(child, index) in children"
           :key="`overview-item-${index}`"
           :item="child"
           :hovered-item="currentItem"
