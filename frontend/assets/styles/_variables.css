@@ -3,9 +3,12 @@
   --black: rgb(0 0 0);
   --white: rgb(255 255 255);
   --white-90: rgb(255 255 255 / 90%);
+  --grey: #f4f3ef;
+  --yellow: #fcc100;
   --link-color: rgb(0 0 255);
   --focus-color: rgb(0 140 255 / 20%);
   --selection-color: var(--focus-color);
+  --highlight-color: var(--yellow);
 
   /* Effects */
   --bg-blur: 20px;
