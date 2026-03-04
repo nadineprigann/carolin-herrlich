@@ -14,8 +14,8 @@ Options -Indexes
 Options -MultiViews
 
 # Do follow symbolic links
-Options +FollowSymLinks
-# Options +SymLinksifOwnerMatch
+# Options +FollowSymLinks
+Options +SymLinksifOwnerMatch
 
 # Character encoding: Serve text/html or text/plain as UTF-8
 AddDefaultCharset UTF-8
