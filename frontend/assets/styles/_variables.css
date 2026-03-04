@@ -13,8 +13,9 @@
   /* Effects */
   --bg-blur: 20px;
 
-  /* Button Contents */
-  --s-close: '\00D7';
+  /* Unicode Icons */
+  --s-close: '\2212';
+  --s-open: '\002B';
   --l-close: '\2715';
   --nav: '\2630';
 

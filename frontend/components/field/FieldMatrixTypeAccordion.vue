@@ -3,6 +3,13 @@ const props = defineProps<{
   item: MatrixTypeAccordion
 }>()
 
+const accordionClass = computed(() => {
+  return [
+    'field-matrix-type-accordion',
+    accordionVisible.value ? 'is-open' : '',
+  ]
+})
+
 const accordionVisible = ref(false)
 
 const showAccordion = computed(() => {
@@ -15,7 +22,7 @@ const toggleAccordion = () => {
 </script>
 
 <template>
-  <div v-if="showAccordion" class="field-matrix-type-accordion">
+  <div v-if="showAccordion" :class="accordionClass">
     <div class="header" @click="toggleAccordion">
       <FieldText
         element="h4"
@@ -46,10 +53,7 @@ const toggleAccordion = () => {
 }
 
 .header {
-  @media (min-width: $tablet) {
-    display: flex;
-    align-items: baseline;
-  }
+  @include toggle-icon;
 }
 
 .title,

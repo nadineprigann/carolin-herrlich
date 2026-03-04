@@ -23,6 +23,12 @@ const labels = reactive({
   all: 'Alle',
 })
 
+const classes = computed(() => {
+  return {
+    info: ['info-section', infoVisible.value ? 'is-open' : ''],
+  }
+})
+
 const hasChildren = computed(() => {
   return children?.value?.length > 0
 })
@@ -79,13 +85,15 @@ onDeactivated(() => {
     <section class="content-section">
       <BreadcrumbList :breadcrumbs="breadcrumbs" class="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
-      <section v-if="fields.text" class="info-section">
-        <FieldText
-          element="h4"
-          class="label"
-          :text="labels.info"
-          @click="toggleInfo"
-        />
+      <section v-if="fields.text" :class="classes.info">
+        <div class="header">
+          <FieldText
+            element="h4"
+            class="label"
+            :text="labels.info"
+            @click="toggleInfo"
+          />
+        </div>
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
       <ImageSlider
@@ -171,6 +179,10 @@ onDeactivated(() => {
   @media (min-width: $medium) {
     background-color: transparent;
   }
+}
+
+.header {
+  @include toggle-icon;
 }
 
 .text {

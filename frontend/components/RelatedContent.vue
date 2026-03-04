@@ -11,6 +11,12 @@ const labels = reactive({
   in_depth: 'Vertiefung',
 })
 
+const classes = computed(() => {
+  return {
+    context: ['context-section', contextVisible.value ? 'is-open' : ''],
+    depth: ['in-depth-section', depthVisible.value ? 'is-open' : ''],
+  }
+})
 const relatedItem = computed(() => {
   return props.related?.[0] ?? null
 })
@@ -75,22 +81,26 @@ watch(
       :key="`related-${index}`"
     >
       <!-- TODO: if no children, use disabled state. necessary to show at all times for consistent layout on overview page (with cover image). if rendered only when content is there, in-depth moves up and its content is flashed. OR: dynamically with refs. -->
-      <section v-if="showContext" class="context-section">
-        <FieldText
-          element="h4"
-          class="label"
-          :text="labels.context"
-          @click="toggleContext"
-        />
+      <section v-if="showContext" :class="classes.context">
+        <div class="header">
+          <FieldText
+            element="h4"
+            class="label"
+            :text="labels.context"
+            @click="toggleContext"
+          />
+        </div>
         <NumberRowList v-if="contextVisible" :table="relatedItem.context" />
       </section>
-      <section v-if="showInDepth" class="in-depth-section">
-        <FieldText
-          element="h4"
-          class="label"
-          :text="labels.in_depth"
-          @click="toggleDepth"
-        />
+      <section v-if="showInDepth" :class="classes.depth">
+        <div class="header">
+          <FieldText
+            element="h4"
+            class="label"
+            :text="labels.in_depth"
+            @click="toggleDepth"
+          />
+        </div>
         <InDepthList v-if="depthVisible" :items="content.in_depth" />
       </section>
     </template>
@@ -111,10 +121,12 @@ watch(
   }
 }
 
+.header {
+  @include toggle-icon;
+}
+
 .label {
   @include ff-sans;
   @include fs-medium;
-
-  cursor: pointer;
 }
 </style>
