@@ -22,5 +22,7 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .in-depth-list {
   @include list-reset;
+
+  margin-bottom: var(--gutter-m);
 }
 </style>

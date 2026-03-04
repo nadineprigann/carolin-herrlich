@@ -19,6 +19,17 @@ const showItem = computed(() => {
 <style lang="scss" scoped>
 .in-depth-item {
   @include highlight-element;
+
+  min-height: calc(var(--blank-line) * 3);
+  padding: var(--gutter-base);
+
+  &:not(:last-of-type) {
+    margin-bottom: var(--gutter-base);
+  }
+
+  &:last-of-type {
+    margin-bottom: calc(var(--gutter-base) * 7);
+  }
 }
 
 .title {

@@ -146,6 +146,7 @@ onUnmounted(stopAutoplay)
     @include t-slide($duration: var(--long), $delay: var(--medium));
 
     height: 30vh;
+    margin-bottom: calc(var(--gutter-base) * 4);
   }
 
   &.is-content {

@@ -102,6 +102,7 @@
 
 <style lang="scss" scoped>
 .site-logo {
+  display: flex;
   width: 4.5em;
 
   @media (min-width: $tablet) {

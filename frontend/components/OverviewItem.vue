@@ -83,6 +83,13 @@ function resetCurrentItem() {
 <style lang="scss" scoped>
 .overview-item {
   @include highlight-element;
+
+  min-height: calc(var(--blank-line) * 3.5);
+  padding: var(--gutter-base);
+
+  @media (min-width: $medium) {
+    min-height: calc(var(--blank-line) * 3);
+  }
 }
 
 .link {

@@ -114,6 +114,8 @@ watch(
 .related-content-section {
   @include center-content;
 
+  margin-bottom: calc(var(--gutter-base) * 7);
+
   @media (min-width: $medium) {
     // is set on parent template, so make sure to alwys set it to make it work on desktop
     grid-row: 2 / 3;
@@ -123,10 +125,19 @@ watch(
 
 .header {
   @include toggle-icon;
+
+  margin-bottom: var(--gutter-s);
+  border-bottom: 1px dashed var(--black);
+
+  @media (min-width: $medium) {
+    margin-bottom: var(--gutter-m);
+  }
 }
 
 .label {
   @include ff-sans;
   @include fs-medium;
+
+  margin-bottom: var(--accordion-title-spacing);
 }
 </style>

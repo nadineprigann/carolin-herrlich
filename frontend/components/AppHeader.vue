@@ -30,10 +30,12 @@ const toggleNavigation = () => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: var(--gutter-m) var(--gutter-s) 0 var(--gutter-s);
   background-color: var(--white);
 
   @media (min-width: $medium) {
     justify-content: center;
+    padding: var(--gutter-m) var(--gutter-m) 0 var(--gutter-m);
   }
 }
 
@@ -44,10 +46,11 @@ const toggleNavigation = () => {
   top: 0;
   right: 0;
   z-index: var(--xxl-overlay);
-  padding: var(--gutter);
+  display: flex;
+  padding: var(--gutter-m) var(--gutter-s) 0 var(--gutter-s);
 
   @media (min-width: $medium) {
-    padding: var(--gutter) calc(var(--gutter) * 2) 0 var(--gutter);
+    padding: var(--gutter-m) var(--gutter-m) 0 var(--gutter-m);
   }
 }
 
@@ -68,7 +71,7 @@ const toggleNavigation = () => {
 
 .open {
   &::before {
-    margin-top: -0.3em;
+    margin-top: -0.5em;
     margin-right: -0.1em;
     font-size: 1.5em;
     content: var(--nav);

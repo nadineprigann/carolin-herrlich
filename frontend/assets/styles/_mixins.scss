@@ -131,6 +131,7 @@
   &::before {
     display: inline-block;
     margin-top: -0.2em; // visually center icon with text
+    margin-right: calc(var(--gutter-base) / 2);
     font-size: $size; // to size the icon independently of the text size
     content: $open;
   }

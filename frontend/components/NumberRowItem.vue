@@ -19,7 +19,12 @@ const showRow = computed(() => {
 <style lang="scss" scoped>
 .number-row-item {
   display: grid;
-  grid-template-columns: 2em 1fr;
+  grid-template-columns: 1.5em 1fr;
+  gap: var(--gutter-s);
+
+  &:not(:last-of-type) {
+    margin-bottom: var(--spacing-xxs);
+  }
 }
 
 .number,
@@ -28,6 +33,6 @@ const showRow = computed(() => {
 }
 
 .number {
-  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 </style>
