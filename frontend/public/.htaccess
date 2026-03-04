@@ -149,21 +149,29 @@ FileETag None
 # HTTPS/non-www redirect and SPA mode
 # -----------------------------------------------------------------------------------------------
 
-# <IfModule mod_rewrite.c>
-#   RewriteEngine On
-#   RewriteBase /
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
 
-#   # Redirect from HTTP to HTTPS
-#   RewriteCond %{HTTPS} off
-#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Redirect from HTTP to HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-#   # Redirect www to non-www (combined with HTTPS if needed)
-#   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-#   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+  # Redirect www to non-www (combined with HTTPS if needed)
+  RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
-#   # Always serve index.html for SPA
-#   RewriteRule ^index\.html$ - [L]
-#   RewriteCond %{REQUEST_FILENAME} !-f
-#   RewriteCond %{REQUEST_FILENAME} !-d
-#   RewriteRule . /index.html [L]
-# </IfModule>
+  # Always serve index.html for SPA
+  # RewriteRule ^index\.html$ - [L]
+  # RewriteCond %{REQUEST_FILENAME} !-f
+  # RewriteCond %{REQUEST_FILENAME} !-d
+  # RewriteRule . /index.html [L]
+
+  # Allow existing files to avoid redirecting to index.html for existing sites
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Send everything else to Vue
+  RewriteRule ^ index.html [L]
+</IfModule>
