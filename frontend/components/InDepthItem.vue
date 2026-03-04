@@ -9,8 +9,8 @@ const showItem = computed(() => {
 </script>
 
 <template>
-  <li class="in-depth-item">
-    <NuxtLink v-if="showItem" :to="props.item.meta.url" class="link">
+  <li v-if="showItem" class="in-depth-item">
+    <NuxtLink :to="props.item.meta.url" class="link">
       <FieldText element="h5" class="title" :text="props.item.fields.title" />
     </NuxtLink>
   </li>
@@ -18,10 +18,23 @@ const showItem = computed(() => {
 
 <style lang="scss" scoped>
 .in-depth-item {
-  // @include link-default;
+  @include highlight-element;
+
+  min-height: calc(var(--blank-line) * 3);
+  padding: var(--gutter-base);
+
+  &:not(:last-of-type) {
+    margin-bottom: var(--gutter-base);
+  }
+
+  &:last-of-type {
+    margin-bottom: calc(var(--gutter-base) * 7);
+  }
 }
 
 .title {
   @include ff-sans;
+
+  // font-size set via defaults h5 = 1em;
 }
 </style>

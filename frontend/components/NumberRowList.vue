@@ -17,5 +17,7 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .number-row-list {
   @include list-reset;
+
+  margin-bottom: var(--gutter-m);
 }
 </style>

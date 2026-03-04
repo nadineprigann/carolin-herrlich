@@ -8,7 +8,10 @@ const props = defineProps<{
 }>()
 
 const buttonClass = computed(() => {
-  return ['chapter-nav-button', `chapter-nav-button-${props.direction}`]
+  return [
+    'chapter-nav-button',
+    props.direction === 'prev' ? 'is-prev' : 'is-next',
+  ]
 })
 
 const labels = reactive({
@@ -35,20 +38,40 @@ const navigate = () => {
     :direction="props.direction"
     @click="navigate"
   >
-    <FieldText element="span" :text="props.item.meta.title" />
+    <FieldText element="span" :text="props.item.meta.title" class="title" />
   </button>
 </template>
 
 <style lang="scss" scoped>
 .chapter-nav-button {
-  @include button-default;
+  @include button-reset;
+  @include highlight-element($radius: 1em);
+}
 
-  &-prev {
-    grid-column: 1;
+.title {
+  display: flex;
+  align-items: center;
+
+  &::before,
+  &::after {
+    display: inline-block;
+
+    // margin-top: -0.2em;
+    font-size: 1.2em;
   }
 
-  &-next {
-    grid-column: 2;
+  .is-prev & {
+    &::before {
+      content: var(--s-arrow-right);
+      transform: scale(-1, 1);
+    }
+  }
+
+  .is-next & {
+    &::after {
+      font-size: 1.5em;
+      content: var(--s-arrow-right);
+    }
   }
 }
 </style>

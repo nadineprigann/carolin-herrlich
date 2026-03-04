@@ -23,6 +23,12 @@ const labels = reactive({
   all: 'Alle',
 })
 
+const classes = computed(() => {
+  return {
+    info: ['info-section', infoVisible.value ? 'is-open' : ''],
+  }
+})
+
 const hasChildren = computed(() => {
   return children?.value?.length > 0
 })
@@ -79,13 +85,15 @@ onDeactivated(() => {
     <section class="content-section">
       <BreadcrumbList :breadcrumbs="breadcrumbs" class="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
-      <section v-if="fields.text" class="info-section">
-        <FieldText
-          element="h4"
-          class="label"
-          :text="labels.info"
-          @click="toggleInfo"
-        />
+      <section v-if="fields.text" :class="classes.info">
+        <div class="header">
+          <FieldText
+            element="h4"
+            class="label"
+            :text="labels.info"
+            @click="toggleInfo"
+          />
+        </div>
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
       <ImageSlider
@@ -135,26 +143,37 @@ onDeactivated(() => {
 
   // keep myzel height the same as the subtraction value for the cover image in OverviewItem.vue
 
-  grid-template-rows: 1fr 3em; // content, then myzel section. fixed height leads to problems when myzel is not there. see RelatedContent.vue but makes it possible to overflow to the bottom when myzel accordions are toggled.
+  grid-template-rows: 1fr auto; // content, then myzel section. fixed height leads to problems when myzel is not there. see RelatedContent.vue but makes it possible to overflow to the bottom when myzel accordions are toggled.
+  gap: calc(var(--gutter-base) * 6) 0;
+
   // overflow: hidden;
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
+  padding: var(--page-spacing);
 
   @media (min-width: $medium) {
+    grid-template-rows: minmax(calc(100% - calc(var(--blank-line) * 5.25)), 1fr) auto;
     grid-template-columns: minmax(0, 1fr) var(--content-width) minmax(0, 1fr); // minmax to prevent overflow of cover bc it basically says removes the implicit minimum width of 1fr which makes the image "obey"
+    gap: var(--gutter-s) 0;
+  }
+
+  @media (min-width: $desktop) {
+    grid-template-rows: minmax(calc(100% - calc(var(--blank-line) * 4.75)), 1fr) auto;
   }
 }
 
 .content-section {
   position: relative;
+  display: grid;
+  grid-template-rows: repeat(5, auto);
+  align-self: start;
 
-  // grid-template-rows: auto auto auto minmax(0, 1fr) auto; // give all elements the space they need and let slider take the remaining space. OR categories under it. but for now: no grid on mobile to stack all according to its space.
-  height: 100%;
+  // height: 100%;
 
   @media (min-width: $medium) {
-    display: grid;
     grid-template-rows: auto auto minmax(0, 1fr) auto; // give all elements the space they need and let the info section take the remaining space
     grid-row: 1 / 2;
     grid-column: 2 / 3;
+    align-self: stretch; // make sure content takes full height on large screens
 
     // width: var(--content-width);
   }
@@ -200,10 +219,13 @@ onDeactivated(() => {
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter-base);
 
   @media (min-width: $medium) {
     grid-template-columns: repeat(3, 1fr);
     grid-row: 4; // make sure to always set to last row to prevent layout breaking when info-section is empty and therefore not rendered
+    gap: var(--gutter-s);
+    margin-bottom: var(--gutter-s);
   }
 }
 
@@ -233,6 +255,17 @@ onDeactivated(() => {
   }
 }
 
+.header {
+  @include toggle-icon;
+
+  margin-bottom: var(--gutter-s);
+  border-bottom: 1px dashed var(--black);
+}
+
+.label {
+  margin-bottom: var(--accordion-title-spacing);
+}
+
 .link {
   @include link-default;
 }
@@ -245,6 +278,12 @@ onDeactivated(() => {
 
 .title {
   @include fs-xlarge;
+
+  margin-bottom: var(--gutter-xl);
+
+  @media (min-width: $medium) {
+    margin-bottom: calc(var(--gutter-base) * 5);
+  }
 }
 
 .link-title {

@@ -81,7 +81,14 @@ h5,
 h6 {
   // font-size: inherit;
   font-weight: inherit;
+  hyphens: auto;
+  word-break: break-word;
   overflow-wrap: break-word;
+}
+
+h5,
+h6 {
+  font-size: 1em;
 }
 
 h6 {
@@ -89,8 +96,6 @@ h6 {
   @include fw-bold;
 
   margin: 0 0 1.25em;
-
-  // font-size: 1em;
 }
 
 p,

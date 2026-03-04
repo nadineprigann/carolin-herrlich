@@ -3,16 +3,21 @@
   --black: rgb(0 0 0);
   --white: rgb(255 255 255);
   --white-90: rgb(255 255 255 / 90%);
+  --grey: #f4f3ef;
+  --yellow: #fcc100;
   --link-color: rgb(0 0 255);
   --focus-color: rgb(0 140 255 / 20%);
   --selection-color: var(--focus-color);
+  --highlight-color: var(--yellow);
 
   /* Effects */
   --bg-blur: 20px;
 
-  /* Button Contents */
-  --s-close: '\00D7';
+  /* Unicode Icons */
+  --s-close: '\2212';
+  --s-open: '\002B';
   --l-close: '\2715';
+  --s-arrow-right: '\2192';
   --nav: '\2630';
 
   /* Typography */
@@ -23,15 +28,28 @@
 
   /* Use --blank-line for horizontal spacing of content elements */
   --blank-line: calc(var(--lh-root) * 1em);
+  --spacing-xxs: 0.25em;
+  --spacing-xs: 0.5em;
+  --spacing-s: 0.75em;
+  --spacing-m: 1.25em;
+  --spacing-l: 1.75em;
+  --spacing-xl: 2.25em;
 
-  /* Use --gutter for vertical and horizontal spacing of layout elements */
-  --gutter: 1rem;
+  /* Use --gutter for vertical and horizontal spacing of layout elements. padding for inside a component, gaps and margin for spaces between components (be aware of layout collapsing) */
 
-  /* --gutter-m: 2rem;
-  --gutter-l: 4rem; */
+  /* larger gutters are to be created via calc from base gutter to keep them maintainable */
+  --gutter-base: 1rem; /* 10px */
+  --gutter-s: 1.5rem; /* base gutter for mobile, 15px */
+  --gutter-m: 2rem; /* base gutter for desktop, 20px */
+  --gutter-l: 2.5rem; /* 25px */
+  --gutter-xl: 3rem; /* 30px */
 
+  /* specific vars for spacing */
   --content-width: 70vw;
   --title-width: 70%; /* percent cuz within already centered content */
+  --accordion-title-spacing: var(--spacing-xxs);
+  --button-padding-s: 0.35em 0.5em 0.25em; /* different paddings to visually center label */
+  --page-spacing: 0 var(--gutter-s) var(--gutter-s) var(--gutter-s);
 
   /* Easing */
 
@@ -68,14 +86,17 @@
 
 /* Breakpoints have to be kept in sync with the ones defined in _breakpoints.scss */
 
-/* @media (min-width: 48em) {
+@media (width >= 48em) {
   :root {
-    --gutter: 2rem;
+    --page-spacing: 0 var(--gutter-m) var(--gutter-m) var(--gutter-m)
+      var(--gutter-m);
+
+    /* --gutter: 2rem; */
   }
 }
 
-@media (min-width: 80em) {
+/* @media (width >= 80em) {
   :root {
     --gutter: 4rem;
   }
-} */
+}  */

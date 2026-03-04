@@ -26,8 +26,13 @@ const isTopLevel = computed(() => {
   )
 })
 
-const className = computed(() => {
-  return isTopLevel.value ? 'nav-item' : 'sub-nav-item'
+const classes = computed(() => {
+  return {
+    item: [
+      isTopLevel.value ? 'nav-item' : 'sub-nav-item',
+      showSubNav.value ? 'is-open' : '',
+    ],
+  }
 })
 
 const isCurrent = computed(() => {
@@ -53,7 +58,7 @@ const closeNav = () => {
 </script>
 
 <template>
-  <li :class="className">
+  <li :class="classes.item">
     <span
       v-if="isTopLevel"
       class="title"
@@ -61,7 +66,7 @@ const closeNav = () => {
       v-text="props.item.meta.title"
     />
     <NuxtLink v-else :to="props.item.meta.url" class="link" @click="closeNav">
-      <span class="title" v-text="props.item.meta.title" />
+      <span class="link-title" v-text="props.item.meta.title" />
     </NuxtLink>
     <!-- use classic ul tag for sub-navigation to prevent recursive component issues. This happens even though I'm making sure to only fetch one level deep from the backend. Dedicated components don't work either.  -->
     <template v-if="showChildren">
@@ -83,9 +88,24 @@ const closeNav = () => {
   @include link-default;
 }
 
-.title {
+.title,
+.link-title {
   @include ff-sans;
   @include fs-medium;
+}
+
+.title {
+  @include toggle-icon;
+
+  // reset mixin styles to not display toggle on larger screens
+  @media (min-width: $medium) {
+    cursor: default;
+
+    &::before {
+      display: none;
+      content: none;
+    }
+  }
 }
 
 .sub-nav-list {

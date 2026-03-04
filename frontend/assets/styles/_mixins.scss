@@ -1,3 +1,7 @@
+// when to use mixins vs. placeholders:
+// - Use mixins when you want to include a set of styles with parameters (e.g., colors, sizes) that can be customized for each use.
+// - Use placeholders when you want to define a set of styles that can be reused without parameters. Placeholders also consolidate mutually-shared code. see: https://medium.com/@linker21/scss-placeholders-vs-mixins-fe79b9dbb6d5
+
 @mixin focus-default($color: var(--focus-color)) {
   &:focus-visible {
     background-color: $color;
@@ -108,5 +112,34 @@
     width: var(--content-width);
     margin-right: auto;
     margin-left: auto;
+  }
+}
+
+@mixin highlight-element($bg-color: var(--grey), $radius: 0.3em) {
+  display: block;
+  background-color: $bg-color;
+  border-right: 1px solid var(--highlight-color);
+  border-bottom: 1px solid var(--highlight-color);
+  border-radius: $radius;
+}
+
+@mixin toggle-icon($open: var(--s-open), $close: var(--s-close), $size: 1.2em) {
+  display: flex;
+  align-items: baseline;
+  cursor: pointer;
+
+  &::before {
+    display: inline-block;
+    margin-top: -0.2em; // visually center icon with text
+    margin-right: calc(var(--gutter-base) / 2);
+    font-size: $size; // to size the icon independently of the text size
+    content: $open;
+  }
+
+  // when parent has class is-open, show close icon
+  .is-open &::before,
+  // when item itself has class is-open, show close icon
+  &.is-open::before {
+    content: $close;
   }
 }
