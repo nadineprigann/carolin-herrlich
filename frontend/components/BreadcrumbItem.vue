@@ -152,7 +152,7 @@ onBeforeRouteLeave(() => {
   &:not(:first-of-type)::before {
     display: inline-block;
     margin-top: -0.1em;
-    content: '\003E';
+    content: var(--s-arrow-right);
   }
 }
 
