@@ -146,9 +146,19 @@ onBeforeRouteLeave(() => {
 </template>
 
 <style lang="scss" scoped>
-.breadcrumb-item,
+.breadcrumb-item {
+  display: flex;
+
+  &:not(:first-of-type)::before {
+    display: inline-block;
+    margin-top: -0.1em;
+    content: '\003E';
+  }
+}
+
 .link {
-  // @include link-default;
+  @include link-reset;
+
   display: flex;
 }
 
