@@ -27,6 +27,7 @@ const toggleNavigation = () => {
   left: 0;
   z-index: var(--l-header); // higher than 1 due to links on home
   display: flex;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
   background-color: var(--white);
@@ -62,12 +63,14 @@ const toggleNavigation = () => {
 
     // width: var(--gutter);
     // height: var(--gutter);
-    content: '';
   }
 }
 
 .open {
   &::before {
+    margin-top: -0.3em;
+    margin-right: -0.1em;
+    font-size: 1.5em;
     content: var(--nav);
   }
 }
