@@ -84,13 +84,16 @@ h6 {
   overflow-wrap: break-word;
 }
 
+h5,
+h6 {
+  font-size: 1em;
+}
+
 h6 {
   @include ff-sans;
   @include fw-bold;
 
   margin: 0 0 1.25em;
-
-  // font-size: 1em;
 }
 
 p,

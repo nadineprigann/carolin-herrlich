@@ -23,5 +23,7 @@ const showItem = computed(() => {
 
 .title {
   @include ff-sans;
+
+  // font-size set via defaults h5 = 1em;
 }
 </style>
