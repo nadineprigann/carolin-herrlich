@@ -5,6 +5,7 @@ class DefaultPage {
     $requestedLang = Helper::setLanguage();
 
     if (isset($data->path)) {
+      $data->path = trim($data->path, '/');
       $data = AppApiHelper::checkAndSanitizeRequiredParameters($data, ['path|pagePathNameUTF8']);
       // If path equals current language, then just get the homepage. For some reason, ProcessWire does not find the language-related homepage by its path.
       if ($data->path === wire('languages')->getLanguage()->name) {
