@@ -41,7 +41,8 @@ const navigate = () => {
 
 <style lang="scss" scoped>
 .chapter-nav-button {
-  @include button-default;
+  @include button-reset;
+  @include highlight-element($radius: 1em);
 
   &-prev {
     grid-column: 1;

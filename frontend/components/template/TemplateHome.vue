@@ -25,6 +25,7 @@ const { fields } = toRefs(props.data)
           v-for="(link, index) in fields.custom_links"
           :key="index"
           :link="link"
+          class="link"
         />
       </div>
     </section>
@@ -65,5 +66,9 @@ const { fields } = toRefs(props.data)
   position: absolute;
   top: 10%;
   z-index: var(--m-upper-content); // above slider
+}
+
+.link {
+  @include highlight-element($radius: 1em);
 }
 </style>

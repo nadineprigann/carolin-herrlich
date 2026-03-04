@@ -82,7 +82,7 @@ function resetCurrentItem() {
 
 <style lang="scss" scoped>
 .overview-item {
-  // @include link-default;
+  @include highlight-element;
 }
 
 .link {

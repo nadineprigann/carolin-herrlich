@@ -18,7 +18,7 @@ const showItem = computed(() => {
 
 <style lang="scss" scoped>
 .in-depth-item {
-  // @include link-default;
+  @include highlight-element;
 }
 
 .title {
