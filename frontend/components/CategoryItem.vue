@@ -14,6 +14,16 @@ const props = defineProps<{
 .category-item {
   // @include link-default;
   @include button-default;
+
+  &:not(:last-of-type) {
+    margin-right: var(--gutter-base);
+  }
+
+  @media (min-width: $tablet) {
+    &:not(:last-of-type) {
+      margin-right: var(--gutter-m);
+    }
+  }
 }
 
 .title {

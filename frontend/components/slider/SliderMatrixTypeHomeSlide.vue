@@ -30,7 +30,11 @@ const showCategories = computed(() => {
           class="text"
         />
       </NuxtLink>
-      <CategoryList v-if="showCategories" :categories="props.item.categories" />
+      <CategoryList
+        v-if="showCategories"
+        :categories="props.item.categories"
+        class="categories"
+      />
     </section>
   </div>
 </template>
@@ -42,6 +46,7 @@ const showCategories = computed(() => {
   // implicitly create two rows, one for the image and one for the content
   grid-template-rows: minmax(0, 1fr) auto; // content gets space as needed, image gets the rest;
   height: 100%;
+  padding: 0 var(--gutter-l);
   overflow: hidden;
 
   :deep(img) {
@@ -50,7 +55,13 @@ const showCategories = computed(() => {
   }
 }
 
+.content {
+  margin-top: var(--gutter-base);
+}
+
 .header {
+  margin-bottom: var(--blank-line);
+
   @media (min-width: $medium) {
     display: flex;
     flex-wrap: wrap; // allow wrapping to multiple lines if needed
@@ -69,5 +80,19 @@ const showCategories = computed(() => {
 .date-end,
 .text {
   @include ff-sans;
+}
+
+.title {
+  padding-right: var(--gutter-m);
+}
+
+.text {
+  @media (min-width: $desktop) {
+    max-width: 85%;
+  }
+}
+
+.categories {
+  margin-top: var(--blank-line);
 }
 </style>
