@@ -20,6 +20,8 @@ const { fields } = toRefs(props.data)
   <main class="template-home">
     <section class="content">
       <FieldText element="h3" :text="fields.subtitle" class="subtitle" />
+    </section>
+    <section class="slider">
       <div class="links">
         <FieldLink
           v-for="(link, index) in fields.custom_links"
@@ -28,18 +30,27 @@ const { fields } = toRefs(props.data)
           class="link"
         />
       </div>
+      <SliderMatrix :items="fields.slider" />
     </section>
-    <SliderMatrix :items="fields.slider" />
   </main>
 </template>
 
 <style lang="scss" scoped>
 .template-home {
-  position: relative; // for links positioning
   display: grid;
   grid-template-rows: auto minmax(0, 1fr); /* text, then slider */
+  gap: var(--gutter-xl);
+  gap: calc(var(--gutter-base) * 6);
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
+  padding: var(--page-spacing);
+  padding-top: var(--gutter-l);
   overflow: hidden;
+
+  @media (min-width: $medium) {
+    gap: var(--gutter-l);
+    padding: 0 calc(var(--gutter-base) * 20) var(--gutter-m)
+      calc(var(--gutter-base) * 20);
+  }
 }
 
 .subtitle {
@@ -62,13 +73,23 @@ const { fields } = toRefs(props.data)
   }
 }
 
+.slider {
+  position: relative; // for links positioning
+}
+
 .links {
   position: absolute;
-  top: 10%;
+  top: calc(var(--gutter-base) * -1);
   z-index: var(--m-upper-content); // above slider
 }
 
 .link {
   @include highlight-element($radius: 1em);
+  @include button-padding(
+    $top: var(--spacing-xxs),
+    $right: var(--spacing-s),
+    $bottom: 0.35em,
+    $left: var(--spacing-s)
+  );
 }
 </style>
