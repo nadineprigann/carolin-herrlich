@@ -41,10 +41,10 @@
   @include button-reset;
   @include focus-default;
   @include ff-sans;
+  @include button-padding;
 
   // fontsize is text-size
 
-  padding: 0.35em 0.5em 0.25em; // different paddings to visually center label
   border: 1px solid var(--black);
   border-radius: 1em;
 }
@@ -142,4 +142,14 @@
   &.is-open::before {
     content: $close;
   }
+}
+
+@mixin button-padding(
+  $top: 0.2em,
+  $right: 0.5em,
+  $bottom: 0.25em,
+  $left: 0.5em
+) {
+  // different paddings to visually center label
+  padding: $top $right $bottom $left;
 }
