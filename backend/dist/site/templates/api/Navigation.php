@@ -30,6 +30,10 @@ class Navigation {
 
     // Add dynamic routes
     // array_push($routes, self::createDynamicRoute(wire('pages')->get('template=parentTemplate'), 'childTemplate', ':name'));
+    array_push($routes, self::createDynamicRoute(wire('pages')->get('template=tools'), 'tool', ':tool')); //
+    array_push($routes, self::createDynamicRoute(wire('pages')->get('template=projects'), 'project', ':project'));
+    array_push($routes, self::createDynamicRoute(wire('pages')->get('template=blog'), 'blog-post', ':blog-post'));
+    array_push($routes, self::createDynamicRoute(wire('pages')->get('template=events'), 'event', ':event'));
 
     return $routes;
   }
