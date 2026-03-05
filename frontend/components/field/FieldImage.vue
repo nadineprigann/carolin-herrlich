@@ -54,11 +54,11 @@ const srcset = computed(() => {
     .join(',')
 })
 
-const text = computed(() => {
-  return {
-    license: 'Lizenz:  ',
-  }
-})
+// const text = computed(() => {
+//   return {
+//     license: 'Lizenz:  ',
+//   }
+// })
 
 // create unique ssr-safe id for aria-describedby. comes from vue 3.3 core.
 const id = useId()
