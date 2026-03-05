@@ -32,11 +32,11 @@ function autoplay() {
 }
 
 onMounted(() => {
-  // if (slideCount.value > 1) autoplay()
+  if (slideCount.value > 1) autoplay()
 })
 
 onActivated(() => {
-  // if (slideCount.value > 1) autoplay()
+  if (slideCount.value > 1) autoplay()
 })
 
 onDeactivated(() => {
