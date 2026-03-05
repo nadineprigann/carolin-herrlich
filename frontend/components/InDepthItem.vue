@@ -19,9 +19,14 @@ const showItem = computed(() => {
 <style lang="scss" scoped>
 .in-depth-item {
   @include highlight-element;
+  @include button-padding(
+    $top: var(--gutter-base),
+    $bottom: var(--gutter-base),
+    $left: var(--gutter-base),
+    $right: var(--gutter-base)
+  );
 
   min-height: calc(var(--blank-line) * 3);
-  padding: var(--gutter-base);
 
   &:not(:last-of-type) {
     margin-bottom: var(--gutter-base);

@@ -83,9 +83,14 @@ function resetCurrentItem() {
 <style lang="scss" scoped>
 .overview-item {
   @include highlight-element;
+  @include button-padding(
+    $top: var(--gutter-base),
+    $bottom: var(--gutter-base),
+    $left: var(--gutter-base),
+    $right: var(--gutter-base)
+  );
 
   min-height: calc(var(--blank-line) * 3.5);
-  padding: var(--gutter-base);
 
   @media (min-width: $medium) {
     min-height: calc(var(--blank-line) * 3);
