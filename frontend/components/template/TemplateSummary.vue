@@ -21,10 +21,12 @@ const labels = reactive({
   <main class="template-summary">
     <div class="title-section">
       <BreadcrumbList :breadcrumbs="breadcrumbs" />
-      <FieldText element="h2" :text="fields.title" class="title" />
-      <FieldText element="h2" :text="labels.header" class="title" />
+      <div class="header">
+        <FieldText element="h2" :text="fields.title" class="title" />
+        <FieldText element="h2" :text="labels.header" class="title" />
+      </div>
     </div>
-    <FieldTextarea v-if="fields.text" :text="fields.text" />
+    <FieldTextarea v-if="fields.text" :text="fields.text" class="text" />
     <ChapterNav :items="nav" />
     <RelatedContent :related="fields.related_content" />
   </main>
@@ -35,8 +37,16 @@ const labels = reactive({
   @include center-content;
 }
 
+.header {
+  margin-bottom: calc(var(--blank-line) * 2);
+}
+
 .title {
   @include ff-sans;
   @include fs-xlarge;
+}
+
+.text {
+  margin-bottom: calc(var(--blank-line) * 2);
 }
 </style>
