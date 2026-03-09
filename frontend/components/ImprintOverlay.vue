@@ -221,7 +221,7 @@ watch(isVisible, (newValue) => {
   @include ff-sans;
   @include fs-xlarge;
 
-  margin-bottom: calc(var(--blank-line) * 1);
+  margin-bottom: calc(var(--blank-line) * 2);
 }
 
 .subtitle {
