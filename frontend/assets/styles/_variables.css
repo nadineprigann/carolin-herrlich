@@ -31,9 +31,9 @@
   --spacing-xxs: 0.25em;
   --spacing-xs: 0.5em;
   --spacing-s: 0.75em;
-  --spacing-m: 1.25em;
-  --spacing-l: 1.75em;
-  --spacing-xl: 2.25em;
+  --spacing-m: 1em;
+  --spacing-l: 1.25em;
+  --spacing-xl: 1.75em;
 
   /* Use --gutter for vertical and horizontal spacing of layout elements. padding for inside a component, gaps and margin for spaces between components (be aware of layout collapsing) */
 
