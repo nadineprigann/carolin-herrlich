@@ -35,6 +35,8 @@ const labels = reactive({
 <style lang="scss" scoped>
 .template-summary {
   @include center-content;
+
+  padding: var(--page-spacing);
 }
 
 .header {
