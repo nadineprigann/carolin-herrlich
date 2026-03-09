@@ -145,6 +145,7 @@ const longDescId = computed(() => {
 .field-image {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto; // image gets the rest, content gets space as intrinsically needed
+  gap: var(--gutter-base);
   height: 100%;
   min-height: 0; // allow image to shrink within the grid
 

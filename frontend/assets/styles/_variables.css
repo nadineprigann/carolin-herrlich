@@ -48,7 +48,7 @@
   --content-width: 70vw;
   --title-width: 70%; /* percent cuz within already centered content */
   --accordion-title-spacing: var(--spacing-xxs);
-  --page-spacing: 0 var(--gutter-s) var(--gutter-s) var(--gutter-s);
+  --page-spacing: 0 var(--gutter-s);
 
   /* Easing */
 
@@ -89,7 +89,7 @@
 
 @media (width >= 48em) {
   :root {
-    --page-spacing: 0 var(--gutter-m) var(--gutter-m) var(--gutter-m);
+    --page-spacing: 0 var(--gutter-m);
 
     /* --gutter: 2rem; */
   }

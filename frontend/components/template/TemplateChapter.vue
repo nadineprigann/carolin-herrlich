@@ -18,13 +18,15 @@ const { fields, breadcrumbs, nav } = toRefs(props.data)
 <template>
   <main class="template-chapter">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText element="h2" :text="fields.title" class="title" />
-    <FieldText
-      v-if="fields.subtitle"
-      element="h3"
-      :text="fields.subtitle"
-      class="subtitle"
-    />
+    <div class="header">
+      <FieldText element="h2" :text="fields.title" class="title" />
+      <FieldText
+        v-if="fields.subtitle"
+        element="h3"
+        :text="fields.subtitle"
+        class="subtitle"
+      />
+    </div>
     <FieldMatrix :items="fields.content" />
     <ChapterNav :items="nav" />
     <RelatedContent :related="fields.related_content" />
@@ -32,6 +34,14 @@ const { fields, breadcrumbs, nav } = toRefs(props.data)
 </template>
 
 <style lang="scss" scoped>
+.template-chapter {
+  padding: var(--page-spacing);
+}
+
+.header {
+  margin-bottom: calc(var(--blank-line) * 2);
+}
+
 .title,
 .subtitle {
   @include center-content;

@@ -23,5 +23,7 @@ const props = defineProps<{
 
 .title {
   @include ff-sans;
+
+  margin-bottom: var(--blank-line);
 }
 </style>

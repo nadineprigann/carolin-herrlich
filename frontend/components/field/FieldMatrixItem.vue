@@ -36,5 +36,9 @@ const type = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-// .field-matrix-item {}
+.field-matrix-item {
+  &:not(:last-child) {
+    margin-bottom: calc(var(--blank-line) * 2);
+  }
+}
 </style>

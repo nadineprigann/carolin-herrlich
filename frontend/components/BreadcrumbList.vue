@@ -22,14 +22,14 @@ const showBreadcrumbs = computed(() => {
 
 <style lang="scss" scoped>
 .breadcrumb-list {
-  margin-top: var(
-    --gutter-base
-  ); // use this to create same spacing as to bottom of overview cover. account for in gap of default layout grid.
+  margin: var(--gutter-base) 0;
 
-  margin-bottom: var(--gutter-xl);
+  // use this to create same spacing as to bottom of overview cover. account for in gap of default layout grid.
+
+  // margin-bottom: var(--gutter-xl);
 
   @media (min-width: $medium) {
-    margin-bottom: calc(var(--gutter-base) * 5);
+    margin-bottom: calc(var(--gutter-base) * 2);
   }
 }
 

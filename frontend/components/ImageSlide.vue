@@ -39,6 +39,16 @@ const modeClass = computed(() => {
     flex: 0 0 auto; /* prevent shrinking in flex container */
     scroll-snap-align: start;
     width: auto;
+
+    &:not(:last-of-type) {
+      margin-right: var(--gutter-base);
+    }
+
+    @media (min-width: $tablet) {
+      &:not(:last-of-type) {
+        margin-right: var(--gutter-m);
+      }
+    }
   }
 }
 </style>

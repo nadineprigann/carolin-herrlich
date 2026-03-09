@@ -17,5 +17,15 @@ const props = defineProps<{
 </template>
 
 <style lang="scss" scoped>
-// .field-matrix {}
+.field-matrix {
+  &:not(:last-child) {
+    margin-bottom: calc(var(--blank-line) * 4);
+  }
+
+  @media (min-width: $tablet) {
+    &:not(:last-child) {
+      margin-bottom: calc(var(--blank-line) * 6);
+    }
+  }
+}
 </style>
