@@ -31,10 +31,6 @@ const showItem = computed(() => {
   &:not(:last-of-type) {
     margin-bottom: var(--gutter-base);
   }
-
-  &:last-of-type {
-    margin-bottom: calc(var(--gutter-base) * 7);
-  }
 }
 
 .title {
