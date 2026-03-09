@@ -36,9 +36,20 @@ const type = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.field-matrix-item {
-  &:not(:last-child) {
-    margin-bottom: calc(var(--blank-line) * 2);
-  }
+// .field-matrix-item {
+//   &:not(:last-child) {
+//     margin-bottom: calc(var(--blank-line) * 2);
+//   }
+// }
+
+.field-matrix-item + .field-matrix-item {
+  margin-top: calc(
+    var(--blank-line) * 2
+  ); // because selectors got crazy with margin-bottom to exclude accordions following accordions, use margin-top instead. add spacing between matrix items
+}
+
+.field-matrix-type-accordion + .field-matrix-type-accordion {
+  // override spacing when accordions follow after accordions
+  margin-top: 0;
 }
 </style>
