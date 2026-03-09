@@ -149,9 +149,14 @@ onBeforeRouteLeave(() => {
 .breadcrumb-item {
   display: flex;
 
+  &:not(:last-of-type) {
+    margin-right: calc(var(--gutter-base) / 2);
+  }
+
   &:not(:first-of-type)::before {
     display: inline-block;
     margin-top: -0.1em;
+    margin-right: calc(var(--gutter-base) / 2);
     content: var(--s-arrow-right);
   }
 }

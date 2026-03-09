@@ -115,14 +115,14 @@ watch(
   @include center-content;
 
   padding-bottom: calc(
-    var(--gutter-base) * 2
+    var(--gutter-base) * 3
   ); // use padding here to prevent grid to "cut off" margin and respect spacing
 
   @media (min-width: $medium) {
     // is set on parent template, so make sure to alwys set it to make it work on desktop
     grid-row: 2 / 3;
     grid-column: 2 / 3;
-    padding-bottom: calc(var(--gutter-base) * 7);
+    padding-bottom: var(--page-end);
   }
 }
 

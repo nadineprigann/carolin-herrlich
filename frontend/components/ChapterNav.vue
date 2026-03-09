@@ -45,18 +45,17 @@ const hasNext = computed(() => {
   display: grid;
   grid-template-columns: repeat(
     2,
-    auto
+    minmax(0, 1fr)
   ); // only  use as much space as each button needs
 
+  gap: var(--gutter-base);
   justify-content: space-between;
-  padding-bottom: calc(
-    var(--blank-line) * 4
+  padding-bottom: var(
+    --page-end
   ); // use padding here to prevent grid to "cut off" margin and respect spacing, when there's no related content, this is last element on the page and should have more spacing to the end of the page
 
   @media (min-width: $tablet) {
-    padding-bottom: calc(
-      var(--blank-line) * 6
-    ); // use padding here to prevent grid to "cut off" margin and respect spacing
+    gap: var(--gutter-m);
   }
 }
 </style>

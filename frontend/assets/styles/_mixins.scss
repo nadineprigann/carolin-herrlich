@@ -29,8 +29,10 @@
 
 @mixin button-reset {
   padding: 0;
+  hyphens: auto; // to allow hyphenation of long words for better breaking and wrapping of text, especially for long titles
   color: inherit;
-  white-space: nowrap;
+  word-break: break-word; // better than overflow-wrap, to prevent overflow of long titles, allow breaking and wrapping of text
+  white-space: normal; // to allow text to wrap and prevent overflow
   cursor: pointer;
   user-select: none;
   background: none;

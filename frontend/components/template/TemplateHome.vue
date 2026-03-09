@@ -14,6 +14,10 @@ const props = defineProps<{
 }>()
 
 const { fields } = toRefs(props.data)
+
+const hasLinks = computed(() => {
+  return fields.value.custom_links && fields.value.custom_links.length > 0
+})
 </script>
 
 <template>
@@ -22,7 +26,7 @@ const { fields } = toRefs(props.data)
       <FieldText element="h3" :text="fields.subtitle" class="subtitle" />
     </section>
     <section class="slider">
-      <div class="links">
+      <div v-if="hasLinks" class="links">
         <FieldLink
           v-for="(link, index) in fields.custom_links"
           :key="index"
