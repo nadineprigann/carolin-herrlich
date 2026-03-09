@@ -31,9 +31,9 @@
   --spacing-xxs: 0.25em;
   --spacing-xs: 0.5em;
   --spacing-s: 0.75em;
-  --spacing-m: 1.25em;
-  --spacing-l: 1.75em;
-  --spacing-xl: 2.25em;
+  --spacing-m: 1em;
+  --spacing-l: 1.25em;
+  --spacing-xl: 1.75em;
 
   /* Use --gutter for vertical and horizontal spacing of layout elements. padding for inside a component, gaps and margin for spaces between components (be aware of layout collapsing) */
 
@@ -48,7 +48,7 @@
   --content-width: 70vw;
   --title-width: 70%; /* percent cuz within already centered content */
   --accordion-title-spacing: var(--spacing-xxs);
-  --page-spacing: 0 var(--gutter-s) var(--gutter-s) var(--gutter-s);
+  --page-spacing: 0 var(--gutter-s);
 
   /* Easing */
 
@@ -74,8 +74,10 @@
   --m-upper-content: 300;
   --l-header: 600;
 
-  /* nav, filters */
+  /* nav, filters, privacy, imprint */
   --xl-overlay: 700;
+
+  /* close button on nav, CloseButton.vue */
   --xxl-overlay: 800;
 
   /* --z-long: 350; */
@@ -87,7 +89,7 @@
 
 @media (width >= 48em) {
   :root {
-    --page-spacing: 0 var(--gutter-m) var(--gutter-m) var(--gutter-m);
+    --page-spacing: 0 var(--gutter-m);
 
     /* --gutter: 2rem; */
   }

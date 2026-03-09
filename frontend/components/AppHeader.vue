@@ -80,6 +80,10 @@ const toggleNavigation = () => {
 
 .close {
   &::before {
+    margin-top: -0.3em;
+
+    // margin-right: -0.1em;
+    font-size: 1.2em;
     content: var(--l-close);
   }
 }

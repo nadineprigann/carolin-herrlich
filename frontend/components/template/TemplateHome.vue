@@ -81,6 +81,9 @@ const { fields } = toRefs(props.data)
   position: absolute;
   top: calc(var(--gutter-base) * -1);
   z-index: var(--m-upper-content); // above slider
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .link {
@@ -91,5 +94,15 @@ const { fields } = toRefs(props.data)
     $bottom: 0.35em,
     $left: var(--spacing-s)
   );
+
+  &:not(:last-child) {
+    margin-bottom: var(--gutter-base);
+  }
+
+  @media (min-width: $tablet) {
+    &:not(:last-child) {
+      margin-bottom: var(--gutter-s);
+    }
+  }
 }
 </style>

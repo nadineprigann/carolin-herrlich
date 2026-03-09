@@ -27,9 +27,16 @@ const blogChildren = [
   },
 ]
 
+const labels = reactive({
+  imprint: 'Impressum',
+  privacy: 'Datenschutz',
+})
+
+const excludedTemplates = ['home', 'tool', 'project', 'blog-post', 'event']
+
 const visibleRoutes = computed(() =>
   defaults.value.navigation
-    .filter((item) => item.meta.template !== 'home')
+    .filter((item) => !excludedTemplates.includes(item.meta.template))
     .map((item) => {
       if (item.meta.template === 'blog') {
         return {
@@ -44,6 +51,14 @@ const visibleRoutes = computed(() =>
 const handleToggleSubNav = (id: number) => {
   layout.value.currentSubNav = layout.value.currentSubNav === id ? null : id
 }
+
+const openImprintOverlay = () => {
+  layout.value.openOverlay.imprint = true
+}
+
+const openPrivacyOverlay = () => {
+  layout.value.openOverlay.privacy = true
+}
 </script>
 
 <template>
@@ -56,7 +71,26 @@ const handleToggleSubNav = (id: number) => {
         @toggle-sub-nav="handleToggleSubNav"
       />
     </ul>
-    <AppFooter />
+    <section class="legal">
+      <button type="button" class="button">
+        <FieldText
+          element="span"
+          class="label"
+          :text="labels.imprint"
+          aria-label="Impressum"
+          @click="openImprintOverlay"
+        />
+      </button>
+      <button type="button" class="button">
+        <FieldText
+          element="span"
+          class="label"
+          :text="labels.privacy"
+          aria-label="Datenschutz"
+          @click="openPrivacyOverlay"
+        />
+      </button>
+    </section>
   </nav>
 </template>
 
@@ -71,14 +105,43 @@ const handleToggleSubNav = (id: number) => {
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  background-color: var(--white);
+  padding: calc(var(--gutter-base) * 5) var(--gutter-m) var(--gutter-base)
+    var(--gutter-m);
+  background-color: var(--white-90);
+  backdrop-filter: blur(var(--bg-blur));
+
+  // always use $tablet as a "working breakpoint" to be able to change explicit widths later and not needing to change them in the whole app.
+  @media (min-width: $tablet) {
+    padding: calc(var(--gutter-base) * 6) var(--gutter-m) var(--gutter-m)
+      var(--gutter-m);
+  }
 }
 
 .nav-list {
   @include list-reset;
 
-  @media (min-width: $medium) {
+  @media (min-width: $tablet) {
     display: flex;
+    justify-content: space-between;
+    padding-right: calc(var(--gutter-base) * 10);
   }
+}
+
+.legal {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  @include button-reset;
+
+  &:first-of-type {
+    margin-right: calc(var(--spacing-m) * 2);
+  }
+}
+
+.label {
+  @include ff-sans;
+  @include fs-small;
 }
 </style>

@@ -82,7 +82,29 @@ const closeNav = () => {
 </template>
 
 <style lang="scss" scoped>
-// .nav-item {}
+.nav-item {
+  &:not(:last-child) {
+    padding-bottom: var(--spacing-m);
+  }
+
+  @media (min-width: $tablet) {
+    &:not(:last-child) {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.sub-nav-item {
+  padding-left: calc(var(--gutter-base) * 4);
+
+  &:not(:last-child) {
+    padding-bottom: var(--spacing-m);
+  }
+
+  @media (min-width: $tablet) {
+    padding-left: calc(var(--gutter-base) * 2);
+  }
+}
 
 .link {
   @include link-default;
@@ -110,6 +132,8 @@ const closeNav = () => {
 
 .sub-nav-list {
   @include list-reset;
+
+  padding-top: var(--spacing-m);
 }
 
 // .router-link-active {}

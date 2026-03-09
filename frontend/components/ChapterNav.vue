@@ -49,5 +49,10 @@ const hasNext = computed(() => {
   ); // only  use as much space as each button needs
 
   justify-content: space-between;
+  margin-bottom: calc(var(--blank-line) * 4);
+
+  @media (min-width: $tablet) {
+    margin-bottom: calc(var(--blank-line) * 6);
+  }
 }
 </style>

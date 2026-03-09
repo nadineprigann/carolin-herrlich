@@ -18,10 +18,22 @@ const ariaLabel = computed(() => `${props.overlayTitle} schließen`)
 
   position: relative;
   z-index: var(--xxl-overlay);
+  display: flex;
   justify-self: flex-end;
-  padding: var(--gutter);
+
+  // padding-right: var(
+  //   --gutter-s
+  // );
+
+  @media (min-width: $tablet) {
+    padding-right: var(
+      --gutter-m
+    ); // check imprint and privacy when changing this in another component
+  }
 
   &::before {
+    margin-top: -0.3em;
+    font-size: 1.2em;
     content: var(--l-close);
   }
 }

@@ -20,5 +20,15 @@ const showRow = computed(() => {
 .text-row-item {
   display: grid;
   grid-template-columns: 30% 1fr;
+  gap: var(--gutter-s);
+
+  &:not(:last-child) {
+    margin-bottom: var(--blank-line);
+  }
+
+  @media (min-width: $tablet) {
+    grid-template-columns: 25% 1fr;
+    gap: var(--gutter-xl);
+  }
 }
 </style>

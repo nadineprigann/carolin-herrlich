@@ -54,11 +54,16 @@ const toggleAccordion = () => {
 
 .header {
   @include toggle-icon;
+
+  margin-bottom: var(--gutter-s);
+  border-bottom: 1px dashed var(--black);
 }
 
 .title,
 .subtitle {
   @include ff-sans;
+
+  margin-bottom: var(--accordion-title-spacing);
 }
 
 .title {

@@ -23,9 +23,27 @@ const props = defineProps<{
 }
 
 .image {
+  &:not(:last-child) {
+    margin-bottom: var(--blank-line);
+  }
+
   @media (min-width: $small) {
     width: 50%;
     max-width: 50%;
+  }
+
+  @media (min-width: $tablet) {
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+
+    &:nth-child(even) {
+      margin-left: var(--gutter-base);
+    }
+
+    &:nth-child(odd) {
+      margin-right: var(--gutter-base);
+    }
   }
 }
 </style>
