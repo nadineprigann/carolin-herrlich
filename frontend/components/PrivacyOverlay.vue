@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// import { bodyOverflowLock } from '@/composables/useBodyOverflowLock'
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
@@ -14,13 +15,8 @@ const isVisible = computed(() => {
   return layout.value.openOverlay.privacy
 })
 
-watch(isVisible, (newValue) => {
-  if (newValue) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
-})
+// use composable to stop the body from scrolling when overlay is open. also resets the overflow on unmount and deactivated
+// bodyOverflowLock(isVisible)
 </script>
 
 <template>
