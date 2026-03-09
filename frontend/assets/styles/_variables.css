@@ -74,8 +74,10 @@
   --m-upper-content: 300;
   --l-header: 600;
 
-  /* nav, filters */
+  /* nav, filters, privacy, imprint */
   --xl-overlay: 700;
+
+  /* close button on nav, CloseButton.vue */
   --xxl-overlay: 800;
 
   /* --z-long: 350; */

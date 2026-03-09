@@ -13,6 +13,14 @@ const closeOverlay = () => {
 const isVisible = computed(() => {
   return layout.value.openOverlay.privacy
 })
+
+watch(isVisible, (newValue) => {
+  if (newValue) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
 </script>
 
 <template>
@@ -193,15 +201,20 @@ const isVisible = computed(() => {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: var(--xxl-overlay);
+  z-index: var(--xl-overlay);
   display: grid;
   grid-template-rows: auto minmax(auto, 1fr);
   width: 100vw;
-  height: 95vh;
+  height: 100vh;
+  padding: var(--gutter-m) var(--gutter-s) calc(var(--gutter-base) * 5)
+    var(--gutter-s);
   overflow-y: scroll;
   background-color: var(--white-90);
   backdrop-filter: blur(var(--bg-blur));
-  border-top: 1px solid var(--black);
+
+  @media (min-width: $tablet) {
+    padding: var(--gutter-m) 0 calc(var(--gutter-base) * 6) 0;
+  }
 }
 
 .content {
@@ -211,11 +224,28 @@ const isVisible = computed(() => {
 .title {
   @include ff-sans;
   @include fs-xlarge;
+
+  margin-bottom: calc(var(--blank-line) * 1);
 }
 
 .subtitle {
   @include ff-sans;
   @include fs-large;
+
+  max-width: 80vw;
+  margin-top: calc(var(--blank-line) * 1);
+  margin-bottom: calc(var(--blank-line) * 0.5);
+}
+
+.text {
+  text-align: justify;
+}
+
+.text,
+.list {
+  &:not(:last-child) {
+    margin-bottom: var(--blank-line);
+  }
 }
 
 .spamblock {
