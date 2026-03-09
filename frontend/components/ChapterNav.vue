@@ -49,10 +49,14 @@ const hasNext = computed(() => {
   ); // only  use as much space as each button needs
 
   justify-content: space-between;
-  margin-bottom: calc(var(--blank-line) * 4);
+  padding-bottom: calc(
+    var(--blank-line) * 4
+  ); // use padding here to prevent grid to "cut off" margin and respect spacing, when there's no related content, this is last element on the page and should have more spacing to the end of the page
 
   @media (min-width: $tablet) {
-    margin-bottom: calc(var(--blank-line) * 6);
+    padding-bottom: calc(
+      var(--blank-line) * 6
+    ); // use padding here to prevent grid to "cut off" margin and respect spacing
   }
 }
 </style>
