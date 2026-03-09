@@ -20,13 +20,18 @@ const props = defineProps<{
 
   display: grid;
   grid-template-columns: repeat(1, minmax(auto, 1fr));
+  gap: var(--gutter-m) 0;
+  padding-bottom: var(--page-end);
 
   @media (min-width: $mobile) {
     grid-template-columns: repeat(2, minmax(auto, 1fr));
+    gap: var(--gutter-m);
+    padding-bottom: 0;
   }
 
   @media (min-width: $tablet) {
     grid-template-columns: repeat(3, minmax(auto, 1fr));
+    gap: var(--gutter-l) var(--gutter-m);
   }
 
   @media (min-width: $desktop) {

@@ -23,11 +23,15 @@ const showChildren = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-// .template-projects {}
+.template-projects {
+  padding: var(--page-spacing);
+}
 
 .title {
   @include center-content;
   @include ff-sans;
   @include fs-xlarge;
+
+  margin-bottom: calc(var(--blank-line) * 2);
 }
 </style>
