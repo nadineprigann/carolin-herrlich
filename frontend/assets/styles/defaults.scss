@@ -91,13 +91,6 @@ h6 {
   font-size: 1em;
 }
 
-h6 {
-  @include ff-sans;
-  @include fw-bold;
-
-  margin: 0 0 1.25em;
-}
-
 p,
 li {
   // hyphens: auto;
