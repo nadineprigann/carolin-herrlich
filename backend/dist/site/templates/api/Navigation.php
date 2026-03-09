@@ -118,8 +118,7 @@ class Navigation {
 
 
     // Eligible siblings only (same parent)
-    $selector = "template=chapter|summary|offer|offer*, sort=sort, status<" . Page::statusTrash;
-
+    $selector = "template=chapter|summary|offer|offer*, status!=hidden, status!=unpublished, sort=sort";
     $prev = $page->prev($selector);
     $next = $page->next($selector);
 
