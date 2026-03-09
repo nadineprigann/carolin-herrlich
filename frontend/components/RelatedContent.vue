@@ -114,7 +114,9 @@ watch(
 .related-content-section {
   @include center-content;
 
-  margin-bottom: calc(var(--gutter-base) * 7);
+  padding-bottom: calc(
+    var(--gutter-base) * 7
+  ); // use padding here to prevent grid to "cut off" margin and respect spacing
 
   @media (min-width: $medium) {
     // is set on parent template, so make sure to alwys set it to make it work on desktop
