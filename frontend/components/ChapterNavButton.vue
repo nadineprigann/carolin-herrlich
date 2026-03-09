@@ -45,7 +45,23 @@ const navigate = () => {
 <style lang="scss" scoped>
 .chapter-nav-button {
   @include button-reset;
-  @include highlight-element($radius: 1em);
+  @include highlight-element($radius: 1.5em);
+  @include button-padding(
+    $top: 0.4em,
+    $bottom: var(--spacing-xs),
+    $left: var(--spacing-l),
+    $right: var(--spacing-l)
+  );
+
+  &.is-prev {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  &.is-next {
+    grid-column: 2;
+    justify-self: end;
+  }
 }
 
 .title {
@@ -62,6 +78,7 @@ const navigate = () => {
 
   .is-prev & {
     &::before {
+      margin-right: var(--gutter-base);
       content: var(--s-arrow-right);
       transform: scale(-1, 1);
     }
@@ -69,6 +86,7 @@ const navigate = () => {
 
   .is-next & {
     &::after {
+      margin-left: var(--gutter-base);
       font-size: 1.5em;
       content: var(--s-arrow-right);
     }

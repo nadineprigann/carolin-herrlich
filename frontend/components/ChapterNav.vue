@@ -45,7 +45,7 @@ const hasNext = computed(() => {
   display: grid;
   grid-template-columns: repeat(
     2,
-    auto
+    minmax(0, 1fr)
   ); // only  use as much space as each button needs
 
   justify-content: space-between;
