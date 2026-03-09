@@ -122,7 +122,7 @@ watch(
     // is set on parent template, so make sure to alwys set it to make it work on desktop
     grid-row: 2 / 3;
     grid-column: 2 / 3;
-    padding-bottom: calc(var(--gutter-base) * 10);
+    padding-bottom: var(--page-end);
   }
 }
 

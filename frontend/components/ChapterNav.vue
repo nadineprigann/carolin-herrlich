@@ -50,15 +50,12 @@ const hasNext = computed(() => {
 
   gap: var(--gutter-base);
   justify-content: space-between;
-  padding-bottom: calc(
-    var(--gutter-base) * 5
+  padding-bottom: var(
+    --page-end
   ); // use padding here to prevent grid to "cut off" margin and respect spacing, when there's no related content, this is last element on the page and should have more spacing to the end of the page
 
   @media (min-width: $tablet) {
     gap: var(--gutter-m);
-    padding-bottom: calc(
-      var(--gutter-base) * 10
-    ); // use padding here to prevent grid to "cut off" margin and respect spacing
   }
 }
 </style>
