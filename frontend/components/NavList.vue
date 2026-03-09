@@ -27,9 +27,11 @@ const blogChildren = [
   },
 ]
 
+const excludedTemplates = ['home', 'tool', 'project', 'blog-post', 'event']
+
 const visibleRoutes = computed(() =>
   defaults.value.navigation
-    .filter((item) => item.meta.template !== 'home')
+    .filter((item) => !excludedTemplates.includes(item.meta.template))
     .map((item) => {
       if (item.meta.template === 'blog') {
         return {
