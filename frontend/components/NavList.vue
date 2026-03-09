@@ -71,14 +71,24 @@ const handleToggleSubNav = (id: number) => {
   justify-content: space-between;
   width: 100%;
   height: 100%;
+  padding: calc(var(--gutter-base) * 5) var(--gutter-m) var(--gutter-base)
+    var(--gutter-m);
   background-color: var(--white);
+
+  // always use $tablet as a "working breakpoint" to be able to change explicit widths later and not needing to change them in the whole app.
+  @media (min-width: $tablet) {
+    padding: calc(var(--gutter-base) * 6) var(--gutter-m) var(--gutter-m)
+      var(--gutter-m);
+  }
 }
 
 .nav-list {
   @include list-reset;
 
-  @media (min-width: $medium) {
+  @media (min-width: $tablet) {
     display: flex;
+    justify-content: space-between;
+    padding-right: calc(var(--gutter-base) * 10);
   }
 }
 </style>

@@ -46,10 +46,15 @@ const openPrivacyOverlay = () => {
   position: relative;
   display: flex;
   justify-content: space-between;
+  margin-top: calc(var(--blank-line) * 2);
 }
 
 .button {
   @include button-reset;
+
+  &:first-of-type {
+    margin-right: calc(var(--spacing-m) * 2);
+  }
 }
 
 .label {
