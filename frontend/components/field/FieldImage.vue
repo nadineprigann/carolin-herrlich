@@ -145,10 +145,9 @@ const longDescId = computed(() => {
 .field-image {
   display: grid;
   grid-template-rows: minmax(0, 1fr) auto; // image gets the rest, content gets space as intrinsically needed
-  gap: var(--gutter-base);
   height: 100%;
   min-height: 0; // allow image to shrink within the grid
-
+  // note: no gap to avoid white area bc images are used without caption sometimes
   img {
     display: block;
     width: 100%;
@@ -224,6 +223,10 @@ const longDescId = computed(() => {
 
 .image-caption {
   @include fs-xsmall; // should be set on single elements
+
+  margin-top: var(
+    --gutter-base
+  ); // use as space instead of gap to avoid white area when caption is hidden
   // width: 100%;
   // max-width: max-content;
 
