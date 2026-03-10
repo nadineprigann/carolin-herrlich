@@ -258,12 +258,9 @@ onDeactivated(() => {
 .header {
   @include toggle-icon;
 
+  padding-bottom: var(--accordion-title-spacing);
   margin-bottom: var(--gutter-s);
   border-bottom: 1px dashed var(--black);
-}
-
-.label {
-  margin-bottom: var(--accordion-title-spacing);
 }
 
 .link {

@@ -55,6 +55,9 @@ const toggleAccordion = () => {
 .header {
   @include toggle-icon;
 
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: var(--accordion-title-spacing);
   margin-bottom: var(--gutter-s);
   border-bottom: 1px dashed var(--black);
 }
@@ -62,8 +65,6 @@ const toggleAccordion = () => {
 .title,
 .subtitle {
   @include ff-sans;
-
-  margin-bottom: var(--accordion-title-spacing);
 }
 
 .title {
@@ -72,5 +73,7 @@ const toggleAccordion = () => {
 
 .subtitle {
   @include fs-small;
+
+  padding-left: var(--gutter-s); // has to match with indent on small screens
 }
 </style>
