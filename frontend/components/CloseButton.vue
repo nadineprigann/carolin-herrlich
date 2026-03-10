@@ -21,14 +21,17 @@ const ariaLabel = computed(() => `${props.overlayTitle} schließen`)
   display: flex;
   justify-self: flex-end;
 
-  // padding-right: var(
-  //   --gutter-s
-  // );
+  // padding-right: var(--gutter-s);
 
   @media (min-width: $tablet) {
-    padding-right: var(
-      --gutter-m
-    ); // check imprint and privacy when changing this in another component
+    @include button-padding(
+      $top: 0,
+      $bottom: 0,
+      $left: 0,
+      $right: var(--gutter-m)
+    );
+
+    // check imprint and privacy when changing this in another component
   }
 
   &::before {
