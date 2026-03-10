@@ -155,3 +155,12 @@
   // different paddings to visually center label
   padding: $top $right $bottom $left;
 }
+
+@mixin line-clamp($lines: var(--line-clamp)) {
+  display: -webkit-box; // clamp text after 3 lines and add an ellipsis, doesn't work if eleemnt itself is display: fle
+  // clamp text after 3 lines and add an ellipsis
+  overflow: hidden;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  line-clamp: $lines; // used by browsers who know this, others use upper declarations
+}

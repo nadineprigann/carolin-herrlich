@@ -79,18 +79,11 @@ const linkTo = computed(() => {
 }
 
 .description {
-  display: -webkit-box; // clamp text after 3 lines and add an ellipsis, doesn't work if eleemnt itself is display: flex
+  @include line-clamp;
+
   min-width: 0;
   margin-top: var(--gutter-s);
-
-  // clamp text after 3 lines and add an ellipsis
-  overflow: hidden;
   hyphens: auto;
   word-break: break-word;
-  -webkit-line-clamp: var(--line-clamp);
-  -webkit-box-orient: vertical;
-  line-clamp: var(
-    --line-clamp
-  ); // used by browsers who know this, others use upper declarations
 }
 </style>
