@@ -56,16 +56,19 @@ const linkTo = computed(() => {
 
 <style lang="scss" scoped>
 .child-item {
-  padding: 0.5rem 0 var(--gutter-base) 0;
   border-bottom: 0.5px dashed var(--black);
-
-  @media (min-width: $tablet) {
-    padding: var(--gutter-s) 0 var(--gutter-m) 0;
-  }
 }
 
 .link {
   @include link-reset;
+
+  display: inline-block;
+  width: 100%;
+  padding: 0.5rem 0 var(--gutter-base) 0;
+
+  @media (min-width: $tablet) {
+    padding: var(--gutter-s) 0 var(--gutter-m) 0;
+  }
 }
 
 .title,

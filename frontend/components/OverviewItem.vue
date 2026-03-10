@@ -83,12 +83,6 @@ function resetCurrentItem() {
 <style lang="scss" scoped>
 .overview-item {
   @include highlight-element;
-  @include button-padding(
-    $top: var(--gutter-base),
-    $bottom: var(--gutter-base),
-    $left: var(--gutter-base),
-    $right: var(--gutter-base)
-  );
 
   min-height: calc(var(--blank-line) * 3.5);
 
@@ -99,6 +93,16 @@ function resetCurrentItem() {
 
 .link {
   @include link-default;
+  @include button-padding(
+    $top: var(--gutter-base),
+    $bottom: var(--gutter-base),
+    $left: var(--gutter-base),
+    $right: var(--gutter-base)
+  );
+
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 
 .title {

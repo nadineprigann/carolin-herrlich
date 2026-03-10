@@ -46,7 +46,8 @@ const showChild = computed(() => {
 
   display: block;
   width: 100%;
-  height: 100%;
+
+  // height: 100%;
 }
 
 .content {
