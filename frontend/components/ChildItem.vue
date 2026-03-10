@@ -60,7 +60,7 @@ const linkTo = computed(() => {
   border-bottom: 0.5px dashed var(--black);
 
   @media (min-width: $tablet) {
-    padding: var(--gutter-base) 0 var(--gutter-s) 0;
+    padding: var(--gutter-s) 0 var(--gutter-m) 0;
   }
 }
 
@@ -68,13 +68,20 @@ const linkTo = computed(() => {
   @include link-reset;
 }
 
-.header {
-  margin-bottom: var(--gutter-base);
-}
-
 .title,
 .subtitle {
   @include ff-sans;
   @include fs-medium;
+}
+
+.subtitle {
+  margin-bottom: var(--spacing-xxs);
+}
+
+.description {
+  min-width: 0;
+  margin-top: var(--gutter-s);
+  hyphens: auto;
+  word-break: break-word;
 }
 </style>

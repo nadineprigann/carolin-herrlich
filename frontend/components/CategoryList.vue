@@ -20,5 +20,10 @@ const props = defineProps<{
 
   display: flex;
   flex-wrap: wrap; // allow wrapping to multiple lines if needed
+  margin-top: var(--gutter-base);
+
+  @media (min-width: $tablet) {
+    margin-top: var(--gutter-s);
+  }
 }
 </style>

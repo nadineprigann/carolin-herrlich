@@ -45,9 +45,13 @@ const showChildren = computed(() => {
 
 <style lang="scss" scoped>
 .template-blog {
-  @include center-content;
-
   padding: var(--page-spacing);
+}
+
+.title,
+.current,
+.archive {
+  @include center-content;
 }
 
 .title,
@@ -77,13 +81,4 @@ const showChildren = computed(() => {
 
   padding-bottom: var(--page-end);
 }
-
-// .archive {
-//   padding-bottom: var(--page-end);
-//   margin-top: calc(var(--gutter-base) * 5);
-
-//   @media (min-width: $tablet) {
-//     margin-top: calc(var(--gutter-base) * 10);
-//   }
-// }
 </style>
