@@ -53,6 +53,8 @@
     var(--gutter-base) * 5
   ); /* for spacing at the end of the page */
 
+  --line-clamp: 5;
+
   /* Easing */
 
   /* https://cubic-bezier.com/#.55,0,.1,1 */
