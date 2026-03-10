@@ -98,6 +98,12 @@ onBeforeRouteLeave(() => {
 
 <style lang="scss" scoped>
 .template-tools {
+  padding: var(--page-spacing);
+}
+
+.title,
+.children,
+.random {
   @include center-content;
 }
 
@@ -109,5 +115,25 @@ onBeforeRouteLeave(() => {
 
 .title {
   @include fs-xlarge;
+
+  margin-bottom: var(--gutter-xl);
+
+  @media (min-width: $medium) {
+    margin-bottom: calc(var(--gutter-base) * 5);
+  }
+}
+
+.label {
+  padding-bottom: var(--accordion-title-spacing);
+  border-bottom: 1px solid var(--black);
+}
+
+.random {
+  padding-bottom: var(--page-end);
+  margin-top: calc(var(--gutter-base) * 5);
+
+  @media (min-width: $tablet) {
+    margin-top: calc(var(--gutter-base) * 10);
+  }
 }
 </style>

@@ -224,8 +224,8 @@ const longDescId = computed(() => {
 .image-caption {
   @include fs-xsmall; // should be set on single elements
 
-  margin-top: var(
-    --gutter-base
+  margin-top: calc(
+    var(--gutter-base) / 2
   ); // use as space instead of gap to avoid white area when caption is hidden
   // width: 100%;
   // max-width: max-content;

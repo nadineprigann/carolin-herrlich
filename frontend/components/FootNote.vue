@@ -6,16 +6,21 @@ const props = defineProps<{
 
 <template>
   <section class="note-section">
-    <div class="note">
-      <span class="caption" v-text="props.note.number" />
-      <span class="text" v-html="props.note.text" />
-    </div>
-    <button
+    <div class="wrapper">
+      <div class="note">
+        <span class="caption" v-text="props.note.number" />
+        <span class="text" v-html="props.note.text" />
+      </div>
+      <!-- <button
       type="button"
-      class="button"
-      aria-label="Fußnote schließen"
-      @click="closeNote"
-    />
+
+    /> -->
+      <CloseButton
+        class="button"
+        aria-label="Fußnote schließen"
+        @click="closeNote"
+      />
+    </div>
   </section>
 </template>
 
@@ -24,8 +29,21 @@ const props = defineProps<{
   position: fixed;
   bottom: 0;
   left: 0;
-  display: flex;
   width: 100%;
+  min-height: calc(var(--blank-line) * 4);
+  padding: var(--gutter-s);
+  background-color: var(--grey);
+  border-top: 0.5px solid var(--yellow);
+
+  @media (min-width: $medium) {
+    min-height: calc(var(--blank-line) * 3);
+  }
+}
+
+.wrapper {
+  @include center-content;
+
+  display: flex;
 }
 
 .note {
@@ -36,10 +54,24 @@ const props = defineProps<{
 
 .button {
   @include button-reset;
+  @include button-padding(
+    $top: 0,
+    $bottom: 0,
+    $left: 0,
+    $right: var(--gutter-s)
+  );
 
   position: absolute;
   right: 0;
-  padding-right: var(--gutter);
+
+  @media (min-width: $tablet) {
+    @include button-padding(
+      $top: 0,
+      $bottom: 0,
+      $left: 0,
+      $right: var(--gutter-m)
+    );
+  }
 
   &::before {
     content: var(--l-close);

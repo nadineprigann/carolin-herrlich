@@ -172,4 +172,8 @@ onBeforeRouteLeave(() => {
   @include ff-sans;
   @include fs-small;
 }
+
+.title > * {
+  white-space: nowrap;
+}
 </style>
