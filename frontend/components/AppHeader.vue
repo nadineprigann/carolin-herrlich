@@ -34,12 +34,12 @@ const toggleNavigation = () => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: var(--gutter-m) var(--gutter-s) 0 var(--gutter-s);
+  padding: var(--gutter-m) var(--gutter-s);
   background-color: var(--white);
 
   @media (min-width: $medium) {
     justify-content: center;
-    padding: var(--gutter-m) var(--gutter-m) 0 var(--gutter-m);
+    padding: var(--gutter-m);
   }
 }
 
