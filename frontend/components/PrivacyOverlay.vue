@@ -197,7 +197,7 @@ const isVisible = computed(() => {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: var(--xl-overlay);
+  z-index: var(--xxl-overlay);
   display: grid;
   grid-template-rows: auto minmax(auto, 1fr);
   width: 100vw;

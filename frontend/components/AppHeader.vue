@@ -16,6 +16,10 @@ const toggleNavigation = () => {
       <span v-else class="open" />
     </button>
     <NavList />
+    <section class="legal">
+      <ImprintOverlay />
+      <PrivacyOverlay />
+    </section>
     <!-- <LanguageSwitch /> -->
   </header>
 </template>
@@ -86,5 +90,9 @@ const toggleNavigation = () => {
     font-size: 1.2em;
     content: var(--l-close);
   }
+}
+
+.legal {
+  margin-top: calc(var(--blank-line) * 2);
 }
 </style>
