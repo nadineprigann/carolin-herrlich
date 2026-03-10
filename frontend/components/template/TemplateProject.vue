@@ -12,6 +12,12 @@ const { fields, breadcrumbs } = toRefs(props.data)
 const label = reactive({
   header: 'Projektinfos',
 })
+
+const content = ref(null)
+
+const scrollTo = () => {
+  content.value?.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <template>
@@ -34,8 +40,10 @@ const label = reactive({
         :controls="true"
       />
     </section>
-    <section class="content">
-      <FieldText element="h4" :text="label.header" class="header" />
+    <section id="content" ref="content" class="content">
+      <button type="button" class="button" @click="scrollTo">
+        <FieldText element="h4" :text="label.header" class="header" />
+      </button>
       <TextRowList :table="fields.table" />
       <RelatedContent :related="fields.related_content" />
     </section>
@@ -70,10 +78,15 @@ const label = reactive({
   }
 }
 
+.button {
+  @include button-reset;
+}
+
 .header {
   @include fs-medium;
 
   margin-bottom: var(--gutter-xl);
+  cursor: pointer;
 
   // &::after {
   //   content: '';
