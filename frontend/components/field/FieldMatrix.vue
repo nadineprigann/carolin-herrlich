@@ -18,10 +18,8 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .field-matrix {
-  &:not(:last-child) {
-    padding-bottom: var(
-      --page-end
-    ); // just to make sure that if theres no chapter nav and no related content, the space is repsected by the parent grid
+  &:not(last-child) {
+    margin-bottom: var(--page-end);
   }
 }
 </style>
