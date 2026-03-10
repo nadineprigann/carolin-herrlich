@@ -151,9 +151,10 @@ onDeactivated(() => {
   padding: var(--page-spacing);
 
   @media (min-width: $medium) {
-    grid-template-rows: minmax(calc(100% - calc(var(--blank-line) * 4.5)), 1fr) auto;
+    grid-template-rows: minmax(calc(100% - calc(var(--blank-line) * 4.7)), 1fr) auto;
     grid-template-columns: minmax(0, 1fr) var(--content-width) minmax(0, 1fr); // minmax to prevent overflow of cover bc it basically says removes the implicit minimum width of 1fr which makes the image "obey"
     gap: var(--gutter-s) 0;
+    padding: 0; // reset padding on larger screens to avoid cover image to overflow -> padding applies to it since its not absolutely positioned
   }
 
   @media (min-width: $desktop) {

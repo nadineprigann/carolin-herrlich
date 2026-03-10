@@ -1,6 +1,7 @@
 :root {
   /* Colors */
   --black: rgb(0 0 0);
+  --black-70: rgb(0 0 0 / 30%);
   --white: rgb(255 255 255);
   --white-90: rgb(255 255 255 / 90%);
   --grey: #f4f3ef;
@@ -9,6 +10,7 @@
   --focus-color: rgb(0 140 255 / 20%);
   --selection-color: var(--focus-color);
   --highlight-color: var(--yellow);
+  --disabled-color: var(--black-70);
 
   /* Effects */
   --bg-blur: 20px;
