@@ -56,7 +56,13 @@ const showCategories = computed(() => {
 }
 
 .content {
+  // use min-height to avoid overly jumping of slides due to different content
+  min-height: calc(var(--blank-line) * 10);
   margin-top: var(--gutter-base);
+
+  @media (min-width: $tablet) {
+    min-height: calc(var(--blank-line) * 9);
+  }
 }
 
 .header {
@@ -87,6 +93,8 @@ const showCategories = computed(() => {
 }
 
 .text {
+  @include line-clamp;
+
   @media (min-width: $desktop) {
     max-width: 85%;
   }
