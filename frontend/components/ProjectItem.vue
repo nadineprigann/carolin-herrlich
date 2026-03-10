@@ -33,8 +33,8 @@ const showChild = computed(() => {
 <style lang="scss" scoped>
 .project-item {
   // @include link-default;
-  display: flex;
-  height: 30vh;
+  // display: flex;
+  // height: 30vh;
 
   @media (min-width: $mobile) {
     margin: 0 auto; // centers the item if it has less width than the container, e.g. on mobile
@@ -51,8 +51,10 @@ const showChild = computed(() => {
 
 .content {
   display: grid;
-  grid-template-rows: 1fr auto;
-  height: 100%;
+  grid-template-rows: auto auto;
+
+  // grid-template-rows: 1fr auto;
+  // height: 100%;
 }
 
 .title {

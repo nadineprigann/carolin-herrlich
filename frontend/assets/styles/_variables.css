@@ -34,9 +34,6 @@
   --spacing-m: 1em;
   --spacing-l: 1.25em;
   --spacing-xl: 1.75em;
-  --page-end: calc(
-    var(--gutter-base) * 5
-  ); /* for spacing at the end of the page */
 
   /* Use --gutter for vertical and horizontal spacing of layout elements. padding for inside a component, gaps and margin for spaces between components (be aware of layout collapsing) */
 
@@ -52,6 +49,11 @@
   --title-width: 70%; /* percent cuz within already centered content */
   --accordion-title-spacing: var(--spacing-xxs);
   --page-spacing: 0 var(--gutter-s);
+  --page-end: calc(
+    var(--gutter-base) * 5
+  ); /* for spacing at the end of the page */
+
+  --line-clamp: 5;
 
   /* Easing */
 

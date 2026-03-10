@@ -31,13 +31,19 @@ const linkTo = computed(() => {
 <template>
   <li class="child-item">
     <NuxtLink v-if="showChild" :to="linkTo" class="link">
-      <FieldText
-        v-if="isEvent"
-        element="h5"
-        class="subtitle"
-        :text="props.child.fields.subtitle"
-      />
-      <FieldText element="h5" class="title" :text="props.child.fields.title" />
+      <div class="header">
+        <FieldText
+          v-if="isEvent"
+          element="h5"
+          class="subtitle"
+          :text="props.child.fields.subtitle"
+        />
+        <FieldText
+          element="h5"
+          class="title"
+          :text="props.child.fields.title"
+        />
+      </div>
       <FieldTextarea
         v-if="showDescription"
         class="description"
@@ -50,12 +56,34 @@ const linkTo = computed(() => {
 
 <style lang="scss" scoped>
 .child-item {
-  // @include link-default;
+  padding: 0.5rem 0 var(--gutter-base) 0;
+  border-bottom: 0.5px dashed var(--black);
+
+  @media (min-width: $tablet) {
+    padding: var(--gutter-s) 0 var(--gutter-m) 0;
+  }
+}
+
+.link {
+  @include link-reset;
 }
 
 .title,
 .subtitle {
   @include ff-sans;
   @include fs-medium;
+}
+
+.subtitle {
+  margin-bottom: var(--spacing-xxs);
+}
+
+.description {
+  @include line-clamp;
+
+  min-width: 0;
+  margin-top: var(--gutter-s);
+  hyphens: auto;
+  word-break: break-word;
 }
 </style>

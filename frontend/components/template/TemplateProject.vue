@@ -12,6 +12,12 @@ const { fields, breadcrumbs } = toRefs(props.data)
 const label = reactive({
   header: 'Projektinfos',
 })
+
+const content = ref(null)
+
+const scrollTo = () => {
+  content.value?.scrollIntoView({ behavior: 'smooth' })
+}
 </script>
 
 <template>
@@ -34,8 +40,10 @@ const label = reactive({
         :controls="true"
       />
     </section>
-    <section class="content">
-      <FieldText element="h4" :text="label.header" class="header" />
+    <section id="content" ref="content" class="content">
+      <button type="button" class="button" @click="scrollTo">
+        <FieldText element="h4" :text="label.header" class="header" />
+      </button>
       <TextRowList :table="fields.table" />
       <RelatedContent :related="fields.related_content" />
     </section>
@@ -44,6 +52,7 @@ const label = reactive({
 
 <style lang="scss" scoped>
 .template-project {
+  padding: var(--page-spacing);
   overflow-y: auto;
   scroll-snap-type: y mandatory;
 }
@@ -61,17 +70,34 @@ const label = reactive({
 
 .title {
   @include fs-xlarge;
+
+  margin-bottom: var(--gutter-xl);
+
+  @media (min-width: $medium) {
+    margin-bottom: calc(var(--gutter-base) * 5);
+  }
+}
+
+.button {
+  @include button-reset;
 }
 
 .header {
   @include fs-medium;
+
+  margin-bottom: var(--gutter-xl);
+  cursor: pointer;
+
+  // &::after {
+  //   content: '';
+  // }
 }
 
 .slideshow {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   height: calc(
-    100% - var(--blank-line)
+    100% - calc(var(--blank-line) * 2.5)
   ); // account for project infos below the fold
 
   scroll-snap-align: start;
@@ -83,6 +109,8 @@ const label = reactive({
 
 .content {
   min-height: 100%;
+  padding-bottom: var(--page-end);
+  margin-top: var(--blank-line);
   scroll-snap-align: start;
 }
 </style>

@@ -38,5 +38,6 @@ const showBreadcrumbs = computed(() => {
   @include center-content;
 
   display: flex;
+  flex-wrap: wrap;
 }
 </style>

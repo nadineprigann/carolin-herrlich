@@ -182,11 +182,13 @@ const longDescId = computed(() => {
     }
   }
 
-  // &.is-project {
-  //   img {
-  //     padding: 5em;
-  //   }
-  // }
+  &.is-project {
+    gap: calc(var(--gutter-base) * 5) 0;
+
+    @media (min-width: $tablet) {
+      gap: calc(var(--gutter-base) * 10) 0;
+    }
+  }
 
   // content slider from repeater-matrix
   &.is-content {
@@ -200,8 +202,10 @@ const longDescId = computed(() => {
   // projects-overview
   &.is-projects {
     img {
+      align-self: start;
       max-width: 100%;
-      height: 100%;
+
+      // height: 100%;
       object-fit: cover;
     }
 
@@ -224,8 +228,8 @@ const longDescId = computed(() => {
 .image-caption {
   @include fs-xsmall; // should be set on single elements
 
-  margin-top: var(
-    --gutter-base
+  margin-top: calc(
+    var(--gutter-base) / 2
   ); // use as space instead of gap to avoid white area when caption is hidden
   // width: 100%;
   // max-width: max-content;

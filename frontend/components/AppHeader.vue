@@ -16,6 +16,10 @@ const toggleNavigation = () => {
       <span v-else class="open" />
     </button>
     <NavList />
+    <section class="legal">
+      <ImprintOverlay />
+      <PrivacyOverlay />
+    </section>
     <!-- <LanguageSwitch /> -->
   </header>
 </template>
@@ -30,12 +34,12 @@ const toggleNavigation = () => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: var(--gutter-m) var(--gutter-s) 0 var(--gutter-s);
+  padding: var(--gutter-m) var(--gutter-s);
   background-color: var(--white);
 
   @media (min-width: $medium) {
     justify-content: center;
-    padding: var(--gutter-m) var(--gutter-m) 0 var(--gutter-m);
+    padding: var(--gutter-m);
   }
 }
 
@@ -86,5 +90,9 @@ const toggleNavigation = () => {
     font-size: 1.2em;
     content: var(--l-close);
   }
+}
+
+.legal {
+  margin-top: calc(var(--blank-line) * 2);
 }
 </style>

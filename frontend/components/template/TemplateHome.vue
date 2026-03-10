@@ -48,6 +48,7 @@ const hasLinks = computed(() => {
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   padding: var(--page-spacing);
   padding-top: var(--gutter-l);
+  padding-bottom: var(--gutter-s);
   overflow: hidden;
 
   @media (min-width: $medium) {
