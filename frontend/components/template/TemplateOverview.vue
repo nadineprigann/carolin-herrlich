@@ -144,7 +144,7 @@ onDeactivated(() => {
 
   // keep myzel height the same as the subtraction value for the cover image in OverviewItem.vue
 
-  grid-template-rows: 1fr auto; // content, then myzel section. fixed height leads to problems when myzel is not there. see RelatedContent.vue but makes it possible to overflow to the bottom when myzel accordions are toggled.
+  grid-template-rows: min-content; // make sure that all items follow suit like auto to avoid toggling the accordion upwards. right now: normal page flow.
   gap: calc(var(--gutter-base) * 6) 0;
 
   // overflow: hidden;
