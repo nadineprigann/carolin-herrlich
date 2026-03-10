@@ -124,6 +124,7 @@ onDeactivated(() => {
     <template v-if="hasCoverImage">
       <transition name="t-fade">
         <div v-if="currentItem" :key="currentItem.index" class="cover">
+          <div class="tint" />
           <FieldImage :image="currentItem.fields?.image" :caption="false" />
         </div>
       </transition>
@@ -237,7 +238,8 @@ onDeactivated(() => {
   // border-top-right-radius: var(--border-radius-small);
   overflow: hidden;
 
-  @media (min-width: $medium) {
+  @media (min-width: $tablet) {
+    position: relative;
     z-index: var(
       --s-cover-image
     ); // cover over info section but under other content like breadcrumbs and title. works without position due to grid
@@ -253,6 +255,16 @@ onDeactivated(() => {
       height: 100%;
       object-fit: cover;
     }
+  }
+}
+
+.tint {
+  @media (min-width: $tablet) {
+    position: absolute;
+    z-index: 250; // in between 200 for cover image and 300 for content above cover image
+    width: 100%;
+    height: 100%;
+    background-color: var(--white-40);
   }
 }
 
