@@ -30,9 +30,8 @@ const props = defineProps<{
   @media (min-width: $small) {
     width: 50%;
     max-width: 50%;
-  }
 
-  @media (min-width: $tablet) {
+    // @media (min-width: $tablet) {
     &:not(:last-child) {
       margin-bottom: 0;
     }
