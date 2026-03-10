@@ -19,6 +19,14 @@ const showItem = computed(() => {
 <style lang="scss" scoped>
 .in-depth-item {
   @include highlight-element;
+
+  &:not(:last-of-type) {
+    margin-bottom: var(--gutter-base);
+  }
+}
+
+.link {
+  @include link-default;
   @include button-padding(
     $top: var(--gutter-base),
     $bottom: var(--gutter-base),
@@ -26,11 +34,9 @@ const showItem = computed(() => {
     $right: var(--gutter-base)
   );
 
+  display: inline-block;
+  width: 100%;
   min-height: calc(var(--blank-line) * 3);
-
-  &:not(:last-of-type) {
-    margin-bottom: var(--gutter-base);
-  }
 }
 
 .title {

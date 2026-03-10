@@ -101,24 +101,14 @@ watch(
     > -->
     <!-- TODO: if no children, use disabled state. necessary to show at all times for consistent layout on overview page (with cover image). if rendered only when content is there, in-depth moves up and its content is flashed. OR: dynamically with refs. -->
     <section :class="classes.context">
-      <div class="header">
-        <FieldText
-          element="h4"
-          class="label"
-          :text="labels.context"
-          @click="toggleContext"
-        />
+      <div class="header" @click="toggleContext">
+        <FieldText element="h4" class="label" :text="labels.context" />
       </div>
       <NumberRowList v-if="showContext" :table="relatedItem.context" />
     </section>
     <section :class="classes.depth">
-      <div class="header">
-        <FieldText
-          element="h4"
-          class="label"
-          :text="labels.in_depth"
-          @click="toggleDepth"
-        />
+      <div class="header" @click="toggleDepth">
+        <FieldText element="h4" class="label" :text="labels.in_depth" />
       </div>
       <InDepthList v-if="showInDepth" :items="relatedItem.in_depth" />
     </section>

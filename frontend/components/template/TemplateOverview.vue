@@ -86,13 +86,8 @@ onDeactivated(() => {
       <BreadcrumbList :breadcrumbs="breadcrumbs" class="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
       <section v-if="fields.text" :class="classes.info">
-        <div class="header">
-          <FieldText
-            element="h4"
-            class="label"
-            :text="labels.info"
-            @click="toggleInfo"
-          />
+        <div class="header" @click="toggleInfo">
+          <FieldText element="h4" class="label" :text="labels.info" />
         </div>
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
@@ -112,7 +107,6 @@ onDeactivated(() => {
           v-for="(child, index) in children"
           :key="`overview-item-${index}`"
           :item="child"
-          :hovered-item="currentItem"
           @current-item="handleCurrentItem"
         />
         <NuxtLink v-if="hasCategories" :to="linkToAll" class="link">
@@ -124,6 +118,7 @@ onDeactivated(() => {
     <template v-if="hasCoverImage">
       <transition name="t-fade">
         <div v-if="currentItem" :key="currentItem.index" class="cover">
+          <div class="tint" />
           <FieldImage :image="currentItem.fields?.image" :caption="false" />
         </div>
       </transition>
@@ -143,7 +138,7 @@ onDeactivated(() => {
 
   // keep myzel height the same as the subtraction value for the cover image in OverviewItem.vue
 
-  grid-template-rows: 1fr auto; // content, then myzel section. fixed height leads to problems when myzel is not there. see RelatedContent.vue but makes it possible to overflow to the bottom when myzel accordions are toggled.
+  grid-template-rows: min-content; // make sure that all items follow suit like auto to avoid toggling the accordion upwards. right now: normal page flow.
   gap: calc(var(--gutter-base) * 6) 0;
 
   // overflow: hidden;
@@ -237,7 +232,8 @@ onDeactivated(() => {
   // border-top-right-radius: var(--border-radius-small);
   overflow: hidden;
 
-  @media (min-width: $medium) {
+  @media (min-width: $tablet) {
+    position: relative;
     z-index: var(
       --s-cover-image
     ); // cover over info section but under other content like breadcrumbs and title. works without position due to grid
@@ -256,6 +252,16 @@ onDeactivated(() => {
   }
 }
 
+.tint {
+  @media (min-width: $tablet) {
+    position: absolute;
+    z-index: 250; // in between 200 for cover image and 300 for content above cover image
+    width: 100%;
+    height: 100%;
+    background-color: var(--white-40);
+  }
+}
+
 .header {
   @include toggle-icon;
 
@@ -266,6 +272,22 @@ onDeactivated(() => {
 
 .link {
   @include link-default;
+  @include highlight-element;
+  @include button-padding(
+    $top: var(--gutter-base),
+    $bottom: var(--gutter-base),
+    $left: var(--gutter-base),
+    $right: var(--gutter-base)
+  );
+
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  min-height: calc(var(--blank-line) * 3.5);
+
+  @media (min-width: $medium) {
+    min-height: calc(var(--blank-line) * 3);
+  }
 }
 
 .title,
