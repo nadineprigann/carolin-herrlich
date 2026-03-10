@@ -107,7 +107,6 @@ onDeactivated(() => {
           v-for="(child, index) in children"
           :key="`overview-item-${index}`"
           :item="child"
-          :hovered-item="currentItem"
           @current-item="handleCurrentItem"
         />
         <NuxtLink v-if="hasCategories" :to="linkToAll" class="link">
@@ -273,6 +272,22 @@ onDeactivated(() => {
 
 .link {
   @include link-default;
+  @include highlight-element;
+  @include button-padding(
+    $top: var(--gutter-base),
+    $bottom: var(--gutter-base),
+    $left: var(--gutter-base),
+    $right: var(--gutter-base)
+  );
+
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  min-height: calc(var(--blank-line) * 3.5);
+
+  @media (min-width: $medium) {
+    min-height: calc(var(--blank-line) * 3);
+  }
 }
 
 .title,
