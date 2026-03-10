@@ -200,8 +200,10 @@ const longDescId = computed(() => {
   // projects-overview
   &.is-projects {
     img {
+      align-self: start;
       max-width: 100%;
-      height: 100%;
+
+      // height: 100%;
       object-fit: cover;
     }
 
