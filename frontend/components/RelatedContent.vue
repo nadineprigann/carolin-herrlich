@@ -13,16 +13,17 @@ const labels = reactive({
 
 const classes = computed(() => {
   return {
-    context: ['context-section', contextVisible.value ? 'is-open' : ''],
-    depth: ['in-depth-section', depthVisible.value ? 'is-open' : ''],
+    context: [
+      'context-section',
+      hasContext.value ? '' : 'is-disabled',
+      contextVisible.value ? 'is-open' : '',
+    ],
+    depth: [
+      'in-depth-section',
+      hasInDepth.value ? '' : 'is-disabled',
+      depthVisible.value ? 'is-open' : '',
+    ],
   }
-})
-const relatedItem = computed(() => {
-  return props.related?.[0] ?? null
-})
-
-const showContext = computed(() => {
-  return relatedItem.value?.context.length > 0
 })
 
 const currentNote = ref({} as Note)
@@ -34,14 +35,6 @@ const closeNote = () => {
   layout.currentFootnote = null
 }
 
-const showInDepth = computed(() => {
-  return (relatedItem.value?.in_depth?.length ?? 0) > 0
-})
-
-const showRelatedContent = computed(() => {
-  return showContext.value || showInDepth.value
-})
-
 const showFootnote = computed(() => {
   return Object.keys(currentNote.value).length > 0 && noteVisible.value
 })
@@ -49,11 +42,36 @@ const showFootnote = computed(() => {
 const contextVisible = ref(false)
 const depthVisible = ref(true) // default is visible
 
+const relatedItem = computed(() => {
+  return props.related?.[0] ?? null
+})
+
+// check if there is actual content for the specific section
+const hasContext = computed(() => {
+  return relatedItem.value?.context.length > 0
+})
+
+const hasInDepth = computed(() => {
+  return relatedItem.value?.in_depth?.length > 0
+})
+
+// then show content if it has content AND is toggled open
+const showContext = computed(() => {
+  return hasContext.value > 0 && contextVisible.value
+})
+
+const showInDepth = computed(() => {
+  return hasInDepth.value && depthVisible.value
+})
+
+// toggle specific section open. make it inactive when there is no content
 function toggleContext() {
+  if (!hasContext.value) return
   contextVisible.value = !contextVisible.value
 }
 
 function toggleDepth() {
+  if (!hasInDepth.value) return
   depthVisible.value = !depthVisible.value
 }
 
@@ -74,36 +92,37 @@ watch(
 </script>
 
 <template>
-  <section v-if="showRelatedContent" class="related-content-section">
+  <section class="related-content-section">
+    <!-- v-if="showRelatedContent"  -->
     <!-- NOTE: Structure used due to the repeater logic wich in turn is necessary to be able to limit in-depth list backendwise. Could use repeater-components but seemed overkill. -->
-    <template
+    <!-- <template
       v-for="(content, index) in props.related"
       :key="`related-${index}`"
-    >
-      <!-- TODO: if no children, use disabled state. necessary to show at all times for consistent layout on overview page (with cover image). if rendered only when content is there, in-depth moves up and its content is flashed. OR: dynamically with refs. -->
-      <section v-if="showContext" :class="classes.context">
-        <div class="header">
-          <FieldText
-            element="h4"
-            class="label"
-            :text="labels.context"
-            @click="toggleContext"
-          />
-        </div>
-        <NumberRowList v-if="contextVisible" :table="relatedItem.context" />
-      </section>
-      <section v-if="showInDepth" :class="classes.depth">
-        <div class="header">
-          <FieldText
-            element="h4"
-            class="label"
-            :text="labels.in_depth"
-            @click="toggleDepth"
-          />
-        </div>
-        <InDepthList v-if="depthVisible" :items="content.in_depth" />
-      </section>
-    </template>
+    > -->
+    <!-- TODO: if no children, use disabled state. necessary to show at all times for consistent layout on overview page (with cover image). if rendered only when content is there, in-depth moves up and its content is flashed. OR: dynamically with refs. -->
+    <section :class="classes.context">
+      <div class="header">
+        <FieldText
+          element="h4"
+          class="label"
+          :text="labels.context"
+          @click="toggleContext"
+        />
+      </div>
+      <NumberRowList v-if="showContext" :table="relatedItem.context" />
+    </section>
+    <section :class="classes.depth">
+      <div class="header">
+        <FieldText
+          element="h4"
+          class="label"
+          :text="labels.in_depth"
+          @click="toggleDepth"
+        />
+      </div>
+      <InDepthList v-if="showInDepth" :items="relatedItem.in_depth" />
+    </section>
+    <!-- </template> -->
     <!-- TODO: maybe use vue-portal to render the footnote outside of this section? -->
     <!-- pass evaluated local currentNote to FootNote component for rendering -->
     <FootNote v-if="showFootnote" :note="currentNote" @click="closeNote" />
@@ -131,6 +150,12 @@ watch(
 
   margin-bottom: var(--gutter-s);
   border-bottom: 1px dashed var(--black);
+
+  .is-disabled & {
+    color: var(--disabled-color);
+    cursor: default;
+    border-color: var(--disabled-color);
+  }
 
   @media (min-width: $medium) {
     margin-bottom: var(--gutter-m);
