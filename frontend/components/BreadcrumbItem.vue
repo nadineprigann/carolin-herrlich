@@ -8,6 +8,12 @@ const props = defineProps<{
   breadcrumb: Route
 }>()
 
+const classes = computed(() => {
+  return {
+    item: ['breadcrumb-item', isClickable.value ? 'is-clickable' : ''],
+  }
+})
+
 const templates = ['tools', 'blog', 'events'] // templates for which filter titles should be shown in breadcrumb
 const visibleFilterTitles = ref([]) // local instance for storing filter titles to be able to display them regardless of query state (they get resetted as soon as user starts navigating). middleman so to say. we want to fade them out when nav is finished nut when it starts. needed for navigating away.
 const showTitles = ref(false) // flag to determine if component is mounted
@@ -108,7 +114,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-  <li class="breadcrumb-item">
+  <li :class="classes.item">
     <NuxtLink v-if="isClickable" :to="linkTo" class="link">
       <FieldText
         element="h5"
@@ -148,6 +154,11 @@ onBeforeRouteLeave(() => {
 <style lang="scss" scoped>
 .breadcrumb-item {
   display: flex;
+  color: var(--disabled-color);
+
+  &.is-clickable {
+    color: var(--black);
+  }
 
   &:not(:last-of-type) {
     margin-right: calc(var(--gutter-base) / 2);
@@ -174,6 +185,7 @@ onBeforeRouteLeave(() => {
 }
 
 .title > * {
+  // whatever descendants of title: they should not wrap
   white-space: nowrap;
 }
 </style>
