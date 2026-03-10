@@ -182,11 +182,13 @@ const longDescId = computed(() => {
     }
   }
 
-  // &.is-project {
-  //   img {
-  //     padding: 5em;
-  //   }
-  // }
+  &.is-project {
+    gap: calc(var(--gutter-base) * 5) 0;
+
+    @media (min-width: $tablet) {
+      gap: calc(var(--gutter-base) * 10) 0;
+    }
+  }
 
   // content slider from repeater-matrix
   &.is-content {

@@ -166,6 +166,10 @@ onUnmounted(stopAutoplay)
     overflow-x: auto;
     scroll-snap-type: x mandatory;
   }
+
+  .is-project & {
+    // padding: 0 calc(var(--gutter-base) * 3);
+  }
 }
 
 .prev,
@@ -201,11 +205,11 @@ onUnmounted(stopAutoplay)
 }
 
 .prev {
-  left: 0;
+  left: var(--gutter-base);
 }
 
 .next {
-  right: 0;
+  right: var(--gutter-base);
 
   &::before {
     margin-left: auto;

@@ -44,6 +44,7 @@ const label = reactive({
 
 <style lang="scss" scoped>
 .template-project {
+  padding: var(--page-spacing);
   overflow-y: auto;
   scroll-snap-type: y mandatory;
 }
@@ -61,17 +62,29 @@ const label = reactive({
 
 .title {
   @include fs-xlarge;
+
+  margin-bottom: var(--gutter-xl);
+
+  @media (min-width: $medium) {
+    margin-bottom: calc(var(--gutter-base) * 5);
+  }
 }
 
 .header {
   @include fs-medium;
+
+  margin-bottom: var(--gutter-xl);
+
+  // &::after {
+  //   content: '';
+  // }
 }
 
 .slideshow {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   height: calc(
-    100% - var(--blank-line)
+    100% - calc(var(--blank-line) * 2.5)
   ); // account for project infos below the fold
 
   scroll-snap-align: start;
@@ -83,6 +96,8 @@ const label = reactive({
 
 .content {
   min-height: 100%;
+  padding-bottom: var(--page-end);
+  margin-top: var(--blank-line);
   scroll-snap-align: start;
 }
 </style>
