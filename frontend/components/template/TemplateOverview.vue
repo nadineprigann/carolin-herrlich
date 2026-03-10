@@ -86,13 +86,8 @@ onDeactivated(() => {
       <BreadcrumbList :breadcrumbs="breadcrumbs" class="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
       <section v-if="fields.text" :class="classes.info">
-        <div class="header">
-          <FieldText
-            element="h4"
-            class="label"
-            :text="labels.info"
-            @click="toggleInfo"
-          />
+        <div class="header" @click="toggleInfo">
+          <FieldText element="h4" class="label" :text="labels.info" />
         </div>
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
