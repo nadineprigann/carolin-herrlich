@@ -88,6 +88,9 @@ const closeNav = () => {
   }
 
   @media (min-width: $tablet) {
+    max-width: 100%;
+    padding-right: var(--gutter-s);
+
     &:not(:last-child) {
       padding-bottom: 0;
     }
@@ -118,6 +121,9 @@ const closeNav = () => {
 
 .title {
   @include toggle-icon;
+
+  word-break: break-word;
+  white-space: wrap;
 
   // reset mixin styles to not display toggle on larger screens
   @media (min-width: $medium) {

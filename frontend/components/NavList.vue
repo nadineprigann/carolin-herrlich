@@ -123,6 +123,7 @@ const openPrivacyOverlay = () => {
   @media (min-width: $tablet) {
     display: flex;
     justify-content: space-between;
+    max-width: 100%;
     padding-right: calc(var(--gutter-base) * 10);
   }
 }
