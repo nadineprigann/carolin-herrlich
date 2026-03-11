@@ -7,6 +7,7 @@ require_once __DIR__ . "/Helper.php";
 
 require_once __DIR__ . "/Defaults.php";
 require_once __DIR__ . "/DefaultPage.php";
+require_once __DIR__ . "/CheckOutForm.php";
 
 $routes = [
   'v1' => [
@@ -19,6 +20,8 @@ $routes = [
       ['OPTIONS', '', ['GET']],
       ['GET', '{path:.+}', DefaultPage::class, 'get'],
       ['GET', '', DefaultPage::class, 'get'],
+      // no options needed for POST, because the form is submitted via AJAX and doesn't trigger a preflight request
+      ['POST', 'checkout/submit', CheckOutForm::class, 'submit']
     ]
   ]
 ];
