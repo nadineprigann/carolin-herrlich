@@ -12,7 +12,9 @@ $labels = [
 ];
 
 $linkStyle = 'color: inherit;text-decoration: underline; text-decoration-color: #fcc100;';
+$font = 'font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif; color: #333; line-height: 1.5;font-size: 14px';
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -21,17 +23,17 @@ $linkStyle = 'color: inherit;text-decoration: underline; text-decoration-color: 
     <title><?php echo $title; ?></title>
   </head>
   <body style='font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif; color: #333; line-height: 1.5;font-size: 14px;'>
-    <p style='margin-top: 30px;'><?php echo $title; ?></p>
-    <p><?php echo $body; ?></p>
+    <p style='margin-top: 30px;font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif; color: #333; line-height: 1.5;font-size: 14px;'><?php echo $title; ?></p>
+    <p style='font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif; color: #333; line-height: 1.5;font-size: 14px;'><?php echo $body; ?></p>
 
     <?php if (isset($form)): ?>
       <table style='width: 100%; cellspacing="0"; margin-top: 20px;'>
         <?php foreach($form as $key => $value): ?>
           <tr>
-            <th class='label' style='width: 30%; text-align: right; font-weight: bold; padding: 5px 10px 5px 0; vertical-align: top;'>
+            <th class='label' style='width: 30%; text-align: right; font-weight: bold; padding: 5px 10px 5px 0; vertical-align: top;font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif; color: #333; line-height: 1.5;font-size: 14px;'>
               <?php echo $labels[$key] ?? ucfirst($key); ?>
             </th>
-            <td class='value' style='width: 70%; padding: 5px 0 5px 0;'>
+            <td class='value' style='width: 70%; padding: 5px 0 5px 0;font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif; color: #333; line-height: 1.5;font-size: 14px;'>
               <?php
                 // convert email addresses into styled mailto links
                 if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -44,7 +46,7 @@ $linkStyle = 'color: inherit;text-decoration: underline; text-decoration-color: 
           </tr>
         <?php endforeach; ?>
       </table>
-    <p style='margin-top: 30px;'><?php echo $greeting; ?></p>
+    <p style='margin-top: 30px;font-family:"IBM Plex Serif", Georgia, "Times New Roman", serif; color: #333; line-height: 1.5;font-size: 14px;'><?php echo $greeting; ?></p>
     <?php endif; ?>
   </body>
 </html>
