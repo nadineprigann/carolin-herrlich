@@ -121,7 +121,7 @@ const submit = async () => {
       setTimeout(() => {
         isClicked.value = false // reset submit button state after delay
         layout.value.openOverlay.success = false // close success overlay
-        // closeOverlay() // close checkout overlay
+        closeOverlay() // close checkout overlay
       }, 5000)
     } else {
       // An error occured
