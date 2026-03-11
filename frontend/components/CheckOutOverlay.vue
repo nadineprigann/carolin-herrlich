@@ -113,7 +113,7 @@ const submit = async () => {
     const response = await api.post('page/checkout/submit', payload)
     // console.log(this.response)
     if (response.status === 'success') {
-      console.log('checkout submitted')
+      // console.log('checkout submitted')
       // Form submitted successfully
       reset() // reset form after successful submission, can also be done on close if you want to keep the entered data visible until user closes the overlay
       layout.value.openOverlay.success = true // show success overlay
