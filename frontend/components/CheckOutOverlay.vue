@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 // import { FormKitProvider } from '@formkit/vue'
 // import { de } from '@formkit/i18n'
+const api = useApi()
 
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
@@ -77,6 +78,14 @@ const labels = reactive({
   reset: 'Zurücksetzen',
 })
 
+const form = reactive({
+  firstName: '',
+  lastName: '',
+  pronouns: '',
+  email: '',
+  message: '',
+})
+
 // use accordion title for form title if available, otherwise use the one from props (e.g. from template like event). OverlayButton.vue stores accordion title in store when used within one and clicked, overlay can use it here
 const formTitle = computed(() => {
   return layout.value.openOverlay.checkoutTitle
@@ -93,10 +102,44 @@ const closeOverlay = () => {
   layout.value.openOverlay.checkoutTitle = null
 }
 
-const send = () => {
-  // ... applying logic
-  closeOverlay()
+const submit = async () => {
+  try {
+    // use dedicated payload here instead of only form to hav emore control over what exactly is sent to the backend and to be able to easily add other properties if needed without changing the form state. -> checkout title
+    const payload = {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      pronouns: form.pronouns,
+      email: form.email,
+      message: form.message,
+      title: layout.value.openOverlay.checkoutTitle ?? props.title,
+    }
+
+    const response = await api.post('page/checkout/submit', payload)
+    // console.log(this.response)
+    if (response.status === 'success') {
+      console.log('checkout submitted')
+      // Form submitted successfully
+      // this.isSubmitted = true
+      // this.$emit('form-submitted')
+      // this.$formulate.reset('submissionForm')
+    } else {
+      // An error occured
+      // TODO: show error message
+      console.error(response.message)
+    }
+  } catch (error) {
+    console.error('Checkout failed', error)
+    // this.$formulate.handle(
+    //   {
+    //     formErrors: [`${error}! ${this.$t('tryAgain')}`],
+    //   },
+    //   'submissionForm',
+    // )
+  }
+
+  // closeOverlay()
 }
+
 const reset = () => {}
 
 const titleId = `checkout-titel`
@@ -130,12 +173,13 @@ onDeactivated(() => {
   >
     <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
 
-    <form class="form" @submit.prevent="send">
+    <form class="form" @submit.prevent="submit">
       <section class="content">
         <FieldText :id="titleId" element="h2" :text="formTitle" class="title" />
         <p :id="descId" class="description" v-text="labels.description" />
         <FormInput
           :id="labels.firstName.id"
+          v-model="form.firstName"
           :label="labels.firstName.label"
           :help="labels.firstName.help"
           :error="labels.firstName.error"
@@ -145,6 +189,7 @@ onDeactivated(() => {
         />
         <FormInput
           :id="labels.lastName.id"
+          v-model="form.lastName"
           :label="labels.lastName.label"
           :help="labels.lastName.help"
           :error="labels.lastName.error"
@@ -154,6 +199,7 @@ onDeactivated(() => {
         />
         <FormInput
           :id="labels.pronouns.id"
+          v-model="form.pronouns"
           :label="labels.pronouns.label"
           :help="labels.pronouns.help"
           :error="labels.pronouns.error"
@@ -162,6 +208,7 @@ onDeactivated(() => {
         />
         <FormInput
           :id="labels.mail.id"
+          v-model="form.email"
           :label="labels.mail.label"
           :help="labels.mail.help"
           :error="labels.mail.error"
@@ -171,6 +218,7 @@ onDeactivated(() => {
         />
         <FormInput
           :id="labels.message.id"
+          v-model="form.message"
           :label="labels.message.label"
           :help="labels.message.help"
           :error="labels.message.error"
