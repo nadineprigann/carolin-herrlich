@@ -126,7 +126,9 @@ const submit = async () => {
       // Form submitted successfully
       // this.isSubmitted = true
       // this.$emit('form-submitted')
-      // this.$formulate.reset('submissionForm')
+      reset() // reset form after successful submission, can also be done on close if you want to keep the entered data visible until user closes the overlay
+
+      // closeOverlay()
     } else {
       // An error occured
       // TODO: show error message
@@ -141,11 +143,18 @@ const submit = async () => {
     //   'submissionForm',
     // )
   }
-
-  // closeOverlay()
 }
 
-const reset = () => {}
+const reset = () => {
+  // reset form object. v-model bindings will take care of resetting the input fields.
+  form.firstName = ''
+  form.lastName = ''
+  form.pronouns = ''
+  form.email = ''
+  form.message = ''
+  form.website = ''
+  form.started = 0
+}
 
 const titleId = `checkout-titel`
 const descId = `checkout-beschreibung`
