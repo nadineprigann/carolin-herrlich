@@ -453,7 +453,15 @@ onDeactivated(() => {
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
   gap: 0 var(--gutter-m);
+
+  @media (min-width: $tablet) {
+    display: grid;
+    grid-template-rows: repeat(3, auto) 1fr auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 // FormKit
@@ -478,17 +486,6 @@ onDeactivated(() => {
     grid-column: span 2;
     margin-bottom: calc(var(--gutter-base) * 5);
     margin-left: 0; // reset centering from parent
-  }
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-
-  @media (min-width: $tablet) {
-    display: grid;
-    grid-template-rows: repeat(3, auto) 1fr auto;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
