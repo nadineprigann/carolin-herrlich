@@ -67,7 +67,9 @@ const error = computed(() => {
 .form-textarea {
   display: flex;
   flex-direction: column;
-  grid-column: span 1;
+
+  // TODO: make cols and rows configurable via props if needed and a form wrapper as a comp that is a grid
+  grid-column: span 2;
   margin-bottom: var(--gutter-m);
 }
 
