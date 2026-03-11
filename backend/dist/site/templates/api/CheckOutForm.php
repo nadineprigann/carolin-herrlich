@@ -48,6 +48,7 @@ class CheckOutForm {
         $mail = wireMail();
         $mail->to(wire('config')->_mailTo)
           ->from(wire('config')->_mailFrom)
+          ->replyTo($email) // set reply-to to the email of the user who submitted the form, so that you can easily reply to them without having to copy their email address from the form data in the received email
           ->subject("Neue Anfrage: $title");
         $bodyHTML = wireRenderFile(
           wire('config')->paths->templates . 'mail/default.php',
