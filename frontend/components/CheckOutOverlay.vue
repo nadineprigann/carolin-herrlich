@@ -78,12 +78,15 @@ const labels = reactive({
   reset: 'Zurücksetzen',
 })
 
+// this will be populated by v-model bindings from the form inputs and is passed to the backend on submit
 const form = reactive({
   firstName: '',
   lastName: '',
   pronouns: '',
   email: '',
   message: '',
+  website: '', // honeypot field for spam protection, should be left empty by users, if filled out, submission will be rejected in backend
+  started: 0, // start a timer when the form is first interacted with. if submitted too fast, it might be a bot.
 })
 
 // use accordion title for form title if available, otherwise use the one from props (e.g. from template like event). OverlayButton.vue stores accordion title in store when used within one and clicked, overlay can use it here
@@ -104,7 +107,7 @@ const closeOverlay = () => {
 
 const submit = async () => {
   try {
-    // use dedicated payload here instead of only form to hav emore control over what exactly is sent to the backend and to be able to easily add other properties if needed without changing the form state. -> checkout title
+    // use dedicated payload here instead of only form to have more control over what exactly is sent to the backend and to be able to easily add other properties if needed without changing the form state. -> checkout title
     const payload = {
       firstName: form.firstName,
       lastName: form.lastName,
@@ -112,6 +115,8 @@ const submit = async () => {
       email: form.email,
       message: form.message,
       title: layout.value.openOverlay.checkoutTitle ?? props.title,
+      website: form.website, // honeypot field for spam protection
+      started: form.started, // for spam protection to abort fastly submitted forms
     }
 
     const response = await api.post('page/checkout/submit', payload)
@@ -154,6 +159,12 @@ watchEffect(() => {
   // hasCyclical.value = advanced
 })
 
+watch(showOverlay, (open) => {
+  if (open) {
+    form.started = Math.floor(Date.now() / 1000)
+  }
+})
+
 onDeactivated(() => {
   // reset overlay state when navigating away while overlay is open
   closeOverlay()
@@ -175,6 +186,14 @@ onDeactivated(() => {
 
     <form class="form" @submit.prevent="submit">
       <section class="content">
+        <input
+          v-model="form.website"
+          type="text"
+          name="website"
+          autocomplete="off"
+          tabindex="-1"
+          hidden
+        />
         <FieldText :id="titleId" element="h2" :text="formTitle" class="title" />
         <p :id="descId" class="description" v-text="labels.description" />
         <FormInput
@@ -395,6 +414,10 @@ onDeactivated(() => {
   overflow: hidden;
   background-color: var(--white-90);
   backdrop-filter: blur(var(--bg-blur));
+}
+
+.honeypot {
+  display: none;
 }
 
 .send,

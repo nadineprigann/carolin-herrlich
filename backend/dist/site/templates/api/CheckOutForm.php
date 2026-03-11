@@ -17,19 +17,32 @@ class CheckOutForm {
     $email = $form['email'] = $sanitizer->email($data->email ?? '');
     $message = $form['message'] = $sanitizer->textarea($data->message ?? '');
 
-     // validation
-    if(!$email || !$firstName || !$lastName || !$message) {
-      return [
-        'status' => 'error',
-        'message' => 'Missing required fields'
-      ];
+    // safety net: additional validation even though frontend already uses required fields to prevent empty fields, honeypot field and timer to catch bots that fill all fields and fill them fast
+    // validation
+    $required = ['email','firstName','lastName'];
+
+    foreach($required as $field) {
+      if(empty($form[$field])) {
+        return self::error('Missing required fields');
+      }
+    }
+    // spam protection
+    // simple honeypot spam protection
+    if(!empty($data->website)) {
+      return self::error('Spam detected');
     }
 
-    // honeypot goes here later
+    // simple timer-based spam protection, if form is submitted too fast (e.g. within 5 seconds), it might be a bot. do not send.
+    $started = intval($data->started ?? 0);
+    $elapsed = time() - $started;
 
+    if($started === 0 || $elapsed < 3) {
+      return self::error('Spam detected');
+    }
+
+    // send mail
     $sent = false;
 
-    // Send mail
     if (wire('config')->_mailTo) {
       try {
         $mail = wireMail();
@@ -47,20 +60,16 @@ class CheckOutForm {
         );
 
         $mail->bodyHTML($bodyHTML);
-        $numSent = $mail->send();
 
-        if ($numSent > 0) {
+        if ($mail->send() > 0) {
           $sent = true;
-        } else {
-          wire('log')->save('mail', "Failed to send mail to $email");
         }
       } catch(\Exception $e) {
         wire('log')->save('mail', $e->getMessage());
       }
 
-      // --- send auto response to user ---
+      // send auto-response to user
       try {
-        $autoRespond = wireMail();
         // __(..) is the translation function of ProcessWire so it can translate into the visitors language with Helper::setLanguage() - even though in this case the language is already set to German, it's good practice to wrap any user-facing text in the translation function
         $subject = __("Danke für deine Anfrage");
         $salutation = __("Hallo $firstName,");
@@ -76,13 +85,13 @@ class CheckOutForm {
           ]
         );
 
-        $autoRespond->to($email)
+        wireMail()
+          ->to($email)
           ->from(wire('config')->_mailFrom)
           ->replyTo(wire('config')->_replyTo)
           ->subject($subject)
-          ->bodyHTML($bodyHTML);
-
-        $autoRespond->send();
+          ->bodyHTML($bodyHTML)
+          ->send();
 
       } catch(\Exception $e) {
         wire('log')->save('mail', "Failed to send auto-response to $email: " . $e->getMessage());
@@ -91,16 +100,15 @@ class CheckOutForm {
 
     Helper::unsetLanguage();
 
-    if($sent) {
-      return [
-        'status' => 'success',
-        'message' => 'Check-Out submitted successfully'
-      ];
-    }
+    return $sent
+      ? ['status' => 'success', 'message' => 'Check-Out submitted successfully']
+      : ['status' => 'error', 'message' => 'Mail could not be sent'];
+  }
 
+  private static function error($message) {
     return [
       'status' => 'error',
-      'message' => 'Mail could not be sent'
+      'message' => $message
     ];
   }
 }
