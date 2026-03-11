@@ -3,6 +3,7 @@ export const useLayoutStore = defineStore('layout', () => {
     template: '',
     openOverlay: {
       checkout: false,
+      success: false,
       checkoutTitle: null as string | null,
       filter: false,
       footnote: false,

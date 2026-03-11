@@ -124,11 +124,13 @@ const submit = async () => {
     if (response.status === 'success') {
       console.log('checkout submitted')
       // Form submitted successfully
-      // this.isSubmitted = true
-      // this.$emit('form-submitted')
       reset() // reset form after successful submission, can also be done on close if you want to keep the entered data visible until user closes the overlay
+      layout.value.openOverlay.success = true // show success overlay
 
-      // closeOverlay()
+      setTimeout(() => {
+        layout.value.openOverlay.success = false // close success overlay
+        // closeOverlay() // close checkout overlay
+      }, 5000)
     } else {
       // An error occured
       // TODO: show error message
@@ -262,6 +264,7 @@ onDeactivated(() => {
           <span class="label" v-text="labels.reset" />
         </button>
       </section>
+      <SuccessOverlay />
     </form>
 
     <!-- <FormKitProvider :config="localFormKitConfig"> -->
