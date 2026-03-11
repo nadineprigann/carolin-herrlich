@@ -246,7 +246,7 @@ onDeactivated(() => {
           :autocomplete="labels.mail.autocomplete"
           :required="true"
         />
-        <FormInput
+        <FormTextarea
           :id="labels.message.id"
           v-model="form.message"
           :label="labels.message.label"
@@ -423,9 +423,14 @@ onDeactivated(() => {
   grid-template-rows: auto minmax(auto, 1fr);
   width: 100vw;
   height: 100vh;
+  padding: var(--gutter-m) var(--gutter-s);
   overflow: hidden;
   background-color: var(--white-90);
   backdrop-filter: blur(var(--bg-blur));
+
+  @media (min-width: $medium) {
+    padding: var(--gutter-m);
+  }
 }
 
 .honeypot {
@@ -447,6 +452,10 @@ onDeactivated(() => {
   @include center-content;
 }
 
+.content {
+  gap: 0 var(--gutter-m);
+}
+
 // FormKit
 // .formkit-form {
 .form {
@@ -459,10 +468,15 @@ onDeactivated(() => {
 }
 
 .title {
+  @include fs-xlarge;
+  @include ff-sans;
+
   max-width: var(--title-width);
+  margin-bottom: var(--gutter-xl);
 
   @media (min-width: $tablet) {
     grid-column: span 2;
+    margin-bottom: calc(var(--gutter-base) * 5);
     margin-left: 0; // reset centering from parent
   }
 }
@@ -498,6 +512,21 @@ onDeactivated(() => {
   display: flex;
   flex-wrap: wrap;
   max-width: 80vw;
+}
+
+.apply,
+.reset {
+  @include button-default;
+  @include button-padding(
+    $top: 0.4em,
+    $bottom: var(--spacing-xs),
+    $left: var(--spacing-l),
+    $right: var(--spacing-l)
+  );
+}
+
+.apply {
+  margin-right: var(--gutter-s);
 }
 
 .formkit-actions .actions,

@@ -12,6 +12,7 @@
   --selection-color: var(--focus-color);
   --highlight-color: var(--yellow);
   --disabled-color: var(--black-70);
+  --error-color: rgb(255 0 0);
 
   /* Effects */
   --bg-blur: 20px;
@@ -49,7 +50,7 @@
 
   /* specific vars for spacing */
   --content-width: 70vw;
-  --title-width: 70%; /* percent cuz within already centered content */
+  --title-width: 80%; /* percent cuz within already centered content */
   --accordion-title-spacing: var(--spacing-xxs);
   --page-spacing: 0 var(--gutter-s);
   --page-end: calc(

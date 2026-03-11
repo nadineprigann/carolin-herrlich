@@ -22,9 +22,15 @@
 @mixin input-default {
   @include input-reset;
   @include focus-default;
+  @include ff-sans;
 
-  padding: 0.25em;
-  background-color: rgb(240 240 240);
+  padding: calc(var(--gutter-base) * 0.5);
+  background-color: var(--grey);
+  border-radius: 0.3rem;
+
+  @media (min-width: $tablet) {
+    padding: calc(var(--gutter-base) * 1);
+  }
 }
 
 @mixin button-reset {
@@ -48,7 +54,7 @@
   // fontsize is text-size
 
   border: 1px solid var(--black);
-  border-radius: 1em;
+  border-radius: 1.5rem;
 }
 
 @mixin link-reset {
