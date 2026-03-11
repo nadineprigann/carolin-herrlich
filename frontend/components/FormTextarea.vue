@@ -12,6 +12,7 @@ interface Props {
   required?: boolean // pass true if required
   emits?: boolean // whether to emit the entered value to the parent component. for now stay dumb and do not emit, can be added later if needed
   modelValue?: string
+  resize?: 'none' | 'both' | 'horizontal' | 'vertical' // whether to allow resizing of the textarea, default is none
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,15 +36,15 @@ const error = computed(() => {
 </script>
 
 <template>
-  <div class="form-input">
+  <div class="form-textarea">
     <label :for="props.id" class="label" v-text="props.label" />
-    <input
+    <textarea
       :id="props.id"
       type="text"
       :name="props.id"
       :autocomplete="props.autocomplete"
       :placeholder="props.placeholder"
-      class="input"
+      class="textarea"
       :aria-describedby="`${help} ${error}`"
       :required="props.required"
       :value="props.modelValue"
@@ -63,17 +64,20 @@ const error = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.form-input {
+.form-textarea {
   display: flex;
   flex-direction: column;
-  grid-column: span 1;
+
+  // TODO: make cols and rows configurable via props if needed and a form wrapper as a comp that is a grid
+  grid-column: span 2;
   margin-bottom: var(--gutter-m);
 }
 
-.input {
+.textarea {
   @include input-default;
 
   margin: calc(var(--gutter-base) / 2) 0;
+  resize: vertical;
 }
 
 .label,

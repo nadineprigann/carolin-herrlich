@@ -73,7 +73,7 @@ const scrollTo = () => {
 
   margin-bottom: var(--gutter-xl);
 
-  @media (min-width: $medium) {
+  @media (min-width: $tablet) {
     margin-bottom: calc(var(--gutter-base) * 5);
   }
 }
