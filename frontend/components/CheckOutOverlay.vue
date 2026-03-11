@@ -56,7 +56,16 @@ const labels = reactive({
     placeholder: 'Ich interessiere mich für ...',
   },
   submit: 'Absenden',
+  sending: 'Senden...',
   reset: 'Zurücksetzen',
+})
+
+const isClicked = ref(false) // to track if submit button has been clicked
+
+const classes = computed(() => {
+  return {
+    submit: ['send', isClicked.value ? 'is-clicked' : ''],
+  }
 })
 
 // this will be populated by v-model bindings from the form inputs and is passed to the backend on submit
@@ -87,6 +96,7 @@ const closeOverlay = () => {
 }
 
 const submit = async () => {
+  isClicked.value = true // for submit button after click
   try {
     // use dedicated payload here instead of only form to have more control over what exactly is sent to the backend and to be able to easily add other properties if needed without changing the form state. -> checkout title
     const payload = {
@@ -109,6 +119,7 @@ const submit = async () => {
       layout.value.openOverlay.success = true // show success overlay
 
       setTimeout(() => {
+        isClicked.value = false // reset submit button state after delay
         layout.value.openOverlay.success = false // close success overlay
         // closeOverlay() // close checkout overlay
       }, 5000)
@@ -239,7 +250,8 @@ onDeactivated(() => {
       </section>
       <section class="controls">
         <button type="submit" class="apply">
-          <span class="label" v-text="labels.submit" />
+          <span v-if="isClicked" class="label" v-text="labels.sending" />
+          <span v-else class="label" v-text="labels.submit" />
         </button>
         <button type="button" class="reset" @click="reset">
           <span class="label" v-text="labels.reset" />
