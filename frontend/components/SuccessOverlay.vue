@@ -15,8 +15,14 @@ const labels = reactive({
 
 <template>
   <section v-if="showOverlay" class="success-overlay">
-    <FieldText element="h2" :text="labels.title" class="title" />
-    <FieldTextarea element="p" :text="labels.description" class="description" />
+    <div class="content">
+      <FieldText element="h2" :text="labels.title" class="title" />
+      <FieldTextarea
+        element="p"
+        :text="labels.description"
+        class="description"
+      />
+    </div>
   </section>
 </template>
 
@@ -26,22 +32,45 @@ const labels = reactive({
   top: 0;
   left: 0;
   z-index: var(--xxl-overlay);
+  display: flex;
+  flex-direction: column;
+
+  // justify-content: center;
   width: 100vw;
   height: 100vh;
+  padding: var(--gutter-m) var(--gutter-s);
   overflow: hidden;
   background-color: var(--white-90);
   backdrop-filter: blur(var(--bg-blur));
+
+  @media (min-width: $medium) {
+    padding: var(--gutter-m);
+  }
+}
+
+.content {
+  @include center-content;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20vh;
 }
 
 .title,
 .description {
-  @include center-content;
-
+  max-width: var(--title-width);
   text-align: center;
 }
 
 .title {
+  @include fs-xlarge;
   @include ff-sans;
-  @include fs-large;
+
+  margin-bottom: var(--gutter-xl);
+
+  @media (min-width: $tablet) {
+    margin-bottom: calc(var(--gutter-base) * 5);
+  }
 }
 </style>
