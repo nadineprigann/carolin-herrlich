@@ -2,6 +2,10 @@
 const props = defineProps<{
   item: MatrixTypeImages
 }>()
+
+const sizes = computed(() => {
+  return '(min-width: 80em) 47vw, (min-width: 48em) 47vw, 94vw'
+})
 </script>
 
 <template>
@@ -11,6 +15,7 @@ const props = defineProps<{
       :key="`image-${index}`"
       :image="image"
       class="image"
+      :sizes="sizes"
     />
   </div>
 </template>

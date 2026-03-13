@@ -6,11 +6,20 @@ const props = defineProps<{
 const showCategories = computed(() => {
   return props.item.categories.length > 0
 })
+
+const sizes = computed(() => {
+  return '(min-width: 80em) 65vw, (min-width: 48em) 45vw, 78vw'
+})
 </script>
 
 <template>
   <div v-if="props.item.title" class="slider-matrix-type-home-slide">
-    <FieldImage :image="props.item.image" :caption="false" class="image" />
+    <FieldImage
+      :image="props.item.image"
+      :caption="false"
+      class="image"
+      :sizes="sizes"
+    />
     <section class="content">
       <NuxtLink :to="props.item.link.meta.url" class="link">
         <section class="header">

@@ -14,6 +14,13 @@ const modeClass = computed(() => {
     'is-overview': isOverview.value,
   }
 })
+
+const sizes = computed(() => {
+  if (isContent.value) {
+    return '(min-width: 80em) 55vw, (min-width: 48em) 70vw, 85vw'
+  }
+  return '(min-width: 80em) 94vw, (min-width: 48em) 95vw, 94vw'
+})
 </script>
 
 <template>
@@ -23,6 +30,7 @@ const modeClass = computed(() => {
       class="image"
       :mode="props.mode"
       :caption="props.caption"
+      :sizes="sizes"
     />
   </li>
 </template>

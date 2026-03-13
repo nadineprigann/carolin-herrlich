@@ -7,7 +7,7 @@ declare global {
     date_end?: string
     text?: string
     image: Image
-    select_category?: PageReference[]
-    select_page: PageReference[]
+    categories?: PageReference[]
+    link: PageReference
   }
 }

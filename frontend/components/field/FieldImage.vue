@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'default',
 })
 
+// vw = (element width / viewport width) * 100
+
 // const emit = defineEmits<{
 //   (e: 'image-width', width: number): void
 // }>()
