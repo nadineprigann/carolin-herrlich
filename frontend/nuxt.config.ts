@@ -69,8 +69,14 @@ export default defineNuxtConfig({
     async 'nitro:config'(nitroConfig) {
       if (nitroConfig.dev) return
 
+      const apiBase = process.env.NUXT_PUBLIC_API_BASE
+      const apiSecret = process.env.NUXT_PUBLIC_API_SECRET
+      const language = process.env.NUXT_PUBLIC_LANGUAGE || 'de'
+
+      if (!apiBase || !apiSecret) return
+
       try {
-        const routes = await getPrerenderRoutes()
+        const routes = await getPrerenderRoutes(apiBase, apiSecret, language)
 
         nitroConfig.prerender ??= {}
 
