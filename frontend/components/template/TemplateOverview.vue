@@ -75,6 +75,10 @@ const linkToAll = computed(() => {
   return props.data.meta.url + 'werkzeuge/'
 })
 
+const sizes = computed(() => {
+  return '(min-width: 80em) 100vw, (min-width: 48em) 100vw, 100vw'
+})
+
 onDeactivated(() => {
   infoVisible.value = false
 })
@@ -119,7 +123,11 @@ onDeactivated(() => {
       <transition name="t-fade">
         <div v-if="currentItem" :key="currentItem.index" class="cover">
           <div class="tint" />
-          <FieldImage :image="currentItem.fields?.image" :caption="false" />
+          <FieldImage
+            :image="currentItem.fields?.image"
+            :caption="false"
+            :sizes="sizes"
+          />
         </div>
       </transition>
     </template>

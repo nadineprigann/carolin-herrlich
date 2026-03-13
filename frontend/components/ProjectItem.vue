@@ -7,6 +7,10 @@ const props = defineProps<{
 const showChild = computed(() => {
   return props.child?.fields && props.child?.meta
 })
+
+const sizes = computed(() => {
+  return '(min-width: 80em) 23vw, (min-width: 48em) 30vw, 94vw'
+})
 </script>
 
 <template>
@@ -19,6 +23,7 @@ const showChild = computed(() => {
           class="image"
           :caption="false"
           :mode="'projects'"
+          :sizes="sizes"
         />
         <FieldText
           class="title"
