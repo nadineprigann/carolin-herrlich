@@ -161,7 +161,7 @@ const onLoaded = () => {
 
   &.is-loaded {
     opacity: 1;
-    transition: opacity var(--short) ease-in;
+    transition: opacity var(--xshort) ease-in;
   }
 
   // &.is-portrait {
