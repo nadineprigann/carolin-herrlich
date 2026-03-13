@@ -118,26 +118,24 @@ onDeactivated(() => {
         </NuxtLink>
       </ul>
     </section>
-    <!-- TODO: maybe use vue-portal to init it in the child but then render it here to prevent transition issues -->
-    <template v-if="hasCoverImage">
-      <transition name="t-fade">
-        <div v-if="currentItem" :key="currentItem.index" class="cover">
-          <div class="tint" />
-          <FieldImage
-            :image="currentItem.fields?.image"
-            :caption="false"
-            :sizes="sizes"
-          />
-        </div>
-      </transition>
-    </template>
+    <!-- note: make sure to not use a conditionally rendered wrapper as it blocks transition detection and breaks them. -->
+    <transition name="t-cover" mode="out-in">
+      <div v-if="currentItem" :key="currentItem.meta.url" class="cover">
+        <div class="tint" />
+        <FieldImage
+          :image="currentItem.fields?.image"
+          :caption="false"
+          :sizes="sizes"
+        />
+      </div>
+    </transition>
     <RelatedContent :related="fields.related_content" class="related" />
   </main>
 </template>
 
 <style lang="scss">
 // defined in _transitions.scss, variables in _variables.scss
-@include t-fade($duration: var(--xshort));
+@include t-cover;
 </style>
 
 <style lang="scss" scoped>

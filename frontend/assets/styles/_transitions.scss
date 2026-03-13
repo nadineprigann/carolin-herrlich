@@ -63,3 +63,23 @@
     transform: translateY(0);
   }
 }
+
+@mixin t-cover($name: 't-cover', $easing: ease-out, $delay: 0ms) {
+  .#{$name}-enter-active {
+    transition: opacity var(--xshort) $easing $delay;
+  }
+
+  .#{$name}-leave-active {
+    transition: opacity 200ms $easing $delay;
+  }
+
+  .#{$name}-enter-from,
+  .#{$name}-leave-to {
+    opacity: 0;
+  }
+
+  .#{$name}-enter-to,
+  .#{$name}-leave-from {
+    opacity: 1;
+  }
+}

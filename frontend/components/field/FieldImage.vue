@@ -23,6 +23,8 @@ const props = withDefaults(defineProps<Props>(), {
 // const imageElement = ref<HTMLImageElement | null>(null)
 // // const imageWidth = ref(0)
 
+const isLoaded = ref(false)
+
 const isOverview = computed(() => props.mode === 'overview')
 const isContent = computed(() => props.mode === 'content')
 const isProjects = computed(() => props.mode === 'projects')
@@ -35,6 +37,7 @@ const modeClass = computed(() => {
     'is-overview': isOverview.value,
     'is-projects': isProjects.value,
     'is-project': isProject.value,
+    'is-loaded': isLoaded.value,
   }
 })
 
@@ -70,16 +73,9 @@ const longDescId = computed(() => {
   return props.image?.long_description?.length ? `long-description-${id}` : null
 })
 
-// const onImageLoad = async () => {
-//   if (!isContent.value) return
-//   await nextTick() // ensures layout is settled
-//   // nextTick(() => {
-//   if (!imageElement.value) return
-//   const width = Math.round(imageElement.value.getBoundingClientRect().width)
-//   emit('image-width', width)
-//   console.log('image loaded')
-//   // })
-// }
+const onLoaded = () => {
+  isLoaded.value = true
+}
 
 // const imageWidthStyle = computed(() => {
 //   if (!isContent.value) return {}
@@ -111,8 +107,8 @@ const longDescId = computed(() => {
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
       class="image"
+      @load="onLoaded"
     />
-    <!-- @load="onImageLoad" -->
     <img
       v-else-if="props.image && !props.image.resized"
       ref="imageElement"
@@ -121,8 +117,8 @@ const longDescId = computed(() => {
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
       class="image"
+      @load="onLoaded"
     />
-    <!-- @load="onImageLoad" -->
     <figcaption :class="figCaptionClass" class="image-caption">
       <span class="caption">{{ props.image.caption }}</span>
       <a class="link" :href="props.image.external_link">
@@ -150,14 +146,22 @@ const longDescId = computed(() => {
   height: 100%;
   min-height: 0; // allow image to shrink within the grid
   // note: no gap to avoid white area bc images are used without caption sometimes
+  opacity: 0;
+
   img {
     display: block;
     width: 100%;
     min-width: 0;
     height: auto;
     min-height: 0;
+    background-color: var(--white);
 
     // object-fit: cover;
+  }
+
+  &.is-loaded {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
   }
 
   // &.is-portrait {
