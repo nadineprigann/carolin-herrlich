@@ -16,8 +16,7 @@ const modeClass = computed(() => {
 })
 
 const sizes = computed(() => {
-  // keep it more verbose to be able to add more mode options
-  if (value) {
+  if (isContent.value) {
     return '(min-width: 80em) 55vw, (min-width: 48em) 70vw, 85vw'
   }
   return '(min-width: 80em) 94vw, (min-width: 48em) 95vw, 94vw'
