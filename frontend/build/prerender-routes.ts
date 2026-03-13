@@ -10,15 +10,11 @@ function extractPaths(items: NavItem[]): string[] {
   ])
 }
 
-export async function getPrerenderRoutes() {
-  const apiBase = process.env.NUXT_PUBLIC_API_BASE
-  const apiSecret = process.env.NUXT_PUBLIC_API_SECRET
-  const language = process.env.NUXT_PUBLIC_LANGUAGE || 'de'
-
-  if (!apiBase || !apiSecret) {
-    return []
-  }
-
+export async function getPrerenderRoutes(
+  apiBase: string,
+  apiSecret: string,
+  language: string,
+) {
   const response = await fetch(`${apiBase}/defaults`, {
     headers: {
       'x-api-key': apiSecret,
