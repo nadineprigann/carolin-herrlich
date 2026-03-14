@@ -17,12 +17,21 @@ const buttonClass = computed(() => {
 const labels = reactive({
   prev: 'Zurück',
   next: 'Weiter',
+  overview: 'Übersicht',
 })
 
 // create nice ARIA label for AT
 const ariaLabel = computed(() => {
   const dir = props.direction === 'prev' ? labels.prev : labels.next
   return `${dir}: ${props.item.meta.title}`
+})
+
+const isOverview = computed(() => {
+  return props.item.meta.template === 'overview'
+})
+
+const overviewLabel = computed(() => {
+  return isOverview.value ? `${labels.overview}: ${props.item.meta.title}` : ''
 })
 
 const navigate = () => {
@@ -38,7 +47,18 @@ const navigate = () => {
     :direction="props.direction"
     @click="navigate"
   >
-    <FieldText element="span" :text="props.item.meta.title" class="title" />
+    <FieldText
+      v-if="isOverview"
+      element="span"
+      :text="overviewLabel"
+      class="title"
+    />
+    <FieldText
+      v-else
+      element="span"
+      :text="props.item.meta.title"
+      class="title"
+    />
   </button>
 </template>
 
