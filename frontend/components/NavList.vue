@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { htmlOverflowLock } from '@/composables/useHtmlOverflowLock'
+
 const defaultsStore = useDefaultsStore()
 const { defaults } = storeToRefs(defaultsStore)
 const layoutStore = useLayoutStore()
@@ -59,10 +61,17 @@ const openImprintOverlay = () => {
 const openPrivacyOverlay = () => {
   layout.value.openOverlay.privacy = true
 }
+
+const isVisible = computed(() => {
+  return layout.value.openOverlay.navigation
+})
+
+// use composable to stop the body from scrolling when overlay is open. also resets the overflow on unmount and deactivated
+htmlOverflowLock(isVisible)
 </script>
 
 <template>
-  <nav v-if="layout.openOverlay.navigation" class="nav" aria-label="Navigation">
+  <nav v-if="isVisible" class="nav" aria-label="Navigation">
     <ul class="nav-list">
       <NavItem
         v-for="item in visibleRoutes"
