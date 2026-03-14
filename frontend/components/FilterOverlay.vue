@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { htmlOverflowLock } from '@/composables/useHtmlOverflowLock'
+
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 const formStore = useFormStore()
@@ -16,7 +18,7 @@ const hasCategorical = ref(false)
 const hasChronological = ref(false)
 const hasCyclical = ref(false)
 
-const showOverlay = computed(() => {
+const isVisible = computed(() => {
   return layout.value.openOverlay.filter
 })
 
@@ -97,11 +99,14 @@ onDeactivated(() => {
   // reset overlay state when navigating away while overlay is open
   closeOverlay()
 })
+
+// use composable to stop the body from scrolling when overlay is open. also resets the overflow on unmount and deactivated
+htmlOverflowLock(isVisible)
 </script>
 
 <template>
   <section
-    v-if="showOverlay"
+    v-if="isVisible"
     class="filter-overlay"
     role="dialog"
     aria-modal="true"

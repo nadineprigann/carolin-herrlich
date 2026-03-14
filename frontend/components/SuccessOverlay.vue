@@ -11,6 +11,8 @@ const labels = reactive({
   description:
     'Du hast eine Bestätigungsmail von mir bekommen und ich melde mich so schnell wie möglich bei dir zurück.',
 })
+
+// note: not necessary to import htmlLock since this overlay can only be open ocne the CheckOutOverlay is open and thus, htmlLock is already active when that overlay is open.
 </script>
 
 <template>

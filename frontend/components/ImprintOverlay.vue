@@ -14,13 +14,7 @@ const isVisible = computed(() => {
   return layout.value.openOverlay.imprint
 })
 
-watch(isVisible, (newValue) => {
-  if (newValue) {
-    document.body.style.overflow = 'hidden'
-  } else {
-    document.body.style.overflow = ''
-  }
-})
+// note: no htmlLock necessary when overlay is open cuz its placed within nav and therefore, html is already locked when this overlay is open
 </script>
 
 <template>

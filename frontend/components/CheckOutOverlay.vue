@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { htmlOverflowLock } from '@/composables/useHtmlOverflowLock'
 const api = useApi()
 
 const layoutStore = useLayoutStore()
@@ -86,7 +87,7 @@ const formTitle = computed(() => {
     : `${labels.title} ${props.title}`
 })
 
-const showOverlay = computed(() => {
+const isVisible = computed(() => {
   return layout.value.openOverlay.checkout
 })
 
@@ -162,7 +163,7 @@ watchEffect(() => {
   // hasCyclical.value = advanced
 })
 
-watch(showOverlay, (open) => {
+watch(isVisible, (open) => {
   if (open) {
     form.started = Math.floor(Date.now() / 1000)
   }
@@ -172,11 +173,14 @@ onDeactivated(() => {
   // reset overlay state when navigating away while overlay is open
   closeOverlay()
 })
+
+// use composable to stop the body from scrolling when overlay is open. also resets the overflow on unmount and deactivated
+htmlOverflowLock(isVisible)
 </script>
 
 <template>
   <section
-    v-if="showOverlay"
+    v-if="isVisible"
     role="dialog"
     aria-modal="true"
     :aria-labelledby="titleId"
