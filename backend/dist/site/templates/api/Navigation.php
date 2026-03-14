@@ -118,9 +118,28 @@ class Navigation {
 
 
     // Eligible siblings only (same parent)
-    $selector = "template=chapter|summary|offer|offer*, status!=hidden, status!=unpublished, sort=sort";
-    $prev = $page->prev($selector);
-    $next = $page->next($selector);
+    $childSelector = "template=chapter|summary|offer|offer*, status!=hidden, status!=unpublished, sort=sort";
+    $overviewSelector = "template=overview, status!=hidden, status!=unpublished, sort=sort";
+
+    $prev = $page->prev($childSelector);
+    $next = $page->next($childSelector);
+
+
+   // for navigating to next block: if current page has no next sibling and is of template summary, link to next overview sibling of its parent
+    if (
+      (!$next || !$next->id) &&
+      $page->template->name === 'summary' &&
+      $page->parent() &&
+      $page->parent()->template->name === 'overview'
+    ) {
+      $nextOverview = $page->parent()->next($overviewSelector);
+
+      if ($nextOverview && $nextOverview->id) {
+        $next = $nextOverview;
+      }
+    }
+
+   // for navigating to prev block, just mirror the next code and for template name, use: chapter. but: if it should be navigated to summary of prev block instead of overview, code must be more complex
 
     $nav = new \StdClass();
     $nav->prev = ($prev && $prev->id) ? self::createRoute($prev) : null;
