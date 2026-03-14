@@ -20,9 +20,9 @@ const props = withDefaults(defineProps<Props>(), {
 // const emit = defineEmits<{
 //   (e: 'image-width', width: number): void
 // }>()
-// const imageElement = ref<HTMLImageElement | null>(null)
 // // const imageWidth = ref(0)
 
+const imageElement = ref<HTMLImageElement | null>(null)
 const isLoaded = ref(false)
 
 const isOverview = computed(() => props.mode === 'overview')
@@ -59,6 +59,10 @@ const srcset = computed(() => {
     .join(',')
 })
 
+const imgSrc = computed(() => {
+  return props.image?.urls?.[0]?.url ?? ''
+})
+
 // const text = computed(() => {
 //   return {
 //     license: 'Lizenz:  ',
@@ -77,6 +81,13 @@ const onLoaded = () => {
   isLoaded.value = true
 }
 
+const syncLoadedState = () => {
+  // check actual DOM element if its there, no reference with src > cleaner
+  const img = imageElement.value
+  isLoaded.value = !!(img && img.complete && img.naturalWidth > 0) // if img already finished loading, mark it loaded immediately. syntax: img.complete && img.naturalWidth > 0 are native brwoser props and mean its not broken cuz width is larger than 0 and the browser is done loading (complete).
+  // double negation to convert to boolean: only true if img exists, otherwise false
+}
+
 // const imageWidthStyle = computed(() => {
 //   if (!isContent.value) return {}
 //   // if (imageWidth.value) {
@@ -85,14 +96,21 @@ const onLoaded = () => {
 //   return imageWidth.value ? { '--media-w': `${imageWidth.value}px` } : {}
 // })
 
-// onMounted(async () => {
-//   if (!isContent.value) return
-//   await nextTick()
-//   if (imageElement.value?.complete && imageElement.value.naturalWidth > 0) {
-//     // image already loaded (cached / SSR); run handler manually
-//     onImageLoad()
-//   }
-// })
+onMounted(() => {
+  syncLoadedState() // if image is already loaded (e.g. from cache), set loaded state to true immediately. if not, it will be set in the onLoad handler. this is necessary to avoid issues with SSR and hydration where the image might already be loaded before the onLoad event can fire, which would cause the component to never update to the loaded state.
+  //   if (!isContent.value) return
+
+  //   if (imageElement.value?.complete && imageElement.value.naturalWidth > 0) {
+  //     // image already loaded (cached / SSR); run handler manually
+  //     onImageLoad()
+  //   }
+})
+
+watch(imageElement, () => {
+  // if image ref in the DOM changes (= new image), set loaded to false and check if this image is already loaded (e.g. from cache) if so, update the opacity accordingly. if not, image gets loaded on @load and then changes its opacity. this makes sure that everything is visible, e.g. when the same component instance is reused for a different image, e.g. in a slider or when the image source changes.
+  isLoaded.value = false // make sure to start every instance with opacity 0. prevent state inheritance.
+  syncLoadedState()
+})
 </script>
 
 <template>
@@ -101,6 +119,7 @@ const onLoaded = () => {
     <img
       v-if="props.image && props.image.resized"
       ref="imageElement"
+      :src="imgSrc"
       :srcset="srcset"
       :sizes="sizes"
       :loading="props.loading"
@@ -112,7 +131,7 @@ const onLoaded = () => {
     <img
       v-else-if="props.image && !props.image.resized"
       ref="imageElement"
-      :src="props.image.urls[0].url"
+      :src="imgSrc"
       :loading="props.loading"
       :alt="props.image.alt_text"
       :aria-describedby="longDescId"
@@ -146,7 +165,6 @@ const onLoaded = () => {
   height: 100%;
   min-height: 0; // allow image to shrink within the grid
   // note: no gap to avoid white area bc images are used without caption sometimes
-  opacity: 0;
 
   img {
     display: block;
@@ -155,13 +173,16 @@ const onLoaded = () => {
     height: auto;
     min-height: 0;
     background-color: var(--white);
+    opacity: 0;
+    transition: opacity var(--xshort) ease-in;
 
     // object-fit: cover;
   }
 
   &.is-loaded {
-    opacity: 1;
-    transition: opacity var(--xshort) ease-in;
+    img {
+      opacity: 1;
+    }
   }
 
   // &.is-portrait {
