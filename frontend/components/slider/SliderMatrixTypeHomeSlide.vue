@@ -38,12 +38,12 @@ const sizes = computed(() => {
           :text="props.item.text"
           class="text"
         />
+        <CategoryList
+          v-if="showCategories"
+          :categories="props.item.categories"
+          class="categories"
+        />
       </NuxtLink>
-      <CategoryList
-        v-if="showCategories"
-        :categories="props.item.categories"
-        class="categories"
-      />
     </section>
   </div>
 </template>
@@ -55,12 +55,24 @@ const sizes = computed(() => {
   // implicitly create two rows, one for the image and one for the content
   grid-template-rows: minmax(0, 1fr) auto; // content gets space as needed, image gets the rest;
   height: 100%;
-  padding: 0 var(--gutter-l);
+  padding: 1rem var(--gutter-l) 0 var(--gutter-l); // set small padding-top to make focus visible
   overflow: hidden;
 
   :deep(img) {
     height: 100%;
     object-fit: cover;
+  }
+
+  // use explicit hover and focus style shere rather than the mixins to be able to use the pseudo-classes on image and text separately
+  &:hover,
+  &:focus-within {
+    .image {
+      box-shadow: var(--shadow) var(--highlight-color);
+    }
+
+    .link {
+      text-shadow: var(--shadow) var(--highlight-color);
+    }
   }
 }
 
@@ -72,6 +84,14 @@ const sizes = computed(() => {
   @media (min-width: $tablet) {
     min-height: calc(var(--blank-line) * 9);
   }
+}
+
+.link {
+  @include link-reset;
+  @include focus-default($color: transparent);
+
+  display: block;
+  width: 100%;
 }
 
 .header {
