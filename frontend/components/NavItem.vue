@@ -61,37 +61,52 @@ const closeNav = () => {
 }
 
 // use custom logic to determine active parent items, since the default router-link-active class doesn't work well with nested navigation and dynamic routes. this way we can also make sure that parent items of dynamic routes like /category/werkzeuge/ are highlighted when on a subpage like /category/werkzeuge/some-tool/
-const itemPath = computed(() => {
+const normalizedItemTarget = computed(() => {
   const url = props.item.meta.url
 
   if (!url) return null
   // normalize path of url by removing the trailing slash for better comparison, but keep it for root path
   // case a: string
   if (typeof url === 'string') {
-    return url.replace(/\/$/, '') || '/'
+    const [path, hash = ''] = url.split('#')
+    return {
+      path: (path || '').replace(/\/$/, '') || '/',
+      hash: hash ? `#${hash}` : '',
+    }
   }
 
   // case b: object with path property
-  if (
-    typeof url === 'object' &&
-    'path' in url &&
-    typeof url.path === 'string'
-  ) {
-    return url.path.replace(/\/$/, '') || '/'
+  if (typeof url === 'object') {
+    const path =
+      'path' in url && typeof url.path === 'string'
+        ? url.path.replace(/\/$/, '') || '/'
+        : '/'
+    const hash = 'hash' in url && typeof url.hash === 'string' ? url.hash : ''
+
+    return { path, hash }
   }
   return null
 })
 
 const isActiveParent = computed(() => {
   // for styling: if it's a top level item or doesn't have a valid path, it can't be an active parent
-  if (isTopLevel.value || !itemPath.value) return false
+  if (isTopLevel.value || !normalizedItemTarget.value) return false
   // normalize the current route, too to make comparing possible
   const currentPath = route.path.replace(/\/$/, '') || '/'
+  const currentHash = route.hash || ''
+
+  const { path, hash } = normalizedItemTarget.value
+
+  // exact hash link match, e.g. /blog#alle
+  if (hash) {
+    return currentPath === path && currentHash === hash
+  }
+
   return (
     // if items match exactly
-    currentPath === itemPath.value ||
+    currentPath === path ||
     // or if the current path starts with the item path + a slash, to prevent false positives for similar paths like /about and /about-us
-    currentPath.startsWith(itemPath.value + '/')
+    currentPath.startsWith(path + '/')
   )
 })
 </script>
