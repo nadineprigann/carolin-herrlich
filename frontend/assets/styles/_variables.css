@@ -1,5 +1,7 @@
 :root {
   /* Colors */
+
+  /* color definitions */
   --black: rgb(0 0 0);
   --black-70: rgb(0 0 0 / 30%);
   --white: rgb(255 255 255);
@@ -7,12 +9,15 @@
   --white-90: rgb(255 255 255 / 90%);
   --grey: #f4f3ef;
   --yellow: #fcc100;
-  --link-color: rgb(0 0 255);
-  --focus-color: rgb(0 140 255 / 20%);
-  --selection-color: var(--focus-color);
+  --red: rgb(255 0 0);
+
+  /* functional variables used with color vars */
+  --link-color: var(--black);
   --highlight-color: var(--yellow);
+  --focus-color: var(--highlight-color);
+  --selection-color: var(--focus-color);
   --disabled-color: var(--black-70);
-  --error-color: rgb(255 0 0);
+  --error-color: var(--red);
 
   /* Effects */
   --bg-blur: 20px;
