@@ -65,7 +65,7 @@ const isClicked = ref(false) // to track if submit button has been clicked
 
 const classes = computed(() => {
   return {
-    submit: ['send', isClicked.value ? 'is-clicked' : ''],
+    submit: ['submit', isClicked.value ? 'is-clicked' : ''],
   }
 })
 
@@ -253,7 +253,7 @@ htmlOverflowLock(isVisible)
         />
       </section>
       <section class="controls">
-        <button type="submit" class="apply">
+        <button type="submit" class="submit">
           <span v-if="isClicked" class="label" v-text="labels.sending" />
           <span v-else class="label" v-text="labels.submit" />
         </button>
@@ -290,9 +290,15 @@ htmlOverflowLock(isVisible)
   display: none;
 }
 
-.send,
+.submit,
 .reset {
   @include button-default;
+  @include button-padding(
+    $top: 0.4em,
+    $bottom: var(--spacing-xs),
+    $left: var(--spacing-l),
+    $right: var(--spacing-l)
+  );
 }
 
 .description {
@@ -359,18 +365,7 @@ htmlOverflowLock(isVisible)
   max-width: 80vw;
 }
 
-.apply,
-.reset {
-  @include button-default;
-  @include button-padding(
-    $top: 0.4em,
-    $bottom: var(--spacing-xs),
-    $left: var(--spacing-l),
-    $right: var(--spacing-l)
-  );
-}
-
-.apply {
+.submit {
   margin-right: var(--gutter-s);
 }
 

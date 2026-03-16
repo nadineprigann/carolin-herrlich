@@ -236,12 +236,6 @@ htmlOverflowLock(isVisible)
   backdrop-filter: blur(var(--bg-blur));
 }
 
-.close,
-.apply,
-.back {
-  @include button-reset;
-}
-
 .close {
   position: relative;
   z-index: var(--xxl-overlay);

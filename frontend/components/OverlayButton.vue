@@ -34,7 +34,12 @@ const buttonLabel = computed(() => {
 
 <template>
   <!-- TODO: temporarily opens overlay to check-out via mail. later: navigate to shop detail of item this button was used (prop!) -->
-  <button class="button" :class="buttonClass" @click="openOverlay">
+  <button
+    type="button "
+    class="button"
+    :class="buttonClass"
+    @click="openOverlay"
+  >
     <span class="label" v-text="buttonLabel" />
   </button>
 </template>

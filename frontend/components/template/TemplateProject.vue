@@ -78,10 +78,6 @@ const scrollTo = () => {
   }
 }
 
-.button {
-  @include button-reset;
-}
-
 .header {
   @include fs-medium;
 

@@ -53,7 +53,6 @@ const props = defineProps<{
 }
 
 .button {
-  @include button-reset;
   @include button-padding(
     $top: 0,
     $bottom: 0,

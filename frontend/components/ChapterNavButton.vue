@@ -64,7 +64,6 @@ const navigate = () => {
 
 <style lang="scss" scoped>
 .chapter-nav-button {
-  @include button-reset;
   @include highlight-element($radius: 3rem);
   @include button-padding(
     $top: 0.4em,

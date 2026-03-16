@@ -176,7 +176,6 @@ onUnmounted(stopAutoplay)
 .next {
   // @extend %tap-highlight-reset;
   // @include focus-default($color: transparent);
-  @include button-reset;
 
   position: absolute;
 
