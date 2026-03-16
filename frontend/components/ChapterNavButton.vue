@@ -88,6 +88,8 @@ const navigate = () => {
 }
 
 .title {
+  @include ff-sans;
+
   display: flex;
   align-items: center;
   min-width: 0; // to allow the title to shrink and prevent overflow of the button, especially for long titles, in combination with overflow-wrap
