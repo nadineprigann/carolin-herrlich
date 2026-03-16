@@ -101,13 +101,23 @@ watch(
     > -->
     <!-- TODO: if no children, use disabled state. necessary to show at all times for consistent layout on overview page (with cover image). if rendered only when content is there, in-depth moves up and its content is flashed. OR: dynamically with refs. -->
     <section :class="classes.context">
-      <button type="button" class="header" @click="toggleContext">
+      <button
+        type="button"
+        class="header"
+        :disabled="!hasContext"
+        @click="toggleContext"
+      >
         <FieldText element="h4" class="label" :text="labels.context" />
       </button>
       <NumberRowList v-if="showContext" :table="relatedItem.context" />
     </section>
     <section :class="classes.depth">
-      <button type="button" class="header" @click="toggleDepth">
+      <button
+        type="button"
+        class="header"
+        :disabled="!hasInDepth"
+        @click="toggleDepth"
+      >
         <FieldText element="h4" class="label" :text="labels.in_depth" />
       </button>
       <InDepthList v-if="showInDepth" :items="relatedItem.in_depth" />
@@ -148,6 +158,11 @@ watch(
     color: var(--disabled-color);
     cursor: default;
     border-color: var(--disabled-color);
+
+    // reset hover styles when disabled. focus styles do not need to be reset cuz button is disabled
+    &:hover {
+      text-shadow: none;
+    }
   }
 
   @media (min-width: $medium) {

@@ -61,6 +61,8 @@ const linkTo = computed(() => {
 
 .link {
   @include link-reset;
+  @include text-hover;
+  @include text-focus;
 
   display: inline-block;
   width: 100%;

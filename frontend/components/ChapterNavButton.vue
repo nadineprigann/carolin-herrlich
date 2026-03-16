@@ -71,6 +71,8 @@ const navigate = () => {
     $left: var(--spacing-l),
     $right: var(--spacing-l)
   );
+  @include hover-default;
+  @include focus-default;
 
   max-width: 100%;
 

@@ -161,6 +161,8 @@ onUnmounted(stopAutoplay)
   height: 100%;
 
   .is-content & {
+    @include focus-default;
+
     display: flex;
     align-items: stretch;
     overflow-x: auto;
@@ -174,8 +176,13 @@ onUnmounted(stopAutoplay)
 
 .prev,
 .next {
-  // @extend %tap-highlight-reset;
-  // @include focus-default($color: transparent);
+  @include focus-default;
+  @include button-padding(
+    $top: 0.1rem,
+    $bottom: 0.1rem,
+    $left: 0.1rem,
+    $right: 0.1rem
+  );
 
   position: absolute;
 
@@ -188,6 +195,7 @@ onUnmounted(stopAutoplay)
 
   z-index: var(--m-upper-content);
   cursor: pointer;
+  border-radius: 1rem;
   transform: translateY(-50%);
 
   &.has-single-slide {

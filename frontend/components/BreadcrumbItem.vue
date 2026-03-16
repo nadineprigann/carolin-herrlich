@@ -174,6 +174,8 @@ onBeforeRouteLeave(() => {
 
 .link {
   @include link-reset;
+  @include text-focus;
+  @include text-hover;
 
   display: flex;
 }

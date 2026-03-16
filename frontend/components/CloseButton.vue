@@ -14,6 +14,9 @@ const ariaLabel = computed(() => `${props.overlayTitle} schließen`)
 
 <style lang="scss" scoped>
 .close {
+  @include text-focus;
+  @include text-hover;
+
   position: relative;
   z-index: var(--xxl-overlay);
   display: flex;

@@ -21,6 +21,7 @@
 
   /* Effects */
   --bg-blur: 20px;
+  --shadow: 1px 1px 10px;
 
   /* Unicode Icons */
   --s-close: '\2212';

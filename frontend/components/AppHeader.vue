@@ -44,6 +44,9 @@ const toggleNavigation = () => {
 }
 
 .button {
+  @include text-hover;
+  @include text-focus;
+
   position: absolute;
   top: 0;
   right: 0;

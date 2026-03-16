@@ -65,7 +65,14 @@ const closeNav = () => {
       @click="toggleSubNav"
       v-text="props.item.meta.title"
     />
-    <NuxtLink v-else :to="props.item.meta.url" class="link" @click="closeNav">
+    <NuxtLink
+      v-else
+      :to="props.item.meta.url"
+      class="link"
+      active-class="is-active"
+      exact-active-class="is-current"
+      @click="closeNav"
+    >
       <span class="link-title" v-text="props.item.meta.title" />
     </NuxtLink>
     <!-- use classic ul tag for sub-navigation to prevent recursive component issues. This happens even though I'm making sure to only fetch one level deep from the backend. Dedicated components don't work either.  -->
@@ -109,14 +116,18 @@ const closeNav = () => {
   }
 }
 
-.link {
-  @include link-default;
-}
-
 .title,
 .link-title {
   @include ff-sans;
   @include fs-medium;
+}
+
+.link {
+  @include link-reset;
+  @include text-focus;
+  @include text-hover;
+
+  // &.is-active {}
 }
 
 .title {
