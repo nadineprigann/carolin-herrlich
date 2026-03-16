@@ -6,13 +6,18 @@ const props = defineProps<{
 
 <template>
   <li class="category-item">
-    <FieldText element="h5" class="title" :text="props.category.fields.title" />
+    <button type="button" class="button" disabled>
+      <FieldText
+        element="h5"
+        class="title"
+        :text="props.category.fields.title"
+      />
+    </button>
   </li>
 </template>
 
 <style lang="scss" scoped>
 .category-item {
-  // @include link-default;
   @include button-default;
 
   &:not(:last-of-type) {

@@ -25,5 +25,9 @@ const handleNoteClick = (event: MouseEvent) => {
 <style lang="scss" scoped>
 .field-matrix-type-text {
   @include center-content;
+
+  a {
+    @include link-default;
+  }
 }
 </style>

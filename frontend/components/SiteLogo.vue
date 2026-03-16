@@ -110,21 +110,30 @@
 <style lang="scss" scoped>
 .site-logo {
   display: flex;
-  width: 4.5em;
+  width: 5em;
 
   @media (min-width: $tablet) {
-    width: 7em;
+    width: 7.5em;
   }
 
   @media (min-width: $desktop) {
-    width: 10em;
+    width: 10.5em;
   }
 }
 
 .link {
-  @include link-default;
+  @include link-reset;
+  @include hover-default;
+  @include focus-default;
+  @include button-padding(
+    $top: 0.1em,
+    $right: 0.2em,
+    $bottom: 0.1em,
+    $left: 0.2em
+  );
 
   display: inline-block;
+  border-radius: 1rem;
 }
 
 .cls-4 {

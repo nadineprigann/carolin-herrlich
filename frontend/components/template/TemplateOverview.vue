@@ -90,9 +90,9 @@ onDeactivated(() => {
       <BreadcrumbList :breadcrumbs="breadcrumbs" class="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
       <section v-if="fields.text" :class="classes.info">
-        <div class="header" @click="toggleInfo">
+        <button type="button" class="header" @click="toggleInfo">
           <FieldText element="h4" class="label" :text="labels.info" />
-        </div>
+        </button>
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
       <ImageSlider
@@ -270,15 +270,20 @@ onDeactivated(() => {
 
 .header {
   @include toggle-icon;
+  @include text-focus;
+  @include text-hover;
 
+  width: 100%;
   padding-bottom: var(--accordion-title-spacing);
   margin-bottom: var(--gutter-s);
   border-bottom: 1px dashed var(--black);
 }
 
 .link {
-  @include link-default;
+  @include link-reset;
   @include highlight-element;
+  @include hover-default;
+  @include focus-default;
   @include button-padding(
     $top: var(--gutter-base),
     $bottom: var(--gutter-base),

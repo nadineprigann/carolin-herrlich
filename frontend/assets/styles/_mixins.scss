@@ -2,10 +2,30 @@
 // - Use mixins when you want to include a set of styles with parameters (e.g., colors, sizes) that can be customized for each use.
 // - Use placeholders when you want to define a set of styles that can be reused without parameters. Placeholders also consolidate mutually-shared code. see: https://medium.com/@linker21/scss-placeholders-vs-mixins-fe79b9dbb6d5
 
+// use dedicated mixins for text and default element interactions to be able to style them separately
 @mixin focus-default($color: var(--focus-color)) {
   &:focus-visible {
-    background-color: $color;
     outline: none;
+    box-shadow: var(--shadow) $color;
+  }
+}
+
+@mixin text-focus($color: var(--focus-color)) {
+  &:focus-visible {
+    text-shadow: var(--shadow) $color;
+    outline: none;
+  }
+}
+
+@mixin hover-default($color: var(--highlight-color)) {
+  &:hover {
+    box-shadow: var(--shadow) $color;
+  }
+}
+
+@mixin text-hover($color: var(--highlight-color)) {
+  &:hover {
+    text-shadow: var(--shadow) $color;
   }
 }
 
@@ -22,6 +42,7 @@
 @mixin input-default {
   @include input-reset;
   @include focus-default;
+  @include hover-default;
   @include ff-sans;
 
   padding: calc(var(--gutter-base) * 0.5);
@@ -58,23 +79,22 @@
 }
 
 @mixin link-reset {
-  @include focus-default;
-
   color: inherit;
-  text-decoration: none;
+  text-decoration-color: transparent;
 }
 
-@mixin link-default($color: var(--link-color)) {
+@mixin link-default(
+  $color: var(--link-color),
+  $decoration-style: solid,
+  $decoration-color: var(--highlight-color)
+) {
   @include link-reset;
+  @include text-focus;
+  @include text-hover;
 
   color: $color;
-  text-decoration: underline;
-
-  // text-decoration-color: #fcc000;
-
-  // &:hover {
-  //   text-shadow: 0 4px 4px 0 #fcc000;
-  // }
+  text-decoration-style: $decoration-style;
+  text-decoration-color: $decoration-color;
 
   // &:active {}
   // &:visited {}

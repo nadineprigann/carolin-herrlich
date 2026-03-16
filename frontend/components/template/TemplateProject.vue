@@ -21,7 +21,7 @@ const scrollTo = () => {
 </script>
 
 <template>
-  <main class="template-project">
+  <main class="template-project" tabindex="-1">
     <section class="slideshow">
       <BreadcrumbList :breadcrumbs="breadcrumbs" />
       <FieldText element="h2" :text="fields.title" class="title" />
@@ -78,10 +78,6 @@ const scrollTo = () => {
   }
 }
 
-.button {
-  @include button-reset;
-}
-
 .header {
   @include fs-medium;
 
@@ -109,8 +105,12 @@ const scrollTo = () => {
 
 .content {
   min-height: 100%;
-  padding-bottom: var(--page-end);
   margin-top: var(--blank-line);
   scroll-snap-align: start;
+}
+
+.button {
+  @include text-hover;
+  @include text-focus;
 }
 </style>

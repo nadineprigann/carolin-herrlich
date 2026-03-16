@@ -11,7 +11,7 @@ const toggleNavigation = () => {
   <header ref="header" class="app-header">
     <!-- <h1>{{ defaults.appTitle }}</h1> -->
     <SiteLogo />
-    <button class="button" @click="toggleNavigation">
+    <button type="button" class="button" @click="toggleNavigation">
       <span v-if="layout.openOverlay.navigation" class="close" />
       <span v-else class="open" />
     </button>
@@ -44,7 +44,8 @@ const toggleNavigation = () => {
 }
 
 .button {
-  @include button-reset;
+  @include text-hover;
+  @include text-focus;
 
   position: absolute;
   top: 0;

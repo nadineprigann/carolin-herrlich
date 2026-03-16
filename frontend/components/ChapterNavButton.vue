@@ -64,7 +64,6 @@ const navigate = () => {
 
 <style lang="scss" scoped>
 .chapter-nav-button {
-  @include button-reset;
   @include highlight-element($radius: 3rem);
   @include button-padding(
     $top: 0.4em,
@@ -72,6 +71,8 @@ const navigate = () => {
     $left: var(--spacing-l),
     $right: var(--spacing-l)
   );
+  @include hover-default;
+  @include focus-default;
 
   max-width: 100%;
 

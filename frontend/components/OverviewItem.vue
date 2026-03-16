@@ -92,7 +92,9 @@ function resetCurrentItem() {
 }
 
 .link {
-  @include link-default;
+  @include link-reset;
+  @include hover-default;
+  @include focus-default;
   @include button-padding(
     $top: var(--gutter-base),
     $bottom: var(--gutter-base),

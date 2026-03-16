@@ -143,8 +143,6 @@ htmlOverflowLock(isVisible)
 }
 
 .button {
-  @include button-reset;
-
   &:first-of-type {
     margin-right: calc(var(--spacing-m) * 2);
   }

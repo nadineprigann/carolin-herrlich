@@ -271,8 +271,14 @@ watch(imageElement, () => {
   // }
 
   &.is-hidden {
-    @include visually-hidden;
+    display: none; // completely hide to make sure focus is not catching them
   }
+}
+
+.link {
+  @include link-reset;
+  @include text-focus;
+  @include text-hover;
 }
 
 .long-description {

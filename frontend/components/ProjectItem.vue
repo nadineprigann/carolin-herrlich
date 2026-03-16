@@ -47,7 +47,9 @@ const sizes = computed(() => {
 }
 
 .link {
-  @include link-default;
+  @include link-reset;
+  @include text-hover;
+  @include text-focus;
 
   display: block;
   width: 100%;
