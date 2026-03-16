@@ -23,7 +23,7 @@ const toggleAccordion = () => {
 
 <template>
   <div v-if="showAccordion" :class="accordionClass">
-    <div class="header" @click="toggleAccordion">
+    <button type="button" class="header" @click="toggleAccordion">
       <FieldText
         element="h4"
         :text="props.item.accordion.title"
@@ -35,7 +35,7 @@ const toggleAccordion = () => {
         :text="props.item.accordion.subtitle"
         class="subtitle"
       />
-    </div>
+    </button>
     <FieldMatrix
       v-if="accordionVisible"
       :items="props.item.accordion.content"
@@ -54,9 +54,12 @@ const toggleAccordion = () => {
 
 .header {
   @include toggle-icon;
+  @include text-focus;
+  @include text-hover;
 
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
   padding-bottom: var(--accordion-title-spacing);
   margin-bottom: var(--gutter-s);
   border-bottom: 1px dashed var(--black);
