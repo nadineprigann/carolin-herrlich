@@ -15,13 +15,15 @@ const { fields, breadcrumbs } = toRefs(props.data)
 <template>
   <main class="template-event">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
-    <FieldText
-      v-if="fields.subtitle"
-      element="h3"
-      :text="fields.subtitle"
-      class="subtitle"
-    />
-    <FieldText element="h2" :text="fields.title" class="title" />
+    <div class="header">
+      <FieldText
+        v-if="fields.subtitle"
+        element="h3"
+        :text="fields.subtitle"
+        class="subtitle"
+      />
+      <FieldText element="h2" :text="fields.title" class="title" />
+    </div>
     <FieldMatrix :items="fields.content" />
     <section class="sign-up">
       <OverlayButton
@@ -37,16 +39,27 @@ const { fields, breadcrumbs } = toRefs(props.data)
 </template>
 
 <style lang="scss" scoped>
-// .template-event {}
+.template-event {
+  padding: var(--page-spacing);
+}
+
 .title,
 .subtitle,
 .sign-up {
   @include center-content;
 }
 
+.header {
+  margin-bottom: calc(var(--blank-line) * 2);
+}
+
 .title,
 .subtitle {
   @include ff-sans;
   @include fs-xlarge;
+}
+
+.sign-up {
+  margin-bottom: var(--page-end);
 }
 </style>

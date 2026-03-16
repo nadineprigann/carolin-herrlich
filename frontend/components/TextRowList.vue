@@ -17,5 +17,7 @@ const props = defineProps<{
 <style lang="scss" scoped>
 .text-row-list {
   @include list-reset;
+
+  padding-bottom: var(--page-end);
 }
 </style>
