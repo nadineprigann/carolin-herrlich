@@ -123,7 +123,6 @@
 
 .link {
   @include link-reset;
-  @include hover-default;
   @include focus-default;
   @include button-padding(
     $top: 0.1em,
