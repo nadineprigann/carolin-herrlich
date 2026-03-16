@@ -17,16 +17,16 @@ const blogChildren = [
     },
     path: '/blog#alle',
   },
-  {
-    name: 10002,
-    meta: {
-      id: 10002,
-      title: 'Archiv',
-      url: { path: '/blog', hash: '#archiv' },
-      template: 'blog-archive',
-    },
-    path: '/blog#archiv',
-  },
+  // {
+  //   name: 10002,
+  //   meta: {
+  //     id: 10002,
+  //     title: 'Archiv',
+  //     url: { path: '/blog', hash: '#archiv' },
+  //     template: 'blog-archive',
+  //   },
+  //   path: '/blog#archiv',
+  // },
 ]
 
 const labels = reactive({
