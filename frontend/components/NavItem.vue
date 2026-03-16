@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import { useRoute } from 'vue-router'
 const breakpointsStore = useBreakpointsStore()
 const { isMedium } = storeToRefs(breakpointsStore)
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
+
+const route = useRoute()
 
 const emit = defineEmits(['toggle-sub-nav'])
 
@@ -32,6 +35,7 @@ const classes = computed(() => {
       isTopLevel.value ? 'nav-item' : 'sub-nav-item',
       showSubNav.value ? 'is-open' : '',
     ],
+    link: ['link', isActiveParent.value ? 'is-active' : ''],
   }
 })
 
@@ -55,6 +59,41 @@ const showSubNav = computed(() => {
 const closeNav = () => {
   layout.value.openOverlay.navigation = false
 }
+
+// use custom logic to determine active parent items, since the default router-link-active class doesn't work well with nested navigation and dynamic routes. this way we can also make sure that parent items of dynamic routes like /category/werkzeuge/ are highlighted when on a subpage like /category/werkzeuge/some-tool/
+const itemPath = computed(() => {
+  const url = props.item.meta.url
+
+  if (!url) return null
+  // normalize path of url by removing the trailing slash for better comparison, but keep it for root path
+  // case a: string
+  if (typeof url === 'string') {
+    return url.replace(/\/$/, '') || '/'
+  }
+
+  // case b: object with path property
+  if (
+    typeof url === 'object' &&
+    'path' in url &&
+    typeof url.path === 'string'
+  ) {
+    return url.path.replace(/\/$/, '') || '/'
+  }
+  return null
+})
+
+const isActiveParent = computed(() => {
+  // for styling: if it's a top level item or doesn't have a valid path, it can't be an active parent
+  if (isTopLevel.value || !itemPath.value) return false
+  // normalize the current route, too to make comparing possible
+  const currentPath = route.path.replace(/\/$/, '') || '/'
+  return (
+    // if items match exactly
+    currentPath === itemPath.value ||
+    // or if the current path starts with the item path + a slash, to prevent false positives for similar paths like /about and /about-us
+    currentPath.startsWith(itemPath.value + '/')
+  )
+})
 </script>
 
 <template>
@@ -68,9 +107,7 @@ const closeNav = () => {
     <NuxtLink
       v-else
       :to="props.item.meta.url"
-      class="link"
-      active-class="is-active"
-      exact-active-class="is-current"
+      :class="classes.link"
       @click="closeNav"
     >
       <span class="link-title" v-text="props.item.meta.title" />
@@ -127,7 +164,19 @@ const closeNav = () => {
   @include text-focus;
   @include text-hover;
 
-  // &.is-active {}
+  position: relative;
+
+  &.is-active {
+    &::before {
+      position: absolute;
+      display: inline;
+
+      //margin-top: 0.1em; // to vertically center the bullet with the text, since the bullet is set to 1em, which is the line height of the text. adjust as needed for different font sizes or if line height changes
+      margin-left: calc(var(--spacing-s) * -1);
+      text-shadow: var(--shadow) var(--highlight-color);
+      content: '\2022';
+    }
+  }
 }
 
 .title {
