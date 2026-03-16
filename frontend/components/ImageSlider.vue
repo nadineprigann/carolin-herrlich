@@ -101,6 +101,10 @@ onUnmounted(stopAutoplay)
 
 <template>
   <section v-if="slideCount" class="image-slider" :class="classes.component">
+    <section v-if="props.controls" class="controls">
+      <button type="button" :class="classes.prev" @click="prev" />
+      <button type="button" :class="classes.next" @click="next" />
+    </section>
     <ul class="slides">
       <transition v-if="isOverview" name="t-slide">
         <ImageSlide
@@ -127,10 +131,6 @@ onUnmounted(stopAutoplay)
         :caption="props.caption"
       />
     </ul>
-    <section v-if="props.controls" class="controls">
-      <button type="button" :class="classes.prev" @click="prev" />
-      <button type="button" :class="classes.next" @click="next" />
-    </section>
   </section>
 </template>
 
