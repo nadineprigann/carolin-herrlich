@@ -140,7 +140,7 @@ onUnmounted(stopAutoplay)
 
 <style lang="scss" scoped>
 .image-slider {
-  position: relative; // for absolute positioning of slides during transition
+  position: relative; // for absolute positioning of slides during transition + controls
 
   &.is-overview {
     @include t-slide($duration: var(--long), $delay: var(--medium));
@@ -174,6 +174,24 @@ onUnmounted(stopAutoplay)
   }
 }
 
+.controls {
+  // when using background images with ::before
+  position: absolute;
+  top: calc(
+    50% - calc(calc(var(--gutter-base) * 5))
+  ); // subtract grid-gap of image to visually align controls more with img center. more elegant: fetch img height and set this as height of this container.
+
+  z-index: var(--m-upper-content);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  transform: translateY(-50%);
+
+  // when using cursor images
+  // width: 50%;
+  // height: 100%;
+}
+
 .prev,
 .next {
   @include focus-default;
@@ -184,19 +202,8 @@ onUnmounted(stopAutoplay)
     $right: 0.1rem
   );
 
-  position: absolute;
-
-  // when using background images with ::before
-  top: 50%;
-
-  // when using cursor images
-  // width: 50%;
-  // height: 100%;
-
-  z-index: var(--m-upper-content);
   cursor: pointer;
   border-radius: 1rem;
-  transform: translateY(-50%);
 
   &.has-single-slide {
     display: none;
