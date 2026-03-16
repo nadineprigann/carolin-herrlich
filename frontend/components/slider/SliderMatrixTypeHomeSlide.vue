@@ -49,6 +49,14 @@ const sizes = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.link {
+  @include link-reset;
+  @include focus-default($color: transparent);
+
+  display: block;
+  width: 100%;
+}
+
 .slider-matrix-type-home-slide {
   display: grid;
 
@@ -84,14 +92,6 @@ const sizes = computed(() => {
   @media (min-width: $tablet) {
     min-height: calc(var(--blank-line) * 9);
   }
-}
-
-.link {
-  @include link-reset;
-  @include focus-default($color: transparent);
-
-  display: block;
-  width: 100%;
 }
 
 .header {
