@@ -8,22 +8,15 @@
         height="155"
         viewBox="0 0 644 155"
       >
+        <title id="site-logo-title">Herrliche Permakultur</title>
+        <desc id="site-logo-desc">
+          Copyright © 2025 Claudia Große Wiesmann. Licensed under CC BY-NC 4.0.
+        </desc>
         <metadata>
-          <dc:creator>Claudia Große Wiesmann</dc:creator>
-          <dc:rights
-            >Copyright 2025, Claudia Große Wiesmann. Lizensiert unter
-            <a
-              href="https://creativecommons.org/licenses/by-nd/4.0/"
-              rel="noopener"
-              target="blank"
-              >CC–BY–NC</a
-            >. Alle Rechte vorbehalten.</dc:rights
-          >
-          <dc:date>25/02/2025</dc:date>
-          <dc:format>image/svg+xml</dc:format>
+          Copyright © 2025 Claudia Große Wiesmann. License: CC BY-NC 4.0.
+          https://creativecommons.org/licenses/by-nc/4.0/. Format:
+          image/svg+xml. Date: 2025-02-25.
         </metadata>
-
-        <title id="logoTitle">Herrliche Permakultur</title>
         <defs>
           <path
             id="a"

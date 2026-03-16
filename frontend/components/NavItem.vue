@@ -186,7 +186,7 @@ const isActiveParent = computed(() => {
       position: absolute;
       display: inline;
 
-      //margin-top: 0.1em; // to vertically center the bullet with the text, since the bullet is set to 1em, which is the line height of the text. adjust as needed for different font sizes or if line height changes
+      // margin-top: 0.1em; // to vertically center the bullet with the text, since the bullet is set to 1em, which is the line height of the text. adjust as needed for different font sizes or if line height changes
       margin-left: calc(var(--spacing-s) * -1);
       text-shadow: var(--shadow) var(--highlight-color);
       content: '\2022';

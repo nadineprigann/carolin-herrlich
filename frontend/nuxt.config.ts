@@ -16,27 +16,23 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
 
-    // head: {
-    //   // Place icon files in /public directory
-    //   link: [
-    //     {
-    //       // Size: 32x32px
-    //       rel: 'icon',
-    //       href: '/favicon.ico',
-    //       sizes: 'any',
-    //     },
-    //     {
-    //       rel: 'icon',
-    //       href: '/favicon.svg',
-    //       type: 'image/svg+xml',
-    //     },
-    //     {
-    //       // Size: 180x180px
-    //       rel: 'apple-touch-icon',
-    //       href: '/apple-touch-icon.png',
-    //     },
-    //   ],
-    // },
+    head: {
+      // Place icon files in /public directory
+      link: [
+        // first choice: SVG favicon for modern browsers
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        // fallback for older browsers: PNG icons in well-supported sizes
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '96x96',
+          href: '/favicon-96x96.png',
+        },
+        { rel: 'alternate icon', href: '/favicon.ico' },
+        // Size: 180x180px
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
+    },
   },
 
   modules: ['@pinia/nuxt', '@formkit/nuxt'],
