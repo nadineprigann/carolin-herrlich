@@ -103,6 +103,7 @@ useHead({
 })
 
 // https://nuxt.com/docs/4.x/api/composables/use-seo-meta
+// check via https://www.opengraph.xyz/
 useSeoMeta({
   title: () => fullTitle.value, // let template apply formatting
   description: () => fields.meta_description, //  () => computed getter to make it reactive, otherwise it would not update on language change
