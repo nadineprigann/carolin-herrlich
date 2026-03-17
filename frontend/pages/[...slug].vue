@@ -109,6 +109,8 @@ useSeoMeta({
   ogTitle: () => fullTitle.value,
   ogDescription: () => fields.meta_description,
   ogType: 'website',
+  ogImage: `${runtimeConfig.public.baseUrl}/sharing-image.jpg`, // always placed in /public
+  twitterCard: 'summary_large_image',
 })
 </script>
 
