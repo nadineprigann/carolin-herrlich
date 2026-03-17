@@ -8,7 +8,9 @@
         height="155"
         viewBox="0 0 644 155"
       >
-        <title id="site-logo-title">Herrliche Permakultur</title>
+        <title id="site-logo-title">
+          Carolin Herrlich · Herrliche Permakultur
+        </title>
         <desc id="site-logo-desc">
           Copyright © 2025 Claudia Große Wiesmann. Licensed under CC BY-NC 4.0.
         </desc>

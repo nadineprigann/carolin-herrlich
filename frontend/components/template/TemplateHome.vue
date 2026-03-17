@@ -1,4 +1,10 @@
 <script lang="ts" setup>
+const config = useRuntimeConfig()
+const defaultsStore = useDefaultsStore()
+const { defaults } = storeToRefs(defaultsStore)
+const languageStore = useLanguageStore()
+const { isoCode } = storeToRefs(languageStore)
+
 interface TemplateHome extends Page {
   fields: {
     title: string
@@ -14,6 +20,54 @@ const props = defineProps<{
 }>()
 
 const { fields } = toRefs(props.data)
+
+// set structured data for SEO. important for home page in particular, as it is the most likely to be shared and linked to, as well as for when owner and site name are not the same
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'WebSite',
+            '@id': `${config.public.baseUrl}/#website`,
+            url: config.public.baseUrl,
+            name: defaults.value.appTitle,
+            description: fields.value.subtitle,
+            inLanguage: isoCode.value,
+            publisher: {
+              '@id': `${config.public.baseUrl}/#person`,
+            },
+            creator: {
+              '@id': 'https://nadineprigann.de/#organization',
+            },
+          },
+          {
+            '@type': 'Person',
+            '@id': `${config.public.baseUrl}/#person`,
+            name: 'Carolin Herrlich',
+            url: config.public.baseUrl,
+            worksFor: {
+              '@id': `${config.public.baseUrl}/#website`,
+            },
+            sameAs: [
+              // optional: add social profiles if they exist
+              // 'https://instagram.com/...',
+              // 'https://linkedin.com/in/...'
+            ],
+          },
+          {
+            '@type': 'Organization',
+            '@id': 'https://nadineprigann.de/#organization',
+            name: 'Nadine Prigann – Nachhaltiges Webdesign und Webentwicklung',
+            url: 'https://nadineprigann.de',
+          },
+        ],
+      }),
+    },
+  ],
+})
 
 const hasLinks = computed(() => {
   return fields.value.custom_links && fields.value.custom_links.length > 0
