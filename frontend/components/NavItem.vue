@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { gsap } from 'gsap'
+
 import { useRoute } from 'vue-router'
 const breakpointsStore = useBreakpointsStore()
 const { isMedium } = storeToRefs(breakpointsStore)

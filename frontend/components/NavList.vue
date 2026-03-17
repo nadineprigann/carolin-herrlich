@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { gsap } from 'gsap'
 import { htmlOverflowLock } from '@/composables/useHtmlOverflowLock'
 
 const defaultsStore = useDefaultsStore()
