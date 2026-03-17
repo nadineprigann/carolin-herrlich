@@ -80,6 +80,21 @@ const alternate = computed(() => {
   })
 })
 
+// SEO-Optimization:
+// for SEO: in case the site name and the name of the owner are not equal, use his / her name as page title on home to improve connection of both (when searching for "name", site is more likely to be found)
+const pageTitle = computed(() => {
+  if (meta.template === 'home') return 'Carolin Herrlich'
+  return fields.title
+})
+
+// for SEO: if there is a page title, use "page title · site name", otherwise just site name (e.g. on error pages) -> essentially just the older version outsourced and hardcoed home title added
+const fullTitle = computed(() => {
+  if (!pageTitle.value) return defaults.value.appTitle
+  if (!defaults.value.appTitle) return pageTitle.value
+
+  return `${pageTitle.value} · ${defaults.value.appTitle}`
+})
+
 useHead({
   htmlAttrs: {
     lang: isoCode,
@@ -87,17 +102,13 @@ useHead({
   link: alternate,
 })
 
+// https://nuxt.com/docs/4.x/api/composables/use-seo-meta
 useSeoMeta({
-  titleTemplate: (titleChunk) => {
-    // If appTitle is undefined, just return titleChunk
-    if (!defaults.value.appTitle) return `${titleChunk}`
-
-    return titleChunk === defaults.value.appTitle
-      ? defaults.value.appTitle
-      : `${titleChunk} - ${defaults.value.appTitle}`
-  },
-  title: () => fields.title,
-  description: () => fields.meta_description,
+  title: () => fullTitle.value, // let template apply formatting
+  description: () => fields.meta_description, //  () => computed getter to make it reactive, otherwise it would not update on language change
+  ogTitle: () => fullTitle.value,
+  ogDescription: () => fields.meta_description,
+  ogType: 'website',
 })
 </script>
 
