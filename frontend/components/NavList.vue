@@ -168,20 +168,16 @@ const navTransition = () => {
     })
   } else {
     // SMALL: stagger of nav list without children
-    // set initial state for sub-items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run. TODO: more elegant solution would be to use component-level state to avoid repetition
-    gsap.set(subItems, { autoAlpha: 0, y: yPosition })
+    // set initial state for items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run. cannot be the same as medium breakpoint because of different animation (opacity and x vs autoAlpha and y).
+    gsap.set(items, { autoAlpha: 0, y: yPosition })
 
-    timeline.to(
-      items,
-      {
-        y: 0,
-        autoAlpha: 1,
-        stagger: staggerDelay,
-        ease: easing,
-        duration: navDuration,
-      },
-      animationPosition,
-    )
+    timeline.to(items, {
+      y: 0,
+      autoAlpha: 1,
+      stagger: staggerDelay,
+      ease: easing,
+      duration: navDuration,
+    })
   }
 }
 
