@@ -86,12 +86,12 @@ const sizes = computed(() => {
 
 .content {
   // use min-height to avoid overly jumping of slides due to different content
-  min-height: calc(var(--blank-line) * 10);
+  min-height: calc(var(--blank-line) * 8);
   margin-top: var(--gutter-base);
   background-color: var(--white);
 
   @media (min-width: $tablet) {
-    min-height: calc(var(--blank-line) * 9);
+    min-height: calc(var(--blank-line) * 7);
   }
 }
 
@@ -123,7 +123,7 @@ const sizes = computed(() => {
 }
 
 .text {
-  @include line-clamp;
+  @include line-clamp(3);
 
   @media (min-width: $desktop) {
     max-width: 85%;

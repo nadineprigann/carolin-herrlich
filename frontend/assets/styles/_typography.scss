@@ -22,10 +22,6 @@
 // d: 12px
 @mixin fs-xsmall {
   font-size: 0.75em;
-
-  @media (min-width: $desktop) {
-    font-size: 0.65em;
-  }
 }
 
 // breadcrumbs, chapter nav counter, categories, context text, subtitle accordion, imrpint and privacy links in footer
@@ -45,11 +41,11 @@
   font-size: 1.4em;
 
   @media (min-width: $tablet) {
-    font-size: 1.55em;
+    font-size: 1.5em;
   }
 
   @media (min-width: $desktop) {
-    font-size: 2em;
+    font-size: 1.6em;
   }
 }
 

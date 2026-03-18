@@ -108,11 +108,11 @@
   width: 5em;
 
   @media (min-width: $tablet) {
-    width: 7.5em;
+    width: 6em;
   }
 
   @media (min-width: $desktop) {
-    width: 10.5em;
+    width: 6.5em;
   }
 }
 
