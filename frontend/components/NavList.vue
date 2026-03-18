@@ -88,6 +88,9 @@ const navTransition = () => {
 
   const items = nav.querySelectorAll('.nav-item')
 
+  // before starting a new transition and assigning start variables and settings, clear all used props from prev transition to prevent issues with manipulated DOM state, esp. after breakpoint changes -> leads to stale values left inline like x or y values etc. only clear props that are used in transition to prevent issues with other styles.
+  gsap.set(items, { clearProps: 'transform,opacity,visibility' })
+
   // define variables and settings for transition here to be able to maintain them much easier
   const overlayDuration = 0.25
   const navDuration = 0.4
@@ -118,10 +121,10 @@ const navTransition = () => {
 
   // OVERLAY:
   // set initial state to start transition from for overlay to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
-  gsap.set(overlay, { opacity: 0 })
+  gsap.set(overlay, { autoAlpha: 0 })
   // define overlay transition start point to end at DOM state and add it to the timeline as the first transition.
   timeline.to(overlay, {
-    opacity: 1,
+    autoAlpha: 1,
     duration: overlayDuration,
     ease: easing,
   })
@@ -130,12 +133,12 @@ const navTransition = () => {
   if (isMedium.value) {
     // MEDIUM: transition columns AND their children
     // set initial state to start transition from for items to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
-    gsap.set(items, { opacity: 0, x: -20 })
+    gsap.set(items, { autoAlpha: 0, x: -20 })
     // define nav-items transition start point to end at DOM state and add it to the timeline as the first transition.
     timeline.to(
       items,
       {
-        opacity: 1,
+        autoAlpha: 1,
         // x: (i, el) => -el.offsetWidth // use function-based values to adress each item individually. works just like a loop.
 
         x: 0,
