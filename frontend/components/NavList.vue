@@ -81,15 +81,23 @@ const isVisible = computed(() => {
 // use composable to stop the body from scrolling when overlay is open. also resets the overflow on unmount and deactivated
 htmlOverflowLock(isVisible)
 
+const resetAnimationState = (elements: Element[]) => {
+  gsap.set(elements, {
+    clearProps: 'transform,opacity,visibility',
+  })
+}
+
 const navTransition = () => {
   const overlay = overlayRef.value
   const nav = navRef.value
   if (!overlay || !nav) return
 
   const items = nav.querySelectorAll('.nav-item')
+  const subItems = nav.querySelectorAll('.sub-nav-item')
 
   // before starting a new transition and assigning start variables and settings, clear all used props from prev transition to prevent issues with manipulated DOM state, esp. after breakpoint changes -> leads to stale values left inline like x or y values etc. only clear props that are used in transition to prevent issues with other styles.
-  gsap.set(items, { clearProps: 'transform,opacity,visibility' })
+  // one reset function to reset items and sub-items upon (re)creation of transition. everything clean from here on.
+  resetAnimationState([...items, ...subItems])
 
   // define variables and settings for transition here to be able to maintain them much easier
   const overlayDuration = 0.25
@@ -132,7 +140,8 @@ const navTransition = () => {
   // NAV ITEMS:
   if (isMedium.value) {
     // MEDIUM: transition columns AND their children
-    // set initial state to start transition from for items to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
+
+    // set initial state (upon creating or after reset on watch) to start transition from for items to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
     gsap.set(items, { autoAlpha: 0, x: -20 })
     // define nav-items transition start point to end at DOM state and add it to the timeline as the first transition.
     timeline.to(
@@ -150,11 +159,10 @@ const navTransition = () => {
     ) // https://gsap.com/resources/position-parameter: start this transition 0.15 seconds after the start of the previous one for a smoother ease out effect
 
     // if there are sub-items, get each one of them and animate them with a slight delay after their parent item for a staggered effect
-    items.forEach((item, i) => {
-      const subItems = item.querySelectorAll('.sub-nav-item')
+    items.forEach((i) => {
       if (!subItems.length) return
 
-      // set initial state for sub-items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
+      // set initial state (upon creating or after reset on watch) for sub-items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
       gsap.set(subItems, { autoAlpha: 0, y: yPosition })
 
       timeline.to(
@@ -171,7 +179,8 @@ const navTransition = () => {
     })
   } else {
     // SMALL: stagger of nav list without children
-    // set initial state for items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run. cannot be the same as medium breakpoint because of different animation (opacity and x vs autoAlpha and y).
+
+    // set initial state (upon creating or after reset on watch) for items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run. cannot be the same as medium breakpoint because of different animation (opacity and x vs autoAlpha and y).
     gsap.set(items, { autoAlpha: 0, y: yPosition })
 
     timeline.to(items, {
@@ -190,6 +199,20 @@ watch(isVisible, (visible) => {
     navTransition()
     navTimeline.value?.play()
   }
+
+  // reset all inline style set by GSAP on breakpoint change to prevent issues with manipulated DOM state and stale values left inline like x or y values etc. that would cause the nav to be invisible after the first transition run and breakpoint change. only reset styles that are used in the transition to prevent issues with other styles.
+  watch(isMedium, () => {
+    // if nav not visible or ref not defined do nothing
+    if (!isVisible.value) return
+    if (!navRef) return
+
+    // fetch all relevant (both depths necessary cuz both are manipulated at some point by the transition) items at once
+    const all = navRef.value.querySelectorAll('.nav-item, .sub-nav-item')
+    // and reset their inline styles set by GSAP so that the set() and to() cascade works again
+    gsap.set(all, {
+      clearProps: 'transform,opacity,visibility',
+    })
+  })
 })
 </script>
 
