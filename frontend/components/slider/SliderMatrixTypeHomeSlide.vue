@@ -88,6 +88,7 @@ const sizes = computed(() => {
   // use min-height to avoid overly jumping of slides due to different content
   min-height: calc(var(--blank-line) * 10);
   margin-top: var(--gutter-base);
+  background-color: var(--white);
 
   @media (min-width: $tablet) {
     min-height: calc(var(--blank-line) * 9);
