@@ -87,10 +87,13 @@ const navTransition = () => {
   if (!overlay || !nav) return
 
   const items = nav.querySelectorAll('.nav-item')
-  const overlayDuration = 0.3
-  const navDuration = 0.5
+  const overlayDuration = 0.25
+  const navDuration = 0.4
+  const subNavDuration = 0.25
+  const staggerDelay = 0.06
   const animationPosition = '<0.15'
   const yPosition = -15
+  const easing = 'power2.out'
   // create timeline to which to add all the animations for sequencing nicely without tedious delays etc.
   // use local timeline and pause it immediately. controls like start and reverse will happen on component level with navTimeline ref
   const timeline = gsap.timeline({
@@ -116,14 +119,14 @@ const navTransition = () => {
   timeline.to(overlay, {
     opacity: 1,
     duration: overlayDuration,
-    ease: 'power2.out',
+    ease: easing,
   })
 
   // NAV ITEMS:
   if (isMedium.value) {
     // MEDIUM: transition columns AND their children
     // set initial state to start transition from for items to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
-    gsap.set(items, { opacity: 0, x: -60 })
+    gsap.set(items, { opacity: 0, x: -20 })
     // define nav-items transition start point to end at DOM state and add it to the timeline as the first transition.
     timeline.to(
       items,
@@ -132,8 +135,8 @@ const navTransition = () => {
         // x: (i, el) => -el.offsetWidth // use function-based values to adress each item individually. works just like a loop.
 
         x: 0,
-        stagger: 0.1,
-        ease: 'power2.out',
+        stagger: staggerDelay,
+        ease: easing,
         duration: navDuration,
       },
       animationPosition,
@@ -152,11 +155,11 @@ const navTransition = () => {
         {
           y: 0,
           autoAlpha: 1, // animates opacity and visibility. when autoAlpha is 0, it sets visibility to hidden to prevent clicks on invisible items, and when it animates to a visible state, it sets visibility to visible. this prevents the need to set pointer-events: none for invisible items in CSS.
-          duration: navDuration,
-          ease: 'power2.out',
-          stagger: 0.06, // delay per item (row) in s
+          duration: subNavDuration,
+          ease: easing,
+          stagger: staggerDelay, // delay per item (row) in s
         },
-        i * 0.18 + navDuration, // index * delay for each parent item creates progressive delay per column (column rhythm) + delay after parent item animation starts (when children start appearing). currently waits till parent item animation is finished (0.5s) to calm the animation a bit
+        i * 0.15 + 0.15, // index * delay for each parent item creates progressive delay per column (column rhythm) + delay after parent item animation starts (when children start appearing). currently waits till parent item animation is finished (0.5s) to calm the animation a bit
       )
     })
   } else {
@@ -169,7 +172,8 @@ const navTransition = () => {
       {
         y: 0,
         autoAlpha: 1,
-        stagger: 0.1,
+        stagger: staggerDelay,
+        ease: easing,
         duration: navDuration,
       },
       animationPosition,
