@@ -44,7 +44,7 @@ const scrollTo = () => {
       <button type="button" class="button" @click="scrollTo">
         <FieldText element="h4" :text="label.header" class="header" />
       </button>
-      <TextRowList :table="fields.table" />
+      <TextRowList :table="fields.table" class="table" />
       <RelatedContent :related="fields.related_content" />
     </section>
   </main>
@@ -107,6 +107,10 @@ const scrollTo = () => {
   min-height: 100%;
   margin-top: var(--blank-line);
   scroll-snap-align: start;
+}
+
+.table {
+  padding-bottom: var(--page-end);
 }
 
 .button {
