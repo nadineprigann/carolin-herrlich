@@ -110,9 +110,11 @@ const navTransition = () => {
   // fromTo: FROM this state TO this state (entering and leaving transitions)
 
   // OVERLAY:
+  // set initial state to start transition from for overlay to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
+  gsap.set(overlay, { opacity: 0 })
   // define overlay transition start point to end at DOM state and add it to the timeline as the first transition.
-  timeline.from(overlay, {
-    opacity: 0,
+  timeline.to(overlay, {
+    opacity: 1,
     duration: overlayDuration,
     ease: 'power2.out',
   })
@@ -120,14 +122,16 @@ const navTransition = () => {
   // NAV ITEMS:
   if (isMedium.value) {
     // MEDIUM: transition columns AND their children
+    // set initial state to start transition from for items to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
+    gsap.set(items, { opacity: 0, x: -60 })
     // define nav-items transition start point to end at DOM state and add it to the timeline as the first transition.
-    timeline.from(
+    timeline.to(
       items,
       {
-        opacity: 0,
+        opacity: 1,
         // x: (i, el) => -el.offsetWidth // use function-based values to adress each item individually. works just like a loop.
 
-        x: -60,
+        x: 0,
         stagger: 0.1,
         ease: 'power2.out',
         duration: navDuration,
@@ -140,11 +144,14 @@ const navTransition = () => {
       const subItems = item.querySelectorAll('.sub-nav-item')
       if (!subItems.length) return
 
-      timeline.from(
+      // set initial state for sub-items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run
+      gsap.set(subItems, { autoAlpha: 0, y: yPosition })
+
+      timeline.to(
         subItems,
         {
-          y: yPosition,
-          autoAlpha: 0, // animates opacity and visibility. when autoAlpha is 0, it sets visibility to hidden to prevent clicks on invisible items, and when it animates to a visible state, it sets visibility to visible. this prevents the need to set pointer-events: none for invisible items in CSS.
+          y: 0,
+          autoAlpha: 1, // animates opacity and visibility. when autoAlpha is 0, it sets visibility to hidden to prevent clicks on invisible items, and when it animates to a visible state, it sets visibility to visible. this prevents the need to set pointer-events: none for invisible items in CSS.
           duration: navDuration,
           ease: 'power2.out',
           stagger: 0.06, // delay per item (row) in s
@@ -154,11 +161,14 @@ const navTransition = () => {
     })
   } else {
     // SMALL: stagger of nav list without children
-    timeline.from(
+    // set initial state for sub-items to start transition from to avoid issues with manipulated initial DOM state cuz otherwise, DOM stays invisible after first transition run. TODO: more elegant solution would be to use component-level state to avoid repetition
+    gsap.set(subItems, { autoAlpha: 0, y: yPosition })
+
+    timeline.to(
       items,
       {
-        y: yPosition,
-        autoAlpha: 0,
+        y: 0,
+        autoAlpha: 1,
         stagger: 0.1,
         duration: navDuration,
       },
