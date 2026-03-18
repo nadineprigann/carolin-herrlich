@@ -216,31 +216,30 @@ watch(isVisible, (visible) => {
   top: 0;
   left: 0;
   z-index: var(--xl-overlay);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* close button, nav items, legal */
   width: 100%;
   height: 100%;
-  padding: calc(var(--gutter-base) * 5) var(--gutter-m) var(--gutter-base)
-    var(--gutter-m);
+  padding: var(--gutter-m) var(--gutter-s);
   background-color: var(--white-90);
   backdrop-filter: blur(var(--bg-blur));
 
   // always use $tablet as a "working breakpoint" to be able to change explicit widths later and not needing to change them in the whole app.
   @media (min-width: $tablet) {
-    padding: calc(var(--gutter-base) * 6) var(--gutter-m) var(--gutter-m)
-      var(--gutter-m);
+    padding: var(--gutter-m);
   }
 }
 
 .nav-list {
   @include list-reset;
 
+  padding-top: var(--gutter-l);
+
   @media (min-width: $tablet) {
     display: flex;
     justify-content: space-between;
     max-width: 100%;
-    padding-right: calc(var(--gutter-base) * 10);
+    padding-right: calc(var(--gutter-base) * 5);
   }
 }
 
