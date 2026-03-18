@@ -259,7 +259,7 @@ htmlOverflowLock(isVisible)
           />
         </section>
         <section class="controls">
-          <button type="submit" class="submit">
+          <button type="submit" :class="classes.submit">
             <span v-if="isClicked" class="label" v-text="labels.sending" />
             <span v-else class="label" v-text="labels.submit" />
           </button>
@@ -311,6 +311,8 @@ htmlOverflowLock(isVisible)
     $left: var(--spacing-l),
     $right: var(--spacing-l)
   );
+  @include hover-default;
+  @include focus-default;
 }
 
 .description {
@@ -379,6 +381,10 @@ htmlOverflowLock(isVisible)
 
 .submit {
   margin-right: var(--gutter-s);
+
+  &.is-clicked {
+    cursor: progress;
+  }
 }
 
 .formkit-actions .actions,
