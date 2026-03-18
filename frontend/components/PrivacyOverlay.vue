@@ -18,7 +18,7 @@ const isVisible = computed(() => {
 </script>
 
 <template>
-  <transition name="legal" mode="">
+  <transition name="t-fade">
     <section v-if="isVisible" class="privacy-overlay">
       <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
       <div class="content">
@@ -187,7 +187,7 @@ const isVisible = computed(() => {
 
 <style lang="scss">
 // defined in _transitions.scss
-@include t-legal;
+@include t-fade($duration: var(--short));
 </style>
 
 <style lang="scss" scoped>

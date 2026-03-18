@@ -100,7 +100,7 @@ const navTransition = () => {
   resetAnimationState([...items, ...subItems])
 
   // define variables and settings for transition here to be able to maintain them much easier
-  const overlayDuration = 0.25
+  const overlayDuration = 0.25 // same as short in variables.css
   const navDuration = 0.4
   const subNavDuration = 0.25
   const staggerDelay = 0.06

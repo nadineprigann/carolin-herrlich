@@ -116,10 +116,10 @@ const submit = async () => {
     if (response.status === 'success') {
       // console.log('checkout submitted')
       // Form submitted successfully
-      reset() // reset form after successful submission, can also be done on close if you want to keep the entered data visible until user closes the overlay
       layout.value.openOverlay.success = true // show success overlay
 
       setTimeout(() => {
+        reset() // reset form after successful submission. with timeout to keep the entered data visible until success-overlay is really open
         isClicked.value = false // reset submit button state after delay
         layout.value.openOverlay.success = false // close success overlay
         closeOverlay() // close checkout overlay
@@ -179,92 +179,104 @@ htmlOverflowLock(isVisible)
 </script>
 
 <template>
-  <section
-    v-if="isVisible"
-    role="dialog"
-    aria-modal="true"
-    :aria-labelledby="titleId"
-    :aria-describedby="descId"
-    tabindex="-1"
-    class="checkout-overlay"
-    @keydown.esc.prevent.stop="closeOverlay"
-  >
-    <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
+  <transition name="t-fade">
+    <section
+      v-if="isVisible"
+      role="dialog"
+      aria-modal="true"
+      :aria-labelledby="titleId"
+      :aria-describedby="descId"
+      tabindex="-1"
+      class="checkout-overlay"
+      @keydown.esc.prevent.stop="closeOverlay"
+    >
+      <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
 
-    <form class="form" @submit.prevent="submit">
-      <section class="content">
-        <input
-          v-model="form.website"
-          type="text"
-          name="website"
-          autocomplete="off"
-          tabindex="-1"
-          hidden
-        />
-        <FieldText :id="titleId" element="h2" :text="formTitle" class="title" />
-        <p :id="descId" class="description" v-text="labels.description" />
-        <FormInput
-          :id="labels.firstName.id"
-          v-model="form.firstName"
-          :label="labels.firstName.label"
-          :help="labels.firstName.help"
-          :error="labels.firstName.error"
-          :placeholder="labels.firstName.placeholder"
-          :autocomplete="labels.firstName.autocomplete"
-          :required="true"
-        />
-        <FormInput
-          :id="labels.lastName.id"
-          v-model="form.lastName"
-          :label="labels.lastName.label"
-          :help="labels.lastName.help"
-          :error="labels.lastName.error"
-          :placeholder="labels.lastName.placeholder"
-          :autocomplete="labels.lastName.autocomplete"
-          :required="true"
-        />
-        <FormInput
-          :id="labels.pronouns.id"
-          v-model="form.pronouns"
-          :label="labels.pronouns.label"
-          :help="labels.pronouns.help"
-          :error="labels.pronouns.error"
-          :placeholder="labels.pronouns.placeholder"
-          :autocomplete="labels.pronouns.autocomplete"
-        />
-        <FormInput
-          :id="labels.mail.id"
-          v-model="form.email"
-          :label="labels.mail.label"
-          :help="labels.mail.help"
-          :error="labels.mail.error"
-          :placeholder="labels.mail.placeholder"
-          :autocomplete="labels.mail.autocomplete"
-          :required="true"
-        />
-        <FormTextarea
-          :id="labels.message.id"
-          v-model="form.message"
-          :label="labels.message.label"
-          :help="labels.message.help"
-          :error="labels.message.error"
-          :placeholder="labels.message.placeholder"
-          :autocomplete="labels.message.autocomplete"
-        />
-      </section>
-      <section class="controls">
-        <button type="submit" class="submit">
-          <span v-if="isClicked" class="label" v-text="labels.sending" />
-          <span v-else class="label" v-text="labels.submit" />
-        </button>
-        <button type="button" class="reset" @click="reset">
-          <span class="label" v-text="labels.reset" />
-        </button>
-      </section>
-      <SuccessOverlay />
-    </form>
-  </section>
+      <form class="form" @submit.prevent="submit">
+        <section class="content">
+          <input
+            v-model="form.website"
+            type="text"
+            name="website"
+            autocomplete="off"
+            tabindex="-1"
+            hidden
+          />
+          <FieldText
+            :id="titleId"
+            element="h2"
+            :text="formTitle"
+            class="title"
+          />
+          <p :id="descId" class="description" v-text="labels.description" />
+          <FormInput
+            :id="labels.firstName.id"
+            v-model="form.firstName"
+            :label="labels.firstName.label"
+            :help="labels.firstName.help"
+            :error="labels.firstName.error"
+            :placeholder="labels.firstName.placeholder"
+            :autocomplete="labels.firstName.autocomplete"
+            :required="true"
+          />
+          <FormInput
+            :id="labels.lastName.id"
+            v-model="form.lastName"
+            :label="labels.lastName.label"
+            :help="labels.lastName.help"
+            :error="labels.lastName.error"
+            :placeholder="labels.lastName.placeholder"
+            :autocomplete="labels.lastName.autocomplete"
+            :required="true"
+          />
+          <FormInput
+            :id="labels.pronouns.id"
+            v-model="form.pronouns"
+            :label="labels.pronouns.label"
+            :help="labels.pronouns.help"
+            :error="labels.pronouns.error"
+            :placeholder="labels.pronouns.placeholder"
+            :autocomplete="labels.pronouns.autocomplete"
+          />
+          <FormInput
+            :id="labels.mail.id"
+            v-model="form.email"
+            :label="labels.mail.label"
+            :help="labels.mail.help"
+            :error="labels.mail.error"
+            :placeholder="labels.mail.placeholder"
+            :autocomplete="labels.mail.autocomplete"
+            :required="true"
+          />
+          <FormTextarea
+            :id="labels.message.id"
+            v-model="form.message"
+            :label="labels.message.label"
+            :help="labels.message.help"
+            :error="labels.message.error"
+            :placeholder="labels.message.placeholder"
+            :autocomplete="labels.message.autocomplete"
+          />
+        </section>
+        <section class="controls">
+          <button type="submit" class="submit">
+            <span v-if="isClicked" class="label" v-text="labels.sending" />
+            <span v-else class="label" v-text="labels.submit" />
+          </button>
+          <button type="button" class="reset" @click="reset">
+            <span class="label" v-text="labels.reset" />
+          </button>
+        </section>
+        <SuccessOverlay />
+      </form>
+    </section>
+  </transition>
 </template>
+
+<style lang="scss">
+// defined in _transitions.scss
+@include t-fade($duration: var(--short));
+</style>
 
 <style lang="scss" scoped>
 .checkout-overlay {
