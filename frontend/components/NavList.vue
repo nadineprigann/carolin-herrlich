@@ -87,6 +87,8 @@ const navTransition = () => {
   if (!overlay || !nav) return
 
   const items = nav.querySelectorAll('.nav-item')
+
+  // define variables and settings for transition here to be able to maintain them much easier
   const overlayDuration = 0.25
   const navDuration = 0.4
   const subNavDuration = 0.25
@@ -94,6 +96,8 @@ const navTransition = () => {
   const animationPosition = '<0.15'
   const yPosition = -15
   const easing = 'power2.out'
+  // kill any existing timeline instance before creating a new one to prevent issues and keep code and lifecycles clean
+  navTimeline.value?.kill()
   // create timeline to which to add all the animations for sequencing nicely without tedious delays etc.
   // use local timeline and pause it immediately. controls like start and reverse will happen on component level with navTimeline ref
   const timeline = gsap.timeline({
@@ -183,7 +187,7 @@ const navTransition = () => {
 
 watch(isVisible, (visible) => {
   if (visible) {
-    // if nav is visible through isVisible (based on store value), start its transition
+    // if nav is visible through isVisible (based on store value), start its transition. create a new transition instance everytime isVisible = true. this is fine and the desired way cuz the transition depends on state (breakpoints) and is complex. therefore, creating (and killing) the instance is the cleanest way to make sure the transition always runs with the correct settings based on the current state.
     navTransition()
     navTimeline.value?.play()
   }
