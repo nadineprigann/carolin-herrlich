@@ -192,7 +192,11 @@ watch(isVisible, (visible) => {
 
 <template>
   <nav v-show="isVisible" ref="overlayRef" class="nav" aria-label="Navigation">
-    <CloseButton :overlay-title="labels.overlayTitle" @click="closeNav" />
+    <CloseButton
+      :overlay-title="labels.overlayTitle"
+      class="close"
+      @click="closeNav"
+    />
     <ul ref="navRef" class="nav-list">
       <NavItem
         v-for="item in visibleRoutes"
@@ -242,6 +246,10 @@ watch(isVisible, (visible) => {
   @media (min-width: $tablet) {
     padding: var(--gutter-m);
   }
+}
+
+.close {
+  padding-right: 0; // reset default padding of CloseButton.vue
 }
 
 .nav-list {
