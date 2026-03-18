@@ -47,8 +47,10 @@ const buttonLabel = computed(() => {
 <style lang="scss" scoped>
 .overlay-button {
   @include button-default;
+  @include hover-default;
+  @include focus-default;
 
-  display: block;
+  display: inline-block;
   max-width: max-content;
 
   // &-checkout { }
