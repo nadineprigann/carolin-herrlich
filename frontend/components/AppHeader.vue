@@ -3,17 +3,25 @@ const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
 const toggleNavigation = () => {
-  layout.value.openOverlay.navigation = !layout.value.openOverlay.navigation
+  layout.value.openOverlay.navigation = true
 }
+
+const showButton = computed(() => {
+  return !layout.value.openOverlay.navigation
+})
 </script>
 
 <template>
   <header ref="header" class="app-header">
     <!-- <h1>{{ defaults.appTitle }}</h1> -->
     <SiteLogo />
-    <button type="button" class="button" @click="toggleNavigation">
-      <span v-if="layout.openOverlay.navigation" class="close" />
-      <span v-else class="open" />
+    <button
+      v-if="showButton"
+      type="button"
+      class="button"
+      @click="toggleNavigation"
+    >
+      <span class="open" />
     </button>
     <NavList />
     <section class="legal">
