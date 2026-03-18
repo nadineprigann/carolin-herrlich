@@ -12,21 +12,28 @@ const labels = reactive({
     'Du hast eine Bestätigungsmail von mir bekommen und ich melde mich so schnell wie möglich bei dir zurück.',
 })
 
-// note: not necessary to import htmlLock since this overlay can only be open ocne the CheckOutOverlay is open and thus, htmlLock is already active when that overlay is open.
+// note: not necessary to import htmlLock since this overlay can only be open once the CheckOutOverlay is open and thus, htmlLock is already active when that overlay is open.
 </script>
 
 <template>
-  <section v-if="showOverlay" class="success-overlay">
-    <div class="content">
-      <FieldText element="h2" :text="labels.title" class="title" />
-      <FieldTextarea
-        element="p"
-        :text="labels.description"
-        class="description"
-      />
-    </div>
-  </section>
+  <transition name="t-fade">
+    <section v-if="showOverlay" class="success-overlay">
+      <div class="content">
+        <FieldText element="h2" :text="labels.title" class="title" />
+        <FieldTextarea
+          element="p"
+          :text="labels.description"
+          class="description"
+        />
+      </div>
+    </section>
+  </transition>
 </template>
+
+<style lang="scss">
+// defined in _transitions.scss
+@include t-fade($duration: var(--short));
+</style>
 
 <style lang="scss" scoped>
 .success-overlay {
