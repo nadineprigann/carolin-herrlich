@@ -18,7 +18,7 @@ const isVisible = computed(() => {
 </script>
 
 <template>
-  <transition name="legal" mode="">
+  <transition name="t-legal">
     <section v-if="isVisible" class="privacy-overlay">
       <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
       <div class="content">
