@@ -69,7 +69,7 @@ const linkTo = computed(() => {
   padding: 0.5rem 0 var(--gutter-base) 0;
 
   @media (min-width: $tablet) {
-    padding: var(--gutter-s) 0 var(--gutter-m) 0;
+    padding: var(--gutter-base) 0 var(--gutter-s) 0;
   }
 }
 

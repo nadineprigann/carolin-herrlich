@@ -106,7 +106,7 @@ const hasLinks = computed(() => {
 
   @media (min-width: $medium) {
     gap: var(--gutter-l);
-    padding: 0 calc(var(--gutter-base) * 20) var(--gutter-m)
+    padding: var(--gutter-l) calc(var(--gutter-base) * 20) var(--gutter-m)
       calc(var(--gutter-base) * 20);
   }
 }
@@ -133,6 +133,10 @@ const hasLinks = computed(() => {
 
 .slider {
   position: relative; // for links positioning
+
+  @media (min-width: $desktop) {
+    padding: 0 15rem;
+  }
 }
 
 .links {
