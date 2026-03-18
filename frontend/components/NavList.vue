@@ -35,10 +35,12 @@ const blogChildren = [
 const labels = reactive({
   imprint: 'Impressum',
   privacy: 'Datenschutz',
+  overlayTitle: 'Navigation',
 })
 
 const navRef = ref<HTMLElement | null>(null)
 const overlayRef = ref<HTMLElement | null>(null)
+const navTimeline = ref<gsap.core.Timeline | null>(null) // create component-level timeline to be able to control it from outside the navTransition function to reverse it when closing the nav
 
 const excludedTemplates = ['home', 'tool', 'project', 'blog-post', 'event']
 
@@ -68,6 +70,10 @@ const openPrivacyOverlay = () => {
   layout.value.openOverlay.privacy = true
 }
 
+const closeNav = () => {
+  navTimeline.value?.reverse()
+}
+
 const isVisible = computed(() => {
   return layout.value.openOverlay.navigation
 })
@@ -86,14 +92,24 @@ const navTransition = () => {
   const animationPosition = '<0.15'
   const yPosition = -15
   // create timeline to which to add all the animations for sequencing nicely without tedious delays etc.
-  const timeline = gsap.timeline()
+  // use local timeline and pause it immediately. controls like start and reverse will happen on component level with navTimeline ref
+  const timeline = gsap.timeline({
+    paused: true,
+    // only when the reverse transition is fully finished, use the callback to set the store value to close the nav. setting the store value to false too early causes the nav to be removed from the DOM before the leaving transition is finished, therefore interrupting the transition -> causes unwanted behaviour.
+    // callback is set here in the timeline config, no need to use it as callback for a specific animation cuz whole timeline will be reversed no matter which screen size. and is ONLY called once reverse is fully finished. cleanest and safest approach to properly sequence closing and transition.
+    onReverseComplete: () => {
+      layout.value.openOverlay.navigation = false
+    },
+  })
+
+  // assign local timeline value to component-level ref to enable control from outside the navTransition function
+  navTimeline.value = timeline
+
   // to: from wherever you are TO this state
-  // from: FROM this state to DOM state (entering transitions). sets start values immediately, then animates to defined state. can cuase flickers, therefore set() and to() can be used.
+  // from: FROM this state to DOM state (entering transitions). sets start values immediately, then animates to defined state. can cause flickers, therefore set() and to() can be used (gsap.set(items, { opacity: 0, x: -40 })) to set start values immediately without animation, then use to() to animate to DOM state. this is the cleanest approach to avoid flickers and have better control over the transition.
   // fromTo: FROM this state TO this state (entering and leaving transitions)
 
-  // set initial state for all items to be invisible and slightly moved to the left. this is important for the entering transition, as the items are already in the DOM when the transition starts, but should start from this defined state. otherwise they would be visible and in their final position for a split second before the transition starts, which causes a flicker.
-  // gsap.set(items, { opacity: 0, x: -40 })
-
+  // OVERLAY:
   // define overlay transition start point to end at DOM state and add it to the timeline as the first transition.
   timeline.from(overlay, {
     opacity: 0,
@@ -101,6 +117,7 @@ const navTransition = () => {
     ease: 'power2.out',
   })
 
+  // NAV ITEMS:
   if (isMedium.value) {
     // MEDIUM: transition columns AND their children
     // define nav-items transition start point to end at DOM state and add it to the timeline as the first transition.
@@ -152,14 +169,16 @@ const navTransition = () => {
 
 watch(isVisible, (visible) => {
   if (visible) {
-    // if nav is visible through isVisible (based on store value), start its transition. nextTcik to make sure all items are fully attached to the DOM.
+    // if nav is visible through isVisible (based on store value), start its transition
     navTransition()
+    navTimeline.value?.play()
   }
 })
 </script>
 
 <template>
   <nav v-show="isVisible" ref="overlayRef" class="nav" aria-label="Navigation">
+    <CloseButton :overlay-title="labels.overlayTitle" @click="closeNav" />
     <ul ref="navRef" class="nav-list">
       <NavItem
         v-for="item in visibleRoutes"
