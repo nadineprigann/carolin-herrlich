@@ -18,12 +18,20 @@
 }
 
 @mixin hover-default($color: var(--highlight-color)) {
+  // TODO: add transition and wrap this in a media query for hover-capable devices only as well as
+  // &:not(:disabled):hover {
+  //   /* hover styles */
+  // }
   &:hover {
     box-shadow: var(--shadow) $color;
   }
 }
 
 @mixin text-hover($color: var(--highlight-color)) {
+  // TODO: add transition and wrap this in a media query for hover-capable devices only as well as
+  // &:not(:disabled):hover {
+  //   /* hover styles */
+  // }
   &:hover {
     text-shadow: var(--shadow) $color;
   }
