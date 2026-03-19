@@ -12,6 +12,7 @@ interface Props {
   required?: boolean // pass true if required
   emits?: boolean // whether to emit the entered value to the parent component. for now stay dumb and do not emit, can be added later if needed
   modelValue?: string
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
   emit: false, // for now stay dumb and do not emit selected value to parent component. can be added later if needed
   modelValue: '', // for v-model binding, can be used by parent component to get the entered value if emit is set to true
   error: '',
+  disabled: false,
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -32,10 +34,16 @@ const help = computed(() => {
 const error = computed(() => {
   return `${props.id}-error`
 })
+
+const classes = computed(() => {
+  return {
+    input: ['form-input', props.disabled ? 'is-disabled' : ''],
+  }
+})
 </script>
 
 <template>
-  <div class="form-input">
+  <div :class="classes.input">
     <label :for="props.id" class="label" v-text="props.label" />
     <input
       :id="props.id"
@@ -47,6 +55,7 @@ const error = computed(() => {
       :aria-describedby="`${help} ${error}`"
       :required="props.required"
       :value="props.modelValue"
+      :disabled="props.disabled"
       @input="
         emit('update:modelValue', ($event.target as HTMLInputElement).value)
       "
@@ -68,19 +77,26 @@ const error = computed(() => {
   flex-direction: column;
   grid-column: span 1;
   margin-bottom: var(--gutter-m);
+
+  &.is-disabled {
+    cursor: progress;
+  }
 }
 
 .input {
   @include input-default;
 
   margin: calc(var(--gutter-base) / 2) 0;
-}
 
-.label,
-::placeholder,
-.help,
-.error {
-  @include ff-sans;
+  .is-disabled & {
+    color: var(--disabled-color);
+    cursor: progress;
+
+    // reset hover styles when disabled. focus styles do not need to be reset cuz button is disabled
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
 
 .label,
@@ -97,5 +113,16 @@ const error = computed(() => {
 
 .error {
   color: var(--error-color);
+}
+
+.label,
+::placeholder,
+.help,
+.error {
+  @include ff-sans;
+
+  .is-disabled & {
+    color: var(--disabled-color);
+  }
 }
 </style>

@@ -127,6 +127,11 @@ sub {
   top: 0.4em;
 }
 
+fieldset {
+  padding: 0;
+  border: 0;
+}
+
 input,
 button,
 textarea,

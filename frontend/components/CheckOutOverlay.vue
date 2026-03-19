@@ -59,13 +59,17 @@ const labels = reactive({
   submit: 'Absenden',
   sending: 'Senden...',
   reset: 'Zurücksetzen',
+  feedbackSending: 'Deine Daten werden gesendet. Ein wenig Geduld bitte ...',
+  feedbackError:
+    'Beim Absenden ist ein Fehler aufgetreten. Bitte versuche es erneut.',
 })
 
-const isClicked = ref(false) // to track if submit button has been clicked
+const isSubmitted = ref(false) // to track if submit button has been clicked
+const hasErrors = ref(false) // to track if there are errors in the form submission
 
 const classes = computed(() => {
   return {
-    submit: ['submit', isClicked.value ? 'is-clicked' : ''],
+    section: ['checkout-overlay', isSubmitted.value ? 'is-submitted' : ''],
   }
 })
 
@@ -97,7 +101,7 @@ const closeOverlay = () => {
 }
 
 const submit = async () => {
-  isClicked.value = true // for submit button after click
+  isSubmitted.value = true // for submit button after click
   try {
     // use dedicated payload here instead of only form to have more control over what exactly is sent to the backend and to be able to easily add other properties if needed without changing the form state. -> checkout title
     const payload = {
@@ -120,23 +124,18 @@ const submit = async () => {
 
       setTimeout(() => {
         reset() // reset form after successful submission. with timeout to keep the entered data visible until success-overlay is really open
-        isClicked.value = false // reset submit button state after delay
+        isSubmitted.value = false // reset submit button state after delay
         layout.value.openOverlay.success = false // close success overlay
         closeOverlay() // close checkout overlay
       }, 5000)
     } else {
       // An error occured
-      // TODO: show error message
-      // console.error(response.message)
+      hasErrors.value = true
+      console.error(response.message)
     }
   } catch (error) {
-    // console.error('Checkout failed', error)
-    // this.$formulate.handle(
-    //   {
-    //     formErrors: [`${error}! ${this.$t('tryAgain')}`],
-    //   },
-    //   'submissionForm',
-    // )
+    console.error('Der Check-Out hat leider nicht funktioniert.', error)
+    hasErrors.value = true
   }
 }
 
@@ -187,86 +186,110 @@ htmlOverflowLock(isVisible)
       :aria-labelledby="titleId"
       :aria-describedby="descId"
       tabindex="-1"
-      class="checkout-overlay"
+      :class="classes.section"
       @keydown.esc.prevent.stop="closeOverlay"
     >
       <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
 
       <form class="form" @submit.prevent="submit">
-        <section class="content">
-          <input
-            v-model="form.website"
-            type="text"
-            name="website"
-            autocomplete="off"
-            tabindex="-1"
-            hidden
-          />
-          <FieldText
-            :id="titleId"
-            element="h2"
-            :text="formTitle"
-            class="title"
-          />
-          <p :id="descId" class="description" v-text="labels.description" />
-          <FormInput
-            :id="labels.firstName.id"
-            v-model="form.firstName"
-            :label="labels.firstName.label"
-            :help="labels.firstName.help"
-            :error="labels.firstName.error"
-            :placeholder="labels.firstName.placeholder"
-            :autocomplete="labels.firstName.autocomplete"
-            :required="true"
-          />
-          <FormInput
-            :id="labels.lastName.id"
-            v-model="form.lastName"
-            :label="labels.lastName.label"
-            :help="labels.lastName.help"
-            :error="labels.lastName.error"
-            :placeholder="labels.lastName.placeholder"
-            :autocomplete="labels.lastName.autocomplete"
-            :required="true"
-          />
-          <FormInput
-            :id="labels.pronouns.id"
-            v-model="form.pronouns"
-            :label="labels.pronouns.label"
-            :help="labels.pronouns.help"
-            :error="labels.pronouns.error"
-            :placeholder="labels.pronouns.placeholder"
-            :autocomplete="labels.pronouns.autocomplete"
-          />
-          <FormInput
-            :id="labels.mail.id"
-            v-model="form.email"
-            :label="labels.mail.label"
-            :help="labels.mail.help"
-            :error="labels.mail.error"
-            :placeholder="labels.mail.placeholder"
-            :autocomplete="labels.mail.autocomplete"
-            :required="true"
-          />
-          <FormTextarea
-            :id="labels.message.id"
-            v-model="form.message"
-            :label="labels.message.label"
-            :help="labels.message.help"
-            :error="labels.message.error"
-            :placeholder="labels.message.placeholder"
-            :autocomplete="labels.message.autocomplete"
-          />
-        </section>
-        <section class="controls">
-          <button type="submit" :class="classes.submit">
-            <span v-if="isClicked" class="label" v-text="labels.sending" />
-            <span v-else class="label" v-text="labels.submit" />
-          </button>
-          <button type="button" class="reset" @click="reset">
-            <span class="label" v-text="labels.reset" />
-          </button>
-        </section>
+        <fieldset class="wrapper" :disabled="isSubmitted">
+          <section class="content">
+            <input
+              v-model="form.website"
+              type="text"
+              name="website"
+              autocomplete="off"
+              tabindex="-1"
+              hidden
+            />
+            <FieldText
+              :id="titleId"
+              element="h2"
+              :text="formTitle"
+              class="title"
+            />
+            <p :id="descId" class="description" v-text="labels.description" />
+            <FormInput
+              :id="labels.firstName.id"
+              v-model="form.firstName"
+              :label="labels.firstName.label"
+              :help="labels.firstName.help"
+              :error="labels.firstName.error"
+              :placeholder="labels.firstName.placeholder"
+              :autocomplete="labels.firstName.autocomplete"
+              :required="true"
+              :disabled="isSubmitted"
+            />
+            <FormInput
+              :id="labels.lastName.id"
+              v-model="form.lastName"
+              :label="labels.lastName.label"
+              :help="labels.lastName.help"
+              :error="labels.lastName.error"
+              :placeholder="labels.lastName.placeholder"
+              :autocomplete="labels.lastName.autocomplete"
+              :required="true"
+              :disabled="isSubmitted"
+            />
+            <FormInput
+              :id="labels.pronouns.id"
+              v-model="form.pronouns"
+              :label="labels.pronouns.label"
+              :help="labels.pronouns.help"
+              :error="labels.pronouns.error"
+              :placeholder="labels.pronouns.placeholder"
+              :autocomplete="labels.pronouns.autocomplete"
+              :disabled="isSubmitted"
+            />
+            <FormInput
+              :id="labels.mail.id"
+              v-model="form.email"
+              :label="labels.mail.label"
+              :help="labels.mail.help"
+              :error="labels.mail.error"
+              :placeholder="labels.mail.placeholder"
+              :autocomplete="labels.mail.autocomplete"
+              :required="true"
+              :disabled="isSubmitted"
+            />
+            <FormTextarea
+              :id="labels.message.id"
+              v-model="form.message"
+              :label="labels.message.label"
+              :help="labels.message.help"
+              :error="labels.message.error"
+              :placeholder="labels.message.placeholder"
+              :autocomplete="labels.message.autocomplete"
+              :disabled="isSubmitted"
+            />
+          </section>
+          <section class="feedback">
+            <p
+              v-if="isSubmitted"
+              class="feedback-sending"
+              v-text="labels.feedbackSending"
+            />
+            <p
+              v-else-if="hasErrors"
+              class="feedback-error"
+              v-text="labels.feedbackError"
+            />
+          </section>
+          <section class="controls">
+            <button type="submit" class="submit" :disabled="isSubmitted">
+              <span v-if="isSubmitted" class="label" v-text="labels.sending" />
+              <span v-else class="label" v-text="labels.submit" />
+            </button>
+            <button
+              type="button"
+              class="reset"
+              :disabled="isSubmitted"
+              @click="reset"
+            >
+              <span class="label" v-text="labels.reset" />
+            </button>
+          </section>
+        </fieldset>
         <SuccessOverlay />
       </form>
     </section>
@@ -302,19 +325,6 @@ htmlOverflowLock(isVisible)
   display: none;
 }
 
-.submit,
-.reset {
-  @include button-default;
-  @include button-padding(
-    $top: 0.4em,
-    $bottom: var(--spacing-xs),
-    $left: var(--spacing-l),
-    $right: var(--spacing-l)
-  );
-  @include hover-default;
-  @include focus-default;
-}
-
 .description {
   @include visually-hidden;
 }
@@ -340,10 +350,18 @@ htmlOverflowLock(isVisible)
 .form {
   @include center-content;
 
+  height: 100%;
+}
+
+.wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
+  .is-submitted & {
+    cursor: progress;
+  }
 }
 
 .title {
@@ -373,6 +391,13 @@ htmlOverflowLock(isVisible)
   // width: 100% !important;
 }
 
+.feedback {
+  display: flex;
+  grid-column: span 2;
+  justify-content: center;
+  padding: var(--gutter-xl) 0;
+}
+
 .buttons {
   display: flex;
   flex-wrap: wrap;
@@ -381,9 +406,29 @@ htmlOverflowLock(isVisible)
 
 .submit {
   margin-right: var(--gutter-s);
+}
 
-  &.is-clicked {
+.submit,
+.reset {
+  @include button-default;
+  @include button-padding(
+    $top: 0.4em,
+    $bottom: var(--spacing-xs),
+    $left: var(--spacing-l),
+    $right: var(--spacing-l)
+  );
+  @include hover-default;
+  @include focus-default;
+
+  .is-submitted & {
+    color: var(--disabled-color);
     cursor: progress;
+    border-color: var(--disabled-color);
+
+    // reset hover styles when disabled. focus styles do not need to be reset cuz button is disabled
+    &:hover {
+      box-shadow: none;
+    }
   }
 }
 
