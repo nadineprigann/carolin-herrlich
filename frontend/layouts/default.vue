@@ -3,6 +3,18 @@ import { watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+const headerHeight = ref(0)
+
+const handleHeaderHeight = (height) => {
+  headerHeight.value = height
+}
+
+const style = computed(() => {
+  return {
+    // works cuz the custom property is defined in the root of the layout and cascades down to all children, so it can be used in any component without having to pass it down via props or provide/inject
+    '--header-height': headerHeight.value + 'px',
+  }
+})
 
 const scrollToHash = async () => {
   const hash = route.hash
@@ -36,8 +48,8 @@ watch(
 </script>
 
 <template>
-  <div class="layout-default">
-    <AppHeader />
+  <div class="layout-default" :style="style">
+    <AppHeader @header-height="handleHeaderHeight" />
     <slot />
   </div>
 </template>
