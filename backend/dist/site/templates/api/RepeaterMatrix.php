@@ -40,9 +40,18 @@ class RepeaterMatrix {
         $page = $matrixItem->select_accordion;
 
         // NullPage has id = 0
-        $item->accordion = $page->id
-          ? Helper::getPageFields($page)
-          : null;
+        // $item->accordion = $page->id
+        //   ? Helper::getPageFields($page)
+        //   : null;
+
+         if ($page->id) {
+          $item->accordion = Helper::getPageFields($page);
+          // add name to accordion reepater item to be able to use anchor links
+          $item->id = $page->name;
+        } else {
+          $item->accordion = null;
+          $item->id = null;
+        }
       }
 
       if ($matrixItem->type === 'type_table') {

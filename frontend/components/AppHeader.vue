@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
+const { debounce } = useDebounce()
+
+const emit = defineEmits(['header-height'])
 
 const toggleNavigation = () => {
   layout.value.openOverlay.navigation = true
@@ -9,10 +12,34 @@ const toggleNavigation = () => {
 const showButton = computed(() => {
   return !layout.value.openOverlay.navigation
 })
+
+const headerRef = ref<HTMLElement>()
+
+const getHeaderHeight = () => {
+  if (!headerRef.value) return
+  // emit to parent layout to bind to template in order to define header-height custom prop globally from one source
+  emit('header-height', headerRef.value?.offsetHeight + 1)
+}
+
+const handleResize = debounce(() => {
+  if (!headerRef.value) return
+  getHeaderHeight()
+}, 150)
+
+onMounted(() => {
+  nextTick(() => {
+    getHeaderHeight()
+  })
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <template>
-  <header ref="header" class="app-header">
+  <header ref="headerRef" class="app-header">
     <!-- <h1>{{ defaults.appTitle }}</h1> -->
     <SiteLogo />
     <button

@@ -93,8 +93,8 @@ const scrollTo = () => {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   height: calc(
-    100% - calc(var(--blank-line) * 2.5)
-  ); // account for project infos below the fold
+    calc(100vh - var(--header-height)) - var(--blank-line) * 2.5
+  ); // full viewport height minus header and project infos below the fold, set via default.vue and AppHeader.vue communication
 
   scroll-snap-align: start;
 }
@@ -104,7 +104,7 @@ const scrollTo = () => {
 }
 
 .content {
-  min-height: 100%;
+  min-height: calc(100vh - var(--header-height));
   margin-top: var(--blank-line);
   scroll-snap-align: start;
 }

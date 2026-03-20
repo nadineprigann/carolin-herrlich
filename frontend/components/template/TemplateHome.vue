@@ -98,6 +98,10 @@ const hasLinks = computed(() => {
   grid-template-rows: auto minmax(0, 1fr); /* text, then slider */
   gap: var(--gutter-xl);
   gap: calc(var(--gutter-base) * 6);
+  height: calc(
+    100vh - var(--header-height)
+  ); // full viewport height minus header, set via default.vue and AppHeader.vue communication
+
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   padding: var(--page-spacing);
   padding-top: var(--gutter-l);

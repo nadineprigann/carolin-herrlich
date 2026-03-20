@@ -34,8 +34,6 @@
 html {
   @include fs-html;
 
-  height: 100%;
-
   // https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-behavior
   // &:focus-within {
   //   scroll-behavior: smooth;
@@ -46,7 +44,6 @@ body {
   @include ff-regular;
   @include fs-body;
 
-  height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -54,7 +51,6 @@ body {
 // https://www.joshwcomeau.com/css/custom-css-reset/#nine-root-stacking-context-10
 // stylelint-disable-next-line selector-id-pattern
 #__nuxt {
-  height: 100%;
   isolation: isolate;
 }
 
