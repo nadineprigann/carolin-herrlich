@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 const props = defineProps<{
   link: {
-    alt_text?: string
+    title?: string
     select_page: PageReference
+    select_host?: PageReference
   }
 }>()
 
@@ -13,7 +14,7 @@ const showLink = computed(() => {
 
 <template>
   <NuxtLink v-if="showLink" :to="link.select_page.meta.url" class="field-link">
-    <FieldText v-if="link.alt_text" :text="link.alt_text" class="title" />
+    <FieldText v-if="link.title" :text="link.title" class="title" />
     <FieldText v-else :text="link.select_page.fields.title" class="title" />
   </NuxtLink>
 </template>
