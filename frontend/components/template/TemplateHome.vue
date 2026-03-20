@@ -96,8 +96,7 @@ const hasLinks = computed(() => {
 .template-home {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr); /* text, then slider */
-  gap: var(--gutter-xl);
-  gap: calc(var(--gutter-base) * 6);
+  gap: calc(var(--gutter-base) * 4);
   height: calc(
     100vh - var(--header-height)
   ); // full viewport height minus header, set via default.vue and AppHeader.vue communication
@@ -105,13 +104,22 @@ const hasLinks = computed(() => {
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   padding: var(--page-spacing);
   padding-top: var(--gutter-l);
-  padding-bottom: var(--gutter-s);
+  padding-bottom: var(--gutter-l);
   overflow: hidden;
+}
 
-  @media (min-width: $medium) {
-    gap: var(--gutter-l);
-    padding: var(--gutter-l) calc(var(--gutter-base) * 20) var(--gutter-m)
-      calc(var(--gutter-base) * 20);
+.content {
+  @media (min-width: $xsmall) {
+    max-width: 70vw;
+    margin: 0 auto;
+  }
+
+  @media (min-width: $tablet) {
+    max-width: 25em;
+  }
+
+  @media (min-width: $desktop) {
+    max-width: 25em;
   }
 }
 
@@ -120,26 +128,13 @@ const hasLinks = computed(() => {
   @include fs-large;
 
   text-align: center;
-
-  @media (min-width: $xsmall) {
-    max-width: 70vw;
-    margin: 0 auto;
-  }
-
-  @media (min-width: $tablet) {
-    max-width: 55vw;
-  }
-
-  @media (min-width: $desktop) {
-    max-width: 40vw;
-  }
 }
 
 .slider {
   position: relative; // for links positioning
 
-  @media (min-width: $desktop) {
-    padding: 0 15rem;
+  @media (min-width: $tablet) {
+    @include center-content;
   }
 }
 

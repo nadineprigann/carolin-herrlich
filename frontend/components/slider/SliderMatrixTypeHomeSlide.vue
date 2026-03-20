@@ -14,14 +14,14 @@ const sizes = computed(() => {
 
 <template>
   <div v-if="props.item.title" class="slider-matrix-type-home-slide">
-    <FieldImage
-      :image="props.item.image"
-      :caption="false"
-      class="image"
-      :sizes="sizes"
-    />
-    <section class="content">
-      <NuxtLink :to="props.item.link.meta.url" class="link">
+    <NuxtLink :to="props.item.link.meta.url" class="link">
+      <FieldImage
+        :image="props.item.image"
+        :caption="false"
+        class="image"
+        :sizes="sizes"
+      />
+      <section class="content">
         <section class="header">
           <div class="title" v-text="props.item.title" />
           <div v-if="props.item.date_start" class="dates">
@@ -43,8 +43,8 @@ const sizes = computed(() => {
           :categories="props.item.categories"
           class="categories"
         />
-      </NuxtLink>
-    </section>
+      </section>
+    </NuxtLink>
   </div>
 </template>
 
@@ -53,18 +53,18 @@ const sizes = computed(() => {
   @include link-reset;
   @include focus-default($color: transparent);
 
-  display: block;
-  width: 100%;
-}
-
-.slider-matrix-type-home-slide {
   display: grid;
 
   // implicitly create two rows, one for the image and one for the content
   grid-template-rows: minmax(0, 1fr) auto; // content gets space as needed, image gets the rest;
+  width: 100%;
   height: 100%;
   padding: 1rem var(--gutter-l) 0 var(--gutter-l); // set small padding-top to make focus visible
   overflow: hidden;
+}
+
+.slider-matrix-type-home-slide {
+  height: 100%;
 
   :deep(img) {
     height: 100%;
@@ -75,6 +75,7 @@ const sizes = computed(() => {
   &:hover,
   &:focus-within {
     .image {
+      cursor: pointer;
       box-shadow: var(--shadow) var(--highlight-color);
     }
 
@@ -87,22 +88,23 @@ const sizes = computed(() => {
 .content {
   // use min-height to avoid overly jumping of slides due to different content
   min-height: calc(var(--blank-line) * 8);
+  max-height: calc(var(--blank-line) * 9);
   margin-top: var(--gutter-base);
   background-color: var(--white);
 
-  @media (min-width: $tablet) {
-    min-height: calc(var(--blank-line) * 7);
+  @media (min-width: $desktop) {
+    display: grid;
+    grid-template-columns: 25% auto 15em;
+    gap: 0 var(--gutter-l);
+    min-height: calc(var(--blank-line) * 3);
+    max-height: calc(
+      var(--blank-line) * 3
+    ); // make sure that content never exceeds constraints
   }
 }
 
 .header {
   margin-bottom: var(--blank-line);
-
-  @media (min-width: $medium) {
-    display: flex;
-    flex-wrap: wrap; // allow wrapping to multiple lines if needed
-    justify-content: space-between;
-  }
 }
 
 .date-end {
@@ -125,12 +127,21 @@ const sizes = computed(() => {
 .text {
   @include line-clamp(3);
 
+  @media (min-width: $tablet) {
+    max-width: 70%;
+  }
+
   @media (min-width: $desktop) {
-    max-width: 85%;
+    max-width: none;
   }
 }
 
 .categories {
   margin-top: var(--blank-line);
+
+  @media (min-width: $desktop) {
+    place-content: start end;
+    margin-top: 0;
+  }
 }
 </style>
