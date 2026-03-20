@@ -3,6 +3,9 @@ const props = defineProps<{
   item: MatrixTypeAccordion
 }>()
 
+const route = useRoute()
+const router = useRouter()
+
 const accordionClass = computed(() => {
   return [
     'field-matrix-type-accordion',
@@ -17,12 +20,37 @@ const showAccordion = computed(() => {
 })
 
 const toggleAccordion = () => {
-  accordionVisible.value = !accordionVisible.value
+  if (accordionVisible.value) {
+    // closing manually
+    accordionVisible.value = false
+    // and when this is the current accordion, remove hash set from scroll to in default.vue when opening the accordion via anchor link
+    if (isCurrent.value) router.replace({ hash: '' })
+  } else {
+    // opening manually
+    accordionVisible.value = true
+  }
 }
+
+const isCurrent = computed(() => {
+  return route.hash.replace('#', '') === props.item.id // remove # to make the two comparable
+})
+
+watch(
+  () => route.hash,
+  () => {
+    // wait for DOM to dfully settle before checking the state and opening th accordion
+    nextTick(() => {
+      if (isCurrent.value) {
+        accordionVisible.value = true
+      }
+    })
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
-  <div v-if="showAccordion" :class="accordionClass">
+  <div v-if="showAccordion" :id="item.id" :class="accordionClass">
     <button type="button" class="header" @click="toggleAccordion">
       <FieldText
         element="h4"
@@ -37,7 +65,7 @@ const toggleAccordion = () => {
       />
     </button>
     <FieldMatrix
-      v-if="accordionVisible"
+      v-show="accordionVisible"
       :items="props.item.accordion.content"
       class="content"
       :accordion-title="props.item.accordion.title"
@@ -50,6 +78,9 @@ const toggleAccordion = () => {
   @include center-content;
 
   position: relative;
+  scroll-margin-top: calc(
+    var(--blank-line) * 5
+  ); // to prevent the header from being hidden behind the fixed header when linked to via anchor link
 }
 
 .header {
