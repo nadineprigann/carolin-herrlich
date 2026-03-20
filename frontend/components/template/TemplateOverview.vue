@@ -119,8 +119,8 @@ onDeactivated(() => {
       </ul>
     </section>
     <!-- note: make sure to not use a conditionally rendered wrapper as it blocks transition detection and breaks them. -->
-    <transition name="t-cover" mode="out-in">
-      <div v-if="currentItem" :key="currentItem.meta.url" class="cover">
+    <transition name="t-cover">
+      <div v-if="currentItem" class="cover">
         <div class="tint" />
         <FieldImage
           :image="currentItem.fields?.image"
