@@ -61,6 +61,24 @@ class RepeaterMatrix {
         $item->image = Images::get($matrixItem->image);
         $item->categories = Helper::getPageReferences($matrixItem->select_category);
         $item->link = Helper::getPageReference($matrixItem->select_page);
+
+
+        // whenever select_page and select_host BOTH are set, override the URL of select_page with the URL of select_host + anchor to select_page. this is necessary for accordion links as they come with accordions/xxx by default and would link to this non-existing URL on the frontend. with this override, the accordion links will link to the correct page + anchor on the frontend. implemented in all ocurrences of select_page, therefore also in fields in_depth and custom_links (both repeaters) in getRepeaters() in Helper.php
+        $page = $matrixItem->select_page;
+        $host = $matrixItem->select_host; // your new field
+
+        if ($page && $page->id) {
+
+          $item->link = Helper::getPageReference($page);
+
+          if ($page->template->name === 'accordion' && $host && $host->id) {
+            $item->link->meta->url =
+              rtrim($host->url, '/') . '/#' . $page->name;
+          }
+
+        } else {
+          $item->link = null;
+        }
       }
 
       // if ($matrixItem->type === 'type_image') {

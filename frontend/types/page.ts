@@ -74,15 +74,16 @@ declare global {
     }
   }
 
+  interface InDepthItem {
+    select_page: PageReference
+    select_host?: PageReference
+  }
+
   interface RelatedContent {
     [
       {
         context: Note[]
-        in_depth: [
-          {
-            item: PageReference
-          },
-        ]
+        in_depth: InDepthItem[]
       },
     ]
   }

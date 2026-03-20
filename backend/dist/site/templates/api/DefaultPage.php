@@ -69,7 +69,7 @@ class DefaultPage {
       $response->children = Helper::getPages($page->children);
     }
 
-    // Include categories as categories for these templates
+    // Include categories as categories in response for these templates
     // config-style rules for the templates that should include the categories (filter pages and tools)
     $rules = [
       'overview-tools' => [

@@ -214,12 +214,36 @@ class Helper {
   public static function getRepeater($pages) {
     $array = [];
     if (!$pages) return $array;
+
     foreach ($pages as $p) {
       $p->of(true);
-      // $item = new \StdClass();
-      // $item->meta = self::getMeta($p);
-      // $item->fields = self::getFields($p);
       $item = self::getFields($p);
+
+      // whenever select_page and select_host BOTH are set (currently is the case for fields in_depth and custom_links which are both repeaters), override the URL of select_page with the URL of select_host + anchor to select_page. this is necessary for accordion links as they come with accordions/xxx by default and would link to this non-existing URL on the frontend. with this override, the accordion links will link to the correct page + anchor on the frontend. implemented in all ocurrences of select_page, therefore also in home_slide in RepeaterMatrix.php
+      if (isset($item['select_page']) && isset($item['select_host'])) {
+
+        $page = $p->select_page; // raw Page object
+        $host = $p->select_host;
+
+        if ($page && $page->id) {
+
+          // override URL if accordion
+          if ($page->template->name === 'accordion' && $host && $host->id) {
+
+            // select_page is already transformed → override it
+            if (is_array($item['select_page'])) {
+              foreach ($item['select_page'] as &$link) {
+                $link->meta->url =
+                  rtrim($host->url, '/') . '/#' . $page->name;
+              }
+            } else {
+              $item['select_page']->meta->url =
+                rtrim($host->url, '/') . '/#' . $page->name;
+            }
+          }
+        }
+      }
+
       array_push($array, $item);
     }
     return $array;

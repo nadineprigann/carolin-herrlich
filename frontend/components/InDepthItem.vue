@@ -1,17 +1,21 @@
 <script lang="ts" setup>
 const props = defineProps<{
-  item: PageReference
+  item: InDepthItem
 }>()
 
 const showItem = computed(() => {
-  return props.item?.fields && props.item?.meta
+  return props.item?.select_page?.fields && props.item?.select_page?.meta
 })
 </script>
 
 <template>
   <li v-if="showItem" class="in-depth-item">
-    <NuxtLink :to="props.item.meta.url" class="link">
-      <FieldText element="h5" class="title" :text="props.item.fields.title" />
+    <NuxtLink :to="props.item.select_page.meta.url" class="link">
+      <FieldText
+        element="h5"
+        class="title"
+        :text="props.item.select_page.fields.title"
+      />
     </NuxtLink>
   </li>
 </template>
