@@ -25,11 +25,5 @@ onMounted(() => breakpointsStore.init())
 <style lang="scss">
 @import '~/assets/styles/defaults';
 
-.app {
-  height: 100%;
-
-  > div {
-    height: 100%;
-  }
-}
+// .app {}
 </style>

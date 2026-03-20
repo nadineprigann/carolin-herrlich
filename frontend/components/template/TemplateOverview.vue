@@ -146,20 +146,27 @@ onDeactivated(() => {
 
   grid-template-rows: min-content; // make sure that all items follow suit like auto to avoid toggling the accordion upwards. right now: normal page flow.
   gap: calc(var(--gutter-base) * 6) 0;
+  height: calc(
+    100vh - var(--header-height)
+  ); // full viewport height minus header, set via default.vue and AppHeader.vue communication
 
   // overflow: hidden;
   min-height: 0; // this makes sure the content can shrink if needed, preventing overflow when there are no slides
   padding: var(--page-spacing);
 
   @media (min-width: $medium) {
-    grid-template-rows: minmax(calc(100% - calc(var(--blank-line) * 4.7)), 1fr) auto;
+    grid-template-rows:
+      minmax(calc(100% - calc(var(--blank-line) * 4.7)), 1fr)
+      auto;
     grid-template-columns: minmax(0, 1fr) var(--content-width) minmax(0, 1fr); // minmax to prevent overflow of cover bc it basically says removes the implicit minimum width of 1fr which makes the image "obey"
     gap: var(--gutter-s) 0;
     padding: 0; // reset padding on larger screens to avoid cover image to overflow -> padding applies to it since its not absolutely positioned
   }
 
   @media (min-width: $desktop) {
-    grid-template-rows: minmax(calc(100% - calc(var(--blank-line) * 4.15)), 1fr) auto;
+    grid-template-rows:
+      minmax(calc(100% - calc(var(--blank-line) * 4.5)), 1fr)
+      auto;
   }
 }
 
