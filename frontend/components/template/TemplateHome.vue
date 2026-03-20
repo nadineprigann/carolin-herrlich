@@ -119,7 +119,7 @@ const hasLinks = computed(() => {
   }
 
   @media (min-width: $desktop) {
-    max-width: 25em;
+    max-width: 32em;
   }
 }
 
