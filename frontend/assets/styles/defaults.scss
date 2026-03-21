@@ -157,28 +157,10 @@ button {
 // TODO: mirror styles for ckeditor text fields in the backend and vice versa. corresponding file: site/modules/InputfieldCKEditor/contents-inline_custom.css
 
 blockquote {
+  padding-left: 1em;
   margin-left: 2em;
-
-  // font-size: 1em;
-
-  > p {
-    display: inline;
-  }
-
-  > p::before,
-  > p::after {
-    color: var(--yellow);
-  }
-
-  > p::before {
-    margin-right: 0.15em;
-    content: '“';
-  }
-
-  > p::after {
-    margin-left: 0.15em;
-    content: '”';
-  }
+  font-style: italic;
+  border-left: var(--highlight-color) 2px solid;
 }
 
 .highlight {
