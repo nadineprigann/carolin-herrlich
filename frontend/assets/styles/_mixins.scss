@@ -28,24 +28,22 @@
 }
 
 @mixin hover-default($color: var(--highlight-color)) {
-  // TODO: add transition and wrap this in a media query for hover-capable devices only as well as
-  // &:not(:disabled):hover {
-  //   /* hover styles */
-  // }
-  // &:hover {
+  // TODO: add transition
   @media (hover: hover) and (pointer: fine) {
-    @include element-interaction-default($color);
+    // make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled
+    &:not(:disabled, [aria-disabled='true']):hover {
+      @include element-interaction-default($color);
+    }
   }
 }
 
 @mixin text-hover($color: var(--highlight-color)) {
-  // TODO: add transition and wrap this in a media query for hover-capable devices only as well as
-  // &:not(:disabled):hover {
-  //   /* hover styles */
-  // }
-  // &:hover {
+  // TODO: add transition
   @media (hover: hover) and (pointer: fine) {
-    @include text-interaction-default($color);
+    // make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled
+    &:not(:disabled, [aria-disabled='true']):hover {
+      @include text-interaction-default($color);
+    }
   }
 }
 
@@ -144,8 +142,6 @@
   }
 
   // &:visited {}
-
-  // @media (hover: hover) and (pointer: fine) {}
 }
 
 @mixin list-reset {
