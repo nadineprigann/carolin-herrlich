@@ -371,6 +371,45 @@ class Helper {
     $field = wire('sanitizer')->unentities($field);
     $field = wire('sanitizer')->purify($field);
 
+    // always add target="_blank" and rel="noopener noreferrer" to external links in text fields to make sure that any link set via the backend in a text field opens in a new browsing context. checked for already existing target and rel attributes to not override manually added ones, but add missing values if necessary.
+    $field = preg_replace_callback('/<a([^>]*href="([^"]+)"[^>]*)>/i', function($matches) {
+      $attrs = $matches[1];
+      $href = $matches[2];
+
+      // skip internal links
+      if (
+        str_starts_with($href, '/') ||
+        strpos($href, wire('config')->httpHost) !== false
+      ) {
+        return '<a' . $attrs . '>';
+      }
+
+      // add target if missing
+      if (stripos($attrs, 'target=') === false) {
+        $attrs .= ' target="_blank"';
+      }
+
+      // ensure rel contains noopener noreferrer
+      if (stripos($attrs, 'rel=') === false) {
+        $attrs .= ' rel="noopener noreferrer"';
+      } else {
+        $attrs = preg_replace_callback('/rel="([^"]*)"/i', function($relMatch) {
+          $rels = $relMatch[1];
+
+          if (stripos($rels, 'noopener') === false) {
+            $rels .= ' noopener';
+          }
+          if (stripos($rels, 'noreferrer') === false) {
+            $rels .= ' noreferrer';
+          }
+
+          return 'rel="' . trim($rels) . '"';
+        }, $attrs);
+      }
+
+      return '<a' . $attrs . '>';
+    }, $field);
+
     return $field;
   }
 }

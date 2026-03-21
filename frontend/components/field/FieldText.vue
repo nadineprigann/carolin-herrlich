@@ -18,5 +18,9 @@ const props = withDefaults(defineProps<Props>(), {
 </template>
 
 <style lang="scss" scoped>
-// .field-text {}
+.field-text {
+  :deep(a) {
+    @include link-default;
+  }
+}
 </style>
