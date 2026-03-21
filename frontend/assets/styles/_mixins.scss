@@ -51,7 +51,7 @@
 
 // Use this only on large (!) clickable areas like prev/next buttons over a slideshow. or, if using on smaller elements, make sure to also include focus and active styles to provide user feedback.
 @mixin tap-highlight-reset {
-  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+  -webkit-tap-highlight-color: rgba(var(--highlight-color) / 50%);
 }
 
 @mixin input-reset {
