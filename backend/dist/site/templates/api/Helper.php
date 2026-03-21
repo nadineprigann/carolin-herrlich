@@ -368,8 +368,8 @@ class Helper {
     $field = str_replace('/site/assets/files/', wire('config')->urls->httpRoot . 'site/assets/files/', $field);
 
     // Remove entities (added by HTML Entity Encoder)
-    $field = wire('sanitizer')->unentities($field);
     $field = wire('sanitizer')->purify($field);
+    $field = wire('sanitizer')->unentities($field);
 
     // always add target="_blank" and rel="noopener noreferrer" to external links in text fields to make sure that any link set via the backend in a text field opens in a new browsing context. checked for already existing target and rel attributes to not override manually added ones, but add missing values if necessary.
     $field = preg_replace_callback('/<a([^>]*href="([^"]+)"[^>]*)>/i', function($matches) {
