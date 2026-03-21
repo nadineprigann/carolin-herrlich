@@ -29,7 +29,7 @@
 
 @mixin hover-default($color: var(--highlight-color)) {
   // TODO: add transition
-  // @media (hover: hover) and (pointer: fine) {
+  // @media (hover: hover) and (pointer: fine) { // disable for now to also apply on touch devices. ideally, only apply hover styles on non-touch devices and active styles on touch devices, but currently, active styles are not working properly
   // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interaction
   &:hover {
     @include element-interaction-default($color);
@@ -40,7 +40,7 @@
 
 @mixin text-hover($color: var(--highlight-color)) {
   // TODO: add transition
-  // @media (hover: hover) and (pointer: fine) {
+  // @media (hover: hover) and (pointer: fine) { // disable for now to also apply on touch devices. ideally, only apply hover styles on non-touch devices and active styles on touch devices, but currently, active styles are not working properly
   // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interactions
   &:hover {
     @include text-interaction-default($color);
