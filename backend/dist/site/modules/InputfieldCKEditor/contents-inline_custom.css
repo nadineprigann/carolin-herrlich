@@ -73,26 +73,8 @@
   font-style: normal;
   font-size: 1em;
   margin-left: 2em;
-  border: none !important;
-
-  > p {
-    display: inline;
-  }
-
-  > p::before,
-  > p::after {
-    color: #fcc000;
-  }
-
-  > p::before {
-    content: "“";
-    margin-right: 0.15em;
-  }
-
-  > p::after {
-    content: "”";
-    margin-left: 0.15em;
-  }
+  border-left: #fcc100 solid 2px;
+  padding-left: 1em;
 }
 /* .InputfieldForm .InputfieldCKEditorInline h1,
 .InputfieldForm .InputfieldCKEditorInline h2,

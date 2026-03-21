@@ -166,7 +166,7 @@ const isActiveParent = computed(() => {
   }
 
   @media (min-width: $tablet) {
-    padding-left: calc(var(--gutter-base) * 2);
+    padding-left: calc(var(--gutter-base) * 2.5);
   }
 }
 
