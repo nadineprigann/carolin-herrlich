@@ -29,22 +29,24 @@
 
 @mixin hover-default($color: var(--highlight-color)) {
   // TODO: add transition
-  @media (hover: hover) and (pointer: fine) {
-    // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interaction
-    &:hover {
-      @include element-interaction-default($color);
-    }
+  // @media (hover: hover) and (pointer: fine) {
+  // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interaction
+  &:hover {
+    @include element-interaction-default($color);
   }
+
+  // }
 }
 
 @mixin text-hover($color: var(--highlight-color)) {
   // TODO: add transition
-  @media (hover: hover) and (pointer: fine) {
-    // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interactions
-    &:hover {
-      @include text-interaction-default($color);
-    }
+  // @media (hover: hover) and (pointer: fine) {
+  // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interactions
+  &:hover {
+    @include text-interaction-default($color);
   }
+
+  // }
 }
 
 // Use this only on large (!) clickable areas like prev/next buttons over a slideshow. or, if using on smaller elements, make sure to also include focus and active styles to provide user feedback.
@@ -68,6 +70,9 @@
   padding: calc(var(--gutter-base) * 0.5);
   background-color: var(--grey);
   border-radius: 0.3rem;
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
 
   &:active {
     @include element-interaction-default;
@@ -105,6 +110,9 @@
 
   border: 1px solid var(--black);
   border-radius: 1.5rem;
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
 
   &:active {
     @include element-interaction-default;
@@ -133,6 +141,9 @@
   color: $color;
   text-decoration-style: $decoration-style;
   text-decoration-color: $decoration-color;
+  transition:
+    transform 0.12s ease,
+    opacity 0.12s ease;
 
   &:active {
     @include text-interaction-default;
