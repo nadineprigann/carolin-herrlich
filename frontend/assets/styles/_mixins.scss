@@ -32,7 +32,8 @@
   // &:not(:disabled):hover {
   //   /* hover styles */
   // }
-  &:hover {
+  // &:hover {
+  @media (hover: hover) and (pointer: fine) {
     @include element-interaction-default($color);
   }
 }
@@ -42,7 +43,8 @@
   // &:not(:disabled):hover {
   //   /* hover styles */
   // }
-  &:hover {
+  // &:hover {
+  @media (hover: hover) and (pointer: fine) {
     @include text-interaction-default($color);
   }
 }
