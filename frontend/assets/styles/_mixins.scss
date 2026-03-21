@@ -32,7 +32,8 @@
   // &:not(:disabled):hover {
   //   /* hover styles */
   // }
-  &:hover {
+  // &:hover {
+  @media (hover: hover) and (pointer: fine) {
     @include element-interaction-default($color);
   }
 }
@@ -42,12 +43,13 @@
   // &:not(:disabled):hover {
   //   /* hover styles */
   // }
-  &:hover {
+  // &:hover {
+  @media (hover: hover) and (pointer: fine) {
     @include text-interaction-default($color);
   }
 }
 
-// Use this only on large (!) clickable areas like prev/next buttons over a slideshow
+// Use this only on large (!) clickable areas like prev/next buttons over a slideshow. or, if using on smaller elements, make sure to also include focus and active styles to provide user feedback.
 @mixin tap-highlight-reset {
   -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
 }
@@ -71,6 +73,9 @@
 
   &:active {
     @include element-interaction-default;
+
+    opacity: 0.8;
+    transform: scale(0.97);
   }
 
   @media (min-width: $tablet) {
@@ -105,6 +110,9 @@
 
   &:active {
     @include element-interaction-default;
+
+    opacity: 0.8;
+    transform: scale(0.97);
   }
 }
 
@@ -130,6 +138,9 @@
 
   &:active {
     @include text-interaction-default;
+
+    opacity: 0.8;
+    transform: scale(0.97);
   }
 
   // &:visited {}
