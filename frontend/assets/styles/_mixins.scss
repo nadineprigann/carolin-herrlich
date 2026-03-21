@@ -30,8 +30,8 @@
 @mixin hover-default($color: var(--highlight-color)) {
   // TODO: add transition
   @media (hover: hover) and (pointer: fine) {
-    // make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled
-    &:not(:disabled, [aria-disabled='true']):hover {
+    // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interaction
+    &:hover {
       @include element-interaction-default($color);
     }
   }
@@ -40,8 +40,8 @@
 @mixin text-hover($color: var(--highlight-color)) {
   // TODO: add transition
   @media (hover: hover) and (pointer: fine) {
-    // make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled
-    &:not(:disabled, [aria-disabled='true']):hover {
+    // TODO: make sure to only apply hover effect when elements are not disabled, either native (disabled attr) or aria-disabled -> separate mixin for disabled state cuz in here, it does not work: elements stop interactions
+    &:hover {
       @include text-interaction-default($color);
     }
   }
