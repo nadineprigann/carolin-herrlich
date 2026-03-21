@@ -2,17 +2,27 @@
 // - Use mixins when you want to include a set of styles with parameters (e.g., colors, sizes) that can be customized for each use.
 // - Use placeholders when you want to define a set of styles that can be reused without parameters. Placeholders also consolidate mutually-shared code. see: https://medium.com/@linker21/scss-placeholders-vs-mixins-fe79b9dbb6d5
 
+@mixin text-interaction-default($color: var(--highlight-color)) {
+  text-shadow: var(--shadow) $color;
+}
+
+@mixin element-interaction-default($color: var(--highlight-color)) {
+  box-shadow: var(--shadow) $color;
+}
+
 // use dedicated mixins for text and default element interactions to be able to style them separately
 @mixin focus-default($color: var(--focus-color)) {
   &:focus-visible {
+    @include element-interaction-default($color);
+
     outline: none;
-    box-shadow: var(--shadow) $color;
   }
 }
 
 @mixin text-focus($color: var(--focus-color)) {
   &:focus-visible {
-    text-shadow: var(--shadow) $color;
+    @include text-interaction-default($color);
+
     outline: none;
   }
 }
@@ -23,7 +33,7 @@
   //   /* hover styles */
   // }
   &:hover {
-    box-shadow: var(--shadow) $color;
+    @include element-interaction-default($color);
   }
 }
 
@@ -33,7 +43,7 @@
   //   /* hover styles */
   // }
   &:hover {
-    text-shadow: var(--shadow) $color;
+    @include text-interaction-default($color);
   }
 }
 
@@ -43,6 +53,8 @@
 }
 
 @mixin input-reset {
+  @include tap-highlight-reset;
+
   padding: 0;
   border: none;
 }
@@ -57,12 +69,18 @@
   background-color: var(--grey);
   border-radius: 0.3rem;
 
+  &:active {
+    @include element-interaction-default;
+  }
+
   @media (min-width: $tablet) {
     padding: calc(var(--gutter-base) * 1);
   }
 }
 
 @mixin button-reset {
+  @include tap-highlight-reset;
+
   padding: 0;
   hyphens: auto; // to allow hyphenation of long words for better breaking and wrapping of text, especially for long titles
   color: inherit;
@@ -84,9 +102,15 @@
 
   border: 1px solid var(--black);
   border-radius: 1.5rem;
+
+  &:active {
+    @include element-interaction-default;
+  }
 }
 
 @mixin link-reset {
+  @include tap-highlight-reset;
+
   color: inherit;
   text-decoration-color: transparent;
 }
@@ -104,7 +128,10 @@
   text-decoration-style: $decoration-style;
   text-decoration-color: $decoration-color;
 
-  // &:active {}
+  &:active {
+    @include text-interaction-default;
+  }
+
   // &:visited {}
 
   // @media (hover: hover) and (pointer: fine) {}
