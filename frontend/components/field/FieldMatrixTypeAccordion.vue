@@ -16,7 +16,7 @@ const accordionClass = computed(() => {
 const accordionVisible = ref(false)
 
 const showAccordion = computed(() => {
-  return props.item.accordion != null
+  return props.item.accordion != null && props.item.accordion.content.length > 0
 })
 
 const toggleAccordion = () => {
