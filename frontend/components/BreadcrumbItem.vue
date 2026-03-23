@@ -117,7 +117,7 @@ onBeforeRouteLeave(() => {
   <li :class="classes.item">
     <NuxtLink v-if="isClickable" :to="linkTo" class="link">
       <FieldText
-        element="h5"
+        element="div"
         class="title"
         :text="props.breadcrumb.meta.title"
       />
@@ -126,7 +126,7 @@ onBeforeRouteLeave(() => {
         <FieldText
           v-for="(filterTitle, index) in visibleFilterTitles"
           :key="`filter-title-${index}`"
-          element="h5"
+          element="div"
           class="filter-title"
           :text="filterTitle"
         />
@@ -134,7 +134,7 @@ onBeforeRouteLeave(() => {
     </NuxtLink>
     <template v-else>
       <FieldText
-        element="h5"
+        element="div"
         class="title"
         :text="props.breadcrumb.meta.title"
       />
@@ -142,7 +142,7 @@ onBeforeRouteLeave(() => {
         <FieldText
           v-for="(filterTitle, index) in visibleFilterTitles"
           :key="`filter-title-${index}`"
-          element="h5"
+          element="div"
           class="filter-title"
           :text="filterTitle"
         />

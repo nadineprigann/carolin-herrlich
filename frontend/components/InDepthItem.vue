@@ -12,7 +12,7 @@ const showItem = computed(() => {
   <li v-if="showItem" class="in-depth-item">
     <NuxtLink :to="props.item.select_page.meta.url" class="link">
       <FieldText
-        element="h5"
+        element="div"
         class="title"
         :text="props.item.select_page.fields.title"
       />

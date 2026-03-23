@@ -113,7 +113,7 @@ watch(
         :disabled="!hasContext"
         @click="toggleContext"
       >
-        <FieldText element="h4" class="label" :text="labels.context" />
+        <FieldText element="h3" class="label" :text="labels.context" />
       </button>
       <NumberRowList v-if="showContext" :table="relatedItem.context" />
     </section>
@@ -124,7 +124,7 @@ watch(
         :disabled="!hasInDepth"
         @click="toggleDepth"
       >
-        <FieldText element="h4" class="label" :text="labels.in_depth" />
+        <FieldText element="h3" class="label" :text="labels.in_depth" />
       </button>
       <InDepthList v-if="showInDepth" :items="relatedItem.in_depth" />
     </section>

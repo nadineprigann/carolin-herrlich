@@ -18,7 +18,7 @@ const { fields, breadcrumbs } = toRefs(props.data)
     <div class="header">
       <FieldText
         v-if="fields.subtitle"
-        element="h3"
+        element="div"
         :text="fields.subtitle"
         class="subtitle"
       />

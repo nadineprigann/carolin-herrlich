@@ -77,7 +77,7 @@ const hasLinks = computed(() => {
 <template>
   <main class="template-home">
     <section class="content">
-      <FieldText element="h3" :text="fields.subtitle" class="subtitle" />
+      <FieldText element="h2" :text="fields.subtitle" class="subtitle" />
     </section>
     <section class="slider">
       <div v-if="hasLinks" class="links">
