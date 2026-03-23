@@ -39,7 +39,11 @@ const error = computed(() => {
 
 const classes = computed(() => {
   return {
-    textarea: ['form-textarea', props.disabled ? 'is-disabled' : ''],
+    textarea: [
+      'form-textarea',
+      props.disabled ? 'is-disabled' : '',
+      props.required ? 'is-required' : '',
+    ],
   }
 })
 </script>
@@ -109,6 +113,16 @@ const classes = computed(() => {
 .error {
   @include fs-small;
   @include ff-sans;
+}
+
+.label {
+  .is-required &::after {
+    @include fw-bold;
+
+    margin-left: 0.25ch;
+    color: var(--error-color);
+    content: '*';
+  }
 }
 
 .help,

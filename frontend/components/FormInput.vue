@@ -37,7 +37,11 @@ const error = computed(() => {
 
 const classes = computed(() => {
   return {
-    input: ['form-input', props.disabled ? 'is-disabled' : ''],
+    input: [
+      'form-input',
+      props.disabled ? 'is-disabled' : '',
+      props.required ? 'is-required' : '',
+    ],
   }
 })
 </script>
@@ -104,6 +108,16 @@ const classes = computed(() => {
 .error {
   @include fs-small;
   @include ff-sans;
+}
+
+.label {
+  .is-required &::after {
+    @include fw-bold;
+
+    margin-left: 0.25ch;
+    color: var(--error-color);
+    content: '*';
+  }
 }
 
 .help,
