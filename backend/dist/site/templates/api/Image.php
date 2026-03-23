@@ -8,11 +8,11 @@ class Image {
 
     $response = new \StdClass();
     $response->urls = [];
-    $response->alt_text = $image->alt_text;
-    $response->long_description = $image->long_description;
-    $response->caption = $image->caption;
+    $response->alt_text = Helper::formatPlainText($image->alt_text);
+    $response->long_description = Helper::formatPlainText($image->long_description);
+    $response->caption = Helper::formatPlainText($image->caption);
     $response->year = $image->year;
-    $response->external_link_title = $image->external_link_title;
+    $response->external_link_title = Helper::formatPlainText($image->external_link_title);
     $response->external_link = $image->external_link;
     $response->license = Helper::getPageReference($image->select_license);
     // $response->ext = $image->ext;
