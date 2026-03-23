@@ -5,6 +5,7 @@
   font-style: normal;
   font-weight: 400;
   src: url('~/assets/fonts/IBMPlexSerif-Regular.woff2') format('woff2');
+  font-display: swap; // loads faster than optional, but may cause a flash of unstyled text (FOUT). loads fallback font immediately, then swaps to the custom font once it's loaded.
 }
 
 @font-face {
@@ -12,6 +13,7 @@
   font-style: normal;
   font-weight: 700;
   src: url('~/assets/fonts/IBMPlexSerif-Bold.woff2') format('woff2');
+  font-display: swap;
 }
 
 @font-face {
@@ -19,6 +21,7 @@
   font-style: normal;
   font-weight: 400;
   src: url('~/assets/fonts/IBMPlexSans-Regular.woff2') format('woff2');
+  font-display: swap;
 }
 
 * {
