@@ -41,35 +41,26 @@ const props = defineProps<{
 }
 
 .wrapper {
-  @include center-content;
-
+  position: relative;
   display: flex;
 }
 
 .note {
+  @include center-content;
+
   display: grid;
   grid-template-columns: 3em 1fr;
   padding-right: 4em; /* add some space for the close button */
 }
 
 .button {
-  @include button-padding(
-    $top: 0,
-    $bottom: 0,
-    $left: 0,
-    $right: var(--gutter-s)
-  );
+  @include button-padding($top: 0, $bottom: 0, $left: 0, $right: 0);
 
   position: absolute;
   right: 0;
 
   @media (min-width: $tablet) {
-    @include button-padding(
-      $top: 0,
-      $bottom: 0,
-      $left: 0,
-      $right: var(--gutter-m)
-    );
+    @include button-padding($top: 0, $bottom: 0, $left: 0, $right: 0);
   }
 
   &::before {
