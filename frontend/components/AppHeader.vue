@@ -46,6 +46,7 @@ onUnmounted(() => {
       v-if="showButton"
       type="button"
       class="button"
+      aria-label="Navigation öffnen"
       @click="toggleNavigation"
     >
       <span class="open" />
