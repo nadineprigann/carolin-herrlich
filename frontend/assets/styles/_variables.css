@@ -111,8 +111,8 @@
   }
 }
 
-/* @media (width >= 80em) {
+@media (width >= 80em) {
   :root {
-    --gutter: 4rem;
+    --content-width: 60vw;
   }
-}  */
+}
