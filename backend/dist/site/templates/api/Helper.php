@@ -87,7 +87,7 @@ class Helper {
       $value = $page->get($field->name);
 
       if ($field->type instanceof FieldtypePageTitle) {
-        $pdata[$field->name] = self::formatText($value);
+        $pdata[$field->name] = self::formatPlainText($value);
         continue;
       }
 
@@ -204,7 +204,7 @@ class Helper {
       $item = new \StdClass();
       $item->meta = self::getMeta($p);
       $item->fields = [
-        'title' => $p->title
+        'title' => self::formatPlainText($p->title)
       ];
       array_push($array, $item);
     }
@@ -269,7 +269,7 @@ class Helper {
     $item = new \StdClass();
     $item->meta = self::getMeta($page);
     $item->fields = [
-      'title' => $page->title
+      'title' => self::formatPlainText($page->title)
     ];
     return $item;
   }
@@ -278,7 +278,7 @@ class Helper {
   public static function getSelectOptions($field) {
     return [
       'id' => $field->id,
-      'title' => $field->title,
+      'title' => self::formatPlainText($field->title),
       'value' => $field->value
     ];
   }
@@ -300,7 +300,7 @@ class Helper {
     // $p->of(true);
     $item = new \StdClass();
     $item->ext = $file->ext;
-    $item->description = $file->description;
+    $item->description = self::formatPlainText($file->description);
     $item->url = $file->httpUrl;
     return $item;
   }
@@ -312,7 +312,7 @@ class Helper {
     // $columns = $field->columns;
     foreach ($field as $row) {
       $item = [
-        'key' => self::formatText($row->title),
+        'key' => self::formatText($row->title), // use formatText here instead of formatPlain text cuz these fields are based on the text field in PW and therefore use its settings -> rich text!
         // 'key' => self::formatText($row->table_key),
         'value' => self::formatText($row->value)
         // 'value' => self::formatText($row->table_value)
@@ -329,7 +329,7 @@ class Helper {
     // $columns = $field->columns;
     foreach ($field as $row) {
       $item = [
-        'number' => self::formatText($row->number),
+        'number' => self::formatText($row->number), // use formatText here instead of formatPlain text cuz these fields are based on the text field in PW and therefore use its settings -> rich text!
         // 'key' => self::formatText($row->table_key),
         'text' => self::formatText($row->text)
         // 'value' => self::formatText($row->table_value)

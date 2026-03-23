@@ -15,7 +15,7 @@ class RepeaterMatrix {
       // if ($matrixItem->type === 'type_section') {
       //   $title = $matrixItem->title;
       //   if (!$title) continue;
-      //   $item->title = Helper::formatText($title)
+      //   $item->title = Helper::formatPlainText($title)
       // }
 
       if ($matrixItem->type === 'type_text') {
@@ -55,7 +55,7 @@ class RepeaterMatrix {
       }
 
       if ($matrixItem->type === 'type_table') {
-        $item->title = Helper::formatText($matrixItem->title);
+        $item->title = Helper::formatPlainText($matrixItem->title);
 
         $table = $matrixItem->table;
         if (!$table || !count($table)) continue;
@@ -63,9 +63,9 @@ class RepeaterMatrix {
       }
 
       if ($matrixItem->type === 'type_home_slide') {
-        $item->title = Helper::formatText($matrixItem->title);
-        $item->date_start = Helper::formatText($matrixItem->date_start);
-        $item->date_end = Helper::formatText($matrixItem->date_end);
+        $item->title = Helper::formatPlainText($matrixItem->title);
+        $item->date_start = Helper::formatPlainText($matrixItem->date_start);
+        $item->date_end = Helper::formatPlainText($matrixItem->date_end);
         $item->text = Helper::formatText($matrixItem->text);
         $item->image = Images::get($matrixItem->image);
         $item->categories = Helper::getPageReferences($matrixItem->select_category);
@@ -111,7 +111,7 @@ class RepeaterMatrix {
        if ($matrixItem->type === 'type_button') {
         $button_title = $matrixItem->external_link_title;
         if (!$button_title) continue;
-        $item->button_title = Helper::formatText($button_title);
+        $item->button_title = Helper::formatPlainText($button_title);
       }
 
       array_push($matrix, $item);
