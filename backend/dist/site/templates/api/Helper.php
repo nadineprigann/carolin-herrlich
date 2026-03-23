@@ -412,4 +412,14 @@ class Helper {
 
     return $field;
   }
+
+  public static function formatPlainText($value) {
+    // Decode repeatedly until stable (handles double encoding)
+    do {
+      $decoded = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8'); // decode HTML entities like &, <, >, umlauts etc. to get the actual plain text value
+      if ($decoded === $value) break; // if decoding doesn't change the value, we're done = plain text that cannot be decoded further
+      $value = $decoded; // otherwise, continue decoding
+    } while (true); // always decode at least once, then check if further decoding is needed. can cause infinite loop if the value is not properly encoded. but risk is as encoding is controlled by backend and we do break after stable state is reached.
+    return $value;
+  }
 }
