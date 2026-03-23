@@ -25,6 +25,7 @@ const showChildren = computed(() => {
 <style lang="scss" scoped>
 .template-projects {
   padding: var(--page-spacing);
+  padding-bottom: var(--page-end);
 }
 
 .title {

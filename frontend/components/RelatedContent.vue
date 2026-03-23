@@ -48,11 +48,17 @@ const relatedItem = computed(() => {
 
 // check if there is actual content for the specific section
 const hasContext = computed(() => {
-  return relatedItem.value?.context.length > 0
+  return (
+    relatedItem.value?.context?.length > 0 &&
+    relatedItem.value?.context[0].number !== ''
+  )
 })
 
 const hasInDepth = computed(() => {
-  return relatedItem.value?.in_depth?.length > 0
+  return (
+    relatedItem.value?.in_depth?.length > 0 &&
+    relatedItem.value?.in_depth[0].title !== ''
+  )
 })
 
 // then show content if it has content AND is toggled open
