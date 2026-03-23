@@ -30,7 +30,9 @@ const props = defineProps<{
     margin-top: calc(var(--blank-line) * 2);
   }
 
-  :deep(p) {
+  :deep(p),
+  :deep(ul),
+  :deep(ol) {
     &:not(:last-child) {
       margin-bottom: var(--blank-line);
     }
