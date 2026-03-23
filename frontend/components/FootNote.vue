@@ -43,6 +43,7 @@ const props = defineProps<{
 .wrapper {
   position: relative;
   display: flex;
+  justify-content: space-between;
 }
 
 .note {
@@ -55,9 +56,6 @@ const props = defineProps<{
 
 .button {
   @include button-padding($top: 0, $bottom: 0, $left: 0, $right: 0);
-
-  position: absolute;
-  right: 0;
 
   @media (min-width: $tablet) {
     @include button-padding($top: 0, $bottom: 0, $left: 0, $right: 0);
