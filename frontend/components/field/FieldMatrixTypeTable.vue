@@ -8,7 +8,7 @@ const props = defineProps<{
   <div class="field-matrix-type-table">
     <FieldText
       v-if="props.item.title"
-      element="h4"
+      element="h3"
       :text="props.item.title"
       class="title"
     />

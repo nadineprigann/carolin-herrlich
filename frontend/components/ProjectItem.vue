@@ -27,7 +27,7 @@ const sizes = computed(() => {
         />
         <FieldText
           class="title"
-          element="h4"
+          element="h3"
           :text="props.child.fields.title"
         />
       </div>

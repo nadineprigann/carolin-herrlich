@@ -75,7 +75,7 @@ function resetCurrentItem() {
     @mouseleave="resetCurrentItem"
   >
     <NuxtLink :to="linkTo" class="link" @click="onNavigateCategory">
-      <FieldText class="title" element="h5" :text="props.item.fields.title" />
+      <FieldText class="title" element="h4" :text="props.item.fields.title" />
     </NuxtLink>
   </li>
 </template>

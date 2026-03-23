@@ -34,12 +34,12 @@ const linkTo = computed(() => {
       <div class="header">
         <FieldText
           v-if="isEvent"
-          element="h5"
+          element="div"
           class="subtitle"
           :text="props.child.fields.subtitle"
         />
         <FieldText
-          element="h5"
+          element="h4"
           class="title"
           :text="props.child.fields.title"
         />

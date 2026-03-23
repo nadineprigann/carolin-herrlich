@@ -91,7 +91,7 @@ onDeactivated(() => {
       <FieldText element="h2" :text="fields.title" class="title" />
       <section v-if="fields.text" :class="classes.info">
         <button type="button" class="header" @click="toggleInfo">
-          <FieldText element="h4" class="label" :text="labels.info" />
+          <FieldText element="h3" class="label" :text="labels.info" />
         </button>
         <FieldTextarea v-show="infoVisible" :text="fields.text" class="text" />
       </section>
@@ -114,7 +114,7 @@ onDeactivated(() => {
           @current-item="handleCurrentItem"
         />
         <NuxtLink v-if="hasCategories" :to="linkToAll" class="link">
-          <FieldText element="h5" class="link-title" :text="labels.all" />
+          <FieldText element="h4" class="link-title" :text="labels.all" />
         </NuxtLink>
       </ul>
     </section>

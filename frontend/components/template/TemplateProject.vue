@@ -42,7 +42,7 @@ const scrollTo = () => {
     </section>
     <section id="content" ref="content" class="content">
       <button type="button" class="button" @click="scrollTo">
-        <FieldText element="h4" :text="label.header" class="header" />
+        <FieldText element="h3" :text="label.header" class="header" />
       </button>
       <TextRowList :table="fields.table" class="table" />
       <RelatedContent :related="fields.related_content" />

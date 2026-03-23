@@ -53,13 +53,13 @@ watch(
   <div v-if="showAccordion" :id="item.id" :class="accordionClass">
     <button type="button" class="header" @click="toggleAccordion">
       <FieldText
-        element="h4"
+        element="h3"
         :text="props.item.accordion.title"
         class="title"
       />
       <FieldText
         v-if="props.item.accordion.subtitle"
-        element="h5"
+        element="h4"
         :text="props.item.accordion.subtitle"
         class="subtitle"
       />

@@ -8,7 +8,7 @@ const props = defineProps<{
   <li class="category-item">
     <button type="button" class="button" disabled>
       <FieldText
-        element="h5"
+        element="div"
         class="title"
         :text="props.category.fields.title"
       />
