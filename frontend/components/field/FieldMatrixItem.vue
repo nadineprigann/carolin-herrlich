@@ -42,6 +42,11 @@ const type = computed(() => {
   ); // because selectors got crazy with margin-bottom to exclude accordions following accordions, use margin-top instead. add spacing between matrix items
 }
 
+.field-matrix-type-images + .field-matrix-type-images {
+  // override spacing when images follow after images
+  margin-top: var(--blank-line);
+}
+
 .field-matrix-type-accordion + .field-matrix-type-accordion {
   // override spacing when accordions follow after accordions
   margin-top: 0;
