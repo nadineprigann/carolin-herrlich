@@ -73,7 +73,7 @@ jobs:
           # server-dir: ${{ env.remote-root }}
           username: ${{ env.username }}
           local-dir: frontend/dist/
-          password: ${{ secrets.FRONTEND_PASSWORD }}
+          password: ${{ secrets.FRONTEND_LIVE_PASSWORD }}
           exclude: |
             **/.git*
             **/.git*/**
