@@ -5,7 +5,7 @@ env:
   server: webh04.biohost.net
   # port:
   # protocol:
-  username: m3967ftp-f
+  username: m3967ftp-f-live
   # remote-root:
 
 on:
