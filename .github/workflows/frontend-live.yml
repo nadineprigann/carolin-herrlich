@@ -1,0 +1,98 @@
+name: Frontend Live
+
+env:
+  working-directory: ./frontend
+  server: webh04.biohost.net
+  # port:
+  # protocol:
+  username: m3967ftp-f-live
+  # remote-root:
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-live.yml"
+  repository_dispatch:
+    types: [deploy]
+
+concurrency: frontend
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 9
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm i
+        working-directory: ${{ env.working-directory }}
+
+      - name: Build project
+        run: pnpm generate:prod
+        working-directory: ${{ env.working-directory }}
+
+      # https://github.com/SamKirkland/FTP-Deploy-Action
+      - name: Deploy project (FTP)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ env.server }}
+          # port: ${{ env.port }}
+          # protocol: ${{ env.protocol }}
+          # server-dir: ${{ env.remote-root }}
+          username: ${{ env.username }}
+          local-dir: frontend/dist/
+          password: ${{ secrets.FRONTEND_LIVE_PASSWORD }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            /.user.ini
+            /.well-known
+            /.well-known/**
+            /php.ini
+            /prepend.inc.php
+
+      # https://github.com/easingthemes/ssh-deploy
+      # - name: Deploy project (SSH)
+      #   uses: easingthemes/ssh-deploy@v5.1.0
+      #   with:
+      #     SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+      #     ARGS: "-avzr --delete"
+      #     SOURCE: "frontend/dist/"
+      #     REMOTE_HOST: ${{ env.server }}
+      #     # REMOTE_PORT: ${{ env.port }}
+      #     REMOTE_USER: ${{ env.username }}
+      #     # TARGET: ${{ env.remote-root }}
+      #     EXCLUDE: "/.user.ini, /.well-known, /php.ini, /prepend.inc.php, /.htaccess"
