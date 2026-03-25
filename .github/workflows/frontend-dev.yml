@@ -1,24 +1,24 @@
-name: Frontend
+name: Frontend Dev
 
 env:
   working-directory: ./frontend
   server: webh04.biohost.net
   # port:
   # protocol:
-  username: m3967ftp-f-live
+  username: m3967ftp-f
   # remote-root:
 
 on:
   push:
     branches:
-      - main
+      - dev
     paths:
       - "frontend/**"
-      - ".github/workflows/frontend.yml"
+      - ".github/workflows/frontend-dev.yml"
   repository_dispatch:
     types: [deploy]
 
-concurrency: frontend
+concurrency: frontend-dev
 
 jobs:
   build-and-deploy:
@@ -59,8 +59,9 @@ jobs:
         run: pnpm i
         working-directory: ${{ env.working-directory }}
 
-      - name: Build project
-        run: pnpm generate:prod
+      - name: Build project (Dev)
+        # explicitly use generate:dev which is now defined in package.json and uses .env.development, see https://nuxt.com/modules/dotenv#usage to be able to stage the live site with the dev branch
+        run: pnpm generate:dev
         working-directory: ${{ env.working-directory }}
 
       # https://github.com/SamKirkland/FTP-Deploy-Action
@@ -73,7 +74,7 @@ jobs:
           # server-dir: ${{ env.remote-root }}
           username: ${{ env.username }}
           local-dir: frontend/dist/
-          password: ${{ secrets.FRONTEND_LIVE_PASSWORD }}
+          password: ${{ secrets.FRONTEND_DEV_PASSWORD }}
           exclude: |
             **/.git*
             **/.git*/**
