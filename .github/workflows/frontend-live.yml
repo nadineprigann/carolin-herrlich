@@ -16,7 +16,7 @@ on:
       - "frontend/**"
       - ".github/workflows/frontend-live.yml"
   repository_dispatch:
-    types: [deploy]
+    types: [deploy-live]
 
 concurrency: frontend-live
 

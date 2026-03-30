@@ -16,7 +16,7 @@ on:
       - "frontend/**"
       - ".github/workflows/frontend-dev.yml"
   repository_dispatch:
-    types: [deploy]
+    types: [deploy-dev]
 
 concurrency: frontend-dev
 
