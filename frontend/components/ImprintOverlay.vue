@@ -159,7 +159,7 @@ const isVisible = computed(() => {
           <a
             href="http://www.cegewe-concept.de/"
             rel="noopener"
-            target="blank"
+            target="_blank"
             class="link"
           >
             Claudia Große Wiesmann</a
