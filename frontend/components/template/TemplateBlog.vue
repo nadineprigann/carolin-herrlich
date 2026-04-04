@@ -25,13 +25,13 @@ const showChildren = computed(() => {
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
     <!-- <FilterBar :overlay="'filter'" /> -->
-    <section class="current">
+    <section id="current-posts" class="current">
       <FieldText class="label" element="h3" :text="label.current" />
       <ChildList v-if="showChildren" :children="props.data.children" />
     </section>
     <!-- TODO: implement archive functionality: checkbox to mark posts as archived, filter here. successively: automatically move posts older than X months to archive -->
     <!-- <button type="button" v-text="label.loadArchive" /> -->
-    <!-- <section class="archive-posts">
+    <!-- <section id="archived-posts" class="archive-posts">
       <FieldText class="label" element="h3" :text="label.archive" />
       <ChildList :children="" />
     </section> -->
