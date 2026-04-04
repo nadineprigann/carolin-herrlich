@@ -14,11 +14,13 @@ const blogChildren = [
     name: 10001,
     meta: {
       id: 10001,
-      template: 'blog-all',
+      template: 'blog',
       title: 'Alle',
-      url: { path: '/blog', hash: '#alle' },
+      url: { path: '/blog' },
+      // url: { path: '/blog', hash: '#alle' },
     },
-    path: '/blog#alle',
+    path: '/blog',
+    // path: '/blog#alle',
   },
   // {
   //   name: 10002,
