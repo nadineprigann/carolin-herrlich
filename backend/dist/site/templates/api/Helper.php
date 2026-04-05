@@ -353,7 +353,7 @@ class Helper {
     $fmt = new \IntlDateFormatter(wire('languages')->getLocale(), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
 
     // date formatting
-    $fmt->setPattern("dd.M.yyyy");
+    $fmt->setPattern("dd.MM.yyyy");
     $date = $fmt->format($timestamp);
 
     // time formatting
