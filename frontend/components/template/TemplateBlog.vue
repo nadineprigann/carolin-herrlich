@@ -15,9 +15,49 @@ const label = reactive({
   loadArchive: 'Archiv laden',
 })
 
+const classes = computed(() => {
+  return {
+    button: ['button', hasArchive.value ? '' : 'is-disabled'],
+  }
+})
+
+const archiveLoaded = ref(false)
+
 const showChildren = computed(() => {
   return props.data.children?.length > 0
 })
+
+const currentPosts = computed(() => {
+  if (!showChildren.value) return []
+  return props.data.children?.filter((child) => !child.meta.archived)
+})
+
+const archivedPosts = computed(() => {
+  if (!showChildren.value) return []
+  return props.data.children?.filter((child) => child.meta.archived)
+})
+
+const showCurrent = computed(() => {
+  if (!showChildren.value) return false
+  return currentPosts.value?.length > 0
+})
+
+const hasArchive = computed(() => {
+  if (!showChildren.value) return false
+  return archivedPosts.value?.length > 0
+})
+
+const showArchive = computed(() => {
+  return hasArchive.value && archiveLoaded.value
+})
+
+const showArchiveButton = computed(() => {
+  return !archiveLoaded.value
+})
+
+const loadArchive = () => {
+  archiveLoaded.value = true
+}
 </script>
 
 <template>
@@ -25,21 +65,30 @@ const showChildren = computed(() => {
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
     <!-- <FilterBar :overlay="'filter'" /> -->
-    <section id="current-posts" class="current">
+    <section v-show="showCurrent" id="current-posts" class="current">
       <FieldText class="label" element="h3" :text="label.current" />
-      <ChildList v-if="showChildren" :children="props.data.children" />
+      <ChildList v-if="showChildren" :children="currentPosts" />
     </section>
-    <!-- TODO: implement archive functionality: checkbox to mark posts as archived, filter here. successively: automatically move posts older than X months to archive -->
-    <!-- <button type="button" v-text="label.loadArchive" /> -->
-    <!-- <section id="archived-posts" class="archive-posts">
-      <FieldText class="label" element="h3" :text="label.archive" />
-      <ChildList :children="" />
-    </section> -->
-    <FilterOverlay
+    <!-- TODO: successively: automatically move posts older than X months to archive -->
+    <section id="archived-posts" class="archive">
+      <button
+        v-if="showArchiveButton"
+        type="button"
+        :class="classes.button"
+        :disabled="!hasArchive"
+        @click="loadArchive"
+        v-text="label.loadArchive"
+      />
+      <div v-show="showArchive">
+        <FieldText class="label" element="h3" :text="label.archive" />
+        <ChildList :children="archivedPosts" />
+      </div>
+    </section>
+    <!-- <FilterOverlay
       :filters="categories"
       :template="'blog'"
       :title="fields.title"
-    />
+    /> -->
   </main>
 </template>
 
@@ -50,7 +99,8 @@ const showChildren = computed(() => {
 
 .title,
 .current,
-.archive {
+.archive,
+.button {
   @include center-content;
 }
 
@@ -66,6 +116,28 @@ const showChildren = computed(() => {
 
   @media (min-width: $medium) {
     margin-bottom: calc(var(--gutter-base) * 5);
+  }
+}
+
+.button {
+  @include button-default;
+  @include hover-default;
+  @include focus-default;
+  @include center-content;
+
+  display: flex;
+  max-width: max-content;
+  margin-bottom: var(--gutter-xl);
+
+  &.is-disabled {
+    color: var(--disabled-color);
+    cursor: default;
+    border-color: var(--disabled-color);
+
+    // reset hover styles when disabled. focus styles do not need to be reset cuz button is disabled
+    &:hover {
+      box-shadow: none;
+    }
   }
 }
 
