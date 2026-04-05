@@ -434,7 +434,7 @@ class Helper {
       // determine if a page is archived based on its template and relevant date fields. The logic can be adjusted based on specific requirements for each template.
       switch ($page->template->name) {
       case 'blog-post':
-        return $page->is_archived == 1 || $page->created < strtotime('-6 months');
+        return $page->is_archived == 1 || $page->published < strtotime('-6 months');
 
       case 'event':
         return $page->is_archived == 1;
