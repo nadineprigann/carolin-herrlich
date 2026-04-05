@@ -22,16 +22,16 @@ const blogChildren = [
     // path: '/blog',
     path: '/blog#current-posts',
   },
-  // {
-  //   name: 10002,
-  //   meta: {
-  //     id: 10002,
-  //     template: 'blog-archive',
-  //     title: 'Archiv',
-  //     url: { path: '/blog', hash: '#archived-posts' },
-  //   },
-  //   path: '/blog#archived-posts',
-  // },
+  {
+    name: 10002,
+    meta: {
+      id: 10002,
+      template: 'blog-archive',
+      title: 'Archiv',
+      url: { path: '/blog', hash: '#archived-posts' },
+    },
+    path: '/blog#archived-posts',
+  },
 ]
 
 const labels = reactive({

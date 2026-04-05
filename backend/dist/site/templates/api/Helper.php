@@ -47,6 +47,13 @@ class Helper {
     $response->url = $page->url;
     $response->template = $page->template->name;
     $response->alternate = self::getAlternate($page);
+
+    // whitelist templates for which archive status should be returned
+    $hasArchive = ['blog-post', 'event'];
+
+    if (in_array($page->template->name, $hasArchive)) {
+      $response->archived = self::isArchived($page);
+    }
     return $response;
   }
 
@@ -421,5 +428,19 @@ class Helper {
       $value = $decoded; // otherwise, continue decoding
     } while (true); // always decode at least once, then check if further decoding is needed. can cause infinite loop if the value is not properly encoded. but risk is as encoding is controlled by backend and we do break after stable state is reached.
     return $value;
+  }
+
+  public static function isArchived($page) {
+      // determine if a page is archived based on its template and relevant date fields. The logic can be adjusted based on specific requirements for each template.
+      switch ($page->template->name) {
+      case 'blog-post':
+        return $page->is_archived == 1 || $page->created < strtotime('-6 months');
+
+      // case 'event':
+      //   return $page->event_date < time();
+
+      default:
+        return false;
+    }
   }
 }
