@@ -48,7 +48,7 @@ class Helper {
     $response->template = $page->template->name;
     $response->alternate = self::getAlternate($page);
 
-    // whitelist templates for which archive status should be returned
+    // whitelist templates for which archive status should be returned. extend as needed.
     $hasArchive = ['blog-post', 'event'];
 
     if (in_array($page->template->name, $hasArchive)) {
@@ -436,8 +436,9 @@ class Helper {
       case 'blog-post':
         return $page->is_archived == 1 || $page->created < strtotime('-6 months');
 
-      // case 'event':
-      //   return $page->event_date < time();
+      case 'event':
+        return $page->is_archived == 1;
+        // return $page->is_archived == 1 || $page->event_date < time();
 
       default:
         return false;
