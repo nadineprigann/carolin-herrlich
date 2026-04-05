@@ -24,13 +24,13 @@ const sizes = computed(() => {
       <section class="content">
         <section class="header">
           <div class="title" v-text="props.item.title" />
-          <div v-if="props.item.date_start.formatted.full" class="dates">
+          <div v-if="props.item.date_start" class="dates">
             <span
               class="date-start"
               v-text="props.item.date_start?.formatted?.full"
             />
             <span
-              v-if="props.item.date_end?.formatted?.full"
+              v-if="props.item.date_end"
               class="date-end"
               v-text="props.item.date_end.formatted.full"
             />
