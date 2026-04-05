@@ -67,7 +67,7 @@ const loadArchive = () => {
     <!-- <FilterBar :overlay="'filter'" /> -->
     <section v-show="showCurrent" id="current-posts" class="current">
       <FieldText class="label" element="h3" :text="label.current" />
-      <ChildList v-if="showChildren" :children="currentPosts" />
+      <ChildList :children="currentPosts" />
     </section>
     <!-- TODO: successively: automatically move posts older than X months to archive -->
     <section id="archived-posts" class="archive">
