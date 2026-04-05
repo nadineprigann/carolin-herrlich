@@ -64,8 +64,14 @@ class RepeaterMatrix {
 
       if ($matrixItem->type === 'type_home_slide') {
         $item->title = Helper::formatPlainText($matrixItem->title);
-        $item->date_start = Helper::formatPlainText($matrixItem->date_start);
-        $item->date_end = Helper::formatPlainText($matrixItem->date_end);
+        $item->date_start = Helper::getDatetime(
+          $matrixItem,
+          wire('fields')->get('date_start')
+        );
+        $item->date_end = Helper::getDatetime(
+          $matrixItem,
+          wire('fields')->get('date_end')
+        );
         $item->text = Helper::formatText($matrixItem->text);
         $item->image = Images::get($matrixItem->image);
         $item->categories = Helper::getPageReferences($matrixItem->select_category);

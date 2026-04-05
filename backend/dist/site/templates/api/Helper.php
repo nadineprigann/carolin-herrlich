@@ -351,18 +351,32 @@ class Helper {
     if (!$timestamp) return null;
     // Reference: https://unicode-org.github.io/icu/userguide/format_parse/datetime/
     $fmt = new \IntlDateFormatter(wire('languages')->getLocale(), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
-    $fmt->setPattern("d.M.YYYY");
+
+    // date formatting
+    $fmt->setPattern("dd.M.yyyy");
     $date = $fmt->format($timestamp);
-    $fmt->setPattern("HH:mm");
-    $time = $fmt->format($timestamp);
+
+    // time formatting
+    $hour = date('H', $timestamp);
+    $minute = date('i', $timestamp);
+    // make sure to only show time if it is actually set in the backend (if time is 00:00, we assume that no time was set and only show the date)
+    $hasTime = !($hour === '00' && $minute === '00');
+
+    $time = null;
+    if ($hasTime) {
+      $fmt->setPattern("HH:mm");
+      $time = $fmt->format($timestamp) . 'h';
+    }
+
     return [
       'formatted' => [
         'date' => $date,
         'time' => $time,
+        'full' => $hasTime ? "$date, $time" : $date,
       ],
       'iso' => date('c', $timestamp),
       // 'dst' => date('I', $timestamp),
-      // 'timestamp' => $timestamp
+      'timestamp' => $timestamp
     ];
   }
 
