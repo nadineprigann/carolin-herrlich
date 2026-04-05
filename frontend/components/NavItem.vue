@@ -93,13 +93,13 @@ const normalizedItemTarget = computed(() => {
 const isActiveParent = computed(() => {
   // for styling: if it's a top level item or doesn't have a valid path, it can't be an active parent
   if (isTopLevel.value || !normalizedItemTarget.value) return false
-  // normalize the current route, too to make comparing possible
-  const currentPath = route.path.replace(/\/$/, '') || '/'
+  // normalize the current route, to make comparing possible
+  const currentPath = route.path.replace(/\/$/, '') || '/' // remove trailing slash but keep it for root path, to match the normalization of item paths. this way /about and /about/ are treated the same, but the root path is not affected and remains as '/'
   const currentHash = route.hash || ''
 
   const { path, hash } = normalizedItemTarget.value
 
-  // exact hash link match, e.g. /blog#alle
+  // exact hash link match, e.g. /blog#current-posts should make the "Blog" nav item active, but not if we're on /blog#archived-posts
   if (hash) {
     return currentPath === path && currentHash === hash
   }

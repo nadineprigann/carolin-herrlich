@@ -14,19 +14,15 @@ const blogChildren = [
     name: 10001,
     meta: {
       id: 10001,
-      template: 'blog-current',
       title: 'Aktuell',
-      // url: { path: '/blog' },
       url: { path: '/blog', hash: '#current-posts' },
     },
-    // path: '/blog',
     path: '/blog#current-posts',
   },
   {
     name: 10002,
     meta: {
       id: 10002,
-      template: 'blog-archive',
       title: 'Archiv',
       url: { path: '/blog', hash: '#archived-posts' },
     },
