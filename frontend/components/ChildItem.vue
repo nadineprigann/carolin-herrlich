@@ -19,6 +19,10 @@ const showDescription = computed(() => {
   return isEvent.value && props.child?.fields.long_description.length > 0
 })
 
+const showDates = computed(() => {
+  return isEvent.value && props.child?.fields.date_start
+})
+
 // save current list filters in navigation state when linking to detail page
 const linkTo = computed(() => {
   return {
@@ -32,16 +36,26 @@ const linkTo = computed(() => {
   <li class="child-item">
     <NuxtLink v-if="showChild" :to="linkTo" class="link">
       <div class="header">
-        <FieldText
-          v-if="isEvent"
-          element="div"
-          class="subtitle"
-          :text="props.child.fields.subtitle"
-        />
+        <div v-if="showDates" class="dates">
+          <span
+            class="date-start"
+            v-text="props.child.fields.date_start?.formatted?.full"
+          />
+          <span
+            v-if="props.child.fields.date_end"
+            class="date-end"
+            v-text="props.child.fields.date_end.formatted.full"
+          />
+        </div>
         <FieldText
           element="h4"
           class="title"
           :text="props.child.fields.title"
+        />
+        <FieldText
+          element="h5"
+          class="subtitle"
+          :text="props.child.fields.subtitle"
         />
       </div>
       <FieldTextarea
@@ -74,13 +88,21 @@ const linkTo = computed(() => {
 }
 
 .title,
-.subtitle {
+.subtitle,
+.date-start,
+.date-end {
   @include ff-sans;
   @include fs-medium;
 }
 
 .subtitle {
   margin-bottom: var(--spacing-xxs);
+}
+
+.date-end {
+  &::before {
+    content: ' – ';
+  }
 }
 
 .description {
