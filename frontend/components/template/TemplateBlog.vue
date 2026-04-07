@@ -69,7 +69,6 @@ const loadArchive = () => {
       <FieldText class="label" element="h3" :text="label.current" />
       <ChildList :children="currentPosts" />
     </section>
-    <!-- TODO: successively: automatically move posts older than X months to archive -->
     <section id="archived-posts" class="archive">
       <button
         v-show="showArchiveButton"
