@@ -72,14 +72,14 @@ const loadArchive = () => {
     <!-- TODO: successively: automatically move posts older than X months to archive -->
     <section id="archived-events" class="archive">
       <button
-        v-if="showArchiveButton"
+        v-show="showArchiveButton"
         type="button"
         :class="classes.button"
         :disabled="!hasArchive"
         @click="loadArchive"
         v-text="label.loadArchive"
       />
-      <div v-show="showArchive">
+      <div v-if="showArchive">
         <FieldText class="label" element="h3" :text="label.archive" />
         <ChildList :children="archivedEvents" />
       </div>
