@@ -350,11 +350,12 @@ class Helper {
     $timestamp = intval($page->getUnformatted($field->name));
     if (!$timestamp) return null;
     // Reference: https://unicode-org.github.io/icu/userguide/format_parse/datetime/
-    $fmt = new \IntlDateFormatter(wire('languages')->getLocale(), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
+    // $fmt = new \IntlDateFormatter(wire('languages')->getLocale(), \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
 
-    // date formatting
-    $fmt->setPattern("dd.MM.yyyy");
-    $date = $fmt->format($timestamp);
+    // date formatting, stable across environments by using PHP's date function with a fixed format instead of relying on IntlDateFormatter
+    // $fmt->setPattern("dd.MM.yyyy");
+    // $date = $fmt->format($timestamp);
+    $date = date('d.m.Y', $timestamp);
 
     // time formatting
     $hour = date('H', $timestamp);
@@ -364,8 +365,9 @@ class Helper {
 
     $time = null;
     if ($hasTime) {
-      $fmt->setPattern("HH:mm");
-      $time = $fmt->format($timestamp) . 'h';
+      // $fmt->setPattern("HH:mm");
+      // $time = $fmt->format($timestamp) . 'h';
+      $time = date('H:i', $timestamp) . 'h';
     }
 
     return [
