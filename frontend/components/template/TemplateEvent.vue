@@ -16,13 +16,21 @@ const { fields, breadcrumbs } = toRefs(props.data)
   <main class="template-event">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <div class="header">
+      <FieldText element="h2" :text="fields.title" class="title" />
       <FieldText
         v-if="fields.subtitle"
-        element="div"
+        element="h3"
         :text="fields.subtitle"
         class="subtitle"
       />
-      <FieldText element="h2" :text="fields.title" class="title" />
+      <div v-if="fields.date_start" class="dates">
+        <span class="date-start" v-text="fields.date_start?.formatted?.full" />
+        <span
+          v-if="fields.date_end"
+          class="date-end"
+          v-text="fields.date_end.formatted.full"
+        />
+      </div>
     </div>
     <FieldMatrix :items="fields.content" />
     <section class="sign-up">
@@ -45,6 +53,7 @@ const { fields, breadcrumbs } = toRefs(props.data)
 
 .title,
 .subtitle,
+.dates,
 .sign-up {
   @include center-content;
 }
@@ -54,9 +63,17 @@ const { fields, breadcrumbs } = toRefs(props.data)
 }
 
 .title,
-.subtitle {
+.subtitle,
+.date-start,
+.date-end {
   @include ff-sans;
   @include fs-xlarge;
+}
+
+.date-end {
+  &::before {
+    content: ' – ';
+  }
 }
 
 .sign-up {
