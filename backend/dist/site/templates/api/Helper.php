@@ -453,8 +453,26 @@ class Helper {
         return $page->is_archived == 1 || $page->published < strtotime('-6 months');
 
       case 'event':
-        return $page->is_archived == 1;
-        // return $page->is_archived == 1 || $page->event_date < time();
+        // use date_end if available, otherwise fall back to date_start (mandatory)
+        $date = $page->getUnformatted('date_end') ?: $page->getUnformatted('date_start');
+
+        // no date at all → always archived (safety)
+        if (!$date) return true;
+
+        // check if time is actually set
+        $hour = date('H', $date);
+        $minute = date('i', $date);
+
+        // if time is 00:00, we assume that no time was set. this is relevant for the archive status, as events with a date in the past but no time should not be archived before the actual date has passed.
+        $hasTime = !($hour === '00' && $minute === '00');
+
+        // if no time → treat as end of day
+        if (!$hasTime) {
+          $date = strtotime(date('Y-m-d 23:59:59', $date));
+        }
+
+        // archived if date is in the past or if is_archived is manually set in the backend
+        return $page->is_archived == 1 || $date < time();
 
       default:
         return false;
