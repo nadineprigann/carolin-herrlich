@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 const { normalizeToArray } = useNormalizeArray()
+const formStore = useFormStore()
+const { selected } = storeToRefs(formStore)
 
 interface TemplateTools extends Page {
   children: childItem[]
@@ -51,11 +53,27 @@ const showChildren = computed(() => {
 
 // filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. also update the query from within filter button > maybe use composable for this for other templates
 const filteredChildren = computed(() => {
-  return props.data.children?.filter((child) => {
-    // check if child has category that matches selected filter(s)
-    // if no filter is selected, show all children
-    return true
-  })
+  // props.data.children?.forEach((child) => {
+  //   selected.value.categories.forEach((category) => {
+  //     if (child.meta.id === category.meta.id) {
+  //       filtered.push(child)
+  //     } // check if child has category that matches selected filter(s)
+  //   })
+  //   // if no filter is selected, show all children
+  // })
+
+  const children = props.data.children ?? [] // ensure children is always an array to avoid errors when calling filter on undefined
+
+  // if no filters return all children
+  if (!selected.value.categories.length) return children
+
+  return children.filter((child) =>
+    child.fields.select_category?.some((childCategory) =>
+      selected.value.categories.some(
+        (category) => category.meta.id === childCategory.meta.id,
+      ),
+    ),
+  )
 })
 
 const showRandomChildren = computed(() => {
@@ -86,7 +104,7 @@ onBeforeRouteLeave(() => {
     <FilterBar :overlay="'filter'" />
     <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
-      <ChildList v-if="showChildren" :children="props.data.children" />
+      <ChildList v-if="showChildren" :children="filteredChildren" />
     </section>
     <section class="random">
       <FieldText class="label" element="h3" :text="label.random" />
