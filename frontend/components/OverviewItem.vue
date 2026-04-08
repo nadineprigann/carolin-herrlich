@@ -12,8 +12,10 @@ const props = defineProps<{
 const route = useRoute()
 
 const categoryObject = computed<PageReference>(() => ({
-  // create category object from item by using its props and type it as PAgeRefernece (category). this way, its guaranteed that the type always matches. this type is also use dfor filters in filter overlay.
-  title: props.item.fields.title,
+  // create category object from item by using its props and type it as PageRefernece (category). this way, its guaranteed that the type always matches. this type is also used for filters in filter overlay.
+  fields: {
+    title: props.item.fields.title,
+  },
   meta: {
     alternate: props.item.meta.alternate,
     id: props.item.meta.id,
