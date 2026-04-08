@@ -3,30 +3,33 @@ const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 
 const props = defineProps<{
-  filter?: Category
+  filter: Category
   title?: string
-  selected: boolean
+  selected?: boolean
+  disabled?: boolean
 }>()
 
-// const emit = defineEmits<{
-//   (e: 'selected-filter', filter: Category): void
-// }>()
+const emit = defineEmits<{
+  (e: 'select-filter', filter?: Category): void
+}>()
 
 const title = computed(() => {
   return props.filter ? props.filter.fields.title : props.title
 })
 
-// TODO: communicate filter to parent comp otherwise stay dumb
+// TODO: communicate filter to parent comp to collect it in draft
 const selectFilter = () => {
-  // props.filter
-  //   ? emit('selected-filter', null)
-  //   : emit('selected-filter', props.filter)
+  emit('select-filter', props.filter)
 }
 </script>
 
 <template>
   <button
+    :id="props.filter.meta.id"
     type="button"
+    :name="props.filter.meta.id"
+    :value="props.filter.meta.name"
+    :disabled="props.disabled"
     class="form-button"
     :aria-pressed="props.selected"
     @click="selectFilter"
