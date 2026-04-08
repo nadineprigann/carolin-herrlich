@@ -50,7 +50,7 @@ export const useFormStore = defineStore('form', () => {
   const selectedTitles = computed(() => flattenSelectedToTitles(selected.value))
 
   const clear = () => {
-    Object.assign(selected, JSON.parse(JSON.stringify(initial))) // reset selected filters to initial values by creating a deep copy of the initial object
+    selected.value = JSON.parse(JSON.stringify(initial)) // reset selected filters to initial values by creating a deep copy of the initial object
   }
 
   // function setSelectedField<T>(key: string, value: T) {
