@@ -4,7 +4,7 @@ import { htmlOverflowLock } from '@/composables/useHtmlOverflowLock'
 const layoutStore = useLayoutStore()
 const { layout } = storeToRefs(layoutStore)
 const formStore = useFormStore()
-const { selected } = storeToRefs(formStore)
+const { selected, selectedTitles } = storeToRefs(formStore)
 const { setQuery, resetQuery } = useUpdateQuery()
 
 const props = defineProps<{
@@ -17,31 +17,6 @@ const hasAlphabetical = ref(false)
 const hasCategorical = ref(false)
 const hasChronological = ref(false)
 const hasCyclical = ref(false)
-
-const isVisible = computed(() => {
-  return layout.value.openOverlay.filter
-})
-
-const closeOverlay = () => {
-  layout.value.openOverlay.filter = false
-}
-
-const draft = reactive(JSON.parse(JSON.stringify(selected.value)))
-// create a deep copy of the selected filters from the store object to only update the store when applying filters
-
-const applyFilters = () => {
-  // update store with selected filters from draft only when applying filters
-  Object.assign(selected.value, draft) // update selected filters in store
-  setQuery() // update query with selected filters to make them available BreadcrumbItem and ChildItem for routing and visual purposes. Defined in useUpdateQuery composable.
-  closeOverlay()
-}
-
-const resetFilters = async () => {
-  formStore.clear() // reset selected filters in store to initial values. defined in formStore
-  Object.assign(draft, JSON.parse(JSON.stringify(formStore.initial))) // reset local draft to initial values to update the UI accordingly
-  await resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
-  closeOverlay()
-}
 
 const labels = reactive({
   buttonClose: 'Filter schließen',
@@ -81,6 +56,49 @@ const labels = reactive({
   apply: 'Anwenden',
   reset: 'Zurücksetzen',
 })
+
+const isVisible = computed(() => {
+  return layout.value.openOverlay.filter
+})
+
+const closeOverlay = () => {
+  layout.value.openOverlay.filter = false
+}
+
+const draft = reactive(JSON.parse(JSON.stringify(selected.value)))
+// create a deep copy of the selected filters from the store object to only update the store when applying filters
+
+// const isSelected = (filter?: PageReference) => {
+//   return draft.value.some((filter) => filter.meta.id === filter?.meta.id) // some is used to check if at least one filter in the selected filters array matches the given filter by comparing their meta.id. returns true if a match is found, indicating that the filter is currently selected, and false otherwise. used for ARIA selected state + different styling
+// }
+
+const handleSelectedFilter = (filter?: PageReference) => {
+  if (!filter) return
+  // check if filter is already selected, some returns boolean
+  if (draft.categories?.some((item) => item.meta.id === filter.meta.id)) {
+    // if already selected, remove it from the draft array to deselect it by filtering it out of the array
+    draft.categories = draft.categories.filter(
+      (item) => item.meta.id !== filter.meta.id,
+    )
+  } else {
+    // if not selected, add it to the draft array to select it. spread operator is used to create a new array with the existing selected filters (or empty array) and the new one, to trigger reactivity in case of nested arrays in the draft object.
+    draft.categories = [...(draft.categories || []), filter]
+  }
+}
+
+const applyFilters = () => {
+  // update store with selected filters from draft only when applying filters
+  selected.value = JSON.parse(JSON.stringify(draft)) // update selected filters in store by creating a deep copy of the draft object and replacing store object with it instead of only assigning it to avoid reference issues. structuredClone is not working here due to isuses bc cloning a reactive object, therefore JSON is used. this procedure ensures that nested objects and arrays are also copied and not just referenced. This prevents unintended side effects where changes to the draft would directly affect the selected filters in the store before applying. -> references are also updated
+  setQuery() // update query with selected filters to make them available BreadcrumbItem and ChildItem for routing and visual purposes. Defined in useUpdateQuery composable.
+  closeOverlay()
+}
+
+const resetFilters = async () => {
+  formStore.clear() // reset selected filters in store to initial values. defined in formStore
+  Object.assign(draft, JSON.parse(JSON.stringify(formStore.initial))) // reset local draft to initial values to update the UI accordingly
+  await resetQuery() // update query to reset filters in URL. defined in useUpdateQuery composable.
+  closeOverlay()
+}
 
 const titleId = `filter-titel`
 const descId = `filter-beschreibung`
@@ -128,7 +146,7 @@ htmlOverflowLock(isVisible)
       <section class="content">
         <FieldText :id="titleId" element="h2" :text="labels.title" />
         <p :id="descId" class="description" v-text="labels.description" />
-        <div
+        <!-- <div
           v-if="hasAlphabetical"
           role="group"
           :aria-labelledby="`${titleId}-alphabetisch`"
@@ -152,11 +170,11 @@ htmlOverflowLock(isVisible)
             :value="labels.alphabetical.zToA.value"
             :name="labels.alphabetical.zToA.name"
           />
-          <!-- <div class="buttons">
+          <div class="buttons">
             <FilterButton :title="labels.alphabetical.aToZ" />
             <FilterButton :title="labels.alphabetical.zToA" />
-          </div> -->
-        </div>
+          </div>
+        </div> -->
         <div
           v-if="hasCategorical"
           role="group"
@@ -168,14 +186,16 @@ htmlOverflowLock(isVisible)
             :text="labels.categorical.title"
           />
           <div class="buttons">
-            <!-- <FilterButton
+            <FormButton
               v-for="item in filters"
               :key="item.id"
               :filter="item"
-            /> -->
+              @select-filter="handleSelectedFilter"
+            />
+            <!-- :selected="isSelected(item)" -->
           </div>
         </div>
-        <div
+        <!-- <div
           v-if="hasChronological"
           role="group"
           :aria-labelledby="`${titleId}-chronologisch`"
@@ -186,11 +206,11 @@ htmlOverflowLock(isVisible)
             :text="labels.chronological.title"
           />
           <div class="buttons">
-            <!-- <FilterButton :title="labels.chronological.currFut" />
-            <FilterButton :title="labels.chronological.futCurr" /> -->
+            <FilterButton :title="labels.chronological.currFut" />
+            <FilterButton :title="labels.chronological.futCurr" />
           </div>
-        </div>
-        <div
+        </div> -->
+        <!-- <div
           v-if="hasCyclical"
           role="group"
           :aria-labelledby="`${titleId}-zyklisch`"
@@ -201,12 +221,12 @@ htmlOverflowLock(isVisible)
             :text="labels.cyclical.title"
           />
           <div class="buttons">
-            <!-- <FilterButton :title="labels.cyclical.spring" />
+            <FilterButton :title="labels.cyclical.spring" />
             <FilterButton :title="labels.cyclical.summer" />
             <FilterButton :title="labels.cyclical.autumn" />
-            <FilterButton :title="labels.cyclical.winter" /> -->
+            <FilterButton :title="labels.cyclical.winter" />
           </div>
-        </div>
+        </div> -->
         <!-- TODO: get array of selected filters and only on apply, update query and store them in store to make them availbale for parent to filter their children -->
       </section>
       <section class="controls">
