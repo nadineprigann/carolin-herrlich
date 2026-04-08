@@ -41,10 +41,10 @@ const savedFilters = computed(() => {
   // state?.listFilters?.filter
 })
 
-// const savedFilterArray = computed(() =>
-//   // normalize saved titles with the helper function to always work with an array
-//   normalizeToArray(savedFilters.value).filter(Boolean)
-// )
+const savedFilterArray = computed(() =>
+  // normalize saved titles with the helper function to always work with an array
+  normalizeToArray(savedFilters.value).filter(Boolean),
+)
 
 // used for routing only. depending on whether breadcrumb is a link with filter possibility, append saved filter query params using savedFilters. state was saved by ChildItem.vue when navigating to the detail page.
 const linkTo = computed(() => {
@@ -56,10 +56,10 @@ const linkTo = computed(() => {
   if (!process.client) return props.breadcrumb.path
 
   // if filters where saved, re-apply them to the template URL
-  if (savedFilters.value?.length > 0) {
+  if (savedFilterArray.value?.length > 0) {
     return {
       path: props.breadcrumb.path,
-      query: { filter: savedFilters.value },
+      query: { filter: savedFilterArray.value },
     }
   }
   return props.breadcrumb.path
@@ -68,10 +68,11 @@ const linkTo = computed(() => {
 // this is for visual rendering only. make sure that filter titles are correctly displayed
 const filterTitles = computed(() => {
   // normalize saved titles with the helper function to always work with an array
-  const normalizedTitles = normalizeToArray(savedFilters.value)
+  // const normalizedTitles = normalizeToArray(savedFilters.value)
 
   // remove empty values with Boolean, limit to 3, format to uppercase with the useToUppercase composable and return
-  return normalizedTitles.filter(Boolean).slice(0, 3).map(toUppercase)
+  // return normalizedTitles.filter(Boolean).slice(0, 3).map(toUppercase)
+  return savedFilterArray.value.filter(Boolean).slice(0, 3).map(toUppercase)
 })
 
 // only show filter titles if at least one exists and breadcrumb component has mounted to avoid flashing too early (normally right when navigation starts on prev page because query params are available immediately but target page is not yet mounted)

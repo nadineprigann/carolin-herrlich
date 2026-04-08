@@ -64,7 +64,7 @@ const loadArchive = () => {
   <main class="template-blog">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
-    <!-- <FilterBar :overlay="'filter'" /> -->
+    <FilterBar :overlay="'filter'" />
     <section v-show="showCurrent" id="current-posts" class="current">
       <FieldText class="label" element="h3" :text="label.current" />
       <ChildList :children="currentPosts" />
@@ -83,11 +83,11 @@ const loadArchive = () => {
         <ChildList :children="archivedPosts" />
       </div>
     </section>
-    <!-- <FilterOverlay
+    <FilterOverlay
       :filters="categories"
       :template="'blog'"
       :title="fields.title"
-    /> -->
+    />
   </main>
 </template>
 
