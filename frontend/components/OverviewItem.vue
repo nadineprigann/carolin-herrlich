@@ -55,7 +55,7 @@ const onNavigateCategory = () => {
   // set selected category in store to keep filters synced in a central place.
   if (props.item.meta.template !== 'category') return
   selected.value.categories = [categoryObject.value]
-  const targetPath = `${route.path.replace(/\/$/, '')}/werkzeuge/` // const filterName = props.item.meta.name
+  const targetPath = `${route.path.replace(/\/$/, '')}/werkzeuge/`
   setQuery({ path: targetPath })
 }
 
