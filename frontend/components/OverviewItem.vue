@@ -11,6 +11,10 @@ const props = defineProps<{
 
 const route = useRoute()
 
+const isFilter = computed(() => {
+  return props.item.meta.template === 'category'
+})
+
 const categoryObject = computed<PageReference>(() => ({
   // create category object from item by using its props and type it as PageRefernece (category). this way, its guaranteed that the type always matches. this type is also used for filters in filter overlay.
   fields: {
@@ -74,9 +78,17 @@ function resetCurrentItem() {
     @mouseenter="getCurrentItem"
     @mouseleave="resetCurrentItem"
   >
-    <button type="button" class="link" @click="onNavigateCategory">
+    <button
+      v-if="isFilter"
+      type="button"
+      class="link"
+      @click="onNavigateCategory"
+    >
       <FieldText class="title" element="h4" :text="props.item.fields.title" />
     </button>
+    <NuxtLink v-else :to="props.item.meta.url" class="link">
+      <FieldText class="title" element="h4" :text="props.item.fields.title" />
+    </NuxtLink>
   </li>
 </template>
 
