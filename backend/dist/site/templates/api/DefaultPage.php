@@ -76,12 +76,12 @@ class DefaultPage {
         'parent' => 'template=categories',
         'context' => 'template=context, name=werkzeugpalette',
         'extra' => 'is_overview_category=1',
+        'fetch_children' => false, // custom flag to indicate that children should not be fetched for this template, can be used in the loop below to conditionally fetch children
       ],
       'tools' => [
         'parent' => 'template=categories',
         'context' => 'template=context, name=werkzeugpalette',
-        'extra' => 'is_overview_category=1',
-        ],
+      ],
       'events' => [
         'parent' => 'template=categories',
         'context' => 'template=context, name=veranstaltung',
@@ -99,32 +99,67 @@ class DefaultPage {
 
     $template = $page->template->name;
     // If the template of the current page is listed in the rules, get the categories for this template
-    if (isset($rules[$template])) {
-      $parent = wire('pages')->get("template=categories");
-      // Get the context page defined in the rules for this template
-      $contextSelector = $rules[$template]['context'];
-      $context = wire('pages')->get($contextSelector);
+    if (!isset($rules[$template])) {
+      return $response;
+    }
 
-      // Base selector
-      $selectorParts = [
-        "template=category",
-        "parent_id={$parent->id}",
-        "select_context={$context->id}",
-      ];
+    // resolve parent and context pages based on the rules for the current template
+    $parent = wire('pages')->get($rules[$template]['parent']);
+    // get the context page defined in the rules for this template
+    $context = wire('pages')->get($rules[$template]['context']);
+    // safety guard in case parent or context page is not found, to avoid fetching all categories without context or parent filter
+    if (!$parent->id || !$context->id) {
+      return $response;
+    }
 
-      // Add extra only if it exists
-      if (!empty($rules[$template]['extra'])) {
-        $selectorParts[] = $rules[$template]['extra'];
+    // base selector
+    $selectorParts = [
+      "template=category",
+      "parent_id={$parent->id}",
+      "select_context={$context->id}",
+    ];
+
+    // fetch top-level categories for the current template based on the defined rules, sorted by title
+    $categories = wire('pages')->find(
+      implode(', ', $selectorParts),
+      [
+        'sort' => 'title',
+        'limit' => 1000,
+      ]
+    );
+
+    $result = [];
+    $fetchChildren = $rules[$template]['fetch_children'] ?? true;
+
+    foreach ($categories as $category) {
+      $item = Helper::getPage($category);
+      // only fetch children if flag is not set to false for the current template in the rules
+      if ($fetchChildren) {
+        // fetch children for each category with the same context as the parent category (e.g. tools or events)
+        $children = wire('pages')->find(
+          "template=category, parent_id={$category->id}, select_context={$context->id}",
+          ['sort' => 'title']
+        );
+
+        // only attach children if they actually exist
+        if ($children->count()) {
+          $item->children = Helper::getPages($children);
+        }
       }
 
-      $categories = wire('pages')->find(
-        implode(', ', $selectorParts),
-        [
-          'sort' => 'title',
-          'limit' => 1000,
-        ]
-      );
-      $response->categories = Helper::getPages($categories);
+      $result[] = $item;
+    }
+
+    $response->categories = $result;
+
+    // if extra is set, add additional filtering to the base selector and narrow down array even more, sorted by title
+    if (!empty($rules[$template]['extra'])) {
+      $extra = wire('pages')->find(
+      implode(', ', array_merge($selectorParts, [$rules[$template]['extra']])),
+      ['sort' => 'title', 'limit' => 1000]
+    );
+
+    $response->categories = Helper::getPages($extra);
     }
 
     return $response;
