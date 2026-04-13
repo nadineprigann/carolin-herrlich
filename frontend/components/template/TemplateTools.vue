@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 const { normalizeToArray } = useNormalizeArray()
 const formStore = useFormStore()
-const { selected } = storeToRefs(formStore)
+const { selected, selectedTitles } = storeToRefs(formStore)
 
 interface TemplateTools extends Page {
   children: childItem[]
@@ -23,21 +23,20 @@ const label = reactive({
 })
 
 // true only while navigation away from this page is happening
-const isLeaving = ref(false)
+// const isLeaving = ref(false)
 
 // Cache of last “good” title, so it doesn’t flicker during navigation
-const prevTitle = ref(label.all)
+// const prevTitle = ref(label.all)
 
 // Pure title derived from current query
-const titleFromQuery = computed(() => {
-  const values = normalizeToArray(route.query.filter)
-  const titles = values.slice(0, 3).map(toUppercase)
-  return titles.length ? titles.join(', ') : label.all
-})
+// const titleFromQuery = computed(() => {
+//   const values = normalizeToArray(route.query.filter)
+// })
 
-// use route query to set list title if filtered by a filter
+// use selectedTitles from store to set list title when filter(s) are selected. if no filter is selected, show "all". -> no issue with resetting on leave cuz selectedTitles is reset either manually or when route context fully changes (-> see plugins/2.filter-reset.client.ts). no query dependency, so no issue with query reset on leave.
 const listTitle = computed(() => {
-  return isLeaving.value ? prevTitle.value : titleFromQuery.value
+  const titles = selectedTitles.value.slice(0, 3).map(toUppercase)
+  return titles.length ? titles.join(', ') : label.all
 })
 
 const randomChildren = computed(() => {
@@ -81,20 +80,20 @@ const showRandomChildren = computed(() => {
 })
 
 // Keep cache updated while NOT leaving to reflect ui changes
-watch(
-  titleFromQuery,
-  (newTitle) => {
-    if (!isLeaving.value) {
-      prevTitle.value = newTitle
-    }
-  },
-  { immediate: true },
-)
+// watch(
+//   titleFromQuery,
+//   (newTitle) => {
+//     if (!isLeaving.value) {
+//       prevTitle.value = newTitle
+//     }
+//   },
+//   { immediate: true },
+// )
 
 // When leaving, freeze the title (keep lastStableTitle)
-onBeforeRouteLeave(() => {
-  isLeaving.value = true
-})
+// onBeforeRouteLeave(() => {
+//   isLeaving.value = true
+// })
 </script>
 
 <template>
