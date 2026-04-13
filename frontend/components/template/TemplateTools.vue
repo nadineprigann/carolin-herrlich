@@ -20,6 +20,7 @@ const { toUppercase } = useToUppercase()
 const label = reactive({
   random: 'Zufällige Einträge',
   all: 'Alle',
+  noResults: 'Keine Einträge vorhanden.',
 })
 
 // true only while navigation away from this page is happening
@@ -75,6 +76,10 @@ const filteredChildren = computed(() => {
   )
 })
 
+const noResults = computed(() => {
+  return filteredChildren.value.length === 0
+})
+
 const showRandomChildren = computed(() => {
   return props.data.children?.length > 3
 })
@@ -104,6 +109,7 @@ const showRandomChildren = computed(() => {
     <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
       <ChildList v-if="showChildren" :children="filteredChildren" />
+      <FieldText v-if="noResults" class="feedback" :text="label.noResults" />
     </section>
     <section class="random">
       <FieldText class="label" element="h3" :text="label.random" />
