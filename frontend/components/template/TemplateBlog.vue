@@ -4,7 +4,7 @@ const formStore = useFormStore()
 const { selected, selectedTitles } = storeToRefs(formStore)
 
 interface TemplateBlog extends Page {
-  children: childItem[]
+  children: ChildItem[]
 }
 
 const props = defineProps<{

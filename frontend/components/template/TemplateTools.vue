@@ -3,7 +3,7 @@ const formStore = useFormStore()
 const { selected, selectedTitles } = storeToRefs(formStore)
 
 interface TemplateTools extends Page {
-  children: childItem[]
+  children: ChildItem[]
   categories: Category[]
 }
 
