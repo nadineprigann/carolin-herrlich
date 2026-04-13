@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-const { normalizeToArray } = useNormalizeArray()
 const formStore = useFormStore()
 const { selected, selectedTitles } = storeToRefs(formStore)
 
@@ -14,7 +12,6 @@ const props = defineProps<{
 }>()
 
 const { fields, categories, breadcrumbs } = toRefs(props.data)
-const route = useRoute()
 const { toUppercase } = useToUppercase()
 
 const label = reactive({
@@ -22,17 +19,6 @@ const label = reactive({
   all: 'Alle',
   noResults: 'Keine Einträge vorhanden.',
 })
-
-// true only while navigation away from this page is happening
-// const isLeaving = ref(false)
-
-// Cache of last “good” title, so it doesn’t flicker during navigation
-// const prevTitle = ref(label.all)
-
-// Pure title derived from current query
-// const titleFromQuery = computed(() => {
-//   const values = normalizeToArray(route.query.filter)
-// })
 
 // use selectedTitles from store to set list title when filter(s) are selected. if no filter is selected, show "all". -> no issue with resetting on leave cuz selectedTitles is reset either manually or when route context fully changes (-> see plugins/2.filter-reset.client.ts). no query dependency, so no issue with query reset on leave.
 const listTitle = computed(() => {
@@ -51,17 +37,8 @@ const showChildren = computed(() => {
   return props.data.children?.length > 0
 })
 
-// filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. also update the query from within filter button > maybe use composable for this for other templates
+// filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. if no filter is selected, show all children. if filter(s) are selected, only show children that have at least one of the selected filters as category.
 const filteredChildren = computed(() => {
-  // props.data.children?.forEach((child) => {
-  //   selected.value.categories.forEach((category) => {
-  //     if (child.meta.id === category.meta.id) {
-  //       filtered.push(child)
-  //     } // check if child has category that matches selected filter(s)
-  //   })
-  //   // if no filter is selected, show all children
-  // })
-
   const children = props.data.children ?? [] // ensure children is always an array to avoid errors when calling filter on undefined
 
   // if no filters return all children
@@ -83,22 +60,6 @@ const noResults = computed(() => {
 const showRandomChildren = computed(() => {
   return props.data.children?.length > 3
 })
-
-// Keep cache updated while NOT leaving to reflect ui changes
-// watch(
-//   titleFromQuery,
-//   (newTitle) => {
-//     if (!isLeaving.value) {
-//       prevTitle.value = newTitle
-//     }
-//   },
-//   { immediate: true },
-// )
-
-// When leaving, freeze the title (keep lastStableTitle)
-// onBeforeRouteLeave(() => {
-//   isLeaving.value = true
-// })
 </script>
 
 <template>
