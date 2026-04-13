@@ -185,15 +185,22 @@ htmlOverflowLock(isVisible)
             element="h3"
             :text="labels.categorical.title"
           />
-          <div class="buttons">
-            <FormButton
-              v-for="item in filters"
-              :key="item.id"
-              :filter="item"
-              @select-filter="handleSelectedFilter"
-            />
+          <ul class="buttons">
+            <li v-for="item in filters" :key="item.id">
+              <FormButton
+                :filter="item"
+                @select-filter="handleSelectedFilter"
+              />
+              <FormButton
+                v-for="child in item.children"
+                :key="child.id"
+                :filter="child"
+                @select-filter="handleSelectedFilter"
+              />
+            </li>
+
             <!-- :selected="isSelected(item)" -->
-          </div>
+          </ul>
         </div>
         <!-- <div
           v-if="hasChronological"
