@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
+const { resetQuery } = useUpdateQuery()
 
 const route = useRoute()
 const headerHeight = ref(0)
+const cleared = useState('query-cleared', () => false)
 
 const handleHeaderHeight = (height) => {
   headerHeight.value = height
@@ -35,8 +37,15 @@ const scrollToHash = async () => {
   }, 700) // adjusted to page transition duration of 450ms, defined in _transntions.scss plus some buffer time
 }
 
-// run on first load
-onMounted(scrollToHash)
+onMounted(async () => {
+  if (!cleared.value) {
+    await resetQuery()
+    cleared.value = true
+  }
+
+  // run on first load and only after resetting the query to ensure correct scroll position after page transition (especially when coming from a page with filters, which would otherwise cause the scroll position to be off because of the filter overlay)
+  scrollToHash()
+})
 
 // run when hash changes
 watch(
