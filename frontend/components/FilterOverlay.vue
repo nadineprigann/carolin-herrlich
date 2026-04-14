@@ -185,16 +185,18 @@ htmlOverflowLock(isVisible)
             element="h3"
             :text="labels.categorical.title"
           />
-          <ul class="buttons">
-            <li v-for="item in filters" :key="item.id">
+          <ul class="filter-list">
+            <li v-for="item in filters" :key="item.id" class="filter">
               <FormButton
                 :filter="item"
+                class="parent"
                 @select-filter="handleSelectedFilter"
               />
               <FormButton
                 v-for="child in item.children"
                 :key="child.id"
                 :filter="child"
+                class="child"
                 @select-filter="handleSelectedFilter"
               />
             </li>
@@ -258,9 +260,14 @@ htmlOverflowLock(isVisible)
   grid-template-rows: auto minmax(auto, 1fr) auto;
   width: 100vw;
   height: 100vh;
+  padding: var(--gutter-m) var(--gutter-s);
   overflow: hidden;
   background-color: var(--white-90);
   backdrop-filter: blur(var(--bg-blur));
+
+  @media (min-width: $medium) {
+    padding: var(--gutter-m);
+  }
 }
 
 .close {
@@ -278,15 +285,71 @@ htmlOverflowLock(isVisible)
   @include visually-hidden;
 }
 
-.content,
-.controls {
+.title,
+.form {
   @include center-content;
 }
 
-.buttons {
+.form {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content {
+  gap: 0 var(--gutter-m);
+  height: 100%;
+}
+
+.filter-list {
   max-width: 80vw;
+
+  @include list-reset;
+}
+
+.filter {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--gutter-s);
+  place-items: start start;
+
+  &:not(:last-child) {
+    margin-bottom: var(--gutter-base);
+  }
+}
+
+.child {
+  grid-column: 2 / 3;
+
+  &:first-child {
+    grid-row: 1 / 2;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: var(--gutter-base);
+  }
+}
+
+.parent + .child {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    left: -10vw;
+    content: '\27f6';
+  }
+}
+
+.parent {
+  grid-row: 1;
+  grid-column: 1 / 2;
+
+  &:hover {
+    // target sibling element, child in this case, to apply highlight styles when hovering parent element. this is needed because the parent and child elements are not nested, but siblings in the DOM structure
+    ~ .child {
+      border: 1px var(--highlight-color) solid;
+    }
+  }
 }
 
 .controls {
