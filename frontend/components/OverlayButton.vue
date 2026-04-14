@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const altLabel = reactive({
-  refine: 'Verfeinern',
+  filter: 'Filtern',
 })
 
 const openOverlay = () => {
@@ -28,7 +28,7 @@ const buttonClass = computed(() => [
 
 // render either label from using this button within accordions, event OR use alt label
 const buttonLabel = computed(() => {
-  return props.label ? props.label : altLabel.refine
+  return props.label ? props.label : altLabel.filter
 })
 </script>
 
