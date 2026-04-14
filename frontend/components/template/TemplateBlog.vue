@@ -206,10 +206,13 @@ const loadArchive = () => {
   border-bottom: 1px solid var(--black);
 }
 
-.current {
-  // note: remove the following delcaration when archive is implemented
-
+.archive {
   padding-bottom: var(--page-end);
+  margin-top: calc(var(--gutter-base) * 5);
+
+  @media (min-width: $tablet) {
+    margin-top: calc(var(--gutter-base) * 10);
+  }
 }
 
 .feedback {
