@@ -211,4 +211,9 @@ const loadArchive = () => {
 
   padding-bottom: var(--page-end);
 }
+
+.feedback {
+  margin-top: var(--gutter-base);
+  font-size: var(--fs-small);
+}
 </style>

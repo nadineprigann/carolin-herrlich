@@ -219,4 +219,9 @@ const loadArchive = () => {
 //     margin-top: calc(var(--gutter-base) * 10);
 //   }
 // }
+
+.feedback {
+  margin-top: var(--gutter-base);
+  font-size: var(--fs-small);
+}
 </style>
