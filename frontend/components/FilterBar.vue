@@ -8,7 +8,7 @@ const props = defineProps<{
 <template>
   <section class="filter-bar">
     <OverlayButton :overlay="props.overlay" />
-    <SearchBar />
+    <!-- <SearchBar /> -->
   </section>
 </template>
 
