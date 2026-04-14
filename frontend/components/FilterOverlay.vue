@@ -123,28 +123,29 @@ htmlOverflowLock(isVisible)
 </script>
 
 <template>
-  <section
-    v-if="isVisible"
-    class="filter-overlay"
-    role="dialog"
-    aria-modal="true"
-    :aria-labelledby="titleId"
-    :aria-describedby="descId"
-    tabindex="-1"
-    @keydown.esc.prevent.stop="closeOverlay"
-  >
-    <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
+  <transition name="t-fade">
+    <section
+      v-if="isVisible"
+      class="filter-overlay"
+      role="dialog"
+      aria-modal="true"
+      :aria-labelledby="titleId"
+      :aria-describedby="descId"
+      tabindex="-1"
+      @keydown.esc.prevent.stop="closeOverlay"
+    >
+      <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
 
-    <form class="form" @submit.prevent="send">
-      <section class="content">
-        <FieldText
-          :id="titleId"
-          element="h2"
-          :text="labels.title"
-          class="title"
-        />
-        <p :id="descId" class="description" v-text="labels.description" />
-        <!-- <div
+      <form class="form" @submit.prevent="send">
+        <section class="content">
+          <FieldText
+            :id="titleId"
+            element="h2"
+            :text="labels.title"
+            class="title"
+          />
+          <p :id="descId" class="description" v-text="labels.description" />
+          <!-- <div
           v-if="hasAlphabetical"
           role="group"
           :aria-labelledby="`${titleId}-alphabetisch`"
@@ -173,37 +174,37 @@ htmlOverflowLock(isVisible)
             <FilterButton :title="labels.alphabetical.zToA" />
           </div>
         </div> -->
-        <div
-          v-if="hasCategorical"
-          role="group"
-          :aria-labelledby="`${titleId}-kategorisch`"
-        >
-          <FieldText
-            :id="`${titleId}-kategorisch`"
-            element="h3"
-            :text="labels.categorical.title"
-            class="subtitle"
-          />
-          <ul class="filter-list">
-            <li v-for="item in filters" :key="item.id" class="filter">
-              <FormButton
-                :filter="item"
-                class="parent"
-                :selected="isSelected(item)"
-                @select-filter="handleSelectedFilter"
-              />
-              <FormButton
-                v-for="child in item.children"
-                :key="child.id"
-                :filter="child"
-                class="child"
-                :selected="isSelected(child)"
-                @select-filter="handleSelectedFilter"
-              />
-            </li>
-          </ul>
-        </div>
-        <!-- <div
+          <div
+            v-if="hasCategorical"
+            role="group"
+            :aria-labelledby="`${titleId}-kategorisch`"
+          >
+            <FieldText
+              :id="`${titleId}-kategorisch`"
+              element="h3"
+              :text="labels.categorical.title"
+              class="subtitle"
+            />
+            <ul class="filter-list">
+              <li v-for="item in filters" :key="item.id" class="filter">
+                <FormButton
+                  :filter="item"
+                  class="parent"
+                  :selected="isSelected(item)"
+                  @select-filter="handleSelectedFilter"
+                />
+                <FormButton
+                  v-for="child in item.children"
+                  :key="child.id"
+                  :filter="child"
+                  class="child"
+                  :selected="isSelected(child)"
+                  @select-filter="handleSelectedFilter"
+                />
+              </li>
+            </ul>
+          </div>
+          <!-- <div
           v-if="hasChronological"
           role="group"
           :aria-labelledby="`${titleId}-chronologisch`"
@@ -218,7 +219,7 @@ htmlOverflowLock(isVisible)
             <FilterButton :title="labels.chronological.futCurr" />
           </div>
         </div> -->
-        <!-- <div
+          <!-- <div
           v-if="hasCyclical"
           role="group"
           :aria-labelledby="`${titleId}-zyklisch`"
@@ -235,19 +236,25 @@ htmlOverflowLock(isVisible)
             <FilterButton :title="labels.cyclical.winter" />
           </div>
         </div> -->
-        <!-- TODO: get array of selected filters and only on apply, update query and store them in store to make them availbale for parent to filter their children -->
-      </section>
-      <section class="controls">
-        <button type="button" class="apply" @click="applyFilters">
-          <span class="label" v-text="labels.apply" />
-        </button>
-        <button type="button" class="reset" @click="resetFilters">
-          <span class="label" v-text="labels.reset" />
-        </button>
-      </section>
-    </form>
-  </section>
+          <!-- TODO: get array of selected filters and only on apply, update query and store them in store to make them availbale for parent to filter their children -->
+        </section>
+        <section class="controls">
+          <button type="button" class="apply" @click="applyFilters">
+            <span class="label" v-text="labels.apply" />
+          </button>
+          <button type="button" class="reset" @click="resetFilters">
+            <span class="label" v-text="labels.reset" />
+          </button>
+        </section>
+      </form>
+    </section>
+  </transition>
 </template>
+
+<style lang="scss">
+// defined in _transitions.scss
+@include t-fade($duration: var(--short));
+</style>
 
 <style lang="scss" scoped>
 .filter-overlay {
