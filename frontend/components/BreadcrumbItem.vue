@@ -191,4 +191,18 @@ onBeforeRouteLeave(() => {
   // whatever descendants of title: they should not wrap
   white-space: nowrap;
 }
+
+// seperate elements with comma, but not last element
+.filter-title {
+  &:not(:last-of-type)::after {
+    margin-right: var(--spacing-xxs);
+    content: ', ';
+  }
+}
+
+// if title is followed by a filter-title, set . before filter-title. only when there is at least one filter title and only for the first filter title
+.title + .filter-title::before {
+  margin-left: var(--spacing-xxs);
+  content: ' · ';
+}
 </style>
