@@ -14,9 +14,13 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .filter-bar {
-  display: flex;
+  @include center-content;
 
-  // max-width: 80vw;
-  // margin: 0 auto;
+  display: flex;
+  margin-bottom: var(--gutter-xl);
+
+  @media (min-width: $medium) {
+    margin-bottom: calc(var(--gutter-base) * 5);
+  }
 }
 </style>
