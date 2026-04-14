@@ -81,7 +81,7 @@ function resetCurrentItem() {
     <button
       v-if="isFilter"
       type="button"
-      class="link"
+      class="button"
       @click="onNavigateCategory"
     >
       <FieldText class="title" element="h4" :text="props.item.fields.title" />
@@ -103,10 +103,28 @@ function resetCurrentItem() {
   }
 }
 
-.link {
-  @include link-reset;
+.link,
+.button {
   @include hover-default;
   @include focus-default;
+
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.link {
+  @include link-reset;
+  @include button-padding(
+    $top: var(--gutter-base),
+    $bottom: var(--gutter-base),
+    $left: var(--gutter-base),
+    $right: var(--gutter-base)
+  );
+}
+
+.button {
+  @include button-reset;
   @include button-padding(
     $top: var(--gutter-base),
     $bottom: var(--gutter-base),
@@ -114,9 +132,9 @@ function resetCurrentItem() {
     $right: var(--gutter-base)
   );
 
-  display: inline-block;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
 }
 
 .title {
