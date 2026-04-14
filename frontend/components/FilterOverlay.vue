@@ -19,7 +19,7 @@ const hasCategorical = ref(false)
 // const hasCyclical = ref(false)
 
 const labels = reactive({
-  buttonClose: 'Filter schließen',
+  overlayTitle: 'Filter',
   title: 'Ansicht verfeinern',
   description:
     'Wähle Filter aus und klicke anschließend auf „Anwenden“, um die Liste zu aktualisieren.',
@@ -133,18 +133,16 @@ htmlOverflowLock(isVisible)
     tabindex="-1"
     @keydown.esc.prevent.stop="closeOverlay"
   >
-    <button
-      type="button"
-      class="close"
-      :aria-label="labels.buttonClose"
-      @click="closeOverlay"
-    >
-      <span class="label" />
-    </button>
+    <CloseButton :overlay-title="labels.overlayTitle" @click="closeOverlay" />
 
     <form class="form" @submit.prevent="send">
       <section class="content">
-        <FieldText :id="titleId" element="h2" :text="labels.title" />
+        <FieldText
+          :id="titleId"
+          element="h2"
+          :text="labels.title"
+          class="title"
+        />
         <p :id="descId" class="description" v-text="labels.description" />
         <!-- <div
           v-if="hasAlphabetical"
@@ -184,6 +182,7 @@ htmlOverflowLock(isVisible)
             :id="`${titleId}-kategorisch`"
             element="h3"
             :text="labels.categorical.title"
+            class="subtitle"
           />
           <ul class="filter-list">
             <li v-for="item in filters" :key="item.id" class="filter">
@@ -285,12 +284,17 @@ htmlOverflowLock(isVisible)
   @include visually-hidden;
 }
 
-.title,
-.form {
-  @include center-content;
+.title {
+  @include fs-xlarge;
+  @include ff-sans;
+
+  max-width: var(--title-width);
+  margin-bottom: var(--gutter-xl);
 }
 
 .form {
+  @include center-content;
+
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -299,6 +303,12 @@ htmlOverflowLock(isVisible)
 .content {
   gap: 0 var(--gutter-m);
   height: 100%;
+}
+
+.subtitle {
+  @include ff-sans;
+
+  margin-bottom: var(--gutter-base);
 }
 
 .filter-list {
@@ -358,7 +368,19 @@ htmlOverflowLock(isVisible)
 }
 
 .apply,
-.back {
+.reset {
   @include button-default;
+  @include button-padding(
+    $top: 0.4em,
+    $bottom: var(--spacing-xs),
+    $left: var(--spacing-l),
+    $right: var(--spacing-l)
+  );
+  @include hover-default;
+  @include focus-default;
+}
+
+.apply {
+  margin-right: var(--gutter-s);
 }
 </style>
