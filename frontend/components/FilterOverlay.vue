@@ -10,49 +10,49 @@ const { setQuery, resetQuery } = useUpdateQuery()
 const props = defineProps<{
   // to get these filters, make sure to fetch them from the backend. therefore, adjust in DefaultPage.php: the template for which the categories have to be returned; with the specific context of the parent template
   filters: PageReference[]
-  template: 'tools' | 'blog' | 'events'
+  // template: 'tools' | 'blog' | 'events'
 }>()
 
-const hasAlphabetical = ref(false)
+// const hasAlphabetical = ref(false)
 const hasCategorical = ref(false)
-const hasChronological = ref(false)
-const hasCyclical = ref(false)
+// const hasChronological = ref(false)
+// const hasCyclical = ref(false)
 
 const labels = reactive({
   buttonClose: 'Filter schließen',
   title: 'Ansicht verfeinern',
   description:
     'Wähle Filter aus und klicke anschließend auf „Anwenden“, um die Liste zu aktualisieren.',
-  alphabetical: {
-    title: 'Alphabetisch',
-    aToZ: {
-      label: 'A-Z',
-      value: 'az',
-      name: 'radio-alphabetical',
-      id: 'filterAlphabeticalAZ',
-    },
-    zToA: {
-      label: 'Z-A',
-      value: 'za',
-      name: 'radio-alphabetical',
-      id: 'filterAlphabeticalZA',
-    },
-  },
+  // alphabetical: {
+  //   title: 'Alphabetisch',
+  //   aToZ: {
+  //     label: 'A-Z',
+  //     value: 'az',
+  //     name: 'radio-alphabetical',
+  //     id: 'filterAlphabeticalAZ',
+  //   },
+  //   zToA: {
+  //     label: 'Z-A',
+  //     value: 'za',
+  //     name: 'radio-alphabetical',
+  //     id: 'filterAlphabeticalZA',
+  //   },
+  // },
   categorical: {
     title: 'Kategorisch',
   },
-  chronological: {
-    title: 'Chronologisch',
-    currFut: 'aktuell > zukünftig',
-    futCurr: 'zukünftig > aktuell',
-  },
-  cyclical: {
-    title: 'Zyklisch',
-    spring: 'Frühling',
-    summer: 'Sommer',
-    autumn: 'Herbst',
-    winter: 'Winter',
-  },
+  // chronological: {
+  //   title: 'Chronologisch',
+  //   currFut: 'aktuell > zukünftig',
+  //   futCurr: 'zukünftig > aktuell',
+  // },
+  // cyclical: {
+  //   title: 'Zyklisch',
+  //   spring: 'Frühling',
+  //   summer: 'Sommer',
+  //   autumn: 'Herbst',
+  //   winter: 'Winter',
+  // },
   apply: 'Anwenden',
   reset: 'Zurücksetzen',
 })
@@ -105,12 +105,12 @@ const descId = `filter-beschreibung`
 
 // show sections of filters based on template
 watchEffect(() => {
-  hasAlphabetical.value = true
+  // hasAlphabetical.value = true
   hasCategorical.value = true
 
-  const advanced = props.template !== 'tools'
-  hasChronological.value = advanced
-  hasCyclical.value = advanced
+  // const advanced = props.template !== 'tools'
+  // hasChronological.value = advanced
+  // hasCyclical.value = advanced
 })
 
 onDeactivated(() => {
