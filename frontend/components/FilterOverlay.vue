@@ -68,9 +68,9 @@ const closeOverlay = () => {
 const draft = reactive(JSON.parse(JSON.stringify(selected.value)))
 // create a deep copy of the selected filters from the store object to only update the store when applying filters
 
-// const isSelected = (filter?: PageReference) => {
-//   return draft.value.some((filter) => filter.meta.id === filter?.meta.id) // some is used to check if at least one filter in the selected filters array matches the given filter by comparing their meta.id. returns true if a match is found, indicating that the filter is currently selected, and false otherwise. used for ARIA selected state + different styling
-// }
+const isSelected = (filter?: PageReference) => {
+  return draft.categories?.some((item) => item.meta.id === filter?.meta.id) // some is used to check if at least one filter in the selected filters array matches the given filter by comparing their meta.id. returns true if a match is found, indicating that the filter is currently selected, and false otherwise. used for ARIA selected state + different styling
+}
 
 const handleSelectedFilter = (filter?: PageReference) => {
   if (!filter) return
@@ -190,6 +190,7 @@ htmlOverflowLock(isVisible)
               <FormButton
                 :filter="item"
                 class="parent"
+                :selected="isSelected(item)"
                 @select-filter="handleSelectedFilter"
               />
               <FormButton
@@ -197,11 +198,10 @@ htmlOverflowLock(isVisible)
                 :key="child.id"
                 :filter="child"
                 class="child"
+                :selected="isSelected(child)"
                 @select-filter="handleSelectedFilter"
               />
             </li>
-
-            <!-- :selected="isSelected(item)" -->
           </ul>
         </div>
         <!-- <div
