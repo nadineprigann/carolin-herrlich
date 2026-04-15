@@ -125,7 +125,7 @@ htmlOverflowLock(isVisible)
 <template>
   <transition name="t-fade">
     <section
-      v-if="isVisible"
+      v-show="isVisible"
       class="filter-overlay"
       role="dialog"
       aria-modal="true"
@@ -174,11 +174,7 @@ htmlOverflowLock(isVisible)
             <FilterButton :title="labels.alphabetical.zToA" />
           </div>
         </div> -->
-          <div
-            v-if="hasCategorical"
-            role="group"
-            :aria-labelledby="`${titleId}-kategorisch`"
-          >
+          <div role="group" :aria-labelledby="`${titleId}-kategorisch`">
             <FieldText
               :id="`${titleId}-kategorisch`"
               element="h3"
