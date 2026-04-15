@@ -14,7 +14,7 @@ export const useFormStore = defineStore('form', () => {
     cyclical: [],
   }
 
-  let selected = reactive<Selected>({
+  let selected = ref<Selected>({
     // checkout overlay fields
     // firstName: '',
     // lastName: '',
@@ -35,7 +35,7 @@ export const useFormStore = defineStore('form', () => {
       selected.alphabetical,
       selected.chronological,
       ...selected.cyclical,
-      ...selected.categories.map((category) => category.title),
+      ...selected.categories.map((category) => category.fields.title),
     ]
 
       // remove empties + dedupe, keep order
@@ -46,11 +46,11 @@ export const useFormStore = defineStore('form', () => {
     return [...new Set(titles)] // filter out empty strings
   }
 
-  // then, create a computed property that flattens the selected filters to an array of titles whenever selected changes
-  const selectedTitles = computed(() => flattenSelectedToTitles(selected))
+  // then, create a computed property (getter) that flattens the selected filters to an array of titles whenever selected changes
+  const selectedTitles = computed(() => flattenSelectedToTitles(selected.value))
 
   const clear = () => {
-    Object.assign(selected, JSON.parse(JSON.stringify(initial))) // reset selected filters to initial values by creating a deep copy of the initial object
+    selected.value = JSON.parse(JSON.stringify(initial)) // reset selected filters to initial values by creating a deep copy of the initial object
   }
 
   // function setSelectedField<T>(key: string, value: T) {

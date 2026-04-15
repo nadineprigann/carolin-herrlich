@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-const { normalizeToArray } = useNormalizeArray()
+const formStore = useFormStore()
+const { selected, selectedTitles } = storeToRefs(formStore)
 
 interface TemplateTools extends Page {
-  children: childItem[]
+  children: ChildItem[]
   categories: Category[]
 }
 
@@ -12,30 +12,18 @@ const props = defineProps<{
 }>()
 
 const { fields, categories, breadcrumbs } = toRefs(props.data)
-const route = useRoute()
 const { toUppercase } = useToUppercase()
 
 const label = reactive({
   random: 'Zufällige Einträge',
   all: 'Alle',
+  noResults: 'Keine Einträge vorhanden.',
 })
 
-// true only while navigation away from this page is happening
-const isLeaving = ref(false)
-
-// Cache of last “good” title, so it doesn’t flicker during navigation
-const prevTitle = ref(label.all)
-
-// Pure title derived from current query
-const titleFromQuery = computed(() => {
-  const values = normalizeToArray(route.query.filter)
-  const titles = values.slice(0, 3).map(toUppercase)
-  return titles.length ? titles.join(', ') : label.all
-})
-
-// use route query to set list title if filtered by a filter
+// use selectedTitles from store to set list title when filter(s) are selected. if no filter is selected, show "all". -> no issue with resetting on leave cuz selectedTitles is reset either manually or when route context fully changes (-> see plugins/2.filter-reset.client.ts). no query dependency, so no issue with query reset on leave.
 const listTitle = computed(() => {
-  return isLeaving.value ? prevTitle.value : titleFromQuery.value
+  const titles = selectedTitles.value.slice(0, 3).map(toUppercase)
+  return titles.length ? titles.join(', ') : label.all
 })
 
 const randomChildren = computed(() => {
@@ -49,33 +37,28 @@ const showChildren = computed(() => {
   return props.data.children?.length > 0
 })
 
-// filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. also update the query from within filter button > maybe use composable for this for other templates
+// filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. if no filter is selected, show all children. if filter(s) are selected, only show children that have at least one of the selected filters as category.
 const filteredChildren = computed(() => {
-  return props.data.children?.filter((child) => {
-    // check if child has category that matches selected filter(s)
-    // if no filter is selected, show all children
-    return true
-  })
+  const children = props.data.children ?? [] // ensure children is always an array to avoid errors when calling filter on undefined
+
+  // if no filters return all children
+  if (!selected.value.categories.length) return children
+
+  return children.filter((child) =>
+    child.fields.select_category?.some((childCategory) =>
+      selected.value.categories.some(
+        (category) => category.meta.id === childCategory.meta.id,
+      ),
+    ),
+  )
+})
+
+const noResults = computed(() => {
+  return filteredChildren.value.length === 0
 })
 
 const showRandomChildren = computed(() => {
   return props.data.children?.length > 3
-})
-
-// Keep cache updated while NOT leaving to reflect ui changes
-watch(
-  titleFromQuery,
-  (newTitle) => {
-    if (!isLeaving.value) {
-      prevTitle.value = newTitle
-    }
-  },
-  { immediate: true },
-)
-
-// When leaving, freeze the title (keep lastStableTitle)
-onBeforeRouteLeave(() => {
-  isLeaving.value = true
 })
 </script>
 
@@ -83,10 +66,11 @@ onBeforeRouteLeave(() => {
   <main class="template-tools">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
-    <!-- <FilterBar :overlay="'filter'" /> -->
+    <FilterBar :overlay="'filter'" />
     <section class="children">
       <FieldText class="label" element="h3" :text="listTitle" />
-      <ChildList v-if="showChildren" :children="props.data.children" />
+      <ChildList v-if="showChildren" :children="filteredChildren" />
+      <FieldText v-if="noResults" class="feedback" :text="label.noResults" />
     </section>
     <section class="random">
       <FieldText class="label" element="h3" :text="label.random" />
@@ -135,5 +119,10 @@ onBeforeRouteLeave(() => {
   @media (min-width: $tablet) {
     margin-top: calc(var(--gutter-base) * 10);
   }
+}
+
+.feedback {
+  margin-top: var(--gutter-base);
+  font-size: var(--fs-small);
 }
 </style>

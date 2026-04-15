@@ -106,16 +106,15 @@ onDeactivated(() => {
 
       <ul v-if="hasContent" class="overview-list">
         <!-- use children if there are any, otherwise use categories (categories on tools overview page). for now, without filter implemented, do not show overview items on tools -->
-        <!-- v-for="(child, index) in children ?? categories" -->
         <OverviewItem
-          v-for="(child, index) in children"
+          v-for="(child, index) in children ?? categories"
           :key="`overview-item-${index}`"
           :item="child"
           @current-item="handleCurrentItem"
         />
-        <NuxtLink v-if="hasCategories" :to="linkToAll" class="link">
+        <!-- <NuxtLink v-if="hasCategories" :to="linkToAll" class="link">
           <FieldText element="h4" class="link-title" :text="labels.all" />
-        </NuxtLink>
+        </NuxtLink> -->
       </ul>
     </section>
     <!-- note: make sure to not use a conditionally rendered wrapper as it blocks transition detection and breaks them. -->

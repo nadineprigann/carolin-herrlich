@@ -28,6 +28,7 @@ const labels = reactive({
 .search-bar {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
+  margin-left: var(--gutter-xl);
 }
 
 .input {
@@ -37,12 +38,16 @@ const labels = reactive({
 }
 
 .reset {
+  @include button-reset;
+  @include hover-default;
+  @include focus-default;
+  @include button-padding($top: 0, $bottom: 0, $left: 1rem, $right: 1rem);
+
+  background-color: var(--grey);
+
   &::before {
     display: block;
-
-    // width: var(--gutter);
-    // height: var(--gutter);
-    content: var(--s-close);
+    content: var(--l-close);
   }
 }
 </style>

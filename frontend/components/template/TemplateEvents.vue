@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+// TODO: refactor filtering to use composable to use it here and in blog template
+const formStore = useFormStore()
+const { selected, selectedTitles } = storeToRefs(formStore)
+
 interface TemplateEvents extends Page {
-  children: childItem[]
+  children: ChildItem[]
 }
 
 const props = defineProps<{
@@ -8,11 +12,14 @@ const props = defineProps<{
 }>()
 
 const { fields, breadcrumbs, categories } = toRefs(props.data)
+const { toUppercase } = useToUppercase()
 
 const label = reactive({
   current: 'Aktuell',
   archive: 'Archiv',
   loadArchive: 'Archiv laden',
+  noCurrentResults: 'Keine aktuellen Einträge vorhanden.',
+  noArchiveResults: 'Keine Einträge im Archiv vorhanden.',
 })
 
 const classes = computed(() => {
@@ -23,6 +30,12 @@ const classes = computed(() => {
 
 const archiveLoaded = ref(false)
 
+// use selectedTitles from store to set list title when filter(s) are selected. if no filter is selected, show "all". -> no issue with resetting on leave cuz selectedTitles is reset either manually or when route context fully changes (-> see plugins/2.filter-reset.client.ts). no query dependency, so no issue with query reset on leave.
+const currentListTitle = computed(() => {
+  const titles = selectedTitles.value.slice(0, 3).map(toUppercase)
+  return titles.length ? titles.join(', ') : label.current
+})
+
 const showChildren = computed(() => {
   return props.data.children?.length > 0
 })
@@ -32,9 +45,45 @@ const currentEvents = computed(() => {
   return props.data.children?.filter((child) => !child.meta.archived)
 })
 
+// filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. if no filter is selected, show all children. if filter(s) are selected, only show children that have at least one of the selected filters as category.
+const filteredEvents = computed(() => {
+  // if no filters return all children
+  if (!selected.value.categories.length) return currentEvents.value
+
+  return currentEvents.value.filter((event) =>
+    event.fields.select_category?.some((eventCategory) =>
+      selected.value.categories.some(
+        (category) => category.meta.id === eventCategory.meta.id,
+      ),
+    ),
+  )
+})
+
+const noCurrentResults = computed(() => {
+  return filteredEvents.value.length === 0
+})
+
 const archivedEvents = computed(() => {
   if (!showChildren.value) return []
   return props.data.children?.filter((child) => child.meta.archived)
+})
+
+// filter children here before passing them down to their list comp. store selected filter(s) in store and use it here to filter children based on their categories. if no filter is selected, show all children. if filter(s) are selected, only show children that have at least one of the selected filters as category.
+const filteredArchive = computed(() => {
+  // if no filters return all children
+  if (!selected.value.categories.length) return archivedEvents.value
+
+  return archivedEvents.value.filter((event) =>
+    event.fields.select_category?.some((eventCategory) =>
+      selected.value.categories.some(
+        (category) => category.meta.id === eventCategory.meta.id,
+      ),
+    ),
+  )
+})
+
+const noArchiveResults = computed(() => {
+  return filteredArchive.value.length === 0
 })
 
 const showCurrent = computed(() => {
@@ -64,12 +113,16 @@ const loadArchive = () => {
   <main class="template-events">
     <BreadcrumbList :breadcrumbs="breadcrumbs" />
     <FieldText element="h2" :text="fields.title" class="title" />
-    <!-- <FilterBar :overlay="'filter'" /> -->
+    <FilterBar :overlay="'filter'" />
     <section v-show="showCurrent" id="current-events" class="current">
-      <FieldText class="label" element="h3" :text="label.current" />
-      <ChildList :children="currentEvents" />
+      <FieldText class="label" element="h3" :text="currentListTitle" />
+      <ChildList :children="filteredEvents" />
+      <FieldText
+        v-if="noCurrentResults"
+        class="feedback"
+        :text="label.noCurrentResults"
+      />
     </section>
-    <!-- TODO: successively: automatically move posts older than X months to archive -->
     <section id="archived-events" class="archive">
       <button
         v-show="showArchiveButton"
@@ -81,14 +134,19 @@ const loadArchive = () => {
       />
       <div v-if="showArchive">
         <FieldText class="label" element="h3" :text="label.archive" />
-        <ChildList :children="archivedEvents" />
+        <ChildList :children="filteredArchive" />
+        <FieldText
+          v-if="noArchiveResults"
+          class="feedback"
+          :text="label.noArchiveResults"
+        />
       </div>
     </section>
-    <!-- <FilterOverlay
+    <FilterOverlay
       :filters="categories"
       :template="'events'"
       :title="fields.title"
-    /> -->
+    />
   </main>
 </template>
 
@@ -147,18 +205,17 @@ const loadArchive = () => {
   border-bottom: 1px solid var(--black);
 }
 
-.current {
-  // note: remove the following delcaration when archive is implemented
-
+.archive {
   padding-bottom: var(--page-end);
+  margin-top: calc(var(--gutter-base) * 5);
+
+  @media (min-width: $tablet) {
+    margin-top: calc(var(--gutter-base) * 10);
+  }
 }
 
-// .archive {
-//   padding-bottom: var(--page-end);
-//   margin-top: calc(var(--gutter-base) * 5);
-
-//   @media (min-width: $tablet) {
-//     margin-top: calc(var(--gutter-base) * 10);
-//   }
-// }
+.feedback {
+  margin-top: var(--gutter-base);
+  font-size: var(--fs-small);
+}
 </style>

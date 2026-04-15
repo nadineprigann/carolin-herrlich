@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 const emit = defineEmits(['current-item'])
 const formStore = useFormStore()
 const { selected } = storeToRefs(formStore)
-// const { setQuery } = useUpdateQuery()
+const { setQuery } = useUpdateQuery()
 
 const props = defineProps<{
   item: OverviewItem
@@ -11,9 +11,15 @@ const props = defineProps<{
 
 const route = useRoute()
 
+const isFilter = computed(() => {
+  return props.item.meta.template === 'category'
+})
+
 const categoryObject = computed<PageReference>(() => ({
-  // create category object from item by using its props and type it as PAgeRefernece (category). this way, its guaranteed that the type always matches. this type is also use dfor filters in filter overlay.
-  title: props.item.fields.title,
+  // create category object from item by using its props and type it as PageRefernece (category). this way, its guaranteed that the type always matches. this type is also used for filters in filter overlay.
+  fields: {
+    title: props.item.fields.title,
+  },
   meta: {
     alternate: props.item.meta.alternate,
     id: props.item.meta.id,
@@ -24,39 +30,37 @@ const categoryObject = computed<PageReference>(() => ({
 }))
 
 // custom link for overview item when it has template category
-const linkTo = computed(() => {
-  // Destructure meta bject to only get the needed properties
-  const { template, url } = props.item.meta
+// const linkTo = computed(() => {
+//   // Destructure meta object to only get the needed properties
+//   const { template, url } = props.item.meta
 
-  // if no url is present, return null
-  if (!props.item.meta.url) return null
-  if (template === 'category') {
-    return route.path + 'werkzeuge/'
+//   // if no url is present, return null
+//   if (!props.item.meta.url) return null
+//   if (template === 'category') {
+//     // return route.path + 'werkzeuge/'
 
-    // if template category, build link with query param
-    //   return {
-    //     path: route.path + 'werkzeuge/',
-    //     query: {
-    //       filter: props.item.meta.name,
-    //       // for when multiple filters are needed in the future. keep existing filters with ...route.query and add other filters and categories to it
-    //       // ...route.query,
-    //       // category: 'tools',
-    //       // tag: 'permakultur',
-    //       // sort: 'date',
-    //     },
-    //   }
-    //   // Normal page navigation
-  } else return url
-})
+//     // if template category, build link with query param
+//     return {
+//       path: `${route.path.replace(/\/$/, '')}/werkzeuge/`,
+//       query: {
+//         filter: props.item.meta.name,
+//         // for when multiple filters are needed in the future. keep existing filters with ...route.query and add other filters and categories to it
+//         // ...route.query,
+//         // category: 'tools',
+//         // tag: 'permakultur',
+//         // sort: 'date',
+//       },
+//     }
+//     // Normal page navigation
+//   } else return url
+// })
 
 const onNavigateCategory = () => {
   // set selected category in store to keep filters synced in a central place.
   if (props.item.meta.template !== 'category') return
   selected.value.categories = [categoryObject.value]
-  // const targetPath = route.path + 'werkzeuge/'
-  // const filterName = props.item.meta.name
-  // setQuery()
-  // await setQuery([filterName], targetPath)
+  const targetPath = `${route.path.replace(/\/$/, '')}/werkzeuge/`
+  setQuery({ path: targetPath })
 }
 
 function getCurrentItem() {
@@ -74,7 +78,15 @@ function resetCurrentItem() {
     @mouseenter="getCurrentItem"
     @mouseleave="resetCurrentItem"
   >
-    <NuxtLink :to="linkTo" class="link" @click="onNavigateCategory">
+    <button
+      v-if="isFilter"
+      type="button"
+      class="button"
+      @click="onNavigateCategory"
+    >
+      <FieldText class="title" element="h4" :text="props.item.fields.title" />
+    </button>
+    <NuxtLink v-else :to="props.item.meta.url" class="link">
       <FieldText class="title" element="h4" :text="props.item.fields.title" />
     </NuxtLink>
   </li>
@@ -91,10 +103,28 @@ function resetCurrentItem() {
   }
 }
 
-.link {
-  @include link-reset;
+.link,
+.button {
   @include hover-default;
   @include focus-default;
+
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.link {
+  @include link-reset;
+  @include button-padding(
+    $top: var(--gutter-base),
+    $bottom: var(--gutter-base),
+    $left: var(--gutter-base),
+    $right: var(--gutter-base)
+  );
+}
+
+.button {
+  @include button-reset;
   @include button-padding(
     $top: var(--gutter-base),
     $bottom: var(--gutter-base),
@@ -102,9 +132,9 @@ function resetCurrentItem() {
     $right: var(--gutter-base)
   );
 
-  display: inline-block;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
 }
 
 .title {
